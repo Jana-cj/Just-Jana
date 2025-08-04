@@ -556,7 +556,7 @@ body {
 
 .filter-btns .btn {
   background-color: #f3e6f5;
-  color: #964165;
+  color: #9a529a;
   margin: 0 6px;
   border: none;
   font-weight: 500;
@@ -565,7 +565,7 @@ body {
 
 .filter-btns .btn.active,
 .filter-btns .btn:hover {
-  background: rgb(151, 95, 140);
+  background: #c298c2;
   color: white;
 }
 
@@ -575,7 +575,7 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
-/* Freebie Cards */
+
 .freebie-card {
   flex: 0 0 auto;
   width: 250px;
