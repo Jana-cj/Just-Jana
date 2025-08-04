@@ -600,16 +600,14 @@ body {
     padding: 0 1rem;
   }
   
-  @media (max-width: 768px) {
   .story-image img {
-    max-width: auto;
+    max-width: 90;
     height: auto;
     display: block;
     margin: 0 auto;
   }
 }
 
-}
 
 
 /* CSS for missionvalues.html */
