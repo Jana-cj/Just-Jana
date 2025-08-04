@@ -481,16 +481,6 @@ body {
   flex-wrap: wrap;
 }
 
-.story-heading {
-  font-size: 1.6rem;
-  font-family: 'Playfair Display', serif;
-  color: #000;
-  text-align: center;
-  width: 100%;
-  margin-bottom: 1rem;
-}
-
-
 .story {
   display: flex;
   align-items: center;
@@ -590,25 +580,6 @@ body {
   font-family: 'Playfair Display', serif;
   color: #4b2e2e;
 }
-
-@media (max-width: 768px) {
-  .story-text {
-    padding: 0 1rem;
-  }
-
-  .story-heading {
-    padding: 0 1rem;
-  }
-  
- 
-  .story-image img {
-    max-width: auto;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-  }
-}
-
 
 /* CSS for missionvalues.html */
 
