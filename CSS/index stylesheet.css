@@ -512,11 +512,11 @@ body {
 
 
 /* Freebies Section */
-/* Freebies Section */
 .freebies-heading {
   font-size: 2rem;
-  font-weight: 600;
-  color: #4d004d;
+  margin-bottom: 2rem;
+  font-family: 'Playfair Display', serif;
+  color: #4b2e2e;
 }
 
 .filter-btns .btn {
