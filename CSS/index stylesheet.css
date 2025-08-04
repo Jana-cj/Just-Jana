@@ -183,7 +183,7 @@ header {
 
 .read-story-btn {
   color: #ffffff;
-  background-color: #c18eb0;
+  background-color: #a86f75;
   padding: 10px 18px;
   border-radius: 6px;
   text-decoration: none;
@@ -194,7 +194,7 @@ header {
 }
 
 .read-story-btn:hover {
-  background-color: #a46c92;
+  background-color: #8e5c61;
   color: #ffffff;
   text-decoration: none;
 }
@@ -482,7 +482,7 @@ body {
 .download-btn {
   display: inline-block;
   padding: 0.7rem 1.5rem;
-  background-color: #e07fa1;
+  background-color: #a86f75;
   color: white;
   border-radius: 30px;
   text-decoration: none;
@@ -491,7 +491,7 @@ body {
 }
 
 .download-btn:hover {
-  background-color: #c95f88;
+  background-color: #8e5c61;
   color: #ffffff;
   text-decoration: none;
 }
