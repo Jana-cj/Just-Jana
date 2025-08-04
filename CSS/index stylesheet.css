@@ -396,6 +396,16 @@ body {
 }
 
 /* diary entry section */
+/* Scrollable diary section */
+.diary-scroll {
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.diary-card {
+  width: 280px;
+  scroll-snap-align: start;
+}
 
 .diary-heading {
   font-family: 'Playfair Display', serif;
@@ -454,6 +464,20 @@ body {
   color: #8e5c61;
   text-decoration: none;
 }
+
+/* Optional: adjust for large screens */
+@media (min-width: 768px) {
+  .diary-scroll {
+    justify-content: center;
+    overflow-x: visible;
+    flex-wrap: wrap;
+  }
+
+  .diary-card {
+    width: 30%;
+  }
+}
+
 
 
 /* carousel section */
