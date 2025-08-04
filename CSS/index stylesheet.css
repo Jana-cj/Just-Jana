@@ -583,7 +583,7 @@ body {
 
 @media (max-width: 768px) {
   .story-text-block {
-    padding: 0 1rem;  
+    padding: 0 1.5rem;  
   }
 }
 
