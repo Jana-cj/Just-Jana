@@ -599,6 +599,16 @@ body {
   .story-heading {
     padding: 0 1rem;
   }
+  
+  @media (max-width: 768px) {
+  .story-image img {
+    max-width: 90%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+}
+
 }
 
 
