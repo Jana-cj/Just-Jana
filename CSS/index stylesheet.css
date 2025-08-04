@@ -474,7 +474,7 @@ body {
 
 .story-block {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   gap: 4rem;
   margin-bottom: 4rem;
@@ -506,6 +506,20 @@ body {
 .story-text {
   flex: 1 1 400px;
   max-width: 600px;
+  line-height: 1.8;
+}
+
+.story-text-block {
+  flex: 1 1 400px;
+  max-width: 600px;
+}
+
+.story-text-block h2 {
+  font-size: 1.6rem;
+  font-family: 'Playfair Display', serif;
+  color: #000;
+  margin-bottom: 1rem;
+  text-align: left;
 }
 
 .story-image {
@@ -577,21 +591,17 @@ body {
 
 @media (max-width: 768px) {
   .story-block {
-    flex-direction: column-reverse;
-  }
-
-  .story-text {
-    order: 3;
+    flex-direction: column;
     padding: 0 1rem;
   }
 
-  .story-text h2 {
-    order: 1;
-    margin-bottom: 1rem;
+  .story-text-block h2,
+  .story-text {
+    text-align: center;
   }
 
-  .story-image {
-    order: 2;
+  .story-text {
+    margin-top: 1rem;
   }
 }
 
