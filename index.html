@@ -306,6 +306,56 @@
       </section>
 
       <br><br><br>
+
+      <section class="freebies-section py-5">
+  <div class="container-fluid">
+    <h2 class="text-center freebies-heading mb-4">Freebies to Nourish Your Mind & Body ♡</h2>
+
+    <!-- Filter Buttons -->
+    <div class="text-center mb-4">
+      <div class="btn-group filter-btns" role="group">
+        <button type="button" class="btn filter-btn active" data-filter="all">All</button>
+        <button type="button" class="btn filter-btn" data-filter="fitness">Fitness</button>
+        <button type="button" class="btn filter-btn" data-filter="wellness">Wellness</button>
+        <button type="button" class="btn filter-btn" data-filter="mental">Mental Health</button>
+        <button type="button" class="btn filter-btn" data-filter="vegan">Vegan</button>
+      </div>
+    </div>
+
+    <!-- Scrollable Freebies -->
+    <div class="freebies-scroll d-flex overflow-auto px-3 pb-3 flex-nowrap">
+
+      <!-- Freebie Card 1 - Fitness -->
+      <div class="freebie-card text-center mx-2" data-category="fitness">
+        <img src="img/freebie-workout.png" alt="Home Workout Plan" class="img-fluid">
+        <h5 class="mt-3">Home Workout Plan</h5>
+        <p>A beginner-friendly strength and mobility workout schedule.</p>
+        <a href="downloads/workout-plan.pdf" download class="btn download-btn">Download</a>
+      </div>
+
+      <!-- Freebie Card 2 - Vegan -->
+      <div class="freebie-card text-center mx-2" data-category="vegan">
+        <img src="img/freebie-vegan.png" alt="Vegan Starter Guide" class="img-fluid">
+        <h5 class="mt-3">Vegan Starter Bundle</h5>
+        <p>A simple guide to help you go plant-based with ease.</p>
+        <a href="downloads/vegan-starter.pdf" download class="btn download-btn">Download</a>
+      </div>
+
+      <!-- Freebie Card 3 - Mental Health -->
+      <div class="freebie-card text-center mx-2" data-category="mental">
+        <img src="img/freebie-gratitude.png" alt="Gratitude Journal" class="img-fluid">
+        <h5 class="mt-3">Gratitude Journal</h5>
+        <p>Reflect and ground yourself with this daily gratitude template.</p>
+        <a href="downloads/gratitude-journal.pdf" download class="btn download-btn">Download</a>
+      </div>
+
+      <!-- Add more cards with appropriate data-category -->
+
+    </div>
+  </div>
+</section>
+ <br><br><br>
+
       <footer class="site-footer">
   <div class="footer-heading">
     <h3>Let’s stay connected ♡</h3>
@@ -395,5 +445,30 @@
         updateArrowState();
       });
     </script>
+
+    <script>
+  const filterButtons = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.freebie-card');
+
+  filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      // Remove active class from all buttons
+      filterButtons.forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+
+      const filter = button.getAttribute('data-filter');
+
+      cards.forEach(card => {
+        const category = card.getAttribute('data-category');
+        if (filter === 'all' || category === filter) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>
+
   </body>
 </html>
