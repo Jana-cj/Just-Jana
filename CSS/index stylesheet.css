@@ -556,7 +556,7 @@ body {
 
 .filter-btns .btn {
   background-color: #f3e6f5;
-  color: #6f3b66;
+  color: #964165;
   margin: 0 6px;
   border: none;
   font-weight: 500;
@@ -565,7 +565,7 @@ body {
 
 .filter-btns .btn.active,
 .filter-btns .btn:hover {
-  background: #a87c9f;
+  background: rgb(151, 95, 140);
   color: white;
 }
 
