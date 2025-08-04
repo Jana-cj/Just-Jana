@@ -167,6 +167,7 @@ header {
 
 .quote-text span {
   color: #480363;
+  font-family: Georgia, serif;
 }
 
 .quote-text p {
@@ -175,6 +176,10 @@ header {
   font-size: 1rem; 
   line-height: 1.8;
   }
+
+.quote-text p em {
+  font-family: Georgia, serif;
+}
 
 .quote-text .welcome-home {
   font-family: Georgia, serif;
