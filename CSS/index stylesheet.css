@@ -170,14 +170,14 @@ header {
 }
 
 .quote-text p {
-  font-family: Verdana, sans-serif;
+  font-family: Georgia, serif;
   margin-bottom: 1rem;
   font-size: 1rem; 
   line-height: 1.8;
   }
 
 .quote-text .welcome-home {
-  font-family: Verdana, sans-serif;
+  font-family: Georgia, serif;
   font-size: 1.1rem;
   font-weight: 300;
   margin-top: 20px;
@@ -185,7 +185,7 @@ header {
 
 
 .read-story-btn {
-  font-family: Verdana, sans-serif;
+  font-family: Georgia, serif;
   color: #ffffff;
   background-color: #a86f75;
   padding: 10px 18px;
