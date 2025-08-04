@@ -530,7 +530,7 @@ body {
 
 .filter-btns .btn.active,
 .filter-btns .btn:hover {
-  background: linear-gradient(45deg, #ffc6d3, #a87ca0);
+  background: #a87ca0;
   color: white;
 }
 
