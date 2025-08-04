@@ -386,6 +386,61 @@ body {
   }
 }
 
+/* diary entry section */
+
+.diary-heading {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  color: #4b2e2e;
+}
+
+.diary-card {
+  border: 1px solid #f0e1e1;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  transition: transform 0.2s ease;
+  background-color: #fffdfd;
+}
+
+.diary-card:hover {
+  transform: translateY(-4px);
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.card-date {
+  font-size: 0.85rem;
+  color: #b98f8f;
+  margin-bottom: 0.75rem;
+}
+
+.card-text {
+  font-size: 0.95rem;
+  color: #444;
+  margin-bottom: 1.25rem;
+}
+
+.diary-btn {
+  background-color: #a86f75;
+  color: #fff;
+  padding: 0.5rem 1.2rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.diary-btn:hover {
+  background-color: #8e5c61;
+  color: #fff;
+}
+
+
 /* carousel section */
 
 .carousel-section {
