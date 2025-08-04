@@ -396,42 +396,42 @@ body {
 }
 
 /* diary entry section */
-/* Scrollable diary section */
-.diary-scroll {
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-}
-
-.diary-card {
-  width: 280px;
-  scroll-snap-align: start;
-}
-
-
+/* Section Heading */
 .diary-heading {
   font-family: 'Playfair Display', serif;
   font-size: 2rem;
   color: #4b2e2e;
 }
 
+/* Scroll container */
+.diary-scroll {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: space-between;
+}
+
+/* Card base */
 .diary-card {
+  flex: 1 1 calc(33.333% - 1.5rem);
   border: 1px solid #f0e1e1;
   border-radius: 12px;
   padding: 1.5rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-  transition: transform 0.2s ease;
   background-color: #fffdfd;
-  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  
+  transition: transform 0.2s ease;
+  min-width: 280px;
+  max-width: 100%;
 }
 
 .diary-card:hover {
   transform: translateY(-4px);
 }
 
+/* Inside Card */
 .card-title {
   font-size: 1.2rem;
   font-weight: 600;
@@ -450,6 +450,7 @@ body {
   margin-bottom: 1.25rem;
 }
 
+/* Read More Button */
 .diary-btn {
   background-color: #a86f75;
   color: #fff;
@@ -462,8 +463,30 @@ body {
 
 .diary-btn:hover {
   background-color: #8e5c61;
-  color: #8e5c61;
+  color: #fff;
   text-decoration: none;
+}
+
+/* Swipe on mobile */
+@media (max-width: 767px) {
+  .diary-scroll {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .diary-card {
+    flex: 0 0 80%;
+    scroll-snap-align: start;
+    margin-right: 1rem;
+  }
+
+  .diary-card:last-child {
+    margin-right: 0;
+  }
 }
 
 
