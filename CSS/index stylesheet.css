@@ -575,7 +575,7 @@ body {
 
 /* Download Button */
 .download-btn {
-  background: linear-gradient(45deg, #ffc6d3, #a87ca0);
+  background: linear-gradient(45deg, #fff6c6, #a87ca0);
   color: white;
   border: none;
   border-radius: 8px;
