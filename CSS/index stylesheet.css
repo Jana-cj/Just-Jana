@@ -591,6 +591,17 @@ body {
   color: #4b2e2e;
 }
 
+@media (max-width: 768px) {
+  .story-text {
+    padding: 0 1rem;
+  }
+
+  .story-heading {
+    padding: 0 1rem;
+  }
+}
+
+
 /* CSS for missionvalues.html */
 
 .mission-title {
