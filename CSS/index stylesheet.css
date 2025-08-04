@@ -582,10 +582,15 @@ body {
 }
 
 @media (max-width: 768px) {
-  .story-text-block {
+  .story-text {
     padding: 2rem 1.5rem;  
   }
+
+   .story-text p {
+    line-height: 1.7;  /* optional: improves readability */
+  }
 }
+
 
 /* CSS for missionvalues.html */
 
