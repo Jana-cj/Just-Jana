@@ -602,7 +602,7 @@ body {
   
   @media (max-width: 768px) {
   .story-image img {
-    max-width: 100%;
+    max-width: auto;
     height: auto;
     display: block;
     margin: 0 auto;
