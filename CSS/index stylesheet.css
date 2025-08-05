@@ -125,7 +125,7 @@ header {
 .quote-section {
   display: flex;
   justify-content: left;
-  padding-top: 1rem;
+  padding-top: 2rem;
   position: relative;
   z-index: 1;
 }
