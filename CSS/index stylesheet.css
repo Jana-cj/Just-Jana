@@ -225,11 +225,11 @@ header {
 
   .quote-section {
     flex: 2;
-    padding: 1rem;
+    padding: 2rem;
   }
 
   .quote-text {
-    text-align: left;
+    text-align: center;
     padding: 0.5rem;
     margin: 0 auto;
     max-width: 90%;
