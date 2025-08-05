@@ -225,7 +225,7 @@ header {
 
   .quote-section {
     flex: 2;
-    padding: 2rem;
+    padding: 1rem;
   }
 
   .quote-text {
@@ -528,6 +528,12 @@ body {
   margin-top: 1rem;
 }
 
+.download-text {
+  font-size: 1.2rem;
+  font-family: 'Poppins', serif;
+  color: #936d8f;
+}
+
 .carouseldownload-btn {
   display: inline-block;
   padding: 0.7rem 1.5rem;
@@ -761,6 +767,13 @@ body {
 
 
 .jana-title {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  font-family: 'Playfair Display', serif;
+  color: #4b2e2e;
+}
+
+.jana-title em {
   font-size: 2rem;
   margin-bottom: 2rem;
   font-family: 'Playfair Display', serif;
