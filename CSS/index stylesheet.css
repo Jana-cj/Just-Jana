@@ -532,6 +532,12 @@ body {
   font-size: 1.2rem;
   font-family: 'Poppins', serif;
   color: #936d8f;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.download-text + .download-text {
+  margin-top: 0.3rem;
 }
 
 .carouseldownload-btn {
