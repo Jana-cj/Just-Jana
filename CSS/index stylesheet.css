@@ -927,6 +927,38 @@ body {
   object-fit: contain;  
 }
 
+/* Hide on desktop by default */
+.mobile-mission {
+  display: none;
+}
+
+/* Show only on mobile */
+@media (max-width: 768px) {
+  .mobile-mission {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to right, #ffe9a7, #ffc6ce, #f7b7f4);
+    padding: 3rem 1rem;
+    text-align: center;
+  }
+
+  .mobile-mission img {
+    max-width: 90%;
+    height: auto;
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* Hide desktop version on mobile */
+@media (max-width: 768px) {
+  .missionbanner {
+    display: none;
+  }
+}
+
+
 .mission-title {
   font-size: 2rem;
   margin-bottom: 2rem;
