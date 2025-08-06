@@ -1070,6 +1070,50 @@ body {
   object-fit: contain;  
 }
 
+/* Hide on desktop */
+.mobile-fitness {
+  display: none;
+}
+
+/* Show only on mobile */
+@media (max-width: 768px) {
+  .mobile-fitness {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(to right, #ffe9a7, #ffc6ce, #f7b7f4);
+    padding: 3rem 1rem;
+    text-align: center;
+  }
+
+  .fitness-title {
+    max-width: 90%;
+    margin-bottom: 2rem;
+  }
+
+  .fitness-pic {
+    width: 130px;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 2rem;
+  }
+
+  .fitness-quote {
+    max-width: 95%;
+    height: auto;
+  }
+}
+
+/* Hide desktop version of this banner */
+@media (max-width: 768px) {
+  .fitnessbanner {
+    display: none;
+  }
+}
+
+
+
 /* Footer */
 .site-footer {
   background-color: #fff6ff;
