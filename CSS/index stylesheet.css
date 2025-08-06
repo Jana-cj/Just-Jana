@@ -255,6 +255,7 @@ body {
 }
 
   .healing-pillars {
+    background-color: #fdf6f8;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
@@ -269,7 +270,6 @@ body {
 
   
 .pillar-box {
-  background-color: #fdf6f8;
   border-radius: 12px;
   padding: 20px;
   text-align: center;
@@ -904,7 +904,7 @@ body {
 
 /* Footer */
 .site-footer {
-  background-color: #f8f4f8;
+  background-color: #fff6ff;
   color: #333;
   padding: 2rem;
   font-family: 'Poppins', sans-serif;
