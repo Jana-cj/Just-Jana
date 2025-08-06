@@ -255,7 +255,6 @@ body {
 }
 
   .healing-pillars {
-    background-color: #fffbf9;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
@@ -601,7 +600,7 @@ body {
   flex: 0 0 auto;
   width: 250px;
   min-height: 410px;
-  background: linear-gradient(135deg, #fdf4f1, #ffe8f2);
+  background: linear-gradient(135deg, #fdf8f6, #fdf1f6);
   border-radius: 20px;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
   padding: 1.5rem;
