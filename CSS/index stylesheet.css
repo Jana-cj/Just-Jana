@@ -1165,3 +1165,39 @@ body {
 .footer-column a:hover i {
   color: #e07fa1;
 }
+
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: left;
+  }
+
+  .footer-column {
+    width: 100%;
+    max-width: 350px;
+    padding: 1rem 0;
+    border-bottom: 1px solid #e8d4e9;
+  }
+
+  .footer-column:last-child {
+    border-bottom: none;
+  }
+
+  .footer-column a {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .footer-column i {
+    margin-right: 0;
+    font-size: 1.2rem;
+  }
+
+  .footer-credit {
+    text-align: center;
+    font-size: 0.85rem;
+    margin-top: 2rem;
+  }
+}
