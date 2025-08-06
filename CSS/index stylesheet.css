@@ -499,7 +499,6 @@ body {
 .carousel-section {
   padding: 3rem 1rem;
   text-align: center;
-  background-color: #fdf8ff;
 }
 
 .carousel-heading {
@@ -538,6 +537,7 @@ body {
   color: #b38398;
   margin: 0;
   line-height: 1.4;
+  text-align: center;
 }
 
 .download-text + .download-text {
