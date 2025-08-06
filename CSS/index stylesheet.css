@@ -720,14 +720,13 @@ body {
 
   .title-img {
     max-width: 70%;
-    /* height: auto; */
     margin-bottom: 1rem;
   }
 
   .subtitle {
     font-family: 'Amatic SC', cursive;
-    font-size: 10rem;
-    line-height: 1.3;
+    font-size: 40rem;
+    /* line-height: 1.3; */
     margin: 0 0 2rem;
     color: #333;
   }
@@ -741,12 +740,12 @@ body {
   }
 
   .name-img {
-    width: 240px;
+    width: 220px;
     margin-bottom: 2rem;
   }
 
   .quote-img {
-    width: 240px;
+    width: 500px;
     height: auto;
   }
 
