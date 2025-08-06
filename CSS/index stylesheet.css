@@ -92,8 +92,8 @@ header {
 }
 
 .tagline-mobile {
-  max-width: 95vw; 
-  height: auto;
+  max-width: 100vw; 
+  
 }
 
 /* Show only on mobile */
