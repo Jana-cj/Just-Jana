@@ -535,7 +535,7 @@ body {
 .download-text {
   font-size: 1.2rem;
   font-family: 'Poppins', serif;
-  color: #936d8f;
+  color: #b38398;
   margin: 0;
   line-height: 1.4;
 }
@@ -571,10 +571,10 @@ body {
 }
 
 .filter-btns .btn {
-  background-color: #feeef1;
-  color: #c599ac;
+  background-color: #ffffff;
+  color: #b38398;
   margin: 0 6px;
-  border: none;
+  border:0.5px solid #b38398;
   font-weight: 500;
   transition: background 0.3s ease;
 }
