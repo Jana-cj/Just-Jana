@@ -918,6 +918,15 @@ body {
 
 /* CSS for missionvalues.html */
 
+.missionbanner {
+  max-width: 100%;      
+  height: auto;       
+  display: block;     
+  margin: 0;          
+  padding: 0;
+  object-fit: contain;  
+}
+
 .mission-title {
   font-size: 2rem;
   margin-bottom: 2rem;
@@ -1007,7 +1016,16 @@ body {
       }
     }
 
-   
+/* CSS for fitness page    */
+
+.fitnessbanner {
+  max-width: 100%;      
+  height: auto;       
+  display: block;     
+  margin: 0;          
+  padding: 0;
+  object-fit: contain;  
+}
 
 /* Footer */
 .site-footer {
