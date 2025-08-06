@@ -691,6 +691,85 @@ body {
 
 
 /* CSS for janasstory.html */
+
+.desktop-hero {
+  max-width: 100%;      
+  height: auto;       
+  display: block;     
+  margin: 0;          
+  padding: 0;
+  object-fit: contain;  
+  display: block;
+}
+
+.mobile-janastory {
+  background: linear-gradient(to right, #ffe9a7, #ffc6ce, #f7b7f4);
+  padding: 2rem 1rem;
+  display: none;
+}
+
+
+.top-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.left,
+.right {
+  flex: 1;
+  min-width: 130px;
+  text-align: center;
+}
+
+.profile-img {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.name-img {
+  width: 110px;
+  margin-top: 0.5rem;
+}
+
+.title-img {
+  width: 100%;
+  max-width: 180px;
+}
+
+.subtitle {
+  font-family: 'Amatic SC', cursive;
+  font-size: 1.5rem;
+  margin-top: 0.5rem;
+  color: #333;
+  line-height: 1.2;
+}
+
+.quote {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.quote-img {
+  max-width: 95%;
+  height: auto;
+}
+
+/* Show mobile version and hide desktop version on mobile */
+@media (max-width: 768px) {
+  .mobile-janastory {
+    display: block;
+  }
+
+  .desktop-hero {
+    display: none;
+  }
+}
+
 .story-section {
   padding: 4rem 1.5rem;
   background-color: #fff;
