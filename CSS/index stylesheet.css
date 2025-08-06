@@ -749,17 +749,14 @@ body {
     max-width: 95%;
     height: auto;
   }
-}
 
-/* Desktop fallback to show original */
-.desktop-hero {
-  display: block;
-}
-@media (max-width: 768px) {
   .desktop-hero {
     display: none;
   }
 }
+
+
+
 
 
 .story-section {
