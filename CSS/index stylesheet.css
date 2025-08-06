@@ -944,10 +944,19 @@ body {
     text-align: center;
   }
 
-  .mobile-mission img {
-    max-width: 90%;
-    height: auto;
-    margin-bottom: 1.5rem;
+  .mission-logo {
+    max-width: 70px;
+    margin-bottom: 1rem;
+  }
+
+  .mission-text {
+    max-width: 100px;
+    margin-bottom: 2rem;
+  }
+
+  .mission-title {
+    max-width: 280px;
+    margin-bottom: 1rem;
   }
 }
 
