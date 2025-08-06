@@ -79,15 +79,16 @@ header {
 /* Images sizing */
 
 .logo-mobile {
-  max-width: 90px;
+  max-width: 100%;
+  margin-bottom: 2rem;
 }
 
 .text-mobile {
-  max-width: 145px;
+  max-width: 150px;
 }
 
 .tagline-mobile {
-  width: 450px;
+  width: 380px;
   height: auto;
   
 }
