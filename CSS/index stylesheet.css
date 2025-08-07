@@ -1166,3 +1166,46 @@ body {
   color: #e07fa1;
 }
 
+.music-column h4 {
+  text-align: center;
+}
+
+.music-links {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.music-left,
+.music-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 140px;
+}
+
+/* Divider lines on mobile */
+@media (max-width: 768px) {
+  .footer-container {
+    border-top: 1px solid #ccc;
+  }
+
+  .footer-column {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .music-links {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .music-left,
+  .music-right {
+    align-items: flex-start;
+    flex: 1;
+  }
+}
