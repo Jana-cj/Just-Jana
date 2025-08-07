@@ -523,45 +523,45 @@
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
-    const dropdownInstances = new Map();
+    const dropdownMenus = document.querySelectorAll('.dropdown-menu');
 
-    dropdownToggles.forEach(function (toggle) {
-      const instance = new bootstrap.Dropdown(toggle);
-      dropdownInstances.set(toggle, instance);
+    function closeAllDropdowns() {
+      dropdownMenus.forEach(menu => menu.classList.remove('show'));
+      dropdownToggles.forEach(toggle => toggle.setAttribute('aria-expanded', 'false'));
+    }
 
+    dropdownToggles.forEach(toggle => {
       toggle.addEventListener('click', function (e) {
         if (window.innerWidth < 992) {
           e.preventDefault();
+          e.stopPropagation();
 
-          const parent = toggle.closest('.dropdown');
-          const menu = parent.querySelector('.dropdown-menu');
+          const menu = toggle.nextElementSibling;
           const isOpen = menu.classList.contains('show');
 
-          // Close all open dropdowns
-          document.querySelectorAll('.dropdown-menu.show').forEach(openMenu => {
-            const openToggle = openMenu.closest('.dropdown').querySelector('.dropdown-toggle');
-            if (openToggle !== toggle) {
-              dropdownInstances.get(openToggle)?.hide();
-            }
-          });
+          // Close all first
+          closeAllDropdowns();
 
-          // Toggle this one
-          if (isOpen) {
-            dropdownInstances.get(toggle)?.hide();
-          } else {
-            dropdownInstances.get(toggle)?.show();
+          // If not open, open this one
+          if (!isOpen) {
+            menu.classList.add('show');
+            toggle.setAttribute('aria-expanded', 'true');
           }
         }
       });
     });
 
-    // Close dropdowns if clicking outside
+    // Close on outside click
     document.addEventListener('click', function (e) {
-      if (!e.target.closest('.dropdown')) {
-        document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
-          const toggle = menu.closest('.dropdown').querySelector('.dropdown-toggle');
-          dropdownInstances.get(toggle)?.hide();
-        });
+      if (window.innerWidth < 992 && !e.target.closest('.dropdown')) {
+        closeAllDropdowns();
+      }
+    });
+
+    // Close on resize to desktop
+    window.addEventListener('resize', function () {
+      if (window.innerWidth >= 992) {
+        closeAllDropdowns();
       }
     });
   });
