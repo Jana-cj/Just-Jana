@@ -748,10 +748,9 @@ body {
   .desktop-hero {
     display: none;
   }
+
+  
 }
-
-
-
 
 
 .story-section {
@@ -900,6 +899,21 @@ body {
   color: #4b2e2e;
 }
 
+.story-image.multi-image {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  max-width: 100%;
+}
+
+.story-image.multi-image img {
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+  border-radius: 8px;
+}
+
 @media (max-width: 768px) {
  .story-text,
   .story-text-block {
@@ -912,6 +926,32 @@ body {
 }
 }
 
+.story-image.multi-image {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  max-width: 100%;
+}
+
+.story-image.multi-image img {
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* Responsive stacking on smaller screens */
+@media (max-width: 768px) {
+  .story-image.multi-image {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .story-image.multi-image img {
+    max-width: 80%;
+  }
+}
 
 /* CSS for missionvalues.html */
 
