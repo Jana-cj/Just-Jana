@@ -818,9 +818,10 @@ body {
 }
 
 .story-image {
-  flex: 1 1 300px;
-  max-width: 250px;
+  flex: 1 1 100%;
+  max-width: 100%;
 }
+
 
 .story-image img {
   width: 100%;
@@ -904,12 +905,13 @@ body {
   flex-wrap: wrap;
   gap: 1rem;
   justify-content: center;
-  max-width: 100%;
+  align-items: center;
+  width: 100%;
 }
 
 .story-image.multi-image img {
-  width: 100%;
   max-width: 200px;
+  width: 100%;
   height: auto;
   border-radius: 8px;
 }
@@ -932,11 +934,13 @@ body {
   gap: 1rem;
   justify-content: center;
   max-width: 100%;
+  flex-direction: column;
+  align-items: center;
 }
 
 .story-image.multi-image img {
   width: 100%;
-  max-width: 200px;
+  max-width: 80%;
   height: auto;
   border-radius: 8px;
 }
