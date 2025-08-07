@@ -1200,12 +1200,21 @@ body {
   .footer-container {
     flex-direction: column;
     gap: 2rem;
-    border-top: 1px solid #ccc;
+    
   }
 
   .footer-column {
     border-bottom: 1px solid #ccc;
     padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .footer-column.music-column {
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    margin-top: 1.5rem;
     margin-bottom: 1.5rem;
   }
 
@@ -1235,4 +1244,21 @@ body {
   .music-right {
     flex: 1;
   }
+
+  @media (max-width: 768px) {
+  .horizontal-links .link-group {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .horizontal-links .link-group a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.3rem 0;
+  }
+}
+
 }
