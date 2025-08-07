@@ -1216,8 +1216,8 @@ body {
 
   .footer-column {
     border-bottom: 1px solid #ccc;
-    padding-bottom: 1rem;
-    margin-bottom: 1rem;
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
    
   }
 
@@ -1234,9 +1234,5 @@ body {
     flex: 1;
   }
 
-  .footer-column:not(.music-column) a {
-    display: inline-block; /* shows links side by side */
-    margin-right: 1rem;
-    margin-bottom: 0.3rem;
-  }
+  
 }
