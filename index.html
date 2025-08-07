@@ -49,7 +49,7 @@
               </li>
               <!-- Dropdowns -->
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#about" id="dropdownAbout" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#about" id="dropdownAbout" role="button"  aria-expanded="false">
                   About
                 </a>
                 
@@ -60,7 +60,7 @@
               </li>
              
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#about" id="dropdownFitness" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#about" id="dropdownFitness" role="button"  aria-expanded="false">
                   Fitness
                 </a>
                
@@ -75,7 +75,7 @@
             
 
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#about" id="dropdownMusic" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#about" id="dropdownMusic" role="button"  aria-expanded="false">
                   Music
                 </a>
                
@@ -89,7 +89,7 @@
 
 
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#about" id="dropdownWellness" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#about" id="dropdownWellness" role="button" aria-expanded="false">
                   Health & Wellness
                 </a>
                
@@ -104,7 +104,7 @@
 
 
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#about" id="dropdownMentalhealth" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#about" id="dropdownMentalhealth" role="button"  aria-expanded="false">
                   Mental Health
                 </a>
                
@@ -121,7 +121,7 @@
 
                                          
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#about" id="dropdownDiaries" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#about" id="dropdownDiaries" role="button"  aria-expanded="false">
                   Brown Girl Diaries
                 </a>
                
@@ -522,25 +522,28 @@
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+    const dropdowns = [];
 
     dropdownToggles.forEach(function (toggle) {
+      const instance = new bootstrap.Dropdown(toggle);
+      dropdowns.push({ toggle, instance });
+
       toggle.addEventListener('click', function (e) {
         if (window.innerWidth < 992) {
           e.preventDefault();
-          const parent = this.closest('.dropdown');
-          const menu = parent.querySelector('.dropdown-menu');
-          const instance = bootstrap.Dropdown.getOrCreateInstance(this);
 
-          // Close other dropdowns
-          document.querySelectorAll('.dropdown-menu.show').forEach(openMenu => {
-            if (openMenu !== menu) {
-              const otherToggle = openMenu.closest('.dropdown').querySelector('.dropdown-toggle');
-              bootstrap.Dropdown.getInstance(otherToggle)?.hide();
+          const isOpen = toggle.classList.contains('show') || 
+                         toggle.getAttribute('aria-expanded') === 'true';
+
+          // Close all dropdowns first
+          dropdowns.forEach(({ toggle: otherToggle, instance: otherInstance }) => {
+            if (otherToggle !== toggle) {
+              otherInstance.hide();
             }
           });
 
-          // Toggle this dropdown
-          if (menu.classList.contains('show')) {
+          // Toggle the current dropdown
+          if (isOpen) {
             instance.hide();
           } else {
             instance.show();
@@ -549,17 +552,15 @@
       });
     });
 
-    // Optional: close dropdowns on outside click
+    // Close on outside click
     document.addEventListener('click', function (e) {
       if (!e.target.closest('.dropdown')) {
-        document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
-          const toggle = menu.closest('.dropdown').querySelector('.dropdown-toggle');
-          bootstrap.Dropdown.getInstance(toggle)?.hide();
-        });
+        dropdowns.forEach(({ instance }) => instance.hide());
       }
     });
   });
 </script>
+
 
 
 
