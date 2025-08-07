@@ -1210,7 +1210,7 @@ body {
   }
 
   .footer-column.music-column {
-    border-top: 1px solid #ccc;
+    
     border-bottom: 1px solid #ccc;
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
@@ -1245,7 +1245,6 @@ body {
     flex: 1;
   }
 
-  @media (max-width: 768px) {
   .horizontal-links .link-group {
     display: flex;
     justify-content: center;
@@ -1261,4 +1260,4 @@ body {
   }
 }
 
-}
+
