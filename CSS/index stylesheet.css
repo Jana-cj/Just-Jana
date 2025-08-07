@@ -1233,4 +1233,10 @@ body {
   .music-right {
     flex: 1;
   }
+
+  .footer-column:not(.music-column) a {
+    display: inline-block; /* shows links side by side */
+    margin-right: 1rem;
+    margin-bottom: 0.3rem;
+  }
 }
