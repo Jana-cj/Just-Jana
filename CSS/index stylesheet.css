@@ -1130,7 +1130,7 @@ body {
 .footer-column {
   flex: 1;
   min-width: 200px;
-   gap: 2rem;
+  
 }
 
 .footer-column h4 {
@@ -1218,7 +1218,7 @@ body {
     border-bottom: 1px solid #ccc;
     padding-bottom: 1rem;
     margin-bottom: 1rem;
-     gap: 2rem;
+   
   }
 
   .music-links {
