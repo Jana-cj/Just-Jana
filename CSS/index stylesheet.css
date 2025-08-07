@@ -1142,7 +1142,7 @@ body {
 .footer-column a {
   color: #333;
   text-decoration: none;
-  display: inline-flex;
+  display: block;
   align-items: center;
   margin: 0.3rem 0;
   transition: color 0.3s;
@@ -1213,12 +1213,22 @@ body {
     border-top: 1px solid #ccc;
   }
 
+  .footer-column.horizontal-links a {
+    display: inline-block;
+    margin-right: 1rem;
+    margin-bottom: 0.3rem;
+  }
 
   .footer-column {
     border-bottom: 1px solid #ccc;
     padding-bottom: 1.5rem;
     margin-bottom: 1.5rem;
    
+  }
+
+  .footer-column:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
   }
 
   .music-links {
