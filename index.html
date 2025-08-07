@@ -49,23 +49,23 @@
               </li>
               <!-- Dropdowns -->
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#about" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#about" id="dropdownAbout" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   About
                 </a>
                 
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <ul class="dropdown-menu" aria-labelledby="dropdownAbout">
                   <li><a class="dropdown-item" href="janasstory.html">Jana's Story</a></li> 
                   <li><a class="dropdown-item" href="missionvalues.html">Mission & Values</a></li>
                 </ul>
               </li>
              
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#about" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#about" id="dropdownFitness" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Fitness
                 </a>
                
 
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <ul class="dropdown-menu" aria-labelledby="dropdownFitness">
                   <li><a class="dropdown-item" href="fitnessstory.html">Jana's Fitness Journey</a></li> 
                   <li><a class="dropdown-item" href="#Countryid">Programs</a></li>
                   <li><a class="dropdown-item" href="#Countryid">Body Composition</a></li>
@@ -75,12 +75,12 @@
             
 
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#about" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#about" id="dropdownMusic" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Music
                 </a>
                
 
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <ul class="dropdown-menu" aria-labelledby="dropdownMusic">
                   <li><a class="dropdown-item" href="#Classicalid">Jana's Music Journey</a></li> 
                   <li><a class="dropdown-item" href="#Countryid">Healing Compositions</a></li>
                   <li><a class="dropdown-item" href="#Countryid">Behind the Music</a></li>
@@ -89,12 +89,12 @@
 
 
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#about" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#about" id="dropdownWellness" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Health & Wellness
                 </a>
                
 
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <ul class="dropdown-menu" aria-labelledby="dropdownWellness">
                   <li><a class="dropdown-item" href="#Classicalid">Nutrition</a></li> 
                   <li><a class="dropdown-item" href="#Countryid">Sleep & Recovery</a></li>
                   <li><a class="dropdown-item" href="#Countryid">Natural Beauty</a></li>
@@ -104,12 +104,12 @@
 
 
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#about" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#about" id="dropdownMentalhealth" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Mental Health
                 </a>
                
 
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <ul class="dropdown-menu" aria-labelledby="dropdownMentalhealth">
                   <li><a class="dropdown-item" href="#Classicalid">Emotional Survival: Jana's Story</a></li>
                   <li><a class="dropdown-item" href="#Countryid">Navigating Toxic Relationships</a></li> 
                   <li><a class="dropdown-item" href="#Countryid">Breaking the Silence (taboos)</a></li>
@@ -121,12 +121,12 @@
 
                                          
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#about" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#about" id="dropdownDiaries" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Brown Girl Diaries
                 </a>
                
 
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <ul class="dropdown-menu" aria-labelledby="dropdownDiaries">
                   <li><a class="dropdown-item" href="#Classicalid">Unlearn and Reclaim</a></li> 
                   <li><a class="dropdown-item" href="#Countryid">Healing the Inner Child</a></li>
                   <li><a class="dropdown-item" href="#Countryid">Mindful Strength</a></li>
@@ -525,31 +525,42 @@
 
     dropdownToggles.forEach(function (toggle) {
       toggle.addEventListener('click', function (e) {
-        // Apply only on screens narrower than 992px (Bootstrap md breakpoint)
         if (window.innerWidth < 992) {
           e.preventDefault();
-
           const parent = this.closest('.dropdown');
           const menu = parent.querySelector('.dropdown-menu');
+          const instance = bootstrap.Dropdown.getOrCreateInstance(this);
 
-          // Toggle manually
+          // Close other dropdowns
+          document.querySelectorAll('.dropdown-menu.show').forEach(openMenu => {
+            if (openMenu !== menu) {
+              const otherToggle = openMenu.closest('.dropdown').querySelector('.dropdown-toggle');
+              bootstrap.Dropdown.getInstance(otherToggle)?.hide();
+            }
+          });
+
+          // Toggle this dropdown
           if (menu.classList.contains('show')) {
-            // Close dropdown
-            bootstrap.Dropdown.getInstance(this).hide();
+            instance.hide();
           } else {
-            // Close other open dropdowns
-            document.querySelectorAll('.dropdown-menu.show').forEach(function (openMenu) {
-              bootstrap.Dropdown.getInstance(openMenu.closest('.dropdown').querySelector('.dropdown-toggle'))?.hide();
-            });
-
-            // Open this one
-            new bootstrap.Dropdown(this).show();
+            instance.show();
           }
         }
       });
     });
+
+    // Optional: close dropdowns on outside click
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('.dropdown')) {
+        document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
+          const toggle = menu.closest('.dropdown').querySelector('.dropdown-toggle');
+          bootstrap.Dropdown.getInstance(toggle)?.hide();
+        });
+      }
+    });
   });
 </script>
+
 
 
   </body>
