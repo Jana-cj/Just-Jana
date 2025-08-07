@@ -1215,8 +1215,8 @@ body {
     border-bottom: 1px solid #ccc;
     padding-top: 2.5rem;
     padding-bottom: 2.5rem;
-    margin-top: 0.1rem;
-    margin-bottom: 0.1rem;
+    margin-top: 0rem;
+    margin-bottom: 0rem;
   }
 
   .footer-column:last-child {
