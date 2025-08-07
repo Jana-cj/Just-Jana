@@ -1130,7 +1130,6 @@ body {
 .footer-column {
   flex: 1;
   min-width: 200px;
-  
 }
 
 .footer-column h4 {
@@ -1160,7 +1159,8 @@ body {
 
 .footer-credit {
   font-size: 0.9rem;
-  margin-top: 1rem;
+  margin-top: 2rem;
+  text-align: center;
   color: #888;
 }
 
@@ -1173,15 +1173,6 @@ body {
   margin-bottom: 0.8rem;
 }
 
-/* Structure fixes */
-.footer-credit {
-  font-size: 0.9rem;
-  margin-top: 2rem;
-  text-align: center;
-  color: #888;
-}
-
-/* Fix Music section */
 .music-column {
   display: flex;
   flex-direction: column;
@@ -1204,13 +1195,23 @@ body {
   align-items: flex-start;
 }
 
-
-/* Divider lines on mobile */
+/* Responsive mobile adjustments */
 @media (max-width: 768px) {
   .footer-container {
     flex-direction: column;
     gap: 2rem;
     border-top: 1px solid #ccc;
+  }
+
+  .footer-column {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .footer-column:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
   }
 
   .footer-column.horizontal-links a {
@@ -1219,30 +1220,15 @@ body {
     margin-bottom: 0.3rem;
   }
 
-  .footer-column {
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 1.5rem;
-    margin-bottom: 1.5rem;
-   
-  }
-
-  .footer-column:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-  }
-
   .music-links {
     flex-direction: row;
     justify-content: space-between;
     gap: 2rem;
     flex-wrap: wrap;
-    
   }
 
   .music-left,
   .music-right {
     flex: 1;
   }
-
-  
 }
