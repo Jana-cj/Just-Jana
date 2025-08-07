@@ -926,20 +926,36 @@ body {
 }
 }
 
+/* Default: stack vertically on desktop */
 .story-image.multi-image {
   display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: center;
-  max-width: 100%;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
 }
 
 .story-image.multi-image img {
   width: 100%;
-  max-width: 200px;
+  max-width: 250px;
   height: auto;
   border-radius: 8px;
 }
+
+/* On mobile: display side by side */
+@media (max-width: 768px) {
+  .story-image.multi-image {
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
+    padding: 0 1rem; /* adds breathing space on left and right */
+  }
+
+  .story-image.multi-image img {
+    max-width: 45%; /* slightly smaller than half */
+  }
+}
+
 
 
 /* CSS for missionvalues.html */
