@@ -784,7 +784,7 @@ body {
 
 .story-block {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   gap: 4rem;
   margin-bottom: 4rem;
@@ -819,8 +819,8 @@ body {
 }
 
 .story-image {
-  flex: 1 1 100%;
-  max-width: 100%;
+  flex: 1 1 300px;
+  max-width: 250px;
 }
 
 .story-image img {
