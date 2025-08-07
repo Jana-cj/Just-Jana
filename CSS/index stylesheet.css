@@ -1204,13 +1204,13 @@ body {
   }
 
   .footer-column {
-    border-bottom: 1px solid #ccc;
+    
     padding-bottom: 1.5rem;
     margin-bottom: 1.5rem;
   }
 
   .footer-column.music-column {
-    
+    border-top: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
