@@ -1216,8 +1216,12 @@ body {
 
   .footer-column.horizontal-links a {
     display: inline-block;
-    margin-right: 1rem;
-    margin-bottom: 0.3rem;
+    margin: 0.3rem 1rem 0.3rem 0;
+    vertical-align: top;
+  }
+
+  .link-group a {
+    margin:  0.3rem 1rem 0.3rem 0;
   }
 
   .music-links {
