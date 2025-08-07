@@ -1155,7 +1155,11 @@ body {
   margin-right: 0.5rem;
   color: #a94caf; 
   font-size: 1.1rem;
+  width: 1.5rem; /* fixes icon width to match alignment */
+  text-align: center;
 }
+
+
 
 .footer-credit {
   font-size: 0.9rem;
@@ -1188,12 +1192,14 @@ body {
   max-width: 400px;
 }
 
-.music-left,
-.music-right {
+.music-left a,
+.music-right a {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+  gap: 0.5rem; /* consistent spacing between icon and text */
+  min-width: max-content; /* prevents wrapping */
 }
+
 
 /* Responsive mobile adjustments */
 @media (max-width: 768px) {
