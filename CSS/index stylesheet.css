@@ -1142,7 +1142,7 @@ body {
 .footer-column a {
   color: #333;
   text-decoration: none;
-  display: inline-flex;
+  display: block;
   align-items: center;
   margin: 0.3rem 0;
   transition: color 0.3s;
@@ -1234,8 +1234,13 @@ body {
     flex: 1;
   }
 
-  .footer-column:not(.music-column) a {
-    display: inline-block; /* shows links side by side */
+  .footer-column:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+
+  .footer-column.horizontal-links a {
+    display: inline-block;
     margin-right: 1rem;
     margin-bottom: 0.3rem;
   }
