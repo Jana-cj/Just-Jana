@@ -1213,10 +1213,10 @@ body {
   .footer-column.music-column {
     border-top: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+    margin-top: 0.8rem;
+    margin-bottom: 0.8rem;
   }
 
   .footer-column:last-child {
