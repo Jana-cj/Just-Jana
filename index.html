@@ -522,44 +522,44 @@
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
-    const dropdowns = [];
 
     dropdownToggles.forEach(function (toggle) {
       const instance = new bootstrap.Dropdown(toggle);
-      dropdowns.push({ toggle, instance });
 
       toggle.addEventListener('click', function (e) {
         if (window.innerWidth < 992) {
           e.preventDefault();
 
-          const isOpen = toggle.classList.contains('show') || 
-                         toggle.getAttribute('aria-expanded') === 'true';
+          const parent = toggle.closest('.dropdown');
+          const menu = parent.querySelector('.dropdown-menu');
+          const isOpen = menu.classList.contains('show');
 
-          // Close all dropdowns first
-          dropdowns.forEach(({ toggle: otherToggle, instance: otherInstance }) => {
-            if (otherToggle !== toggle) {
-              otherInstance.hide();
-            }
+          // Close all open dropdowns
+          document.querySelectorAll('.dropdown-menu.show').forEach(openMenu => {
+            const openToggle = openMenu.closest('.dropdown').querySelector('.dropdown-toggle');
+            bootstrap.Dropdown.getInstance(openToggle)?.hide();
           });
 
-          // Toggle the current dropdown
-          if (isOpen) {
-            instance.hide();
-          } else {
+          // Toggle this dropdown only if it wasn't open
+          if (!isOpen) {
             instance.show();
           }
         }
       });
     });
 
-    // Close on outside click
+    // Close dropdowns if clicking outside
     document.addEventListener('click', function (e) {
       if (!e.target.closest('.dropdown')) {
-        dropdowns.forEach(({ instance }) => instance.hide());
+        document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
+          const toggle = menu.closest('.dropdown').querySelector('.dropdown-toggle');
+          bootstrap.Dropdown.getInstance(toggle)?.hide();
+        });
       }
     });
   });
 </script>
+
 
 
 
