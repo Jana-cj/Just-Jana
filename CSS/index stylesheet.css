@@ -1206,7 +1206,8 @@ body {
   .footer-column {
     
     padding-bottom: 1.5rem;
-    margin-bottom: 1.5rem;
+    padding-top: 1.5rem;
+    margin: 1.5rem 0;
   }
 
   .footer-column.music-column {
