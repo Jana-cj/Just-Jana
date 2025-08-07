@@ -523,12 +523,6 @@
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
-    const dropdownMenus = document.querySelectorAll('.dropdown-menu');
-
-    function closeAllDropdowns() {
-      dropdownMenus.forEach(menu => menu.classList.remove('show'));
-      dropdownToggles.forEach(toggle => toggle.setAttribute('aria-expanded', 'false'));
-    }
 
     dropdownToggles.forEach(toggle => {
       toggle.addEventListener('click', function (e) {
@@ -536,36 +530,46 @@
           e.preventDefault();
           e.stopPropagation();
 
-          const menu = toggle.nextElementSibling;
-          const isOpen = menu.classList.contains('show');
+          const currentMenu = toggle.nextElementSibling;
+          const isOpen = currentMenu.classList.contains('show');
 
-          // Close all first
-          closeAllDropdowns();
+          // Close all open dropdowns
+          document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
+            menu.classList.remove('show');
+            menu.previousElementSibling?.setAttribute('aria-expanded', 'false');
+          });
 
-          // If not open, open this one
+          // Toggle current dropdown only if it wasn't open already
           if (!isOpen) {
-            menu.classList.add('show');
+            currentMenu.classList.add('show');
             toggle.setAttribute('aria-expanded', 'true');
           }
         }
       });
     });
 
-    // Close on outside click
+    // Close dropdowns on outside click
     document.addEventListener('click', function (e) {
       if (window.innerWidth < 992 && !e.target.closest('.dropdown')) {
-        closeAllDropdowns();
+        document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
+          menu.classList.remove('show');
+          menu.previousElementSibling?.setAttribute('aria-expanded', 'false');
+        });
       }
     });
 
-    // Close on resize to desktop
+    // Close all on resize to desktop
     window.addEventListener('resize', function () {
       if (window.innerWidth >= 992) {
-        closeAllDropdowns();
+        document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
+          menu.classList.remove('show');
+          menu.previousElementSibling?.setAttribute('aria-expanded', 'false');
+        });
       }
     });
   });
 </script>
+
 
 
 
