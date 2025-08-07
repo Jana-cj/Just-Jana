@@ -522,9 +522,11 @@
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+    const dropdownInstances = new Map();
 
     dropdownToggles.forEach(function (toggle) {
       const instance = new bootstrap.Dropdown(toggle);
+      dropdownInstances.set(toggle, instance);
 
       toggle.addEventListener('click', function (e) {
         if (window.innerWidth < 992) {
@@ -537,12 +539,16 @@
           // Close all open dropdowns
           document.querySelectorAll('.dropdown-menu.show').forEach(openMenu => {
             const openToggle = openMenu.closest('.dropdown').querySelector('.dropdown-toggle');
-            bootstrap.Dropdown.getInstance(openToggle)?.hide();
+            if (openToggle !== toggle) {
+              dropdownInstances.get(openToggle)?.hide();
+            }
           });
 
-          // Toggle this dropdown only if it wasn't open
-          if (!isOpen) {
-            instance.show();
+          // Toggle this one
+          if (isOpen) {
+            dropdownInstances.get(toggle)?.hide();
+          } else {
+            dropdownInstances.get(toggle)?.show();
           }
         }
       });
@@ -553,12 +559,13 @@
       if (!e.target.closest('.dropdown')) {
         document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
           const toggle = menu.closest('.dropdown').querySelector('.dropdown-toggle');
-          bootstrap.Dropdown.getInstance(toggle)?.hide();
+          dropdownInstances.get(toggle)?.hide();
         });
       }
     });
   });
 </script>
+
 
 
 
