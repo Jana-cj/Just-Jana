@@ -1141,7 +1141,8 @@ body {
 .footer-column a {
   color: #333;
   text-decoration: none;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   margin: 0.3rem 0;
   transition: color 0.3s;
 }
@@ -1168,6 +1169,7 @@ body {
 
 .music-column h4 {
   text-align: center;
+  margin-bottom: 0.8rem;
 }
 
 .music-links {
@@ -1182,8 +1184,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  min-width: 140px;
-}
+  }
 
 /* Divider lines on mobile */
 @media (max-width: 768px) {
@@ -1200,6 +1201,7 @@ body {
   .music-links {
     flex-direction: row;
     justify-content: space-between;
+    gap: 2rem;
     
   }
 
