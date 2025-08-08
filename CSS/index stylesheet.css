@@ -1094,6 +1094,13 @@ body {
     margin-bottom: 2rem;
   }
 
+  .underheading {
+    font-family: 'Amatic SC', cursive;
+    font-size: 2rem;
+    line-height: 1.3;
+    color: #333;
+  }
+  
   .fitness-pic {
     width: 130px;
     height: 130px;
