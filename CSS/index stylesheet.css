@@ -145,7 +145,7 @@ header {
 }
 
 
-.profile-img {
+.profile-image {
   width: 180px;
   height: 180px;
   object-fit: cover;
@@ -258,14 +258,13 @@ header {
     gap: 2rem;
   }
   
-  .profile-img {
-    width: 130px;
-    height: 130px;
+  .profile-image {
+    width: 180px;   /* Increased size */
+    height: 180px;
     object-fit: cover;
     border-radius: 50%;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem; /* Optional spacing tweak */
   }
-
 
   .profile-section {
     align-items: center;
