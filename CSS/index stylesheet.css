@@ -258,6 +258,11 @@ header {
     gap: 2rem;
   }
   
+  .profile-img {
+    width: 180px;
+    height: 180px;
+  }
+
 
   .profile-section {
     align-items: center;
