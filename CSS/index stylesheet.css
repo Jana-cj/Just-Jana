@@ -1162,6 +1162,70 @@ body {
 }
 
 
+.fitness-story {
+  max-width: 1100px;
+  margin: auto;
+  padding: 2rem 1rem;
+}
+
+.story-blk {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5rem;
+  flex-wrap: wrap;
+}
+
+.story-txt {
+  flex: 1;
+  padding: 1rem;
+  min-width: 300px;
+}
+
+.story-txt h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.story-img {
+  flex: 1;
+  padding: 1rem;
+  text-align: center;
+  min-width: 300px;
+}
+
+.story-img img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.story-blk:nth-child(even) {
+  flex-direction: row-reverse;
+}
+
+@media screen and (max-width: 768px) {
+  .story-blk {
+    flex-direction: column;
+  }
+
+  .story-blk:nth-child(even) {
+    flex-direction: column;
+  }
+
+  .story-txt,
+  .story-img {
+    padding: 0.5rem;
+  }
+
+  .story-txt h2 {
+    font-size: 1.4rem;
+    text-align: center;
+  }
+}
+
+
 
 /* Footer */
 .site-footer {
