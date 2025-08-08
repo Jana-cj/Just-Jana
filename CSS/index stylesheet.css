@@ -1171,15 +1171,15 @@ body {
 .story-blk {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 5rem;
+  justify-content: center;
+  gap: 4rem;
+  margin-bottom: 4rem;
   flex-wrap: wrap;
 }
 
 .story-txt {
-  flex: 1;
-  padding: 1rem;
-  min-width: 300px;
+ flex: 1 1 500px;
+  max-width: 700px;
 }
 
 .story-txt h2 {
