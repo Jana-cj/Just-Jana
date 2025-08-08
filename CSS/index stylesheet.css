@@ -1183,9 +1183,15 @@ body {
 }
 
 .story-txt h2 {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
+  font-family: 'Playfair Display', serif;
+  color: #000000;
   margin-bottom: 1rem;
-  font-weight: 600;
+}
+
+.story-txt p {
+  line-height: 1.8;
+  margin-bottom: 1rem;
 }
 
 .story-img {
@@ -1194,6 +1200,14 @@ body {
   text-align: center;
   min-width: 300px;
 }
+
+.fitnesswhy {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  font-family: 'Playfair Display', serif;
+  color: #4b2e2e;
+}
+
 
 .story-img img {
   max-width: 100%;
