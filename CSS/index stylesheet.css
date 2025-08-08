@@ -1205,6 +1205,13 @@ body {
   color: #4b2e2e;
 }
 
+.fitnessmsg {
+  font-size: 1.4rem;
+  margin-bottom: 2rem;
+  font-family: 'Playfair Display', serif;
+  color: #4b2e2e;
+}
+
 .fitnessbox {
   background-color: #faf6f9;
   padding: 2rem;
