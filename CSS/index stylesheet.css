@@ -759,14 +759,7 @@ body {
   
 }
 
- .sub {
-    font-family: 'Amatic SC', cursive;
-    font-size: 2rem;
-    line-height: 1.3;
-    color: #333;
-  }
-  
-.story-section {
+ .story-section {
   padding: 4rem 1.5rem;
   background-color: #fff;
   font-family: 'Lora', serif;
