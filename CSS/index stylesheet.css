@@ -857,6 +857,19 @@ body {
   border-radius: 8px;
 }
 
+.story-img .carousel-inner img {
+  border-radius: 10px;
+  max-height: 300px;
+  object-fit: cover;
+}
+
+@media (max-width: 768px) {
+  .carousel-control-prev,
+  .carousel-control-next {
+    display: none;
+  }
+}
+
 .story-text h2 {
   font-size: 1.6rem;
   font-family: 'Playfair Display', serif;
