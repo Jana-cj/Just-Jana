@@ -1250,7 +1250,7 @@ body {
 
 @media (max-width: 768px) {
   .music-quote {
-    max-width: 500px;
+    max-width: 200px;
     height: auto;
   }
 }
