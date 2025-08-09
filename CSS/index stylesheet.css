@@ -578,7 +578,7 @@ body {
 }
 
 .lockscreen-text {
-  background-color: #ffeaf4; /* light pink */
+  background-color: #ffeff7; /* light pink */
   border-radius: 12px; /* rounded corners */
   padding: 15px 25px; /* space inside */
   max-width: 500px; /* shrink nicely on mobile */
