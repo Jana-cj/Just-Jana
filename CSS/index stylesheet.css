@@ -578,15 +578,20 @@ body {
   margin-top: 1rem;
 }
 
-.download-caption {
-  text-align: center;
-  max-width: 800px;
-  margin: 1rem auto 0 auto; 
-  padding: 0 1rem;
-  font-family: 'Poppins', serif;
-  font-size: 1rem;
-  color: #b38398; 
-  line-height: 1; 
+.lockscreen-text {
+  background-color: #ffeaf4; /* light pink */
+  border-radius: 12px; /* rounded corners */
+  padding: 15px 25px; /* space inside */
+  max-width: 600px; /* optional: limit width */
+  margin: 20px auto; /* center horizontally */
+  text-align: center; /* center text */
+  font-family: 'Poppins', sans-serif;
+  color: #000; /* text color */
+}
+
+.lockscreen-text p {
+  margin: 5px 0; /* small space between lines */
+  font-size: 16px;
 }
 
 
