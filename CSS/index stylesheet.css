@@ -1257,6 +1257,107 @@ body {
   margin: 0 auto;
 }
 
+/* ============ Music Journey ============ */
+.jj-music {
+  padding: 3rem 0 2rem;
+}
+
+.jj-music-title {
+  font-family: 'Playfair Display', serif; /* swap to your brand font */
+  font-size: clamp(2rem, 1.2rem + 2.4vw, 3rem);
+  text-align: left;
+  margin-bottom: 1.5rem;
+}
+
+.jj-block {
+  gap: 1.5rem;
+  padding: 2rem 0;
+  border-bottom: 1px solid #f0e9f5; /* subtle divider like Fitness */
+}
+
+.jj-block:last-of-type {
+  border-bottom: 0;
+}
+
+.jj-heading {
+  font-size: clamp(1.25rem, 1.05rem + 1vw, 1.75rem);
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+.jj-subheading {
+  font-size: 1.05rem;
+  margin: 1rem 0 0.5rem;
+  font-weight: 600;
+}
+
+.jj-img {
+  border-radius: 16px;
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+/* Carousel chrome to match Fitness look */
+.jj-carousel {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+.jj-carousel .carousel-indicators {
+  margin-bottom: 0.5rem;
+}
+
+.jj-carousel .carousel-indicators [data-bs-target] {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  opacity: 0.5;
+}
+
+.jj-carousel .carousel-indicators .active {
+  opacity: 1;
+}
+
+/* Larger, comfy arrows (Bootstrap icons are auto-styled) */
+.jj-carousel .carousel-control-prev,
+.jj-carousel .carousel-control-next {
+  width: 12%;
+}
+
+/* Spacing/tweaks for mobile-first readability */
+@media (max-width: 767.98px) {
+  .jj-music {
+    padding: 2rem 0 1rem;
+  }
+  .jj-block {
+    padding: 1.5rem 0;
+  }
+  /* Ensure text appears before media on mobile, regardless of flip */
+  /* We already used order classes in HTML to enforce this */
+}
+
+/* Optional: reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  .carousel-item {
+    transition: none !important;
+  }
+}
+
+/* Optional: tighten paragraph measure for large screens */
+@media (min-width: 992px) {
+  #music-journey .col-md-6:first-child p {
+    max-width: 56ch;
+  }
+}
+
+.jj-signoff {
+  margin-top: 0.75rem;
+  font-style: italic;
+}
 
 
 /* Footer */
