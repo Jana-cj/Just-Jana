@@ -1193,6 +1193,18 @@ body {
   max-width: 250px;
 }
 
+.carousel-dots {
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.carousel-dots [data-bs-target] {
+  background-color: #bcb7b9;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
 .fitnesswhy {
   font-size: 2rem;
   margin-bottom: 2rem;
