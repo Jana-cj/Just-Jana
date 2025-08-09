@@ -1246,18 +1246,6 @@ body {
   }
 }
 
-.centered-block.no-image {
-  flex-direction: column !important;
-  justify-content: center;
-  text-align: center;
-}
-
-.centered-block.no-image .story-text {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-
 
 /* Footer */
 .site-footer {
