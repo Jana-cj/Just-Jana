@@ -582,17 +582,36 @@ body {
   background-color: #ffeaf4; /* light pink */
   border-radius: 12px; /* rounded corners */
   padding: 15px 25px; /* space inside */
-  max-width: 600px; /* optional: limit width */
+  max-width: 90%; /* shrink nicely on mobile */
   margin: 20px auto; /* center horizontally */
   text-align: center; /* center text */
   font-family: 'Poppins', sans-serif;
   color: #000; /* text color */
+  box-sizing: border-box; /* ensures padding doesn't break layout */
 }
 
 .lockscreen-text p {
   margin: 5px 0; /* small space between lines */
-  font-size: 16px;
+  font-size: 1rem; /* adjusts with root font size */
+  line-height: 1.4;
 }
+
+/* Tablet adjustments */
+@media (max-width: 768px) {
+  .lockscreen-text {
+    padding: 12px 18px;
+    font-size: 0.95rem;
+  }
+}
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+  .lockscreen-text {
+    padding: 10px 15px;
+    font-size: 0.9rem;
+  }
+}
+
 
 
 .download-text + .download-text {
