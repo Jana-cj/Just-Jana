@@ -1246,6 +1246,14 @@ body {
   }
 }
 
+/* CSS for music page */
+
+@media (max-width: 768px) {
+  .music-quote {
+    max-width: 500px;
+    height: auto;
+  }
+}
 
 /* Footer */
 .site-footer {
