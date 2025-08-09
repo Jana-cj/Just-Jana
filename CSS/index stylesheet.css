@@ -590,7 +590,7 @@ body {
 }
 
 .lockscreen-text p {
-  margin: 5px 0; /* small space between lines */
+  margin: 2px 0; /* small space between lines */
   font-size: 1rem; /* adjusts with root font size */
   line-height: 1.4;
 }
