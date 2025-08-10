@@ -16,7 +16,7 @@ body {
 
 /* Headings (site-wide) */
 h1,h2,h3{
-  font-family:'Playfair Display',serif; /* already imported */
+  font-family:'Poppins',serif; /* already imported */
 }
 
 
@@ -211,11 +211,10 @@ header {
 
 .quote-text span {
   color: #480363;
-  font-family: Georgia, serif;
+  font-family: 'Playfair Display', serif;
 }
 
 .quote-text p {
-  font-family: Verdana, sans-serif;
   margin-bottom: 1rem;
   font-size: 1rem; 
   line-height: 1.8;
@@ -234,7 +233,7 @@ header {
 
 
 .read-story-btn {
-  font-family: Verdana, sans-serif;
+  font-family: 'Poppins', sans-serif;
   color: #ffffff;
   background-color: #a86f75;
   padding: 10px 18px;
@@ -292,7 +291,6 @@ header {
 .healing-title {
   font-size: 2rem;
   margin-bottom: 2rem;
-  font-family: 'Playfair Display', serif;
   color: #4b2e2e;
 }
 
@@ -400,7 +398,6 @@ header {
   }
 
   .pillar-box p {
-    font-family: Verdana, sans-serif;
     font-size: 1rem;
     color: #333;
   }
@@ -545,7 +542,6 @@ header {
 .carousel-heading {
   font-size: 2rem;
   margin-bottom: 2rem;
-  font-family: 'Playfair Display', serif;
   color: #4b2e2e;
 }
 
