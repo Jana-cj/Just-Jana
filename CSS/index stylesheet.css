@@ -26,7 +26,7 @@ h3, h4 {
 /* UI / nav / footer locks Poppins */
 header, .navbar, .site-footer {
   font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  font-size: 16px;
+  font-size: 15.5px;
 }
 
 /* Accent headings that use Amatic */
