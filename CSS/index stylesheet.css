@@ -814,7 +814,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4rem;
+  gap: 2rem;
   margin-bottom: 4rem;
   flex-wrap: wrap;
 }
@@ -1185,31 +1185,11 @@ body {
   padding: 2rem 1rem;
 }
 
-.story-blk {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4rem;
-  margin-bottom: 4rem;
-  flex-wrap: wrap;
-}
 
-.story-txt {
- flex: 1 1 500px;
-  max-width: 700px;
-}
 
-.story-txt h2 {
-  font-size: 1.6rem;
-  font-family: 'Playfair Display', serif;
-  color: #000000;
-  margin-bottom: 1rem;
-}
 
-.story-txt p {
-  line-height: 1.8;
-  margin-bottom: 1rem;
-}
+
+
 
 .story-img {
   max-width: 250px;
@@ -1244,29 +1224,16 @@ body {
   border-radius: 10px;
 }
 
-.story-blk:nth-child(even) {
-  flex-direction: row-reverse;
-}
+
 
 @media screen and (max-width: 768px) {
-  .story-blk {
-    flex-direction: column;
-  }
-
-  .story-blk:nth-child(even) {
-    flex-direction: column;
-  }
-
-  .story-txt,
+  
+  
   .story-img {
     padding: 0.5rem;
   }
 
-  .story-txt h2 {
-    font-size: 1.4rem;
-    text-align: center;
   }
-}
 
 /* CSS for music page */
 
