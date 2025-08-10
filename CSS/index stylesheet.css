@@ -16,11 +16,11 @@ body {
 
 /* Headings (site-wide) */
 h1,h2,h3{
-  font-family:'Poppins',serif;
+  font-family:'Playfair Display',sans-serif;
 }
 
 p{
-  font-family: 'Poppins', serif;
+  font-family: 'Lato', sans-serif;
 }
 
 /* CSS for nav bar */
@@ -216,7 +216,6 @@ header {
   }
 
 .quote-text p {
-  font-family: 'Poppins' serif;
   margin-bottom: 1rem;
   font-size: 1rem; 
   line-height: 1.8;
@@ -224,7 +223,6 @@ header {
   }
 
 .quote-text p em {
-  font-family: Georgia, serif;
   margin-bottom: 1rem;
   font-size: 1rem; 
   line-height: 1.8;
@@ -240,7 +238,6 @@ header {
 
 
 .read-story-btn {
-  font-family: 'Poppins', sans-serif;
   color: #ffffff;
   background-color: #a86f75;
   padding: 10px 18px;
@@ -374,7 +371,6 @@ header {
 }
 
 .pillar-link h3 {
-  font-family: Georgia, serif;
   font-size: 1.3rem;
   margin-bottom: 10px;
   color: inherit;
@@ -447,7 +443,6 @@ header {
 /* diary entry section */
 /* Section Heading */
 .diary-heading {
-  font-family: 'Playfair Display', serif;
   font-size: 2rem;
   color: #4b2e2e;
 }
@@ -581,7 +576,6 @@ header {
   max-width: 500px; /* shrink nicely on mobile */
   margin: 20px auto; /* center horizontally */
   text-align: center; /* center text */
-  font-family: 'Lota', sans-serif;
   color: #a87ca0; /* text color */
   box-sizing: border-box; /* ensures padding doesn't break layout */
 }
@@ -784,7 +778,6 @@ header {
  .story-section {
   padding: 4rem 1.5rem;
   background-color: #fff;
-  font-family: 'Lora', serif;
 }
 
 .section-header {
@@ -794,20 +787,12 @@ header {
 
 .section-header h1 {
   font-size: 2.5rem;
-  font-family: 'Playfair Display', serif;
 }
 
 .subtitle {
   font-size: 1.2rem;
   color: #666;
   margin-top: 0.5rem;
-}
-
-.quote {
-  font-family: 'Great Vibes', cursive;
-  font-size: 1.6rem;
-  color: #a87474;
-  margin-top: 1.5rem;
 }
 
 .story-block {
@@ -863,7 +848,6 @@ header {
 
 .story-text h2 {
   font-size: 1.6rem;
-  font-family: 'Playfair Display', serif;
   color: #000000;
   margin-bottom: 1rem;
 }
@@ -901,7 +885,6 @@ header {
 }
 
 .closing-line {
-  font-family: Georgia, serif;
   text-align: center;
   font-size: 1.2rem;
   margin-top: 2rem;
@@ -921,14 +904,12 @@ header {
 .jana-title {
   font-size: 2rem;
   margin-bottom: 2rem;
-  font-family: 'Playfair Display', serif;
   color: #4b2e2e;
 }
 
 .jana-title em {
   font-size: 2rem;
   margin-bottom: 2rem;
-  font-family: 'Playfair Display', serif;
   color: #4b2e2e;
 }
 
@@ -983,14 +964,12 @@ header {
 .mission-title {
   font-size: 2rem;
   margin-bottom: 2rem;
-  font-family: 'Playfair Display', serif;
   color: #4b2e2e;
 }
 
 .values-title {
   font-size: 2rem;
   margin-bottom: 2rem;
-  font-family: 'Playfair Display', serif;
   color: #4b2e2e;
 }
 
@@ -1002,7 +981,6 @@ header {
     }
 
     h1 {
-      font-family: 'Playfair Display', serif;
       font-size: 2.8rem;
       text-align: center;
       margin-bottom: 2rem;
@@ -1025,7 +1003,6 @@ header {
     }
 
     ul.values-list p.values-list-titles {
-  font-family: 'Playfair Display', serif !important;
   font-size: 1.4rem;
   color: #272626;
   margin-bottom: 2rem;
@@ -1145,13 +1122,11 @@ header {
 .fitnesswhy {
   font-size: 2rem;
   margin-bottom: 2rem;
-  font-family: 'Playfair Display', serif;
   color: #4b2e2e;
 }
 
 .fitnessmsg {
   font-size: 1.4rem;
-  font-family: 'Playfair Display', serif;
   color: #4b2e2e;
 }
 
