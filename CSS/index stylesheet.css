@@ -57,6 +57,12 @@ header {
   align-items: center;
 }
 
+/* Space between the logo and the first navbar item */
+.navbar a.Just {
+  margin-right: 2rem; /* Adjust the rem value as needed */
+}
+
+
 .dropdown-menu {
   box-shadow:0 0 10px rgba(0,0,0,.1);
   border:0;
