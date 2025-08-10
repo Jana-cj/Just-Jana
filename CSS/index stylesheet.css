@@ -16,11 +16,11 @@ body {
 
 /* Headings (site-wide) */
 h1,h2,h3{
-  font-family:'Playfair Display',serif;
+  font-family:'Poppins',sans-serif;
 }
 
 p{
-  font-family: 'Lato', sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 /* CSS for nav bar */
