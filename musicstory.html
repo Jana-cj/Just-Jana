@@ -15,10 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Lato:wght@400;500;700&family=Poppins:wght@400;500;600&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <!-- Bootstrap JS Bundle (includes Popper) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
-
-
+    
     <!-- Title of document -->
     <title>Music | Jana's Music Journey</title>
 
@@ -38,123 +35,113 @@
     <header>
       
       <!-- Navigation Bar -->
-      <nav class="navbar navbar-expand-xl bg-transparent text-dark">
-        <div class="container-fluid">
-          
-          <a class="Just Jana" href="index.html">
-            <img src="img/logohanddrawnbw.png" alt="Logo" width="47" height="40" class="d-inline-block align-text-top">
+      <nav class="navbar navbar-expand-xl navbar-light bg-transparent text-dark">
+  <div class="container-fluid">
+
+    <a class="Just Jana" href="index.html">
+      <img src="img/logohanddrawnbw.png" alt="Logo" width="47" height="40" class="d-inline-block align-text-top">
+    </a>
+
+    <button class="navbar-toggler" type="button"
+            data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+
+        <!-- About -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="ddAbout" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            About
           </a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          
-         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="index.html">Home</a>
-                        </li>
-              
+          <ul class="dropdown-menu" aria-labelledby="ddAbout">
+            <li><a class="dropdown-item" href="janasstory.html">Jana's Story</a></li>
+            <li><a class="dropdown-item" href="missionvalues.html">Mission & Values</a></li>
+          </ul>
+        </li>
 
-              
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#about" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  About
-                </span></a>
-                
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="janasstory.html">Jana's Story</a></li> 
-                  <li><a class="dropdown-item" href="missionvalues.html">Mission & Values</a></li>
-                </ul>
-              </li>
-             
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#about" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Fitness
-                </span></a>
-               
+        <!-- Fitness -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="ddFitness" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Fitness
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="ddFitness">
+            <li><a class="dropdown-item" href="fitnessstory.html">Jana's Fitness Journey</a></li>
+            <li><a class="dropdown-item" href="#Countryid">Programs</a></li>
+            <li><a class="dropdown-item" href="#Countryid">Body Composition</a></li>
+          </ul>
+        </li>
 
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="fitnessstory.html">Jana's Fitness Journey</a></li> 
-                  <li><a class="dropdown-item" href="#Countryid">Programs</a></li>
-                  <li><a class="dropdown-item" href="#Countryid">Body Composition</a></li>
-                </ul>
-              </li>
-              
-            
+        <!-- Music -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="ddMusic" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <span style="color:rgb(251, 194, 147)">Music</span>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="ddMusic">
+            <li><a class="dropdown-item" href="musicstory.html">Jana's Music Journey</a></li>
+            <li><a class="dropdown-item" href="#Countryid">Healing Compositions</a></li>
+            <li><a class="dropdown-item" href="#Countryid">Behind the Music</a></li>
+          </ul>
+        </li>
 
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#about" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><span style = "color:rgb(251, 194, 147)">
-                  Music
-                </span></a>
-               
+        <!-- Health & Wellness -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="ddWellness" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Health & Wellness
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="ddWellness">
+            <li><a class="dropdown-item" href="#Classicalid">Nutrition</a></li>
+            <li><a class="dropdown-item" href="#Countryid">Sleep & Recovery</a></li>
+            <li><a class="dropdown-item" href="#Countryid">Natural Beauty</a></li>
+            <li><a class="dropdown-item" href="#Countryid">Conscious Choices</a></li>
+          </ul>
+        </li>
 
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="musicstory.html">Jana's Music Journey</a></li> 
-                  <li><a class="dropdown-item" href="#Countryid">Healing Compositions</a></li>
-                  <li><a class="dropdown-item" href="#Countryid">Behind the Music</a></li>
-                </ul>
-              </li>
+        <!-- Mental Health -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="ddMental" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Mental Health
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="ddMental">
+            <li><a class="dropdown-item" href="#Classicalid">Emotional Survival: Jana's Story</a></li>
+            <li><a class="dropdown-item" href="#Countryid">Navigating Toxic Relationships</a></li>
+            <li><a class="dropdown-item" href="#Countryid">Breaking the Silence (taboos)</a></li>
+            <li><a class="dropdown-item" href="#Countryid">For My Brown Sisters</a></li>
+            <li><a class="dropdown-item" href="#Countryid">Mental Health in Sport</a></li>
+            <li><a class="dropdown-item" href="#Countryid">Healing Toolkit</a></li>
+          </ul>
+        </li>
 
-
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#about" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Health & Wellness
-                </a>
-               
-
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="#Classicalid">Nutrition</a></li> 
-                  <li><a class="dropdown-item" href="#Countryid">Sleep & Recovery</a></li>
-                  <li><a class="dropdown-item" href="#Countryid">Natural Beauty</a></li>
-                  <li><a class="dropdown-item" href="#Countryid">Conscious Choices</a></li>
-                </ul>
-              </li>
-
-
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#about" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Mental Health
-                </a>
-               
-
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="#Classicalid">Emotional Survival: Jana's Story</a></li> 
-                  <li><a class="dropdown-item" href="#Countryid">Navigating Toxic Relationships</a></li> 
-                  <li><a class="dropdown-item" href="#Countryid">Breaking the Silence (taboos)</a></li>
-                  <li><a class="dropdown-item" href="#Countryid">For My Brown Sisters</a></li>
-                  <li><a class="dropdown-item" href="#Countryid">Mental Health in Sport</a></li>
-                  <li><a class="dropdown-item" href="#Countryid">Healing Toolkit</a></li>
-                </ul>
-              </li>
-
-             
-              
-              
-
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#about" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Brown Girl Diaries
-                </a>
-               
-
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="#Classicalid">Unlearn and Reclaim</a></li> 
-                  <li><a class="dropdown-item" href="#Countryid">Healing the Inner Child</a></li>
-                  <li><a class="dropdown-item" href="#Countryid">Mindful Strength</a></li>
-                  <li><a class="dropdown-item" href="#Countryid">From Surviving to Thriving</a></li>
-                  <li><a class="dropdown-item" href="#Countryid">Letters to My Brown Sisters</a></li>
-                </ul>
-              </li>
-
-            
-              <form class="d-flex ms-4">
-                <input class="form-control me-2" type=" search" aria-label="Search">
-                <button class="btn btn-light" type="submit">Search</button>
-              </form>
-              
+        <!-- Brown Girl Diaries -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="ddDiaries" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Brown Girl Diaries
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="ddDiaries">
+            <li><a class="dropdown-item" href="#Classicalid">Unlearn and Reclaim</a></li>
+            <li><a class="dropdown-item" href="#Countryid">Healing the Inner Child</a></li>
+            <li><a class="dropdown-item" href="#Countryid">Mindful Strength</a></li>
+            <li><a class="dropdown-item" href="#Countryid">From Surviving to Thriving</a></li>
+            <li><a class="dropdown-item" href="#Countryid">Letters to My Brown Sisters</a></li>
+          </ul>
+        </li>
       </ul>
-    </nav>
+
+      <form class="d-flex ms-4">
+        <input class="form-control me-2" type="search" aria-label="Search">
+        <button class="btn btn-light" type="submit">Search</button>
+      </form>
+    </div> <!-- /.collapse -->
+  </div> <!-- /.container-fluid -->
+</nav>
+
             
             
         </div>
