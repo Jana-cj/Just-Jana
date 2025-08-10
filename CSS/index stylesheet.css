@@ -202,7 +202,6 @@ header {
 }
 
 .quote-text h2 {
-  font-family: Georgia, serif;
   font-size: 1.3rem;
   font-weight: 400;
   margin-top: 1.5rem;
@@ -215,13 +214,19 @@ header {
 }
 
 .quote-text p {
+  font-family: Georgia, serif;
   margin-bottom: 1rem;
   font-size: 1rem; 
   line-height: 1.8;
+  color: #333;
   }
 
 .quote-text p em {
-  font-family: Verdana, sans-serif;
+  font-family: Georgia, serif;
+  margin-bottom: 1rem;
+  font-size: 1rem; 
+  line-height: 1.8;
+  color: #333;
 }
 
 .quote-text .welcome-home {
