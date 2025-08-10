@@ -18,7 +18,7 @@ body {
 /* Headings */
 h1, h2 {
   font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
-  color: #66393d;
+  color: #4b2e2e;
 }
 h3, h4 {
   font-family: 'Lato', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
@@ -316,7 +316,6 @@ header {
 .healing-title {
   font-size: 2rem;
   margin-bottom: 2rem;
-  color: #4b2e2e;
 }
 
   .healing-pillars {
@@ -465,7 +464,6 @@ header {
 /* Section Heading */
 .diary-heading {
   font-size: 2rem;
-  color: #4b2e2e;
 }
 
 /* Scroll container */
@@ -564,7 +562,6 @@ header {
 .carousel-heading {
   font-size: 2rem;
   margin-bottom: 2rem;
-  color: #4b2e2e;
 }
 
 .carousel-img {
@@ -651,7 +648,6 @@ header {
 .freebies-heading {
   font-size: 2rem;
   margin-bottom: 2rem;
-  color: #4b2e2e;
 }
 
 .filter-btns .btn {
