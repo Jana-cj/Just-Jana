@@ -7,7 +7,7 @@
 
 /* Typography */
 body {
-  font-family: 'Poppins', serif;
+  font-family: 'Lora', serif;
   background: white;
   color: #111;
   text-align: center;
@@ -66,8 +66,7 @@ header {
   display: block;     
   margin: 0;          
   padding: 0;
-  display: block;
-  }
+}
 
 /* Mobile hero background and layout */
 .hero-mobile {
@@ -714,14 +713,7 @@ header {
 
 /* CSS for janasstory.html */
 
-.desktop-hero {
-  max-width: 100%;      
-  height: auto;       
-  display: block;     
-  margin: 0;          
-  padding: 0;
-  display: block;
-}
+
 
 /* Default: Hide on desktop */
 .mobile-banner {
@@ -769,10 +761,7 @@ header {
     height: auto;
   }
 
-  .desktop-hero {
-    display: none;
-  }
-
+  
   .carousel-control-prev,
   .carousel-control-next {
     display: none;
