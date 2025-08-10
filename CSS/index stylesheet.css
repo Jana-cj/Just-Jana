@@ -1156,6 +1156,10 @@ body {
   }
 }
 
+.story-nb {
+  max-width: 350px;
+}
+
 
 .fitness-story {
   max-width: 1100px;
