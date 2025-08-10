@@ -1157,7 +1157,25 @@ body {
 }
 
 .story-nb {
-  max-width: 350px;
+  max-width: 300px;
+}
+
+.story-nb img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.story-nb .carousel-inner img {
+  border-radius: 10px;
+  max-height: 300px;
+  object-fit: cover;
+}
+
+@media (max-width: 768px) {
+.story-nb {
+    padding: 0.5rem;
+  }
 }
 
 
