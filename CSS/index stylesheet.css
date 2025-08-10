@@ -16,9 +16,12 @@ body {
 
 /* Headings (site-wide) */
 h1,h2,h3{
-  font-family:'Georgia',serif; /* already imported */
+  font-family:'Playfair Display',serif;
 }
 
+p{
+  font-family: 'Lato', sans-serif;
+}
 
 /* CSS for nav bar */
 
@@ -230,7 +233,7 @@ header {
 }
 
 .quote-text .welcome-home {
-  font-family: Verdana, sans-serif;
+  
   font-size: 1.1rem;
   font-weight: 300;
   margin-top: 20px;
