@@ -1243,20 +1243,25 @@ header {
 }
 
 .music-links {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  flex-wrap: nowrap;
-  width: 100%;
-  max-width: 400px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: nowrap; /* keep left & right in the same row */
+}
+
+.music-left,
+.music-right {
+    flex: 0 0 48%; /* two equal columns */
 }
 
 .music-left a,
 .music-right a {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem; /* consistent spacing between icon and text */
-  min-width: max-content; /* prevents wrapping */
+    min-width: 0; /* allow shrinking */
+    white-space: nowrap; /* keep text from wrapping oddly */
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 
