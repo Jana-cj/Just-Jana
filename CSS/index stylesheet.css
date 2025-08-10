@@ -193,8 +193,6 @@ header {
   display:flex; 
   justify-content:flex-start; 
   padding-top:2rem; 
-  padding-left: 2rem;
-  padding-right: 2rem;
   position:relative; 
   z-index:1; }
 
@@ -1176,7 +1174,6 @@ header {
   background-color: #fff6ff;
   color: #333;
   padding: 2rem;
-  font-family: 'Poppins', sans-serif;
   text-align: center;
 }
 
@@ -1250,16 +1247,17 @@ header {
   gap: 2rem;
   flex-wrap: nowrap;
   width: 100%;
-  max-width: 400px;
 }
 
 .music-left a,
 .music-right a {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 0.5rem; /* consistent spacing between icon and text */
-  min-width: max-content; /* prevents wrapping */
+  gap: 0.5rem;
+  min-width: 0;              /* allow shrinking */
+  white-space: nowrap;       /* optional: keep text on one line */
 }
+
 
 
 /* Responsive mobile adjustments */
@@ -1275,6 +1273,8 @@ header {
     padding-bottom: 1rem;
     padding-top: 1rem;
     margin: 1rem 0;
+    gap: 0.75rem 0.9rem;
+
   }
 
   .footer-column.music-column {
@@ -1301,19 +1301,7 @@ header {
     margin:  0.3rem 1rem 0.3rem 0;
   }
 
-  .music-links {
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 2rem;
-    flex-wrap: wrap;
-  }
-
-  .music-left,
-  .music-right {
-    flex: 1;
-  }
-
-  .horizontal-links .link-group {
+   .horizontal-links .link-group {
     display: flex;
     justify-content: center;
     gap: 2rem;
@@ -1326,6 +1314,30 @@ header {
     gap: 0.5rem;
     margin: 0.3rem 0;
   }
+
+  @media (max-width: 768px) {
+  /* Music: flow like Fitness & Wellness */
+  .music-links {
+    display: flex;
+    flex-wrap: wrap;                 /* allow wrapping as one group */
+    justify-content: center;
+    gap: 0.75rem 1.25rem;            /* row / column gap */
+    width: 100%;
+  }
+
+  /* Flatten the two inner wrappers so all <a> are siblings */
+  .music-left,
+  .music-right {
+    display: contents;
+  }
+
+  /* Each link is a tidy item; 2 per row on small screens */
+  .music-links a {
+    flex: 0 1 calc(50% - 1.25rem);   /* change to 33.33% for 3 per row */
+    margin: 0;                       /* gaps control spacing */
+  }
+}
+
 }
 
 
