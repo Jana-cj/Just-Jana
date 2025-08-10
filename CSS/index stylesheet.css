@@ -1,19 +1,22 @@
-/* Reset basics */
+/* Base reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
+  }
 
+/* Typography */
 body {
-  margin: 0;
-  padding: 0;
   font-family: 'Poppins', serif;
   background: white;
   color: #111;
   text-align: center;
   line-height: 1.7;
+}
+
+/* Headings (site-wide) */
+h1,h2,h3{
+  font-family:'Playfair Display',serif; /* already imported */
 }
 
 
@@ -31,20 +34,11 @@ header {
 }
 
 .dropdown-menu {
-  display: none;
-  position: absolute;
-  top: 2.2rem;
-  left: 0;
-  background-color: #fff;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  padding: 0.5rem 0;
-  border-radius: 6px;
-  z-index: 1000;
+  box-shadow:0 0 10px rgba(0,0,0,.1);
+  border:0;
+  border-radius:6px;
 }
 
-.dropdown:hover .dropdown-menu {
-  display: block;
-}
 
 .dropdown-menu li {
   padding: 0.5rem 1rem;
@@ -58,6 +52,10 @@ header {
   color: #000000;
 }
 
+@media (hover:hover){
+  .dropdown:hover > .dropdown-menu{ display:block; }
+}
+
 /* CSS for index.html */
 
 /* Hero banner */
@@ -68,8 +66,7 @@ header {
   display: block;     
   margin: 0;          
   padding: 0;
-  object-fit: contain;  
-}
+  }
 
 /* Mobile hero background and layout */
 .hero-mobile {
@@ -168,13 +165,13 @@ header {
 
 
 
-.quote-section {
-  display: flex;
-  justify-content: left;
-  padding-top: 2rem;
-  position: relative;
-  z-index: 1;
-}
+.quote-section{ 
+  display:flex; 
+  justify-content:flex-start; 
+  padding-top:2rem; 
+  position:relative; 
+  z-index:1; }
+
 
 .quote-text {
   position: relative;
@@ -722,7 +719,6 @@ header {
   display: block;     
   margin: 0;          
   padding: 0;
-  object-fit: contain;  
   display: block;
 }
 
@@ -955,8 +951,7 @@ header {
   display: block;     
   margin: 0;          
   padding: 0;
-  object-fit: contain;  
-}
+  }
 
 /* Hide on desktop by default */
 .mobile-mission {
@@ -1021,7 +1016,7 @@ header {
 }
 
 
-    .container {
+    .container-narrow {
       max-width: 1000px;
       margin: 0 auto;
       padding: 4rem 2rem;
@@ -1066,7 +1061,7 @@ header {
       margin-bottom: 2rem;
       background: #fff5f8;
       padding: 1.5rem;
-      border-left: 5px solid #7a3e56;;
+      border-left: 5px solid #7a3e56;
       border-radius: 8px;
     }
 
@@ -1087,8 +1082,7 @@ header {
   display: block;     
   margin: 0;          
   padding: 0;
-  object-fit: contain;  
-}
+ }
 
 /* Hide on desktop */
 .mobile-fitness {
