@@ -953,23 +953,10 @@ header {
   padding: 0;
   }
 
-/* Hide on desktop by default */
-.mobile-mission {
-  display: none;
-}
 
 /* Show only on mobile */
 @media (max-width: 768px) {
-  .mobile-mission {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(to right, #fff8d0, #ffe3e5, #ffcef9);
-    padding: 3rem 1rem;
-    text-align: center;
-  }
-
+  
   .mission-logo {
     max-width: 65px;
     max-height: 70px;
@@ -989,13 +976,14 @@ header {
   .missionbanner {
     display: none;
   }
-
+  
   h1 {
-        font-size: 2rem;
-      }
-      .section h2 {
-        font-size: 1.5rem;
-      }
+    font-size: 2rem;
+  }
+  
+  .section h2 {
+    font-size: 1.5rem;
+  }
 }
 
 
