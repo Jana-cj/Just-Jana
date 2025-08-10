@@ -126,7 +126,7 @@ header {
 }
 
 .subheading {
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-family: 'Amatic SC', cursive;
   color: #444;
 }
@@ -213,8 +213,7 @@ header {
 
 .quote-text span {
   color: #480363;
-  font-family: Georgia, serif;
-}
+  }
 
 .quote-text p {
   font-family: Georgia, serif;
@@ -400,7 +399,6 @@ header {
 }
 
   .pillar-box h3 {
-    font-family: Georgia, serif;
     font-size: 1.3rem;
     margin-bottom: 10px;
   }
@@ -583,7 +581,7 @@ header {
   max-width: 500px; /* shrink nicely on mobile */
   margin: 20px auto; /* center horizontally */
   text-align: center; /* center text */
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Lota', sans-serif;
   color: #a87ca0; /* text color */
   box-sizing: border-box; /* ensures padding doesn't break layout */
 }
@@ -638,7 +636,6 @@ header {
 .freebies-heading {
   font-size: 2rem;
   margin-bottom: 2rem;
-  font-family: 'Playfair Display', serif;
   color: #4b2e2e;
 }
 
