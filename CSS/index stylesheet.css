@@ -16,11 +16,11 @@ body {
 
 /* Headings (site-wide) */
 h1,h2,h3{
-  font-family:'Poppins',sans-serif;
+  font-family:'Poppins',serif;
 }
 
 p{
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Poppins', serif;
 }
 
 /* CSS for nav bar */
@@ -216,7 +216,7 @@ header {
   }
 
 .quote-text p {
-  font-family: Georgia, serif;
+  font-family: 'Poppins' serif;
   margin-bottom: 1rem;
   font-size: 1rem; 
   line-height: 1.8;
