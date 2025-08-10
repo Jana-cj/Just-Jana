@@ -193,6 +193,8 @@ header {
   display:flex; 
   justify-content:flex-start; 
   padding-top:2rem; 
+  padding-left: 2rem;
+  padding-right: 2rem;
   position:relative; 
   z-index:1; }
 
@@ -219,7 +221,6 @@ header {
   height: 100%;
   text-align: center;
   background: #fdf4f1;
-  padding:2rem;
   transform: rotate(-2deg) skew(-2deg);
   z-index: -2;
   border-radius: 30px;
