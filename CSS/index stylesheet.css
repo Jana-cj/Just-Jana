@@ -219,6 +219,7 @@ header {
   height: 100%;
   text-align: center;
   background: #fdf4f1;
+  padding:2rem;
   transform: rotate(-2deg) skew(-2deg);
   z-index: -2;
   border-radius: 30px;
