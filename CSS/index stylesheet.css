@@ -260,10 +260,16 @@ header {
 
 .quote-text .welcome-home {
   
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: 300;
   margin-top: 20px;
-  font-family: 'Playfair Display', serif;
+}
+
+.quote-text .belong-text {
+  
+  font-size: 1rem;
+  font-weight: 250;
+  margin-top: 20px;
 }
 
 
