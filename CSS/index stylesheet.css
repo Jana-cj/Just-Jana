@@ -1169,7 +1169,7 @@ header {
 
 
 /* Responsive mobile adjustments */
-@media (max-width: 768px) {
+@media (max-width: 480px) {
   .footer-container {
     flex-direction: column;
     gap: 2rem;
