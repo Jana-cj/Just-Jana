@@ -44,7 +44,7 @@ header, .navbar {
   p{font-size: 16px;}
 }
 
-/* CSS for nav bar */
+/* Nav bar */
 
 header {
   background: #ffffff;
@@ -57,9 +57,8 @@ header {
   align-items: center;
 }
 
-/* Space between the logo and the first navbar item */
 .navbar a.Just {
-  margin-right: 1rem; /* Adjust the rem value as needed */
+  margin-right: 1rem; 
 }
 
 
@@ -86,7 +85,7 @@ header {
   .dropdown:hover > .dropdown-menu{ display:block; }
 }
 
-/* CSS for index.html */
+/* index.html */
 
 /* Hero banner */
 
@@ -100,7 +99,7 @@ header {
 
 /* Mobile hero background and layout */
 .hero-mobile {
-  display: none; /* hidden by default */
+  display: none; 
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -138,7 +137,7 @@ header {
 }
 
 
-/*  Welcome section */
+/* Welcome section */
 
 .welcome-section {
   padding: 2rem;
@@ -154,7 +153,6 @@ header {
 
 .subheading {
   font-size: 2.5rem;
-  font-family: 'Amatic SC', cursive;
   color: #444;
 }
 
@@ -192,8 +190,6 @@ header {
   margin-top: 1rem;
   
 }
-
-
 
 .quote-section{ 
   display:flex; 
@@ -261,7 +257,7 @@ header {
   font-size: 1.1rem;
   font-weight: 300;
   margin-top: 20px;
-  font-family: 'Playfair Display' serif;
+  font-family: 'Playfair Display', serif;
 }
 
 
@@ -293,11 +289,11 @@ header {
   }
   
   .profile-image {
-    width: 180px;   /* Increased size */
+    width: 180px;   
     height: 180px;
     object-fit: cover;
     border-radius: 50%;
-    margin-bottom: 1.5rem; /* Optional spacing tweak */
+    margin-bottom: 1.5rem; 
   }
 
   .profile-section {
@@ -318,7 +314,7 @@ header {
   }
 }
 
-/* healing pillars section */
+/* Healing pillars section */
 
 .healing-title {
   font-size: 2rem;
@@ -333,8 +329,6 @@ header {
     padding: 0;
     margin: 0 auto;
     width: 100%;
-       
-    
   }
 
   
@@ -468,7 +462,7 @@ header {
 }
 
 /* diary entry section */
-/* Section Heading */
+
 .diary-heading {
   font-size: 2rem;
 }
@@ -559,7 +553,7 @@ header {
 }
 
 
-/* carousel section */
+/* Carousel section */
 
 .carousel-section {
   padding: 3rem 1rem;
@@ -595,19 +589,19 @@ header {
 }
 
 .lockscreen-text {
-  background-color: #fff7f6; /* light pink */
-  border-radius: 12px; /* rounded corners */
-  padding: 15px 25px; /* space inside */
-  max-width: 500px; /* shrink nicely on mobile */
-  margin: 20px auto; /* center horizontally */
-  text-align: center; /* center text */
-  color: #a87ca0; /* text color */
-  box-sizing: border-box; /* ensures padding doesn't break layout */
+  background-color: #fff7f6; 
+  border-radius: 12px; 
+  padding: 15px 25px; 
+  max-width: 500px; 
+  margin: 20px auto; 
+  text-align: center; 
+  color: #a87ca0; 
+  box-sizing: border-box; 
 }
 
 .lockscreen-text p {
-  margin: 2px 0; /* small space between lines */
-  font-size: 1rem; /* adjusts with root font size */
+  margin: 2px 0; 
+  font-size: 1rem; 
   line-height: 1.4;
 }
 
@@ -626,8 +620,6 @@ header {
     font-size: 0.9rem;
   }
 }
-
-
 
 .download-text + .download-text {
   margin-top: 0.3rem;
@@ -732,72 +724,11 @@ header {
 
 /* CSS for janasstory.html */
 
-
-
 /* Default: Hide on desktop */
 .mobile-banner {
   display: none;
 }
 
-/* Show only on screens <=768px */
-@media (max-width: 768px) {
-  .mobile-banner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: linear-gradient(to right, #fff8d0, #ffe3e5, #ffcef9);
-    padding: 2rem 1rem;
-    text-align: center;
-  }
-
-  .title-img {
-    max-width: 70%;
-    margin-bottom: 1rem;
-  }
-
-  .sub {
-    font-family: 'Amatic SC', cursive;
-    font-size: 2rem;
-    line-height: 1.3;
-    color: #333;
-  }
-
-  .profile-img {
-    width: 130px;
-    height: 130px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin-bottom: 1rem;
-  }
-
-  .name-img {
-    width: 200px;
-    margin-bottom: 2rem;
-  }
-
-  .quote-img {
-    width: 390px;
-    height: auto;
-  }
-
-  
-  .carousel-control-prev,
-  .carousel-control-next {
-    display: none;
-  }
-
-  .story-text,
-  .story-text-block {
-    padding: 0 1.5rem;
-  }
-
-  .story-text p {
-  line-height: 1.7;
-  margin-bottom: 1rem;
-}
-
-  
-}
 
  .story-section {
   padding: 4rem 1.5rem;
@@ -866,10 +797,6 @@ header {
   border-radius: 8px;
 }
 
-
-
-
-
 .story-text h2 {
   font-size: 1.6rem;
   color: #000000;
@@ -937,53 +864,64 @@ header {
   color: #4b2e2e;
 }
 
-
-
-/* CSS for missionvalues.html */
-
-.missionbanner {
-  max-width: 100%;      
-  height: auto;       
-  display: block;     
-  margin: 0;          
-  padding: 0;
+/* Show only on screens <=768px */
+@media (max-width: 768px) {
+  .mobile-banner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(to right, #fff8d0, #ffe3e5, #ffcef9);
+    padding: 2rem 1rem;
+    text-align: center;
   }
 
-
-/* Show only on mobile */
-@media (max-width: 768px) {
-  
-  .mission-logo {
-    max-width: 65px;
-    max-height: 70px;
+  .title-img {
+    max-width: 70%;
     margin-bottom: 1rem;
   }
 
-  .mission-text {
-    max-width: 100px;
+  
+  .profile-img {
+    width: 130px;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+  }
+
+  .name-img {
+    width: 200px;
     margin-bottom: 2rem;
   }
 
-  .mission-title {
-    max-width: 350px;
-    margin-bottom: 1rem;
+  .quote-img {
+    width: 390px;
+    height: auto;
   }
 
-  .missionbanner {
+  
+  .carousel-control-prev,
+  .carousel-control-next {
     display: none;
   }
-  
-  h1 {
-    font-size: 2rem;
+
+  .story-text,
+  .story-text-block {
+    padding: 0 1.5rem;
   }
+
+  .story-text p {
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
   
-  .section h2 {
-    font-size: 1.5rem;
-  }
 }
 
 
 
+
+/* CSS for missionvalues.html */
 
 .mission-title {
   font-size: 2rem;
@@ -1052,72 +990,39 @@ header {
       margin-bottom: 0.5rem;
     }
 
+/* Show only on mobile */
+@media (max-width: 768px) {
+  
+  .mission-logo {
+    max-width: 65px;
+    max-height: 70px;
+    margin-bottom: 1rem;
+  }
+
+  .mission-text {
+    max-width: 100px;
+    margin-bottom: 2rem;
+  }
+
+  .mission-title {
+    max-width: 70%;
+    margin-bottom: 1rem;
+  }
+
+  
+  h1 {
+    font-size: 2rem;
+  }
+  
+  .section h2 {
+    font-size: 1.5rem;
+  }
+}
     
 
 /* CSS for fitness page    */
 
-.fitnessbanner {
-  max-width: 100%;      
-  height: auto;       
-  display: block;     
-  margin: 0;          
-  padding: 0;
- }
-
-/* Hide on desktop */
-.mobile-fitness {
-  display: none;
-}
-
-/* Show only on mobile */
-@media (max-width: 768px) {
-  .mobile-fitness {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: linear-gradient(to right, #fff8d0, #ffe3e5, #ffcef9);
-    padding: 3rem 1rem;
-    text-align: center;
-  }
-
-  .fitness-title {
-    max-width: 70%;
-    margin-bottom: 2rem;
-  }
-
-  .underheading {
-    font-family: 'Amatic SC', cursive;
-    font-size: 2rem;
-    line-height: 1.3;
-    color: #333;
-  }
-
-  .fitness-pic {
-    width: 130px;
-    height: 130px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin-bottom: 2rem;
-  }
-
-  .fitness-quote {
-    max-width: 400px;
-    height: auto;
-  }
-
-  .fitnessbanner {
-    display: none;
-  }
-
-  .story-nb {
-    padding: 0.5rem;
-  }
-
  
-}
-
-
-
 .story-nb {
   max-width: 300px;
 }
@@ -1163,8 +1068,55 @@ header {
 }
 
 
+/* Hide on desktop */
+.mobile-fitness {
+  display: none;
+}
 
+/* Show only on mobile */
+@media (max-width: 768px) {
+  .mobile-fitness {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(to right, #fff8d0, #ffe3e5, #ffcef9);
+    padding: 3rem 1rem;
+    text-align: center;
+  }
 
+  .fitness-title {
+    max-width: 70%;
+    margin-bottom: 2rem;
+  }
+
+  .underheading {
+    font-family: 'Amatic SC', cursive;
+    font-size: 2rem;
+    line-height: 1.3;
+    color: #333;
+  }
+
+  .fitness-pic {
+    width: 130px;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 2rem;
+  }
+
+  .fitness-quote {
+    max-width: 400px;
+    height: auto;
+  }
+
+  
+
+  .story-nb {
+    padding: 0.5rem;
+  }
+
+ 
+}
 
 
 /* CSS for music page */
