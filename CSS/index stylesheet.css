@@ -279,7 +279,13 @@ header {
   text-decoration: none;
 }
 
-
+@media (max-width: 768px) {
+  
+  .subheading {
+  font-size: 25px;
+  color: #444;
+}
+}
 @media (min-width: 800px) {
   .content-container {
     flex-direction: row;
@@ -301,10 +307,6 @@ header {
     text-align: center;
   }
 
-  .subheading {
-  font-size: 25px;
-  color: #444;
-}
 
   .quote-section {
     flex: 2;
