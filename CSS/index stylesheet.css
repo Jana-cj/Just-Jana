@@ -1229,20 +1229,22 @@ header {
     margin: 0;
   }
 
-  /* Music: flow like Fitness & Wellness */
-  .music-links {
-    display: flex;
-    flex-wrap: wrap;                 /* allow wrapping as one group */
-    column-gap: 1.25rem; /* horizontal gap */
-    row-gap: 0.75rem;    /* vertical gap between rows */    
-    width: 100%;
-  }
+ /* Music: match the column gap style of Just Jana & Fitness & Wellness */
+.music-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem; /* horizontal gap between columns */
+  width: 100%;
+}
 
-  /* Flatten the two inner wrappers so all <a> are siblings */
-  .music-left,
-  .music-right {
-    display: contents;
-  }
+.music-left,
+.music-right {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem; /* vertical space between links inside a column */
+}
+
 
   /* Each link is a tidy item; 2 per row on small screens */
   .music-links a {
