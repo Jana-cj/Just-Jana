@@ -1098,6 +1098,10 @@ header {
   text-align: center;
 }
 
+.footer-heading h3 {
+font-family: 'Playfair Display', serif;
+}
+
 .footer-container {
   display: flex;
   flex-wrap: wrap;
