@@ -30,7 +30,7 @@ header, .navbar, .site-footer {
   font-size: 15.5px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 780px) {
   .site-footer {
     font-size: 15px;
   }
