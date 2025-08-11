@@ -1092,7 +1092,7 @@ header {
 
 /* Footer */
 .site-footer {
-  background-color: #fff6ff;
+  background: linear-gradient(45deg, #cc5b90, #80397c);
   color: #333;
   padding: 2rem;
   text-align: center;
