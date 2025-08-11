@@ -30,6 +30,12 @@ header, .navbar, .site-footer {
   font-size: 15.5px;
 }
 
+@media (max-width: 768px) {
+  .site-footer {
+    font-size: 15px;
+  }
+}
+
 /* Accent headings that use Amatic */
 .subheading,
 .underheading {
@@ -1169,7 +1175,7 @@ header {
 
 
 /* Responsive mobile adjustments */
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   .footer-container {
     flex-direction: column;
     gap: 2rem;
