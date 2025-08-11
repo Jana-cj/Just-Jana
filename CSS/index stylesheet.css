@@ -33,6 +33,10 @@ header, .navbar, .site-footer {
 @media (max-width: 780px) {
   .site-footer {
     font-size: 15px;
+
+  .footer-heading h3 {
+    font-size: 20px;
+}
   }
 }
 
@@ -323,7 +327,6 @@ header {
 
   .quote-section {
     flex: 2;
-    padding: 2rem;
   }
 
   .quote-text {
