@@ -744,7 +744,7 @@ header {
   font-size: 2.5rem;
 }
 
-.subtitle {
+.underheading {
   font-size: 1.2rem;
   color: #666;
   margin-top: 0.5rem;
@@ -880,6 +880,9 @@ header {
     margin-bottom: 1rem;
   }
 
+  .underheading {
+    font-size: 12px;
+  }
   
   .profile-img {
     width: 130px;
