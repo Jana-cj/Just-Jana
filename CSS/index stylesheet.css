@@ -1054,15 +1054,6 @@ header {
 /* Show only on mobile */
 @media (max-width: 768px) {
 
-
-  .fitness-pic {
-    width: 130px;
-    height: 130px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin-bottom: 2rem;
-  }
-
   .story-nb {
     padding: 0.5rem;
   }
