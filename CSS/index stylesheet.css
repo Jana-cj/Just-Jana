@@ -211,11 +211,11 @@ header {
   font-size: 1rem;
   font-weight: 500;
   line-height: 1.8;
-  padding: 2rem;
+  padding: 2rem 4rem;
   max-width: 500px;
   z-index: 2;
   text-align: center;  
-  margin: 0 auto;
+  margin: 0 auto;   
 }
 
 .quote-text::before {
