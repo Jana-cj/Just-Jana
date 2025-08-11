@@ -301,6 +301,11 @@ header {
     text-align: center;
   }
 
+  .subheading {
+  font-size: 25px;
+  color: #444;
+}
+
   .quote-section {
     flex: 2;
     padding: 2rem;
