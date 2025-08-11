@@ -215,7 +215,6 @@ header {
   font-size: 1rem;
   font-weight: 500;
   line-height: 1.8;
-  padding: 2rem 4rem;
   max-width: 500px;
   z-index: 2;
   text-align: center;  
@@ -229,7 +228,6 @@ header {
   left: 0;
   width: 100%;
   height: 100%;
-  padding: 2rem 4rem;
   text-align: center;
   background: #fdf4f1;
   transform: rotate(-2deg) skew(-2deg);
