@@ -312,6 +312,10 @@ header {
 
   .quote-text::before {
     border-radius: 20px;   /* slightly smaller radius for mobile */
+    left: -10px;               /* stretch beyond padding */
+    right: -10px;
+    width: calc(100% + 20px);  /* fill edge to edge */
+    transform: none;           /* remove skew if you want it straight */
   }
 }
 @media (min-width: 800px) {
