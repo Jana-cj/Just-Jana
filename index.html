@@ -438,6 +438,46 @@
   </div>
   </footer>
   
+<!-- Scroll Up Button -->
+<button id="scrollUp" aria-label="Scroll to navigation" title="Back to top" hidden>↑</button>
+
+<script>
+  // Target the first <nav> on the page
+  window.__SCROLL_TARGET_SELECTOR__ = 'nav.navbar';
+
+  (function () {
+    const btn = document.getElementById('scrollUp');
+    const targetSelector = window.__SCROLL_TARGET_SELECTOR__ || 'header';
+    const targetEl = document.querySelector(targetSelector) || document.body;
+    const SHOW_AFTER = 300;
+
+    function toggleButton() {
+      if (window.scrollY > SHOW_AFTER) {
+        btn.hidden = false;
+        btn.classList.add('show');
+      } else {
+        btn.classList.remove('show');
+        if (!btn.classList.contains('show')) {
+          setTimeout(() => { if (!btn.classList.contains('show')) btn.hidden = true; }, 250);
+        }
+      }
+    }
+
+    function scrollToNav() {
+      const top = targetEl.getBoundingClientRect().top + window.pageYOffset;
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!prefersReduced && 'scrollBehavior' in document.documentElement.style) {
+        window.scrollTo({ top, behavior: 'smooth' });
+      } else {
+        window.scrollTo(0, top);
+      }
+    }
+
+    window.addEventListener('scroll', toggleButton, { passive: true });
+    window.addEventListener('load', toggleButton);
+    btn.addEventListener('click', scrollToNav, { passive: true });
+  })();
+</script>
 
 
 

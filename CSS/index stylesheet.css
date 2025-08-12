@@ -1294,3 +1294,34 @@ font-family: 'Georgia', serif;
     white-space: nowrap;
   }
 }
+
+/* Scroll Up Button Styling */
+#scrollUp {
+  position: fixed;
+  right: clamp(12px, 2vw, 20px);
+  bottom: clamp(12px, 2vw, 20px);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: rgb(255, 228, 128); /* Same gold as your nav highlight */
+  color: #000;
+  font-size: 22px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  z-index: 999;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity .25s ease, transform .25s ease;
+}
+
+#scrollUp.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+#scrollUp:hover {
+  background: rgb(245, 215, 100);
+}
+
