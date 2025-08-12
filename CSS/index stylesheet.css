@@ -1298,17 +1298,17 @@ font-family: 'Georgia', serif;
 /* Scroll Up Button Styling - Rotated ">" */
 #scrollUp {
   position: fixed;
-  right: clamp(4px, 1vw, 8px); /* closer to the right edge */
-  bottom: clamp(20px, 3vh, 30px); /* slightly higher to avoid covering content */
+  right: clamp(10px, 1.5vw, 20px); /* more to the side */
+  bottom: clamp(20px, 3vh, 30px);
   width: 42px;
   height: 42px;
   border-radius: 50%;
   border: none;
   background: linear-gradient(
     to right,
-    rgba(255, 245, 175, 0.85), /* soft gold with transparency */
-    rgba(255, 208, 211, 0.85), /* soft pink */
-    rgba(255, 173, 246, 0.85)  /* soft purple */
+    rgba(255, 245, 175, 0.6),  /* gold */
+    rgba(255, 208, 211, 0.6),  /* pink */
+    rgba(255, 173, 246, 0.6)   /* purple */
   );
   color: #000;
   font-size: 24px;
@@ -1320,8 +1320,8 @@ font-family: 'Georgia', serif;
   opacity: 0;
   transform: rotate(-90deg) translateY(10px);
   transition: opacity .25s ease, transform .25s ease, background .25s ease;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-  backdrop-filter: blur(4px); /* subtle glass effect */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  backdrop-filter: blur(3px); /* subtle blur */
 }
 
 #scrollUp.show {
@@ -1332,8 +1332,19 @@ font-family: 'Georgia', serif;
 #scrollUp:hover {
   background: linear-gradient(
     to right,
-    rgba(255, 245, 175, 1),
-    rgba(255, 208, 211, 1),
-    rgba(255, 173, 246, 1)
+    rgba(255, 245, 175, 0.85),
+    rgba(255, 208, 211, 0.85),
+    rgba(255, 173, 246, 0.85)
   );
+}
+
+/* Smaller button on mobile */
+@media (max-width: 768px) {
+  #scrollUp {
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
+    right: 8px;
+    bottom: 20px;
+  }
 }
