@@ -1321,7 +1321,7 @@ font-family: 'Georgia', serif;
   transform: rotate(-90deg) translateY(10px);
   transition: opacity .25s ease, transform .25s ease, background .25s ease;
   box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-  backdrop-filter: blur(1px); /* subtle blur for glassy look */
+  backdrop-filter: blur(0.5px); /* subtle blur for glassy look */
 }
 
 #scrollUp.show {
