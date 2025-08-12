@@ -1306,9 +1306,9 @@ font-family: 'Georgia', serif;
   border: none;
   background: linear-gradient(
     to right,
-    rgba(255, 245, 175, 0.3),  /* gold - more transparent */
-    rgba(255, 208, 211, 0.3),  /* pink - more transparent */
-    rgba(255, 173, 246, 0.3)   /* purple - more transparent */
+    rgba(255, 245, 175, 0.1),  /* gold - more transparent */
+    rgba(255, 208, 211, 0.1),  /* pink - more transparent */
+    rgba(255, 173, 246, 0.1)   /* purple - more transparent */
   );
   color: #000;
   font-size: 24px;
