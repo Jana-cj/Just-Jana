@@ -302,6 +302,17 @@ header {
   font-size: 25px;
   color: #444;
 }
+
+ .quote-text {
+    padding: 1rem;         /* less side padding for more width */
+    max-width: 100%;       /* allow it to take full width */
+    font-size: 1.05rem;    /* slightly larger text for readability */
+    line-height: 1.9;      /* improve spacing */
+  }
+
+  .quote-text::before {
+    border-radius: 20px;   /* slightly smaller radius for mobile */
+  }
 }
 @media (min-width: 800px) {
   .content-container {
