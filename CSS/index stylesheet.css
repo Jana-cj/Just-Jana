@@ -1304,7 +1304,7 @@ font-family: 'Georgia', serif;
   height: 48px;
   border-radius: 50%;
   border: none;
-  background: rgb(255, 171, 248); /* Same gold as your nav highlight */
+  background:linear-gradient(to right, #fff5af, #ffd0d3, #ffadf6);
   color: #000;
   font-size: 22px;
   display: grid;
