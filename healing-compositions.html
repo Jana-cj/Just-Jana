@@ -51,30 +51,46 @@
       letter-spacing:0.2px;
     }
 
-    .title-img{
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
 .hero .title-img{
   max-width: 400px;   /* Adjust size */
   margin: 0 auto;     /* Center it */
 }
 
-.profile-image {
-  width: 130px;
-  height: 130px;
-  object-fit: cover;
-  border-radius: 50%;
-  margin-top: 3rem;
+/* Stacked mast */
+.mast{
+  display:flex; flex-direction:column; align-items:center;
+  gap:18px;
+  margin:24px 0 26px;        /* space above the card */
+}
+
+/* Title image */
+.title-img{
+  width:min(780px, 88vw);    /* scales down on mobile */
+  height:auto; display:block;
+}
+
+/* Author block */
+.author{ display:flex; flex-direction:column; align-items:center; gap:10px; }
+.avatar{
+  width:140px; height:140px; border-radius:50%;
+  object-fit:cover;
+  border:1px solid var(--ring);
+  box-shadow: var(--shadow);
+}
+.signature{ max-width:280px; height:auto; display:block; opacity:.95; }
+.signature-text{
+  margin:2px 0 0; font-family:'Amatic SC', cursive;
+  font-size:clamp(26px,4.2vw,36px); letter-spacing:.5px; color:var(--fg);
+}
+
+/* Roomier layout on big screens */
+@media (min-width: 900px){
+  .mast{ gap:22px; margin:28px 0 30px; }
+  .avatar{ width:160px; height:160px; }
+  .signature{ max-width:320px; }
 }
 
 
-.signature {
-  width: 250px;
-  margin-top: 1rem;
-  
-}
 
     .subtitle{
       color:var(--muted); font-size:15px; margin-bottom:26px; 
@@ -89,7 +105,7 @@
       letter-spacing:0.5px; margin:0 0 6px;
       text-align: center;
     }
-    .cta-card p{ color:var(--muted); margin:0 0 8px; font-size:14px;}
+    .cta-card p{ color:var(--muted); margin:0 0 8px; font-size:14px; text-align: center}
     .links{ display:flex; flex-direction:column; gap:12px; margin-top:14px;}
     .link-btn{
       display:flex; align-items:center; gap:12px;
@@ -118,12 +134,25 @@
 </head>
 <body>
   <main class="container" role="main">
-    <section class="hero" aria-labelledby="title">
-      <!-- Swap src with your single cover -->
-       <img src="img/healing-compositions.png" alt="Healing Compositions" class="title-img"><br><br>
-      <img src="img/me.png" alt="Janani Jayalath" class="profile-image">
-              <img src="img/name.png" alt="name" class="signature"><br><br>
-    </section>
+   <!-- MAST: title image + author -->
+<section class="mast" aria-labelledby="title-image">
+  <!-- Title image -->
+  <img src="img/healing-compositions.png"
+       alt="Healing Compositions"
+       class="title-img" id="title-image">
+
+  <!-- Author -->
+  <div class="author">
+    <img src="img/me.png" alt="Janani Jayalath" class="avatar">
+    <!-- If you have a signature image, use it: -->
+    <img src="img/signature.png" alt="Janani Jayalath" class="signature">
+    <!-- Or, if you prefer text instead of a signature image, delete the line above
+         and uncomment the line below:
+    <p class="signature-text">Janani Jayalath</p>
+    -->
+  </div>
+</section>
+
 
     <section class="cta-card" aria-label="Listen">
       <h2>Listen to Featherfall</h2>
