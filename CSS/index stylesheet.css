@@ -70,7 +70,10 @@ header {
   top: 0;
   width: 100%;
   z-index: 999;
+  background-color: #ffffff; /* keep white background */
   transition: top 0.3s ease-in-out;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* optional subtle shadow */
+
 }
 
 .navbar a.Just {
