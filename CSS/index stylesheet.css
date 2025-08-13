@@ -143,7 +143,7 @@ header {
 
 /* Arrow indicator + rotate on open */
 .dropdown-submenu > a::after {
-  content: "›";
+  content: ">";
   float: right;
   margin-left: 6px;
   font-size: .8rem;
@@ -172,6 +172,12 @@ header {
 .submenu-toggle::after {
   display: none !important;
 }
+
+/* Remove Bootstrap's default caret, keep our custom one */
+.submenu-toggle.dropdown-toggle::after {
+  display: none !important; /* hides Bootstrap caret only if .dropdown-toggle */
+}
+
 
 
 
