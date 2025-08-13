@@ -64,14 +64,16 @@
     }
     .cta-card p{ color:var(--muted); margin:0 0 8px; font-size:14px;}
     .links{ display:flex; flex-direction:column; gap:12px; margin-top:14px;}
-    .link-btn{
-      display:flex; align-items:center; gap:12px;
-      width:100%; text-decoration:none; color:var(--fg);
-      padding:14px 16px; border-radius:14px; background:#1f1f25;
-      border:1px solid var(--ring);
-      transition: transform .08s ease, border-color .2s ease, background .2s ease;
-    }
-    .link-btn:hover{ transform: translateY(-2px); border-color:#4b4b56;}
+ .link-btn{
+  background:#f7f4fb;           /* light lilac/cream */
+  border:1px solid var(--ring); /* subtle border */
+  color:var(--fg);
+}
+.link-btn:hover{
+  background:#ede7f6;           /* slightly deeper lilac on hover */
+  border-color:#d2c5eb;         /* matching border */
+}
+
     .icon{
       width:22px; height:22px; display:inline-block; flex:0 0 22px;
     }
@@ -166,15 +168,16 @@
 
     <!-- Optional: embedded YouTube player for instant play -->
     <div class="embed" aria-label="Featherfall video player">
-      <iframe
-        src="https://www.youtube.com/watch?v=IaYw3IHba5o"
-        title="Featherfall by Janani"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen
-        style="width:100%; height:100%;">
-      </iframe>
-    </div>
+  <iframe
+    src="https://www.youtube.com/embed/IaYw3IHba5o?rel=0"
+    title="Featherfall by Janani"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen
+    style="width:100%; height:100%;">
+  </iframe>
+</div>
+
 
     <p class="fineprint">Trouble finding your platform? <a href="https://linktr.ee/jana.cj?fbclid=PAZXh0bgNhZW0CMTEAAafK4R9bn9O-Hb5X4g-1Cv_atYDFLES19dWZWCp25fadWN4WDCpDo67u60Ut2Q_aem_0j4P_l6jSmqR71Urpnld-Q" target="_blank" rel="noopener" style="color:var(--accent);">See all links</a>.</p>
   </main>
