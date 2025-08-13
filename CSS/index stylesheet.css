@@ -1120,13 +1120,13 @@ header {
 /* Healing Compositions */
 
 /* ---------- Base ---------- */
-/* *{ box-sizing:border-box; }
+*{ box-sizing:border-box; }
 html,body{ margin:0; padding:0; }
 body{
   font-family:'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   color:#1b1b20; background:#fff; line-height:1.6;
-  overflow-x:hidden; avoid sideways scroll from full-bleed margins */
-/* } */
+  overflow-x:hidden; /* avoid sideways scroll from full-bleed margins */
+}
 
 /* ---------- Theme tokens ---------- */
 :root{
