@@ -76,7 +76,7 @@ header {
 
 }
 
-:root { --nav-h: 72px; } /* your navbar height */
+:root { --nav-h: 80px; } /* your navbar height */
 
 #siteNav.navbar {
   position: fixed;
