@@ -50,8 +50,19 @@
       margin:10px 0 6px; font-size:clamp(28px, 5vw, 40px);
       letter-spacing:0.2px;
     }
+
+    .title-img{
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+.hero .title-img{
+  max-width: 400px;   /* Adjust size */
+  margin: 0 auto;     /* Center it */
+}
+
     .subtitle{
-      color:var(--muted); font-size:15px; margin-bottom:26px;
+      color:var(--muted); font-size:15px; margin-bottom:26px; font-family: "Playfair Display", serif;
     }
     .cta-card{
       background:var(--card); border:1px solid var(--ring);
@@ -94,7 +105,7 @@
     <section class="hero" aria-labelledby="title">
       <!-- Swap src with your single cover -->
       <img class="cover" src="img/featherfall.png" alt="Featherfall single cover art">
-      <h1 id="title">Healing Compositions</h1>
+<img src="img/healing-compositions.png" alt="Healing Compositions" class="title-img">
       <p class="subtitle">Listen to <strong>Featherfall</strong> on your favourite platform</p>
     </section>
 
