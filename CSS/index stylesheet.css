@@ -168,10 +168,7 @@ header {
   .dropdown-menu.show { display: block; } /* Bootstrap uses .show to reveal */
 }
 
-/* Remove default caret for our custom submenu links */
-.submenu-toggle::after {
-  display: none !important;
-}
+
 
 /* Remove Bootstrap's default caret, keep our custom one */
 .submenu-toggle.dropdown-toggle::after {
