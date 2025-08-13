@@ -1,42 +1,21 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="description" content="Just Jana">
-    <meta name="keywords" content="Jana's Music Story">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-    
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Music | Healing Compositions</title>
+  <meta name="description" content="Listen to Featherfall by Janani on your favourite platform." />
 
+  <!-- ONE Bootstrap include (optional if the rest of your site uses it) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-     <!-- Font-->
-    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Lato:wght@400;500;700&family=Poppins:wght@400;500;600&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-     <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Amatic+SC:wght@700&display=swap" rel="stylesheet">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Playfair+Display:wght@400;600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
-
-
-    
-    <!-- Title of document -->
-    <title>Music | Healing Compositions</title>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="..." crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-
-    <!-- Favicon icon -->
-    <link rel="shortcut icon" type="image/png" href="img/Logos/faviconicon.png">
-
-    <!-- Reference to CSS file -->
-    <link rel="stylesheet" type="text/css" href="CSS/index stylesheet.css">
-  
-  </head>
-  
-  <body>
+  <!-- Page styles -->
+  <link rel="stylesheet" href="CSS/healing-compositions.css">
+</head>
+<body>
     
     <header>
       
@@ -149,193 +128,122 @@
 </nav>
 
  
-  <style>
-   :root{
-  --bg:#ffffff;          /* background */
-  --fg:#131316;          /* text */
-  --muted:#5b5b70;       /* subtext */
-  --card:#f4f4f4;        /* card background */
-  --ring:rgba(0,0,0,0.08); /* subtle border */
-  --accent:#7b4ab8;      /* pick an accent that fits your brand */
-}
+  <!-- Full‑bleed hero banner (edge‑to‑edge on all screens) -->
+  <section class="hero-banner" role="img" aria-label="Healing Compositions banner"></section>
 
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background:var(--bg);
-      color:var(--fg);
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-    }
-    .container{
-      max-width:720px;
-      margin-inline:auto;
-      padding:40px 20px 72px;
-    }
-    .hero{
-      display:flex; gap:16px; align-items:center; justify-content:center; flex-wrap:wrap;
-      text-align:center; margin-bottom:14px;
-    }
-    .cover{
-      width:96px; height:96px; border-radius:16px; object-fit:cover;
-      box-shadow:0 8px 24px rgba(0,0,0,.4);
-      border:1px solid var(--ring);
-    }
-    h1{
-      width:100%;
-      margin:10px 0 6px; font-size:clamp(28px, 5vw, 40px);
-      letter-spacing:0.2px;
-    }
+  <!-- Author block under the banner -->
+  <section class="author-block">
+    <img src="img/me.png" alt="Janani Jayalath" class="author-avatar">
+    <!-- Use a signature image OR text. If you don’t have the image, comment this out and un-comment the <p>. -->
+    <img src="img/name.png" alt="Janani Jayalath signature" class="author-signature">
+    <!-- <p class="author-name">Janani Jayalath</p> -->
+  </section>
 
-
-.stay-quote {
-    width: 200px;
-    height: auto;
-  }
-
-
-
-
-    .subtitle{
-      color:var(--muted); font-size:15px; margin-bottom:26px; 
-    }
-    .cta-card{
-      background:var(--card); border:1px solid var(--ring);
-      border-radius:20px; padding:22px 18px; margin-bottom:18px;
-    }
-    .cta-card h2{
-      font-family:'Playfair Display', serif;
-      font-size:clamp(28px, 4.6vw, 40px);
-      letter-spacing:0.5px; margin:0 0 6px;
-      text-align: center;
-    }
-    .cta-card p{ color:var(--muted); margin:0 0 8px; font-size:14px; text-align: center}
-    .links{ display:flex; flex-direction:column; gap:12px; margin-top:14px;}
-    .link-btn{
-      display:flex; align-items:center; gap:12px;
-      width:100%; text-decoration:none; color:var(--fg);
-      padding:14px 16px; border-radius:14px; background:#fff9fe;
-      border:1px solid var(--ring);
-      transition: transform .08s ease, border-color .2s ease, background .2s ease;
-    }
-    .link-btn:hover{ transform: translateY(-2px); background:#d6c9d4;}
-    .icon{
-      width:22px; height:22px; display:inline-block; flex:0 0 22px;
-    }
-    .label{ font-weight:600; font-size:15px; }
-    .hint{ margin-left:auto; color:var(--muted); font-size:12px;}
-    .embed{
-      overflow:hidden; border-radius:16px; border:1px solid var(--ring);
-      background:#000; aspect-ratio:16/9; margin-top:8px;
-    }
-    .fineprint{ color:var(--muted); font-size:12px; text-align:center; margin-top:28px;}
-    /* Optional light mode (if your site is light) */
-    @media (prefers-color-scheme: light){
-      :root{ --bg:#ffffff; --fg:#131316; --muted:#5b5b70; --card:#f7f7fb; --ring:rgba(0,0,0,.08);}
-      .link-btn{ background:#fff; }
-    }
-  </style>
-</head>
-<body>
-  
-   <!-- MAST: title image + author -->
-  <!-- Title image -->
-    <img src="img/Main banners/Compositions banner.jpg" alt="Hero Image" class="full-width-image">
-
-<!-- MOBILE-ONLY VERSION -->
-<div class="mobile-banner">
-  <img src="img/Titles/healing-compositions.png" alt="Jana's Story title" class="title-img">
-
-  <img src="img/Me/me.png" alt="Janani Jayalath" class="profile-img">
-  <img src="img/Me/name.png" alt="Janani Jayalath signature" class="name-img">
-
-  <img src="img/Quotes/stay quote.png" alt="The pen is in your hand..." class="stay-quote">
-</div>
-
-<br>
-
-<main class="container" role="main">
-    <section class="cta-card" aria-label="Listen">
+  <main class="wrap" role="main">
+    <!-- Featherfall card -->
+    <section class="card listen-card" aria-label="Listen to Featherfall">
       <h2>Listen to Featherfall</h2>
-      <p>Choose a platform below. <br> Streams support future music & healing projects ♡</p>
+      <p>Choose a platform below. Streams support future music &amp; healing projects ♡</p>
 
       <div class="links" role="list">
-        <!-- YOUTUBE -->
-        <a class="link-btn" role="listitem" href="https://www.youtube.com/watch?v=IaYw3IHba5o" target="_blank" rel="noopener">
+        <!-- YouTube -->
+        <a class="link-btn" role="listitem"
+           href="https://www.youtube.com/watch?v=IaYw3IHba5o" target="_blank" rel="noopener">
           <span class="icon" aria-hidden="true">
-            <!-- YouTube SVG -->
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a4 4 0 0 0-2.8-2.8C18.9 3 12 3 12 3s-6.9 0-8.7.4A4 4 0 0 0 .5 6.2 41.4 41.4 0 0 0 0 12c0 2 .2 3.9.5 5.8a4 4 0 0 0 2.8 2.8C5.1 21 12 21 12 21s6.9 0 8.7-.4a4 4 0 0 0 2.8-2.8c.3-1.9.5-3.8.5-5.8 0-2-.2-3.9-.5-5.8zM9.6 15.6V8.4L15.8 12l-6.2 3.6z"/></svg>
           </span>
           <span class="label">YouTube</span>
           <span class="hint">Watch</span>
         </a>
 
-        <!-- SPOTIFY -->
-        <a class="link-btn" role="listitem" href="https://open.spotify.com/track/72AQh8yOqFJjhLaIEiNuUm" target="_blank" rel="noopener">
+        <!-- Spotify -->
+        <a class="link-btn" role="listitem"
+           href="https://open.spotify.com/track/72AQh8yOqFJjhLaIEiNuUm" target="_blank" rel="noopener">
           <span class="icon" aria-hidden="true">
-            <!-- Spotify SVG -->
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0a12 12 0 1 0 .001 24.001A12 12 0 0 0 12 0zm5.49 17.3a.91.91 0 0 1-1.25.3c-3.43-2.1-7.75-2.6-12.82-1.47a.91.91 0 0 1-.41-1.77c5.51-1.27 10.28-.72 14.01 1.53.43.26.57.82.27 1.41zm1.78-3.23c-.16.26-.51.35-.78.2-3.92-2.33-9.89-3.01-14.53-1.7-.3.08-.62-.09-.7-.4a.56.56 0 0 1 .38-.68c5.02-1.42 11.4-.68 15.65 1.84.26.15.35.49.19.74zm.08-3.33c-4.41-2.62-11.73-2.86-15.96-1.7a.7.7 0 0 1-.4-1.35c4.65-1.38 12.49-1.11 17.36 1.77.32.19.43.6.24.93a.7.7 0 0 1-.97.35z"/></svg>
           </span>
           <span class="label">Spotify</span>
           <span class="hint">Stream</span>
         </a>
 
-        <!-- APPLE MUSIC -->
-        <a class="link-btn" role="listitem" href="https://music.apple.com/us/album/featherfall-single/1820001662" target="_blank" rel="noopener">
+        <!-- Apple Music -->
+        <a class="link-btn" role="listitem"
+           href="https://music.apple.com/us/album/featherfall-single/1820001662" target="_blank" rel="noopener">
           <span class="icon" aria-hidden="true">
-            <!-- Apple Music (music note) -->
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 2 8 4v11.55a3.5 3.5 0 1 0 2 3.12V9.1l7-1.4v6.85a3.5 3.5 0 1 0 2 3.12V2z"/></svg>
           </span>
           <span class="label">Apple Music</span>
           <span class="hint">Stream</span>
         </a>
+      </div>
 
-        <!-- YOUTUBE MUSIC (optional separate link) -->
-        <a class="link-btn" role="listitem" href="YOUR_YOUTUBE_MUSIC_URL" target="_blank" rel="noopener">
-          <span class="icon" aria-hidden="true">
-            <!-- Play circle -->
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zm-2 13.5v-7l6 3.5-6 3.5z"/></svg>
-          </span>
-          <span class="label">YouTube Music</span>
-          <span class="hint">Listen</span>
-        </a>
-
-        <!-- Add any others you need -->
-        <a class="link-btn" role="listitem" href="YOUR_AMAZON_MUSIC_URL" target="_blank" rel="noopener">
-          <span class="icon" aria-hidden="true">
-            <!-- Simple note -->
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3a1 1 0 0 1 1 1v11.11A4 4 0 1 1 11 17V6h-1V4h2z"/></svg>
-          </span>
-          <span class="label">Amazon Music</span>
-          <span class="hint">Listen</span>
-        </a>
-
-        <a class="link-btn" role="listitem" href="YOUR_SOUNDCLOUD_URL" target="_blank" rel="noopener">
-          <span class="icon" aria-hidden="true">
-            <!-- Cloud -->
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 15a4 4 0 0 1 3.6-4A5 5 0 0 1 19 11a3 3 0 1 1 0 6H7a3 3 0 0 1-1-2z"/></svg>
-          </span>
-          <span class="label">SoundCloud</span>
-          <span class="hint">Listen</span>
-        </a>
+      <!-- Inline player -->
+      <div class="embed" aria-label="Featherfall video player">
+        <iframe
+          src="https://www.youtube.com/embed/IaYw3IHba5o?rel=0"
+          title="Featherfall by Janani"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+          style="width:100%; height:100%;">
+        </iframe>
       </div>
     </section>
 
-    <!-- Optional: embedded YouTube player for instant play -->
-    <div class="embed" aria-label="Featherfall video player">
-  <iframe
-    src="https://www.youtube.com/embed/IaYw3IHba5o?rel=0"
-    title="Featherfall by Janani"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen
-    style="width:100%; height:100%;">
-  </iframe>
-</div>
-
-
-    <p class="fineprint">Trouble finding your platform? <a href="https://linktr.ee/jana.cj?fbclid=PAZXh0bgNhZW0CMTEAAafK4R9bn9O-Hb5X4g-1Cv_atYDFLES19dWZWCp25fadWN4WDCpDo67u60Ut2Q_aem_0j4P_l6jSmqR71Urpnld-Q" target="_blank" rel="noopener" style="color:var(--accent);">See all links</a>.</p>
+    <p class="fineprint">
+      Trouble finding your platform?
+      <a href="https://linktr.ee/jana.cj" target="_blank" rel="noopener">See all links</a>.
+    </p>
   </main>
+
+  <footer class="site-footer">
+  <div class="footer-heading">
+    <h3>Let’s stay connected ♡</h3>
+    <p>Follow for music, movement, and healing energy</p>
+  </div>
+  <br><br>
+  <div class="footer-container">
+    <!-- Just Jana -->
+    <div class="footer-column horizontal-links">
+      <h4>Just Jana</h4>
+      <div class="link-group">
+      <a href="https://instagram.com/justjanaofficial" target="_blank"><i class="fab fa-instagram"></i>justjanaofficial</a>
+      <a href="https://tiktok.com/@justjanaofficial" target="_blank"><i class="fab fa-tiktok"></i>justjanaofficial</a>
+    </div>
+    </div>
+
+    <!-- Music -->
+    <div class="footer-column music-column">
+      <h4>Music</h4>
+      <div class="music-links">
+        <div class="music-left">
+          <a href="https://instagram.com/jananijayalathjj" target="_blank"><i class="fab fa-instagram"></i>jananijayalathjj</a>
+          <a href="https://tiktok.com/@jananijayalathjj" target="_blank"><i class="fab fa-tiktok"></i>jananijayalathjj</a>
+          <a href="https://facebook.com/jananijayalath" target="_blank"><i class="fab fa-facebook"></i>Janani Jayalath</a>
+        </div>
+        <div class="music-right">
+          <a href="https://youtube.com/@jananijayalath" target="_blank"><i class="fab fa-youtube"></i>Janani Jayalath</a>
+          <a href="https://open.spotify.com/artist/5kfFyhjJ5s80fhrQhpFbAc" target="_blank"><i class="fab fa-spotify"></i>Janani Jayalath</a>
+          <a href="https://music.apple.com/us/artist/janani-jayalath/1819698659" target="_blank"><i class="fab fa-apple"></i>Janani Jayalath</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fitness & Wellness -->
+    <div class="footer-column horizontal-links">
+      <h4>Fitness & Wellness</h4>
+      <div class="link-group">
+      <a href="https://instagram.com/jana.cj" target="_blank"><i class="fab fa-instagram"></i> jana.cj</a>
+      <a href="https://tiktok.com/@jj_gains" target="_blank"><i class="fab fa-tiktok"></i> jj_gains</a>
+    </div>
+    </div>
+
+    
+  </div><br>
+<!-- Copyright -->
+  <div class="footer-credit">
+    © 2025 Just Jana. All rights reserved.
+  </div>
+  </footer>
 </body>
 </html>
