@@ -1120,40 +1120,40 @@ header {
 /* Healing Compositions */
 
 :root{
-  --bg:#ffffff;          /* background */
   --fg:#131316;          /* text */
   --muted:#5b5b70;       /* subtext */
   --card:#f4f4f4;        /* card background */
-  --ring:rgba(0,0,0,0.08); /* subtle border */
   --accent:#7b4ab8;      /* pick an accent that fits your brand */
 }
 
     *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background:var(--bg);
-      color:var(--fg);
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-    }
+    
     .container{
       max-width:720px;
       margin-inline:auto;
       padding:40px 20px 72px;
     }
     .hero{
-      display:flex; gap:16px; align-items:center; justify-content:center; flex-wrap:wrap;
-      text-align:center; margin-bottom:14px;
+      display:flex; 
+      gap:16px; 
+      align-items:center; 
+      justify-content:center; 
+      flex-wrap:wrap;
+      text-align:center; 
+      margin-bottom:14px;
     }
     .cover{
-      width:96px; height:96px; border-radius:16px; object-fit:cover;
+      width:96px; 
+      height:96px; 
+      border-radius:16px; 
+      object-fit:cover;
       box-shadow:0 8px 24px rgba(0,0,0,.4);
       border:1px solid var(--ring);
     }
     h1{
       width:100%;
-      margin:10px 0 6px; font-size:clamp(28px, 5vw, 40px);
+      margin:10px 0 6px; 
+      font-size:clamp(28px, 5vw, 40px);
       letter-spacing:0.2px;
     }
 
@@ -1163,42 +1163,80 @@ header {
     height: auto;
   }
 
-
-
-
     .subtitle{
-      color:var(--muted); font-size:15px; margin-bottom:26px; 
+      color:var(--muted); 
+      font-size:15px; 
+      margin-bottom:26px; 
     }
     .cta-card{
-      background:var(--card); border:1px solid var(--ring);
-      border-radius:20px; padding:22px 18px; margin-bottom:18px;
+      background:var(--card); 
+      border:1px solid var(--ring);
+      border-radius:20px; 
+      padding:22px 18px; 
+      margin-bottom:18px;
     }
     .cta-card h2{
       font-family:'Playfair Display', serif;
       font-size:clamp(28px, 4.6vw, 40px);
-      letter-spacing:0.5px; margin:0 0 6px;
+      letter-spacing:0.5px; 
+      margin:0 0 6px;
       text-align: center;
     }
-    .cta-card p{ color:var(--muted); margin:0 0 8px; font-size:14px; text-align: center}
-    .links{ display:flex; flex-direction:column; gap:12px; margin-top:14px;}
+    .cta-card p{ color:var(--muted); 
+      margin:0 0 8px; 
+      font-size:14px; 
+      text-align: center}
+
+    .links{ display:flex; 
+      flex-direction:column; 
+      gap:12px; 
+      margin-top:14px;}
+
     .link-btn{
-      display:flex; align-items:center; gap:12px;
-      width:100%; text-decoration:none; color:var(--fg);
-      padding:14px 16px; border-radius:14px; background:#fff9fe;
+      display:flex; 
+      align-items:center; 
+      gap:12px;
+      width:100%; 
+      text-decoration:none; 
+      color:var(--fg);
+      padding:14px 16px; 
+      border-radius:14px; 
+      background:#fff9fe;
       border:1px solid var(--ring);
       transition: transform .08s ease, border-color .2s ease, background .2s ease;
     }
-    .link-btn:hover{ transform: translateY(-2px); background:#d6c9d4;}
+
+    .link-btn:hover{ transform: translateY(-2px); 
+      background:#d6c9d4;}
+
     .icon{
-      width:22px; height:22px; display:inline-block; flex:0 0 22px;
+      width:22px; 
+      height:22px; 
+      display:inline-block; 
+      flex:0 0 22px;
     }
-    .label{ font-weight:600; font-size:15px; }
-    .hint{ margin-left:auto; color:var(--muted); font-size:12px;}
+
+    .label{ font-weight:600; 
+      font-size:15px; }
+
+    .hint{ margin-left:auto; 
+      color:var(--muted); 
+      font-size:12px;}
+
     .embed{
-      overflow:hidden; border-radius:16px; border:1px solid var(--ring);
-      background:#000; aspect-ratio:16/9; margin-top:8px;
+      overflow:hidden; 
+      border-radius:16px; 
+      border:1px solid var(--ring);
+      background:#000; 
+      aspect-ratio:16/9; 
+      margin-top:8px;
     }
-    .fineprint{ color:var(--muted); font-size:12px; text-align:center; margin-top:28px;}
+
+    .fineprint{ color:var(--muted); 
+      font-size:12px; 
+      text-align:center; 
+      margin-top:28px;}
+      
     /* Optional light mode (if your site is light) */
     @media (prefers-color-scheme: light){
       :root{ --bg:#ffffff; --fg:#131316; --muted:#5b5b70; --card:#f7f7fb; --ring:rgba(0,0,0,.08);}
