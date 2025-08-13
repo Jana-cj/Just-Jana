@@ -1163,13 +1163,13 @@ header {
   color:var(--fg);
   padding:14px 16px; 
   border-radius:14px; 
-  background:#fff9fe;
+  background:#fdf7f8;
   border:1px solid var(--ring);
   transition: transform .08s ease, border-color .2s ease, background .2s ease;
 }
 .link-btn:hover{ 
   transform: translateY(-2px); 
-  background:#ffe3e5; 
+  background:#fdebec; 
   color: var(--fg); /* Stops turning blue */
   }
 
