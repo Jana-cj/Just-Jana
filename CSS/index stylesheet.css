@@ -1210,6 +1210,20 @@ header {
   .link-btn{ background:#fff; }
 }
 
+@media (max-width: 768px) {
+  
+
+  .compositions-title {
+    max-width: 90%;
+    margin-bottom: 3rem;
+  }
+
+  .heal-quote {
+    max-width: 200px;
+    height: auto;
+  }
+}
+
 
 /* Footer */
 .site-footer {
