@@ -1169,7 +1169,7 @@ header {
 }
 .link-btn:hover{ 
   transform: translateY(-2px); 
-  background:#fdebec; 
+  background:#f3d5d6; 
   color: var(--fg); /* Stops turning blue */
   }
 
