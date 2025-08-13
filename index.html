@@ -40,7 +40,7 @@
             <img src="img/Logos/logohanddrawnbw.png" alt="Logo" width="47" height="40" class="d-inline-block align-text-top">
           </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
 
@@ -52,8 +52,9 @@
                 </a>
               </li>
               <!-- Dropdowns -->
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#about" id="dropdownAbout" role="button"  aria-expanded="false">
+              <li class="nav-item dropdown" data-bs-auto-close="outside">
+                <a class="nav-link dropdown-toggle" href="#about" id="dropdownAbout" 
+                role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   About
                 </a>
                 
@@ -62,18 +63,19 @@
                   <li><a class="dropdown-item" href="missionvalues.html">Our Mission & Values</a></li>
                 </ul>
               </li>
-             
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#about" id="dropdownFitness" role="button"  aria-expanded="false">
-                  Fitness
-                </a>
+              
+              <li class="nav-item dropdown" data-bs-auto-close="outside">
+                <a class="nav-link dropdown-toggle" href="#fitness" id="dropdownFitness"
+                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Fitness
+              </a>
                
 
                 <ul class="dropdown-menu" aria-labelledby="dropdownFitness">
                   <li><a class="dropdown-item" href="fitnessstory.html">Jana's Fitness Journey</a></li> 
                   <!-- Submenu -->
                 <li class="dropdown-submenu">
-                  <a class="dropdown-item dropdown-toggle" href="#">Programs</a>
+                  <a class="dropdown-item submenu-toggle" href="#"aria-expanded="false">Programs</a>
                   <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="#">Beginner Program</a></li>
                     <li><a class="dropdown-item" href="#">Intermediate Program</a></li>
@@ -86,10 +88,11 @@
               
             
 
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#about" id="dropdownMusic" role="button"  aria-expanded="false">
-                  Music
-                </a>
+              <li class="nav-item dropdown" data-bs-auto-close="outside">
+                <a class="nav-link dropdown-toggle" href="#music" id="dropdownMusic"
+                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Music
+              </a>
                
 
                 <ul class="dropdown-menu" aria-labelledby="dropdownMusic">
@@ -100,10 +103,11 @@
               </li>
 
 
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#about" id="dropdownWellness" role="button" aria-expanded="false">
-                  Health & Wellness
-                </a>
+             <li class="nav-item dropdown" data-bs-auto-close="outside">
+                <a class="nav-link dropdown-toggle" href="#wellness" id="dropdownWellness"
+                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Health & Wellness
+              </a>
                
 
                 <ul class="dropdown-menu" aria-labelledby="dropdownWellness">
@@ -115,10 +119,11 @@
               </li>
 
 
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#about" id="dropdownMentalhealth" role="button"  aria-expanded="false">
-                  Mental Health
-                </a>
+              <li class="nav-item dropdown" data-bs-auto-close="outside">
+                <a class="nav-link dropdown-toggle" href="#mentalhealth" id="dropdownMentalHealth"
+                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Mental Health
+              </a>
                
 
                 <ul class="dropdown-menu" aria-labelledby="dropdownMentalhealth">
@@ -132,10 +137,11 @@
               </li>
 
                                          
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#about" id="dropdownDiaries" role="button"  aria-expanded="false">
-                  Brown Girl Diaries
-                </a>
+              <li class="nav-item dropdown" data-bs-auto-close="outside">
+                <a class="nav-link dropdown-toggle" href="#diaries" id="dropdownDiaries"
+                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Brown Girl Diaries
+              </a>
                
 
                 <ul class="dropdown-menu" aria-labelledby="dropdownDiaries">
@@ -533,54 +539,69 @@
 </script>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    if (window.innerWidth >= 992) return; // Only apply custom toggle behavior on mobile
+(function () {
+  const HOVER_NONE = window.matchMedia('(hover: none)');
 
-    const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
-
-    dropdownToggles.forEach(toggle => {
-      toggle.addEventListener('click', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-
-        const dropdownMenu = this.nextElementSibling;
-
-        // Close all open dropdowns except the current one
-        document.querySelectorAll('.dropdown-menu.show').forEach(openMenu => {
-          if (openMenu !== dropdownMenu) {
-            openMenu.classList.remove('show');
-            openMenu.previousElementSibling?.setAttribute('aria-expanded', 'false');
-          }
-        });
-
-        // Toggle current dropdown
-        const isOpen = dropdownMenu.classList.contains('show');
-        dropdownMenu.classList.toggle('show', !isOpen);
-        this.setAttribute('aria-expanded', String(!isOpen));
-      });
-    });
-
-    // Close dropdowns when clicking outside
-    document.addEventListener('click', function (e) {
-      if (!e.target.closest('.dropdown')) {
-        document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
-          menu.classList.remove('show');
-          menu.previousElementSibling?.setAttribute('aria-expanded', 'false');
-        });
-      }
-    });
-
-    // Reset all dropdowns on resize to desktop
-    window.addEventListener('resize', function () {
-      if (window.innerWidth >= 992) {
-        document.querySelectorAll('.dropdown-menu').forEach(menu => {
-          menu.classList.remove('show');
-          menu.previousElementSibling?.setAttribute('aria-expanded', 'false');
-        });
+  // Handle top-level dropdowns on mobile: let Bootstrap open them, but prevent accidental navigation
+  document.querySelectorAll('.nav-item.dropdown > a.dropdown-toggle').forEach(a => {
+    a.addEventListener('click', function (e) {
+      if (HOVER_NONE.matches || window.innerWidth < 1200) {
+        // On mobile, just toggle the dropdown (Bootstrap handles this because of data-bs-toggle="dropdown")
+        // Prevent navigation to "#" or section anchors
+        if (!this.getAttribute('data-allow-follow')) {
+          e.preventDefault();
+        }
       }
     });
   });
+
+  // Handle submenus on mobile (tap to expand/collapse)
+  document.querySelectorAll('.dropdown-submenu > .submenu-toggle').forEach(trigger => {
+    trigger.addEventListener('click', function (e) {
+      if (HOVER_NONE.matches || window.innerWidth < 1200) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const submenu = this.nextElementSibling; // <ul.dropdown-menu>
+        const parentMenu = this.closest('.dropdown-menu');
+
+        // Close sibling submenus
+        parentMenu.querySelectorAll(':scope > .dropdown-submenu > .dropdown-menu.show').forEach(openMenu => {
+          if (openMenu !== submenu) {
+            openMenu.classList.remove('show');
+            const t = openMenu.previousElementSibling;
+            if (t) t.setAttribute('aria-expanded', 'false');
+          }
+        });
+
+        // Toggle this submenu
+        const willShow = !submenu.classList.contains('show');
+        submenu.classList.toggle('show', willShow);
+        this.setAttribute('aria-expanded', String(willShow));
+      }
+    });
+  });
+
+  // When a top-level dropdown hides, also hide any open submenus inside it
+  document.querySelectorAll('.nav-item.dropdown').forEach(drop => {
+    drop.addEventListener('hide.bs.dropdown', function () {
+      this.querySelectorAll('.dropdown-menu.show').forEach(m => m.classList.remove('show'));
+      this.querySelectorAll('.dropdown-submenu > .submenu-toggle[aria-expanded="true"]')
+          .forEach(a => a.setAttribute('aria-expanded', 'false'));
+    });
+  });
+
+  // Reset submenus when resizing from mobile to desktop
+  window.addEventListener('resize', function () {
+    if (window.innerWidth >= 1200) {
+      document.querySelectorAll('.dropdown-menu.show').forEach(m => m.classList.remove('show'));
+      document.querySelectorAll('.dropdown-submenu > .submenu-toggle[aria-expanded="true"]')
+          .forEach(a => a.setAttribute('aria-expanded', 'false'));
+    }
+  });
+})();
 </script>
+
 
 <script>
 (function() {
@@ -608,42 +629,6 @@
 })();
 </script>
 
-<script>
-  // Toggle submenus on tap for touch/non-hover devices
-  document.querySelectorAll('.dropdown-submenu > a').forEach(function(trigger) {
-    trigger.addEventListener('click', function (e) {
-      // Only run the tap behavior on devices without hover (i.e., phones)
-      if (window.matchMedia('(hover: none)').matches) {
-        e.preventDefault();
-        e.stopPropagation();
-
-        const submenu = this.nextElementSibling;
-        const parentMenu = this.closest('.dropdown-menu');
-
-        // close other open submenus at the same level
-        parentMenu.querySelectorAll('.dropdown-menu.show').forEach(function(openMenu) {
-          if (openMenu !== submenu) openMenu.classList.remove('show');
-        });
-
-        // toggle this submenu
-        submenu.classList.toggle('show');
-        this.setAttribute('aria-expanded', submenu.classList.contains('show'));
-      }
-    });
-  });
-
-  // When a top-level dropdown hides, also hide any open submenus inside it
-  document.querySelectorAll('.dropdown').forEach(function(drop) {
-    drop.addEventListener('hide.bs.dropdown', function () {
-      this.querySelectorAll('.dropdown-menu.show').forEach(function(openMenu) {
-        openMenu.classList.remove('show');
-      });
-      this.querySelectorAll('.dropdown-submenu > a[aria-expanded="true"]').forEach(function(a) {
-        a.setAttribute('aria-expanded', 'false');
-      });
-    });
-  });
-</script>
 
 
   </body>
