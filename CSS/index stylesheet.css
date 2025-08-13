@@ -1215,12 +1215,13 @@ header {
 
   .compositions-title {
     max-width: 90%;
-    margin-bottom: 3rem;
+    margin-bottom: 4rem;
   }
 
   .heal-quote {
     max-width: 200px;
     height: auto;
+    margin-top: 2rem;
   }
 }
 
