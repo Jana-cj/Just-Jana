@@ -215,7 +215,24 @@
 
   </footer>
 
-  
+  <script>
+let lastScrollTop = 0;
+const navbar = document.querySelector('.navbar');
+
+window.addEventListener("scroll", function(){
+  let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+  if (scrollTop > lastScrollTop){
+    // scrolling down → hide navbar
+    navbar.style.top = "-80px"; // adjust to navbar height
+  } else {
+    // scrolling up → show navbar
+    navbar.style.top = "0";
+  }
+  lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // avoid negative scroll
+}, false);
+</script>
+
 
         
       <!-- Bootstrap CSS -->
