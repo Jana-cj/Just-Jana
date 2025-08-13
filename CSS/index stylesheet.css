@@ -129,6 +129,46 @@ header {
   color: #000000 !important;
 }
 
+/* --- desktop submenu positioning (unchanged) --- */
+.dropdown-submenu { position: relative; }
+.dropdown-submenu > .dropdown-menu {
+  top: 0; left: 100%;
+  margin-top: -0.125rem;
+}
+
+/* Show submenu on hover (desktop/hover devices) */
+@media (hover:hover) {
+  .dropdown-submenu:hover > .dropdown-menu { display: block; }
+}
+
+/* Arrow indicator + rotate on open */
+.dropdown-submenu > a::after {
+  content: "›";
+  float: right;
+  margin-left: 6px;
+  font-size: .8rem;
+  transition: transform .2s ease;
+}
+.dropdown-submenu > a[aria-expanded="true"]::after {
+  transform: rotate(90deg);
+}
+
+/* --- mobile behavior (navbar collapsed under xl) --- */
+@media (max-width: 1199.98px) {
+  /* Make submenus stack within the dropdown, not fly out */
+  .dropdown-submenu > .dropdown-menu {
+    position: static;
+    float: none;
+    display: none;          /* hidden by default on mobile */
+    margin: 0;
+    border: 0;
+    box-shadow: none;
+    padding-left: .75rem;   /* slight indent so hierarchy is clear */
+  }
+  .dropdown-menu.show { display: block; } /* Bootstrap uses .show to reveal */
+}
+
+
 
 /* index.html */
 

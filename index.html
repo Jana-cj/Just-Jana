@@ -71,7 +71,15 @@
 
                 <ul class="dropdown-menu" aria-labelledby="dropdownFitness">
                   <li><a class="dropdown-item" href="fitnessstory.html">Jana's Fitness Journey</a></li> 
-                  <li><a class="dropdown-item" href="#Countryid">Programs</a></li>
+                  <!-- Submenu -->
+                <li class="dropdown-submenu">
+                  <a class="dropdown-item dropdown-toggle" href="#">Programs</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Beginner Program</a></li>
+                    <li><a class="dropdown-item" href="#">Intermediate Program</a></li>
+                    <li><a class="dropdown-item" href="#">Advanced Program</a></li>
+                  </ul>
+                </li>
                   <li><a class="dropdown-item" href="#Countryid">Body Composition</a></li>
                 </ul>
               </li>
@@ -598,6 +606,43 @@
     lastY = y <= 0 ? 0 : y;
   }, { passive: true });
 })();
+</script>
+
+<script>
+  // Toggle submenus on tap for touch/non-hover devices
+  document.querySelectorAll('.dropdown-submenu > a').forEach(function(trigger) {
+    trigger.addEventListener('click', function (e) {
+      // Only run the tap behavior on devices without hover (i.e., phones)
+      if (window.matchMedia('(hover: none)').matches) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const submenu = this.nextElementSibling;
+        const parentMenu = this.closest('.dropdown-menu');
+
+        // close other open submenus at the same level
+        parentMenu.querySelectorAll('.dropdown-menu.show').forEach(function(openMenu) {
+          if (openMenu !== submenu) openMenu.classList.remove('show');
+        });
+
+        // toggle this submenu
+        submenu.classList.toggle('show');
+        this.setAttribute('aria-expanded', submenu.classList.contains('show'));
+      }
+    });
+  });
+
+  // When a top-level dropdown hides, also hide any open submenus inside it
+  document.querySelectorAll('.dropdown').forEach(function(drop) {
+    drop.addEventListener('hide.bs.dropdown', function () {
+      this.querySelectorAll('.dropdown-menu.show').forEach(function(openMenu) {
+        openMenu.classList.remove('show');
+      });
+      this.querySelectorAll('.dropdown-submenu > a[aria-expanded="true"]').forEach(function(a) {
+        a.setAttribute('aria-expanded', 'false');
+      });
+    });
+  });
 </script>
 
 
