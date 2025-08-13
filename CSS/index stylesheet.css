@@ -76,15 +76,22 @@ header {
 
 }
 
+:root { --nav-h: 72px; } /* your navbar height */
+
 #siteNav.navbar {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 999;
-  background-color: #ffffff !important; /* white across full width */
+  background-color: #ffffff !important;
   box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-  transition: transform 0.3s ease-in-out;
+  transform: translateY(0); /* start visible */
+  transition: transform 0.4s ease; /* smooth animation */
+}
+
+#siteNav.nav-hidden {
+  transform: translateY(calc(-1 * var(--nav-h))); /* slide up out of view */
 }
 
 

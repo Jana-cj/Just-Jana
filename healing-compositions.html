@@ -239,21 +239,29 @@
   </footer>
 
   <script>
-let lastScrollTop = 0;
-const navbar = document.querySelector('.navbar');
+(function() {
+  const nav = document.getElementById('siteNav');
+  let lastY = window.scrollY;
 
-window.addEventListener("scroll", function(){
-  let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+  // Set correct nav height
+  const setNavHeightVar = () => {
+    document.documentElement.style.setProperty('--nav-h', nav.offsetHeight + 'px');
+  };
+  setNavHeightVar();
+  window.addEventListener('resize', setNavHeightVar);
 
-  if (scrollTop > lastScrollTop){
-    // scrolling down → hide navbar
-    navbar.style.top = "-80px"; // adjust to navbar height
-  } else {
-    // scrolling up → show navbar
-    navbar.style.top = "0";
-  }
-  lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // avoid negative scroll
-}, false);
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+
+    if (y > lastY && y > nav.offsetHeight) {
+      nav.classList.add('nav-hidden'); // hide smoothly
+    } else {
+      nav.classList.remove('nav-hidden'); // show smoothly
+    }
+
+    lastY = y <= 0 ? 0 : y;
+  }, { passive: true });
+})();
 </script>
 
 
