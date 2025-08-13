@@ -143,7 +143,7 @@ header {
 
 /* Arrow indicator + rotate on open */
 .dropdown-submenu > a::after {
-  content: "▶";
+  content: "➤";
   float: right;
   margin-left: 6px;
   font-size: .8rem;
