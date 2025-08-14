@@ -850,7 +850,7 @@ header {
   background-color: #ffffff;
   color: #b38398;
   margin: 0 6px;
-  border: 1px solid #b38398;
+  border: 0.7px solid #b38398;
   font-weight: 500;
   transition: background 0.3s ease;
 }
