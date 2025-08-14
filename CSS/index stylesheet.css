@@ -437,6 +437,79 @@ header {
   }
 }
 
+/* What Just Jana stands for  */
+.jana-values-section {
+  background-color: #fdf4f0;
+  padding: 60px 20px;
+}
+
+.jana-values-heading {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  color: #7b4ab8;
+  margin-bottom: 40px;
+  font-weight: 600;
+}
+
+.value-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  padding: 24px 20px;
+  margin: 15px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.value-card h4 {
+  font-size: 1.1rem;
+  color: #7b4ab8;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.value-card p {
+  font-size: 0.95rem;
+  color: #5b5b70;
+  margin: 0;
+}
+
+.read-more-btn {
+  background-color: #d89fa3;
+  color: #ffffff;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 12px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.read-more-btn:hover {
+  background-color: #c78c90;
+  text-decoration: none;
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .value-card {
+    margin-bottom: 20px;
+    padding: 28px 18px;
+  }
+
+  .jana-values-section {
+    padding: 50px 16px;
+  }
+}
+
+@media (max-width: 576px) {
+  .jana-values-heading {
+    font-size: 1.5rem;
+  }
+}
+
+
 /* Healing pillars section */
 
 .healing-title {
