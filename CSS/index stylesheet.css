@@ -471,22 +471,20 @@ header {
 }
 
 .read-more-btn {
-  background-color: #a86f75;
   color: #ffffff;
-  border: none;
+  background-color: #a86f75;
   padding: 10px 24px;
   border-radius: 12px;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 500;
-  font-size: 0.95rem;
   text-decoration: none;
-  transition: all 0.3s ease;
+  font-weight: 500;
+  display: inline-block;
+  transition: background-color 0.3s ease;
 }
 
 .read-more-btn:hover {
   background-color: #8e5c61;
+  color: #ffffff;
   text-decoration: none;
-  color: #8e5c61;
 }
 
 @media (max-width: 768px) {
@@ -708,18 +706,21 @@ header {
 }
 
 /* Read More Button */
+
 .diary-btn {
+  color: #ffffff;
   background-color: #a86f75;
-  color: #fff;
   padding: 0.5rem 1.2rem;
   border-radius: 20px;
-  font-size: 0.9rem;
   text-decoration: none;
+  font-size: 0.9rem;
+  display: inline-block;
   transition: background-color 0.3s ease;
 }
 
 .diary-btn:hover {
   background-color: #8e5c61;
+  color: #ffffff;
   text-decoration: none;
 }
 
