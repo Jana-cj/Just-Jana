@@ -1454,17 +1454,16 @@ header {
   .pastel-group{
     border-radius: 20px;
     margin: 24px 12px;               
-    padding: 1px;    
+    padding: 16px 12px 40px;   
   }
   
   .pastel-group .carousel-img{ 
     max-width: 100%; 
   }
 
-  .pastel-group .healing-pillars{ 
-    padding-bottom: 30px; } 
-
-}
+  .pastel-group .healing-pillars{ padding-bottom: 8px; } /* small buffer */
+  
+  }
 
 
 
