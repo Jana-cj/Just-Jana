@@ -514,10 +514,6 @@ header {
 
 /* Healing pillars section */
 
-.healing-title {
-  font-size: 2rem;
-  margin-bottom: 2rem;
-}
 
   .healing-pillars {
     display: flex;
@@ -1462,7 +1458,7 @@ header {
   }
 
   .pastel-group .healing-pillars{ padding-bottom: 8px; } /* small buffer */
-  
+
   }
 
 
