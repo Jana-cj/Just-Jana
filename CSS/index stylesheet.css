@@ -1395,6 +1395,68 @@ header {
 
 }
 
+:root{
+  /* tweak these to adjust the vibe */
+  --group-bg: #fff7fb;                 /* light pastel */
+  --group-ring: rgba(169, 76, 175, .10);/* soft border/shadow tint */
+  --group-max: 1200px;                 /* max width on desktop */
+}
+
+.pastel-group{
+  background: var(--group-bg);
+  border: 1px solid var(--group-ring);
+  border-radius: 32px;
+  box-shadow: 0 10px 32px rgba(0,0,0,.06);
+  max-width: var(--group-max);
+  margin: 36px auto;                   /* centers the whole block */
+  padding: clamp(16px, 3vw, 32px);
+  overflow: hidden;                    /* clips inner shadows to the curve */
+}
+
+/* Give consistent spacing between the child sections inside the group */
+.pastel-group > * + *{
+  margin-top: clamp(16px, 3vw, 32px);
+  padding-top: clamp(8px, 2vw, 16px);
+  border-top: 1px dashed rgba(0,0,0,.06); /* faint divider; remove if you prefer */
+}
+
+/* Keep typography readable on pastel */
+.pastel-group h2, 
+.pastel-group h3, 
+.pastel-group p { color: #2b2b2b; }
+
+/* Make wide inner containers behave inside the curved card */
+.pastel-group .container,
+.pastel-group .container-fluid{
+  max-width: calc(var(--group-max) - 2 * clamp(16px, 3vw, 32px));
+  margin-inline: auto;
+}
+
+/* Make carousels and images respect the rounded shape */
+.pastel-group .carousel-img{
+  max-width: 560px;                  /* optional: a little larger in the card */
+}
+.pastel-group img{
+  border-radius: 12px;               /* softer image corners inside the card */
+}
+
+/* Buttons read nicely on pastel */
+.pastel-group .read-more-btn,
+.pastel-group .diary-btn,
+.pastel-group .carouseldownload-btn,
+.pastel-group .download-btn{
+  box-shadow: 0 6px 16px rgba(169, 76, 175, .12);
+}
+
+/* Mobile tweaks */
+@media (max-width: 768px){
+  .pastel-group{
+    border-radius: 20px;
+    margin: 24px 12px;               /* a little breathing room from screen edge */
+    padding: 16px;
+  }
+  .pastel-group .carousel-img{ max-width: 100%; }
+}
 
 
 
