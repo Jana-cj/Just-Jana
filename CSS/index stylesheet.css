@@ -1376,6 +1376,7 @@ header {
   .compositions-title {
     max-width: 90%;
     margin-bottom: 4rem;
+    margin-top: 2rem;
   }
 
   .heal-quote {
