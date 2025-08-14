@@ -1453,11 +1453,17 @@ header {
 @media (max-width: 768px){
   .pastel-group{
     border-radius: 20px;
-    margin: 24px 12px;               /* a little breathing room from screen edge */
-    overflow: visible; /* let shadows render outside the curve */
-    padding: 12px 12px 24px; /* still add some breathing room */
+    margin: 24px 12px;               
+    padding: 1px;    
   }
-  .pastel-group .carousel-img{ max-width: 100%; }
+  
+  .pastel-group .carousel-img{ 
+    max-width: 100%; 
+  }
+
+  .pastel-group .healing-pillars{ 
+    padding-bottom: 15px; } 
+
 }
 
 
