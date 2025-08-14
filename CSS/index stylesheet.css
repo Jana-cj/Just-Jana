@@ -1201,7 +1201,11 @@ header {
     margin-bottom: 2rem;
   }
 
-  
+   .mission-maintitle {
+    max-width: 90%;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+  }
   
   h1 {
     font-size: 2rem;
@@ -1265,7 +1269,7 @@ header {
   }
 
   .music-title {
-    max-width: 50%;
+    max-width: 55%;
     margin-bottom: 1rem;
     margin-top: 2rem;
   }
@@ -1379,6 +1383,8 @@ header {
     height: auto;
     margin-top: 2rem;
   }
+
+
 }
 
 
