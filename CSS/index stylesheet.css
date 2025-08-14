@@ -486,7 +486,7 @@ header {
 .read-more-btn:hover {
   background-color: #8e5c61;
   text-decoration: none;
-  color: #fff;
+  color: #8e5c61;
 }
 
 @media (max-width: 768px) {
