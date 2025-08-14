@@ -917,8 +917,11 @@ header {
   text-decoration: none;
 }
 
-
-
+@media (max-width: 768px) {
+.freebies-section .filter-btns{
+  padding-top: 6px; /* or margin-top: 6px */
+}
+}
 /* CSS for janasstory.html */
 
 /* Default: Hide on desktop */
