@@ -470,7 +470,7 @@ header {
   margin: 0;
 }
 
-.btn read-more-btn mt-4 {
+.read-more-btn {
   color: #ffffff;
   background-color: #a86f75;
   padding: 10px 24px;
@@ -481,7 +481,7 @@ header {
   transition: background-color 0.3s ease;
 }
 
-.btn read-more-btn mt-4:hover {
+.read-more-btn:hover {
   background-color: #8e5c61;
   color: #ffffff;
   text-decoration: none;
@@ -707,7 +707,7 @@ header {
 
 /* Read More Button */
 
-.btn diary-btn {
+.diary-btn {
   color: #ffffff;
   background-color: #a86f75;
   padding: 0.5rem 1.2rem;
@@ -718,7 +718,7 @@ header {
   transition: background-color 0.3s ease;
 }
 
-.btn diary-btn:hover {
+.diary-btn:hover {
   background-color: #8e5c61;
   color: #ffffff;
   text-decoration: none;
