@@ -439,20 +439,12 @@ header {
 
 /* What Just Jana stands for  */
 .jana-values-section {
-  background-color: #fdf4f0;
-  padding: 60px 20px;
+  padding: 40px 20px;
 }
 
-.jana-values-heading {
-  font-family: 'Playfair Display', serif;
-  font-size: 2rem;
-  color: #7b4ab8;
-  margin-bottom: 40px;
-  font-weight: 600;
-}
 
 .value-card {
-  background-color: #ffffff;
+  background-color: #fdeefa;
   border-radius: 16px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
   padding: 24px 20px;
@@ -462,7 +454,7 @@ header {
 
 .value-card h4 {
   font-size: 1.1rem;
-  color: #7b4ab8;
+  color: #4b2e2e;
   font-weight: 600;
   margin-bottom: 10px;
 }
@@ -474,7 +466,7 @@ header {
 }
 
 .read-more-btn {
-  background-color: #d89fa3;
+  background-color: #a86f75;
   color: #ffffff;
   border: none;
   padding: 10px 24px;
@@ -487,7 +479,7 @@ header {
 }
 
 .read-more-btn:hover {
-  background-color: #c78c90;
+  background-color: #8e5c61;
   text-decoration: none;
   color: #fff;
 }
