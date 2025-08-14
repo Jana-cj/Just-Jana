@@ -438,9 +438,10 @@ header {
 }
 
 /* What Just Jana stands for  */
-/* .jana-values-section {
+.jana-values-section {
   padding: 40px 20px;
-} */
+  margin-bottom: 20px;
+}
 
 
 .value-card {
