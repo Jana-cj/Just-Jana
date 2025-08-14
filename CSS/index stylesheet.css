@@ -444,7 +444,8 @@ header {
 
 
 .value-card {
-  background-color: #fff5f5;
+  background-color: #fffdfd;
+  border: 1px solid #f0e1e1;
   border-radius: 16px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
   padding: 24px 20px;
