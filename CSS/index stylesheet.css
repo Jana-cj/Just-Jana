@@ -850,7 +850,7 @@ header {
   background-color: #ffffff;
   color: #b38398;
   margin: 0 6px;
-  border:0.5px solid #b38398;
+  border: 1px solid #b38398;
   font-weight: 500;
   transition: background 0.3s ease;
 }
@@ -859,6 +859,7 @@ header {
 .filter-btns .btn:hover {
   background: #b38398;
   color: white;
+  border-color: #b38398;
 }
 
 /* Scroll Area */
@@ -917,11 +918,7 @@ header {
   text-decoration: none;
 }
 
-@media (max-width: 768px) {
-.freebies-section .filter-btns{
-  padding-top: 15px; /* or margin-top: 6px */
-}
-}
+
 /* CSS for janasstory.html */
 
 /* Default: Hide on desktop */
