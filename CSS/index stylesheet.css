@@ -450,9 +450,12 @@ header {
   border-radius: 16px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
   padding: 24px 20px;
-  margin: 15px;
   font-family: 'Poppins', sans-serif;
+  max-width: 520px;
+  margin: 15px auto;
 }
+
+
 
 .value-card h4 {
   font-size: 1.1rem;
