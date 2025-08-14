@@ -76,7 +76,7 @@ header {
   top: 0;
   width: 100%;
   z-index: 999;
-  background-color: #fffcff; /* keep white background */
+  background-color: #ffffff; /* keep white background */
   transition: top 0.3s ease-in-out;
   box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* optional subtle shadow */
 
@@ -1454,7 +1454,8 @@ header {
   .pastel-group{
     border-radius: 20px;
     margin: 24px 12px;               /* a little breathing room from screen edge */
-    padding: 1px;
+    overflow: visible; /* let shadows render outside the curve */
+    padding: 12px 12px 24px; /* still add some breathing room */
   }
   .pastel-group .carousel-img{ max-width: 100%; }
 }
