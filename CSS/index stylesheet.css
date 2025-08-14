@@ -63,7 +63,7 @@ html, body {
 /* Nav bar */
 
 header {
-  background: #fffcff;
+  background: #ffffff;
   padding: 1rem 2rem;
 }
 
@@ -71,11 +71,12 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  text-align: center;
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 999;
-  background-color: #ffffff; /* keep white background */
+  background-color: #fffcff; /* keep white background */
   transition: top 0.3s ease-in-out;
   box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* optional subtle shadow */
 
