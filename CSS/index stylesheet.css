@@ -1397,7 +1397,7 @@ header {
 
 :root{
   /* tweak these to adjust the vibe */
-  --group-bg: #fffdf8;                 /* light pastel */
+  --group-bg: #FFF5F8;                 /* light pastel */
   --group-ring: rgba(169, 76, 175, .10);/* soft border/shadow tint */
   --group-max: 1200px;                 /* max width on desktop */
 }
