@@ -1262,6 +1262,14 @@ header {
     max-width: 300px;
     height: auto;
   }
+
+  .music_title {
+    max-width: 50%;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+  }
+  
+
 }
 
 /* Healing Compositions */
