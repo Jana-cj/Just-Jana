@@ -1453,7 +1453,7 @@ header {
   .pastel-group{
     border-radius: 20px;
     margin: 24px 12px;               /* a little breathing room from screen edge */
-    padding: 5px;
+    padding: 1px;
   }
   .pastel-group .carousel-img{ max-width: 100%; }
 }
