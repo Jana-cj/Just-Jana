@@ -352,6 +352,13 @@ header {
   color: #333;
 }
 
+.quote-text p strong {
+  margin-bottom: 1rem;
+  font-size: 1rem; 
+  line-height: 1.8;
+  color: #333;
+}
+
 .quote-text .welcome-home {
   
   font-size: 1.2rem;
