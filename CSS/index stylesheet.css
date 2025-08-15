@@ -1399,7 +1399,7 @@ header {
 .pull-quote { font-style: italic; margin-top: 1rem; }
 
 @media (max-width: 768px){
-.heal-quote {
+.featherfall-quote {
     max-width: 300px;
     height: auto;
     margin-top: 2rem;
