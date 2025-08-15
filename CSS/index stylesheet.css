@@ -1398,6 +1398,13 @@ header {
 .video-container iframe { position: absolute; inset: 0; width: 100%; height: 100%; }
 .pull-quote { font-style: italic; margin-top: 1rem; }
 
+@media (max-width: 768px){
+.heal-quote {
+    max-width: 300px;
+    height: auto;
+    margin-top: 2rem;
+  }
+}
 
 :root{
   /* tweak these to adjust the vibe */
