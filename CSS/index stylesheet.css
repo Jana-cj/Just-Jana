@@ -1413,6 +1413,15 @@ header {
   }
 }
 
+/* Curly hair */
+@media (max-width: 768px){
+ .curl-title {
+    max-width: 80%;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+  }
+}
+
 :root{
   /* tweak these to adjust the vibe */
   --group-bg: #ffffff;                 /* light pastel */
