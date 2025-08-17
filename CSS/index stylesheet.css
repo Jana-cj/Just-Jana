@@ -1414,12 +1414,23 @@ header {
 }
 
 /* Curly hair */
+
+.story-intro p {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
 @media (max-width: 768px){
  .curl-title {
     max-width: 80%;
     margin-bottom: 1rem;
     margin-top: 2rem;
   }
+
+  .story-intro {
+ padding: 0 1.5rem;}
+
 }
 
 :root{
