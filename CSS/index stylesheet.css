@@ -181,12 +181,6 @@ header {
   display: none !important; /* hides Bootstrap caret only if .dropdown-toggle */
 }
 
-.dropdown-item:focus,
-.dropdown-item:active {
-  outline: none;          /* removes default outline */
-  box-shadow: none;       /* removes Bootstrap's focus shadow */
-  border-color: transparent; /* ensures no border shows */
-}
 
 
 
