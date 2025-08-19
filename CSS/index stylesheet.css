@@ -181,12 +181,58 @@ header {
   display: none !important; /* hides Bootstrap caret only if .dropdown-toggle */
 }
 
-@media (max-width: 768px) {
-  .navbar .dropdown-menu .dropdown-item:focus,
-  .navbar .dropdown-menu .dropdown-item:active {
+/* Keep keyboard focus visible on desktop (good a11y) */
+.navbar a:focus-visible,
+.navbar button:focus-visible,
+.navbar .dropdown-item:focus-visible {
+  outline: 2px solid #1f1f1f;   /* tweak to your brand */
+  outline-offset: 2px;
+}
+
+/* Remove tap blue ring + glow on touch devices only */
+@media (hover: none) and (pointer: coarse) {
+  /* Removes Android/iOS tap highlight overlay */
+  .navbar a,
+  .navbar button,
+  .navbar .dropdown-item {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Nix the blue focus ring on tap */
+  .navbar .nav-link:focus,
+  .navbar .nav-link:active,
+  .navbar .dropdown-item:focus,
+  .navbar .dropdown-item:active,
+  .navbar .navbar-toggler:focus {
     outline: none !important;
     box-shadow: none !important;
   }
+}
+
+/* Fallback for older browsers: small screens */
+@media (max-width: 768px) {
+  .navbar .nav-link:focus,
+  .navbar .dropdown-item:focus,
+  .navbar .navbar-toggler:focus {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+}
+
+/* Bootstrap-specific: disable toggler focus glow just in the navbar */
+.navbar { 
+  --bs-navbar-toggler-focus-width: 0;  /* kills the default focus box-shadow */
+}
+.navbar .navbar-toggler:focus {
+  box-shadow: none !important;
+}
+
+/* Extra safety for dropdown items */
+.navbar .dropdown-menu .dropdown-item:focus,
+.navbar .dropdown-menu .dropdown-item:active {
+  outline: 0 !important;
+  box-shadow: none !important;
+  border-color: transparent !important; /* in case any custom border shows */
 }
 
 
