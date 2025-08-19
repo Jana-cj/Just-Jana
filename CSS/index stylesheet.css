@@ -181,6 +181,10 @@ header {
   display: none !important; /* hides Bootstrap caret only if .dropdown-toggle */
 }
 
+.navbar .dropdown-menu .dropdown-item:focus {
+  outline: none;
+  background-color: #f2f2f2; /* your brand color */
+}
 
 
 
