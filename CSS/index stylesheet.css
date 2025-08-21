@@ -1499,20 +1499,20 @@ header {
   border-radius: 32px;
   box-shadow: 0 10px 32px rgba(0,0,0,.06);
   max-width: var(--group-max);
-  margin: 36px auto;                   /* centers the whole block */
-  padding: clamp(16px, 3vw, 32px);
-  overflow: hidden;                    /* clips inner shadows to the curve */
-  padding-top: 1.25rem; /* adjust to taste */
+  margin: 36px auto;
+  padding: clamp(24px, 4vw, 48px); /* ↑ more generous; applies to all sides */
+  overflow: hidden;
 }
 
-.pastel-group > h2:first-child {
-  margin-top: 0;
+
+.pastel-group > h2:first-child { 
+  margin-top: 0; 
+}
+.pastel-group h2 { 
+  margin-bottom: 1rem; 
+  text-align: center; 
 }
 
-.pastel-group h2 {
-  margin-bottom: 1rem; /* or whatever you use elsewhere */
-  text-align: center;  /* matches your other headings */
-}
 
 /* Give consistent spacing between the child sections inside the group */
 .pastel-group > * + *{
@@ -1521,10 +1521,13 @@ header {
   border-top: 1px dashed rgba(0,0,0,.06); /* faint divider; remove if you prefer */
 }
 
-/* Keep typography readable on pastel
-.pastel-group h2, 
-.pastel-group h3, 
-.pastel-group p { color: #2b2b2b; } */
+/* add this override */
+.pastel-group > h2 + *{
+  border-top: 0;
+  padding-top: 0;
+  margin-top: clamp(12px, 2.4vw, 24px);
+}
+
 
 /* Make wide inner containers behave inside the curved card */
 .pastel-group .container,
