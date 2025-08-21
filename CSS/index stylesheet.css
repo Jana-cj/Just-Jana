@@ -465,8 +465,12 @@ header {
     right: -10px;
     width: calc(100% + 20px);  /* fill edge to edge */
   }
+
+  .signature {
+    margin-top: 1.5rem;
+  }
 }
-@media (max-width: 768px) {
+@media (min-width: 800px) {
   .content-container {
     flex-direction: row;
     align-items: flex-start;
