@@ -903,6 +903,15 @@ header {
   text-decoration: none;
 }
 
+/* Safety: always show controls on screens wider than 768px */
+@media (min-width: 769px){
+  .carousel .carousel-control-prev,
+  .carousel .carousel-control-next {
+    display: flex;
+  }
+}
+
+
 
 /* Freebies Section */
 .freebies-heading {
