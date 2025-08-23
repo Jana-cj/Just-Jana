@@ -44,7 +44,7 @@ header, .navbar, .site-footer {
 /* Accent headings that use Amatic */
 .subheading,
 .underheading {
-  font-family: 'Poppins';
+  font-family: 'Amatic SC', cursive;
 }
 
 
@@ -305,7 +305,7 @@ header {
 }
 
 .subheading {
-  font-size: 2rem;
+  font-size: 2.5rem;
   color: #444;
 }
 
