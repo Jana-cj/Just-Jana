@@ -350,6 +350,16 @@ color: #444;
   
 }
 
+.thepillars {
+  display: inline-block;   /* keeps section centered as a block */
+  text-align: left;        /* aligns emojis + text left inside */
+}
+
+.thepillars p {
+  margin: 5px 0;           /* spacing between lines */
+}
+
+
 .quote-section{ 
   display:flex; 
   justify-content:flex-start; 
