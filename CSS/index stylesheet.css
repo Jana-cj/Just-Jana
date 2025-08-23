@@ -309,6 +309,12 @@ header {
   color: #444;
 }
 
+.fourpillars {
+font-family: Georgia, 'Times New Roman', Times, serif;
+font-size: 1rem;
+color: #444;
+}
+
 .content-container {
   display: flex;
   flex-direction: column;
