@@ -235,6 +235,46 @@ header {
   border-color: transparent !important; /* in case any custom border shows */
 }
 
+/* Mega dropdown layout */
+.dropdown-mega .mega-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* two columns */
+  gap: 1.25rem;
+  min-width: clamp(320px, 48vw, 680px); /* comfortable width on desktop */
+}
+
+.dropdown-mega .mega-col {
+  min-width: 240px;
+}
+
+.dropdown-header {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #4b2e2e;
+  margin-top: .25rem;
+  margin-bottom: .5rem;
+}
+
+/* Make links sit neatly under headers */
+.dropdown-mega .dropdown-item {
+  padding-left: .75rem;
+}
+
+/* On hover devices, show the whole mega menu */
+@media (hover:hover) {
+  .dropdown:hover > .dropdown-menu.dropdown-mega { display: block; }
+}
+
+/* Stack columns on mobile */
+@media (max-width: 1199.98px) {
+  .dropdown-mega .mega-wrap {
+    grid-template-columns: 1fr;
+    gap: .25rem;
+    min-width: 100%;
+  }
+  .dropdown-mega .dropdown-item { padding-left: 0.5rem; }
+}
+
 
 
 /* index.html */
@@ -351,17 +391,6 @@ color: #7b7b7b;
   
 }
 
-/* @media (max-width: 768px) {
-.thepillars {
-  display: inline-block;   
-  text-align: left;        
-}
-
-.thepillars p {
-  margin: 5px 0;           
-}
-
-} */
 
 .quote-section{ 
   display:flex; 
