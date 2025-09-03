@@ -351,17 +351,17 @@ color: #7b7b7b;
   
 }
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
 .thepillars {
-  display: inline-block;   /* keeps section centered as a block */
-  text-align: left;        /* aligns emojis + text left inside */
+  display: inline-block;   
+  text-align: left;        
 }
 
 .thepillars p {
-  margin: 5px 0;           /* spacing between lines */
+  margin: 5px 0;           
 }
 
-}
+} */
 
 .quote-section{ 
   display:flex; 
