@@ -139,7 +139,8 @@ header {
 .dropdown-submenu { position: relative; }
 .dropdown-submenu > .dropdown-menu {
   top: 0; left: 100%;
-  margin-top: -0.125rem;
+  margin-left: -0.25rem; 
+  margin-top: -0.25rem;
 }
 
 /* Show submenu on hover (desktop/hover devices) */
@@ -150,10 +151,10 @@ header {
 /* Arrow indicator + rotate on open */
 .dropdown-submenu > a::after {
   content: "➤";
-  float: right;
+  display: inline-block;
   margin-left: 6px;
   font-size: .8rem;
-  transition: transform .2s ease;
+  transform: translateY(1px); /* optional, vertically aligns */
 }
 .dropdown-submenu > a[aria-expanded="true"]::after {
   transform: rotate(90deg);
