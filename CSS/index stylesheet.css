@@ -240,7 +240,7 @@ header {
 .dropdown-mega .mega-wrap {
   display: grid;
   grid-template-columns: 1fr 1fr; /* two columns */
-  gap: 0.5rem;
+  gap: 0;
   min-width: clamp(320px, 48vw, 680px); /* comfortable width on desktop */
 }
 
