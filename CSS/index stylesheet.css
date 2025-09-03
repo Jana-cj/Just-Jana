@@ -245,7 +245,7 @@ header {
 }
 
 .dropdown-mega .mega-col {
-  min-width: 240px;
+  padding: 0 0.5rem; /* side breathing space */
 }
 
 .dropdown-header {
