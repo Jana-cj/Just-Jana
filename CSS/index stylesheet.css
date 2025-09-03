@@ -136,10 +136,10 @@ header {
 }
 
 /* --- desktop submenu positioning (unchanged) --- */
-.dropdown-submenu { position: relative; }
+.dropdown-submenu { position: relative; display: inline-block;}
 .dropdown-submenu > .dropdown-menu {
   top: 0; left: 100%;
-  margin-left: -0.25rem; 
+  margin-left: -0.5rem; 
   margin-top: -0.25rem;
 }
 
