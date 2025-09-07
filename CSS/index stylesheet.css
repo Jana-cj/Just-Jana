@@ -412,6 +412,11 @@ header {
   }
 }
 
+.dropdown-menu, .dropdown-mega.jj-blur, .dropdown-submenu > .dropdown-menu{
+  background: #fff !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
 
 /* index.html */
 
