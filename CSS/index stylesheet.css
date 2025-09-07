@@ -276,6 +276,133 @@ header {
   .dropdown-mega .dropdown-item { padding-left: 0.5rem; }
 }
 
+/* ---------- Brand tokens ---------- */
+:root{
+  --jj-accent: #a94caf;
+  --jj-rose:   #b38398;
+  --jj-blush:  #ffe3e4;
+  --jj-ink:    #1f1f1f;
+  --jj-bg:     #ffffff;
+}
+
+/* ---------- Nav link micro-interactions ---------- */
+.navbar .nav-link {
+  position: relative;
+  transition: color .25s ease;
+}
+.navbar .nav-link:hover,
+.navbar .nav-link:focus {
+  color: var(--jj-accent);
+  background: linear-gradient(90deg, var(--jj-accent), #e07fa1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.navbar .nav-link::after{
+  content:"";
+  position:absolute; left:.5rem; right:.5rem; bottom:.25rem;
+  height:2px; transform: scaleX(0);
+  background: linear-gradient(90deg, var(--jj-accent), var(--jj-rose));
+  border-radius: 2px;
+  transition: transform .25s ease;
+  transform-origin: left center;
+}
+.navbar .nav-link:hover::after,
+.navbar .nav-link:focus::after,
+.navbar .nav-item.show > .nav-link::after{ transform: scaleX(1); }
+
+/* ---------- Frosted mega dropdown ---------- */
+.dropdown-mega.jj-blur{
+  background: rgba(255,255,255,.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(169,76,175,.12);
+  box-shadow: 0 20px 40px rgba(0,0,0,.08);
+  border-radius: 14px;
+  min-width: min(1080px, 92vw);
+  padding: 1rem !important;
+}
+
+/* four columns on xl+, then 2, then 1 */
+.body-grid{
+  display: grid;
+  grid-template-columns: repeat(4, minmax(220px,1fr));
+  gap: 16px 24px;
+}
+@media (max-width: 1199.98px){
+  .dropdown-mega.jj-blur{ min-width: 100%; }
+  .body-grid{ grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 575.98px){
+  .body-grid{ grid-template-columns: 1fr; }
+}
+
+/* Column cards lift on hover */
+.mega-col{
+  padding: .25rem .5rem .75rem;
+  border-radius: 12px;
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+}
+@media (hover:hover){
+  .mega-col:hover{
+    transform: translateY(-2px);
+    background: rgba(169,76,175,.05);
+    box-shadow: 0 10px 24px rgba(0,0,0,.06);
+  }
+}
+
+.dropdown-header{
+  font-weight: 800;
+  letter-spacing: .2px;
+  color: var(--jj-accent);
+  margin-top: .25rem;
+  margin-bottom: .25rem;
+}
+
+/* links inside mega */
+.dropdown-mega .dropdown-item{
+  padding: .35rem .5rem;
+  border-radius: 8px;
+  white-space: normal;
+}
+.dropdown-mega .dropdown-item:hover,
+.dropdown-mega .dropdown-item:focus{
+  background: rgba(255, 227, 228, .6) !important;
+  color: var(--jj-ink) !important;
+}
+
+/* Submenu arrow & rotation */
+.dropdown-submenu > a::after{
+  content:"▸";
+  display:inline-block; margin-left:6px; font-size:.8rem;
+  transition: transform .2s ease;
+}
+.dropdown-submenu > a[aria-expanded="true"]::after{ transform: rotate(90deg); }
+
+/* Mobile-friendly submenus: accordion feel */
+@media (max-width: 1199.98px){
+  .dropdown-submenu > .dropdown-menu{
+    position: static; float: none; display: none;
+    padding-left: .75rem; margin: .25rem 0 0 0;
+    border: 0; box-shadow: none; background: transparent;
+  }
+  .dropdown-submenu > .dropdown-menu.show{ display: block; }
+}
+
+/* Hide-on-scroll already wired in your CSS; this adds smoothness */
+#siteNav{ transition: transform .35s ease, background-color .25s ease; }
+
+/* Toggler: default caret svg -> “X” when expanded */
+.navbar-toggler .navbar-toggler-icon{
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26' viewBox='0 0 16 16'%3E%3Cpath stroke='%23222222' stroke-linecap='round' stroke-width='1.5' d='M2 4h12M2 8h12M2 12h12'/%3E%3C/svg%3E");
+}
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon{
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26' viewBox='0 0 16 16'%3E%3Cpath stroke='%23222222' stroke-linecap='round' stroke-width='1.5' d='M3 3l10 10M13 3L3 13'/%3E%3C/svg%3E");
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  *{ transition: none !important; }
+}
 
 
 /* index.html */
