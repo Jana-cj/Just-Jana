@@ -580,204 +580,166 @@
 
 
     <script>
-      const carousel = document.getElementById("monthlyCarousel");
-      const downloadBtn = document.getElementById("downloadBtn");
-      const items = carousel.querySelectorAll(".carousel-item");
-      const prevBtn = carousel.querySelector(".carousel-control-prev");
-      const nextBtn = carousel.querySelector(".carousel-control-next");
-
-      const slides = [
-        { href: "img/Monthly positivity/mantra.png", label: "Download Mantra" },
-        { href: "img/Monthly positivity/Self-affirmation.png", label: "Download Affirmation" },
-        { href: "img/Monthly positivity/Quote.png", label: "Download Quote" }
-      ];
-
-      function updateArrowState() {
-        const activeIndex = [...items].findIndex(item => item.classList.contains('active'));
-        prevBtn.style.display = activeIndex === 0 ? 'none' : 'flex';
-        nextBtn.style.display = activeIndex === items.length - 1 ? 'none' : 'flex';
-      }
-
-      function handleSwipe(start, end) {
-        const swipeThreshold = 50;
-        const carouselInstance = bootstrap.Carousel.getInstance(carousel);
-        const activeIndex = [...items].findIndex(item => item.classList.contains('active'));
-
-        if (end < start - swipeThreshold && activeIndex < items.length - 1) {
-          carouselInstance.next();
-        } else if (end > start + swipeThreshold && activeIndex > 0) {
-          carouselInstance.prev();
-        }
-      }
-
-      document.addEventListener('DOMContentLoaded', () => {
-        updateArrowState();
-
-        let touchStartX = 0;
-        let touchEndX = 0;
-
-        carousel.addEventListener('touchstart', e => {
-          touchStartX = e.changedTouches[0].screenX;
-        });
-
-        carousel.addEventListener('touchend', e => {
-          touchEndX = e.changedTouches[0].screenX;
-          handleSwipe(touchStartX, touchEndX);
-        });
-      });
-
-      carousel.addEventListener('slid.bs.carousel', e => {
-        const index = e.to;
-        downloadBtn.href = slides[index].href;
-        downloadBtn.download = slides[index].href.split('/').pop();
-        downloadBtn.textContent = slides[index].label;
-        updateArrowState();
-      });
-    </script>
-
-<script>
-  const filterButtons = document.querySelectorAll('.filter-btn');
-  const cards = document.querySelectorAll('.freebie-card');
-
-  filterButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      // Activate button
-      filterButtons.forEach(btn => btn.classList.remove('active'));
-      button.classList.add('active');
-
-      const filter = button.getAttribute('data-filter');
-
-      // Show/hide cards
-      cards.forEach(card => {
-        const category = card.getAttribute('data-category');
-        if (filter === 'all' || category === filter) {
-          card.style.display = 'flex';
-        } else {
-          card.style.display = 'none';
-        }
-      });
-    });
-  });
-</script>
-
-<script>
 (function () {
-  const HOVER_NONE = window.matchMedia('(hover: none)');
+  const XL_UP = window.matchMedia('(min-width: 1200px)');
+  const TOUCH  = window.matchMedia('(hover: none)');
 
-  // Handle top-level dropdowns on mobile: let Bootstrap open them, but prevent accidental navigation
+  // Prevent accidental nav on mobile for top-level toggles
   document.querySelectorAll('.nav-item.dropdown > a.dropdown-toggle').forEach(a => {
     a.addEventListener('click', function (e) {
-      if (HOVER_NONE.matches || window.innerWidth < 1200) {
-        // On mobile, just toggle the dropdown (Bootstrap handles this because of data-bs-toggle="dropdown")
-        // Prevent navigation to "#" or section anchors
-        if (!this.getAttribute('data-allow-follow')) {
-          e.preventDefault();
-        }
+      if (TOUCH.matches || !XL_UP.matches) {
+        if (!this.getAttribute('data-allow-follow')) e.preventDefault();
       }
     });
   });
 
-  // Handle submenus on mobile (tap to expand/collapse)
+  // Submenu toggle (mobile / touch)
+  const closeSiblings = (submenu) => {
+    const parentMenu = submenu.closest('.dropdown-menu');
+    if (!parentMenu) return;
+    parentMenu.querySelectorAll(':scope > .dropdown-submenu > .dropdown-menu.show').forEach(m => {
+      if (m !== submenu) {
+        m.classList.remove('show');
+        const t = m.previousElementSibling;
+        if (t) t.setAttribute('aria-expanded','false');
+      }
+    });
+  };
+
   document.querySelectorAll('.dropdown-submenu > .submenu-toggle').forEach(trigger => {
     trigger.addEventListener('click', function (e) {
-      if (HOVER_NONE.matches || window.innerWidth < 1200) {
+      // Only intercept on mobile/touch (desktop hover stays CSS-driven)
+      if (TOUCH.matches || !XL_UP.matches) {
         e.preventDefault();
         e.stopPropagation();
-
         const submenu = this.nextElementSibling; // <ul.dropdown-menu>
-        const parentMenu = this.closest('.dropdown-menu');
-
-        // Close sibling submenus
-        parentMenu.querySelectorAll(':scope > .dropdown-submenu > .dropdown-menu.show').forEach(openMenu => {
-          if (openMenu !== submenu) {
-            openMenu.classList.remove('show');
-            const t = openMenu.previousElementSibling;
-            if (t) t.setAttribute('aria-expanded', 'false');
-          }
-        });
-
-        // Toggle this submenu
         const willShow = !submenu.classList.contains('show');
+        closeSiblings(submenu);
         submenu.classList.toggle('show', willShow);
         this.setAttribute('aria-expanded', String(willShow));
       }
     });
   });
 
-  // When a top-level dropdown hides, also hide any open submenus inside it
+  // Reset nested submenus when any dropdown hides
   document.querySelectorAll('.nav-item.dropdown').forEach(drop => {
     drop.addEventListener('hide.bs.dropdown', function () {
-      this.querySelectorAll('.dropdown-menu.show').forEach(m => m.classList.remove('show'));
-      this.querySelectorAll('.dropdown-submenu > .submenu-toggle[aria-expanded="true"]')
-          .forEach(a => a.setAttribute('aria-expanded', 'false'));
+      this.querySelectorAll('.dropdown-submenu > .dropdown-menu.show').forEach(m => m.classList.remove('show'));
+      this.querySelectorAll('.dropdown-submenu > .submenu-toggle[aria-expanded="true"]').forEach(t => t.setAttribute('aria-expanded','false'));
     });
   });
 
-  // Reset submenus when resizing from mobile to desktop
+  // Reset when resizing up to desktop layout
   window.addEventListener('resize', function () {
-    if (window.innerWidth >= 1200) {
-      document.querySelectorAll('.dropdown-menu.show').forEach(m => m.classList.remove('show'));
-      document.querySelectorAll('.dropdown-submenu > .submenu-toggle[aria-expanded="true"]')
-          .forEach(a => a.setAttribute('aria-expanded', 'false'));
+    if (XL_UP.matches) {
+      document.querySelectorAll('.dropdown-submenu > .dropdown-menu.show').forEach(m => m.classList.remove('show'));
+      document.querySelectorAll('.dropdown-submenu > .submenu-toggle[aria-expanded="true"]').forEach(t => t.setAttribute('aria-expanded','false'));
     }
   });
-})();
-</script>
 
-
-<script>
-(function() {
+  // Hide-on-scroll: keep your existing one if you prefer; this is fine to run alongside
   const nav = document.getElementById('siteNav');
-  let lastY = window.scrollY;
+  if (nav) {
+    let lastY = window.scrollY;
+    const setH = () => document.documentElement.style.setProperty('--nav-h', nav.offsetHeight + 'px');
+    setH(); window.addEventListener('resize', setH);
 
-  // Set correct nav height
-  const setNavHeightVar = () => {
-    document.documentElement.style.setProperty('--nav-h', nav.offsetHeight + 'px');
-  };
-  setNavHeightVar();
-  window.addEventListener('resize', setNavHeightVar);
-
-  window.addEventListener('scroll', () => {
-    const y = window.scrollY;
-
-    if (y > lastY && y > nav.offsetHeight) {
-      nav.classList.add('nav-hidden'); // hide smoothly
-    } else {
-      nav.classList.remove('nav-hidden'); // show smoothly
-    }
-
-    lastY = y <= 0 ? 0 : y;
-  }, { passive: true });
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      nav.classList.toggle('nav-hidden', y > lastY && y > nav.offsetHeight);
+      lastY = y <= 0 ? 0 : y;
+    }, { passive: true });
+  }
 })();
 </script>
 
 <script>
-  // Toggle nested submenus on tap/click (mobile & keyboard)
-  document.addEventListener('click', function (e) {
-    const toggle = e.target.closest('.submenu-toggle');
-    if (!toggle) return;
+document.addEventListener('DOMContentLoaded', () => {
+  const carouselEl = document.getElementById('monthlyCarousel');
+  const downloadBtn = document.getElementById('downloadBtn');
+  if (!carouselEl || !downloadBtn) return; // no-op if not present
 
-    e.preventDefault();
+  const items  = carouselEl.querySelectorAll('.carousel-item');
+  const prevBtn = carouselEl.querySelector('.carousel-control-prev');
+  const nextBtn = carouselEl.querySelector('.carousel-control-next');
 
-    const submenu = toggle.nextElementSibling; // the nested <ul>
-    const isOpen = submenu.classList.contains('show');
+  const slides = [
+    { href: "img/Monthly positivity/mantra.png",         label: "Download Mantra" },
+    { href: "img/Monthly positivity/Self-affirmation.png", label: "Download Affirmation" },
+    { href: "img/Monthly positivity/Quote.png",            label: "Download Quote" }
+  ];
 
-    // close any open sibling submenus in the same column
-    const siblings = toggle.closest('.mega-col')?.querySelectorAll('.dropdown-submenu .dropdown-menu.show') || [];
-    siblings.forEach(s => { if (s !== submenu) s.classList.remove('show'); });
+  const clampIndex = i => Math.max(0, Math.min(i, items.length - 1));
 
-    // toggle this one
-    submenu.classList.toggle('show', !isOpen);
-    toggle.setAttribute('aria-expanded', String(!isOpen));
+  function updateArrowState() {
+    const activeIndex = [...items].findIndex(item => item.classList.contains('active'));
+    if (prevBtn) prevBtn.style.display = activeIndex <= 0 ? 'none' : 'flex';
+    if (nextBtn) nextBtn.style.display = activeIndex >= items.length - 1 ? 'none' : 'flex';
+  }
+
+  // Ensure a Carousel instance exists
+  const instance = bootstrap.Carousel.getOrCreateInstance
+    ? bootstrap.Carousel.getOrCreateInstance(carouselEl)
+    : (bootstrap.Carousel.getInstance(carouselEl) || new bootstrap.Carousel(carouselEl));
+
+  // Swipe
+  let startX = 0;
+  carouselEl.addEventListener('touchstart', e => { startX = e.changedTouches[0].screenX; }, {passive:true});
+  carouselEl.addEventListener('touchend',   e => {
+    const endX = e.changedTouches[0].screenX;
+    const dx = endX - startX;
+    const threshold = 50;
+    const activeIndex = [...items].findIndex(i => i.classList.contains('active'));
+    if (dx < -threshold && activeIndex < items.length - 1) instance.next();
+    if (dx >  threshold && activeIndex > 0)                instance.prev();
+  }, {passive:true});
+
+  // Update download button + arrows after slide
+  carouselEl.addEventListener('slid.bs.carousel', e => {
+    const i = clampIndex(e.to ?? [...items].findIndex(x => x.classList.contains('active')));
+    const slide = slides[i] || slides[0];
+    if (slide) {
+      downloadBtn.href = slide.href;
+      downloadBtn.download = slide.href.split('/').pop();
+      downloadBtn.textContent = slide.label;
+    }
+    updateArrowState();
   });
 
-  // Close nested submenus when the parent mega dropdown hides
-  document.getElementById('dropdownFitness')?.addEventListener('hide.bs.dropdown', function(){
-    document.querySelectorAll('.dropdown-submenu .dropdown-menu.show').forEach(m => m.classList.remove('show'));
-    document.querySelectorAll('.dropdown-submenu .submenu-toggle[aria-expanded="true"]')
-      .forEach(t => t.setAttribute('aria-expanded', 'false'));
-  });
+  // Initial state
+  updateArrowState();
+  // Set initial download button
+  const startIdx = clampIndex([...items].findIndex(x => x.classList.contains('active')) || 0);
+  const startSlide = slides[startIdx] || slides[0];
+  if (startSlide) {
+    downloadBtn.href = startSlide.href;
+    downloadBtn.download = startSlide.href.split('/').pop();
+    downloadBtn.textContent = startSlide.label;
+  }
+});
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const filterButtons = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.freebie-card');
+  if (!filterButtons.length || !cards.length) return;
+
+  filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      filterButtons.forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+      const filter = button.getAttribute('data-filter');
+
+      cards.forEach(card => {
+        const category = card.getAttribute('data-category');
+        card.style.display = (filter === 'all' || category === filter) ? 'flex' : 'none';
+      });
+    });
+  });
+});
+</script>
+
 
 
   </body>

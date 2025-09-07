@@ -404,6 +404,8 @@ header {
   *{ transition: none !important; }
 }
 
+/* Replace this:  .dropdown-submenu { position: relative; display: inline-block; } */
+.dropdown-submenu { position: relative; display: block; }
 
 /* index.html */
 
