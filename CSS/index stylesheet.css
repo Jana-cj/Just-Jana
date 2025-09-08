@@ -145,7 +145,11 @@ backdrop-filter: blur(10px);
     background: var(--jj-soft);
     box-shadow: 0 10px 24px rgba(0,0,0,.06);
   }
+  .dropdown-submenu:hover > .dropdown-menu { display:block; }
 }
+/* also open when the trigger is focused via keyboard */
+.dropdown-submenu:focus-within > .dropdown-menu { display:block; }
+
 
 /* Section headers */
 .dropdown-header{
@@ -207,6 +211,22 @@ backdrop-filter: blur(10px);
     outline: none !important; box-shadow:none !important;
   }
 }
+
+/* let flyouts render outside the mega container */
+.dropdown-menu { overflow: visible; }                 /* parent menu */
+.dropdown-mega { overflow: visible; }                 /* safety with frosted bg */
+.dropdown-submenu > .dropdown-menu { z-index: 1060; } /* above mega surface */
+
+/* default: fly right */
+.dropdown-submenu > .dropdown-menu{
+  top:0; left:100%; margin-left:-.5rem; margin-top:-.25rem;
+}
+
+/* if near the right edge, flip it */
+.dropdown-submenu.submenu-end > .dropdown-menu{
+  left:auto; right:100%; margin-left:0; margin-right:-.5rem;
+}
+
 
 
 
