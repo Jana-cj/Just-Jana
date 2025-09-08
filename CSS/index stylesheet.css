@@ -112,13 +112,7 @@ html, body {
 /* =================== Dropdown / Mega =================== */
 .dropdown-menu{
   border:0; border-radius:14px; box-shadow:0 20px 40px rgba(0,0,0,.08);
-  background:#fff; .dropdown-menu {
-  min-width: auto;
-  width: max-content;
-  max-width: 18rem;
-  white-space: normal;
-}
-
+  background:#fff; 
 }
 .dropdown-item{ color: var(--jj-ink); white-space: normal; }
 
