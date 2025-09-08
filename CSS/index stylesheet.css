@@ -305,7 +305,7 @@ color: #7b7b7b;
 }
 
 .thepillars{
-  width: 100%;           /* pick how wide you want the section */
+  width: 70%;           /* pick how wide you want the section */
   margin: 0 auto;       /* centers the block horizontally */
   text-align: left;     /* aligns the text inside to the left */
 }
