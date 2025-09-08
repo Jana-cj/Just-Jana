@@ -128,12 +128,15 @@ backdrop-filter: blur(10px);
 
 /* Mega layout */
 .body-grid{
-  display:grid;
-  grid-template-columns: repeat(4, minmax(220px,1fr));
-  gap: 16px 24px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(260px, 1fr)); /* 2 side-by-side */
+  gap: 20px 32px; /* a little breathing room */
 }
-@media (max-width: 1199.98px){ .body-grid{ grid-template-columns: repeat(2,1fr); } }
-@media (max-width: 575.98px){ .body-grid{ grid-template-columns: 1fr; } }
+
+/* Stack to 1 column on small screens */
+@media (max-width: 575.98px){
+  .body-grid{ grid-template-columns: 1fr; }
+}
 
 .mega-col{
   padding:.25rem .5rem .75rem; border-radius:12px;
@@ -149,6 +152,7 @@ backdrop-filter: blur(10px);
 }
 /* also open when the trigger is focused via keyboard */
 .dropdown-submenu:focus-within > .dropdown-menu { display:block; }
+
 
 
 /* Section headers */
