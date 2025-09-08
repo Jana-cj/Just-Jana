@@ -304,6 +304,13 @@ font-weight: 50;
 color: #7b7b7b;
 }
 
+.thepillars{
+  width: 60%;           /* pick how wide you want the section */
+  margin: 0 auto;       /* centers the block horizontally */
+  text-align: left;     /* aligns the text inside to the left */
+}
+
+
 .content-container {
   display: flex;
   flex-direction: column;
