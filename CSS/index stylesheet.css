@@ -516,7 +516,7 @@ color: #7b7b7b;
     width: 100%;        /* take full width */
     margin: 0;          /* no auto centering */
     padding: 0 15px;    /* optional: add side padding */
-    text-align: center;   /* force left alignment */
+    text-align: left;   /* force left alignment */
   }
 }
 
