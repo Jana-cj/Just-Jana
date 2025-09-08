@@ -149,8 +149,6 @@ backdrop-filter: blur(10px);
 .mega-col{
   padding:.25rem .5rem .75rem; border-radius:12px;
   transition: transform .2s ease, box-shadow .2s ease, background .2s ease; 
-  position: relative;  /* anchor the submenu positioning */
-  overflow: visible;   /* keep hover effects intact */
 }
 @media (hover:hover){
   .mega-col:hover{
