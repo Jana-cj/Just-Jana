@@ -133,6 +133,14 @@ backdrop-filter: blur(10px);
   gap: 20px 32px; /* a little breathing room */
 }
 
+/* Make submenu boxes self-contained */
+.dropdown-submenu > .dropdown-menu {
+  overflow: hidden;          /* hide anything outside the box */
+  border-radius: 8px;        /* optional: keeps rounded corners */
+  background: #fff;          /* ensure background is solid */
+  z-index: 2000;             /* stay above sibling arrows/text */
+}
+
 /* Stack to 1 column on small screens */
 @media (max-width: 575.98px){
   .body-grid{ grid-template-columns: 1fr; }
@@ -152,7 +160,6 @@ backdrop-filter: blur(10px);
 }
 /* also open when the trigger is focused via keyboard */
 .dropdown-submenu:focus-within > .dropdown-menu { display:block; }
-
 
 
 /* Section headers */
@@ -195,7 +202,7 @@ backdrop-filter: blur(10px);
   .dropdown-mega{ min-width:100%; }
   .dropdown-submenu > .dropdown-menu{
     position: static; float:none; display:none; margin:.25rem 0 0 0;
-    border:0; box-shadow:none; background:transparent; padding-left:.75rem; overflow: hidden;
+    border:0; box-shadow:none; background:transparent; padding-left:.75rem;
   }
   .dropdown-submenu > .dropdown-menu.show{ display:block; }
 }
