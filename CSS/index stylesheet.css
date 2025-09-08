@@ -195,7 +195,7 @@ backdrop-filter: blur(10px);
   .dropdown-mega{ min-width:100%; }
   .dropdown-submenu > .dropdown-menu{
     position: static; float:none; display:none; margin:.25rem 0 0 0;
-    border:0; box-shadow:none; background:transparent; padding-left:.75rem;
+    border:0; box-shadow:none; background:transparent; padding-left:.75rem; overflow: hidden;
   }
   .dropdown-submenu > .dropdown-menu.show{ display:block; }
 }
