@@ -116,18 +116,15 @@ html, body {
 }
 .dropdown-item{ color: var(--jj-ink); white-space: normal; }
 
-/* Apply rounded pink-box styling to About & Brown Girl Diaries too */
-.dropdown-menu.jj-surface {
-  border-radius: 14px;                  /* rounded corners */
-  background: rgba(255,255,255,.85);    /* same subtle glassy background */
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+/* Surface style */
+.dropdown-mega.jj-surface{
+  background: rgba(255,255,255,.85);
+backdrop-filter: blur(10px);
+-webkit-backdrop-filter: blur(10px);
+  min-width: min(1080px, 92vw);
+  padding: 1rem !important;
   border: 1px solid rgba(179,131,152,.15);
-  box-shadow: 0 20px 40px rgba(0,0,0,.08);
-  padding: .5rem;                       /* optional: spacing inside */
 }
-
-
 
 /* Mega layout */
 .body-grid{
@@ -175,13 +172,10 @@ html, body {
 .dropdown-mega .dropdown-item{
   padding:.35rem .5rem; border-radius:8px;
 }
-/* Pink hover everywhere */
-.navbar .dropdown-menu .dropdown-item:hover,
-.navbar .dropdown-menu .dropdown-item:focus{
-  background: rgba(179,131,152,.15) !important; /* same soft pink */
-  color: var(--jj-ink) !important;
+.dropdown-mega .dropdown-item:hover,
+.dropdown-mega .dropdown-item:focus{
+  background: rgba(179,131,152,.15) !important; color: var(--jj-ink) !important;
 }
-
 
 /* Desktop submenu: flyout */
 .dropdown-submenu{ position: relative; display:inline-block; }
