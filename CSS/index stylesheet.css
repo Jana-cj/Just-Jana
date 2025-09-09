@@ -796,7 +796,7 @@ color: #7b7b7b;
 }
 .jj-journeys::before{
   content:"";
-  position:absolute; inset:0 0 auto 0; height: 66%;
+  position:absolute; inset:0 0 auto 0; height: 90%;
   background: var(--jj-wash);
   pointer-events:none;
 }
