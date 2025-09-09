@@ -818,10 +818,12 @@ const closeAllDropdowns = (exceptNode=null) => {
     lastY = y <= 0 ? 0 : y;
   }, { passive: true });
 
-  /* ---------- NEW: Close on ANY wheel movement (desktop, anywhere) ---------- */
-  window.addEventListener('wheel', () => {
-    if (XL_UP.matches) closeAllDropdowns();
-  }, { passive: true });
+/* Close on ANY wheel movement (desktops/laptops), anywhere on the page */
+const HOVER_DEVICE = window.matchMedia('(hover:hover)');
+window.addEventListener('wheel', () => {
+  if (HOVER_DEVICE.matches) closeAllDropdowns();
+}, { passive: true, capture: true });
+
 
   /* ---------- Close on common page-scroll keys (desktop) ---------- */
   document.addEventListener('keydown', (e) => {
