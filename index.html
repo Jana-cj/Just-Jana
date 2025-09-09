@@ -694,14 +694,21 @@
   const anyDropdownOpen = () => document.querySelector('.nav-item.dropdown.show');
   const collapseIsOpen = () => collapseEl && collapseEl.classList.contains('show');
 
-  const closeAllDropdowns = (exceptNode=null) => {
-    allDropdownItems().forEach(node => {
-      if (node !== exceptNode && node.classList.contains('show')) {
-        const toggle = node.querySelector(':scope > a.dropdown-toggle');
-        if (toggle) getDD(toggle).hide();
-      }
-    });
-  };
+const closeAllDropdowns = (exceptNode=null) => {
+  allDropdownItems().forEach(node => {
+    if (node !== exceptNode && node.classList.contains('show')) {
+      // temporarily suppress CSS :hover reopen
+      node.classList.add('nav-freeze');
+      const toggle = node.querySelector(':scope > a.dropdown-toggle');
+      if (toggle) bootstrap.Dropdown.getOrCreateInstance(toggle).hide();
+      // remove the freeze once the pointer leaves or after a short delay
+      const unfreeze = () => node.classList.remove('nav-freeze');
+      node.addEventListener('mouseleave', unfreeze, { once: true });
+      setTimeout(unfreeze, 250);
+    }
+  });
+};
+
 
   /* ---------- Only one top-level dropdown open at a time ---------- */
   allDropdownItems().forEach(node => {
