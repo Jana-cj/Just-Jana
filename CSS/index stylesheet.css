@@ -116,15 +116,17 @@ html, body {
 }
 .dropdown-item{ color: var(--jj-ink); white-space: normal; }
 
-/* Surface style (use on any dropdown that has jj-surface) */
-.dropdown-menu.jj-surface{
-  background: rgba(255,255,255,.85);
+/* Apply rounded pink-box styling to About & Brown Girl Diaries too */
+.dropdown-menu.jj-surface {
+  border-radius: 14px;                  /* rounded corners */
+  background: rgba(255,255,255,.85);    /* same subtle glassy background */
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(179,131,152,.15);
-  border-radius: 14px;
   box-shadow: 0 20px 40px rgba(0,0,0,.08);
+  padding: .5rem;                       /* optional: spacing inside */
 }
+
 
 
 /* Mega layout */
