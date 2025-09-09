@@ -116,15 +116,16 @@ html, body {
 }
 .dropdown-item{ color: var(--jj-ink); white-space: normal; }
 
-/* Surface style */
-.dropdown-mega.jj-surface{
+/* Surface style (use on any dropdown that has jj-surface) */
+.dropdown-menu.jj-surface{
   background: rgba(255,255,255,.85);
-backdrop-filter: blur(10px);
--webkit-backdrop-filter: blur(10px);
-  min-width: min(1080px, 92vw);
-  padding: 1rem !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(179,131,152,.15);
+  border-radius: 14px;
+  box-shadow: 0 20px 40px rgba(0,0,0,.08);
 }
+
 
 /* Mega layout */
 .body-grid{
@@ -172,10 +173,13 @@ backdrop-filter: blur(10px);
 .dropdown-mega .dropdown-item{
   padding:.35rem .5rem; border-radius:8px;
 }
-.dropdown-mega .dropdown-item:hover,
-.dropdown-mega .dropdown-item:focus{
-  background: rgba(179,131,152,.15) !important; color: var(--jj-ink) !important;
+/* Pink hover everywhere */
+.navbar .dropdown-menu .dropdown-item:hover,
+.navbar .dropdown-menu .dropdown-item:focus{
+  background: rgba(179,131,152,.15) !important; /* same soft pink */
+  color: var(--jj-ink) !important;
 }
+
 
 /* Desktop submenu: flyout */
 .dropdown-submenu{ position: relative; display:inline-block; }
