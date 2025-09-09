@@ -183,10 +183,10 @@ html, body {
 .dropdown-submenu{ position: relative; display:inline-block; }
 .dropdown-submenu > .dropdown-menu{ position: absolute;
   top:0; left:100%; margin-left:-.2rem; margin-top:-.25rem;
-   min-width: auto;  width: max-content; max-width: 14rem; white-space: normal; 
+   min-width: auto;  width: max-content; max-width: 15rem; white-space: normal; 
 }
 @media (min-width: 1200px){
-  .dropdown-submenu.submenu-wide > .dropdown-menu{ min-width: auto; max-width: 14rem; }
+  .dropdown-submenu.submenu-wide > .dropdown-menu{ min-width: auto; max-width: 15rem; }
 }
 
 /* Submenu chevron */
@@ -262,6 +262,25 @@ html, body {
 .navbar .nav-link:focus-visible {
   outline: none !important;
 }
+
+/* Wider mega menus (Body, Mind, Heart, Soul) */
+.dropdown-menu.dropdown-mega.jj-surface {
+  min-width: 1200px;        /* increase from 1080px */
+  max-width: 95vw;          /* respect viewport */
+}
+
+/* Wider Brown Girl Diaries (regular dropdown) */
+#dropdownDiaries + .dropdown-menu.jj-surface {
+  min-width: 320px;         /* wider than default */
+  max-width: 90vw;          /* don’t overflow screen */
+}
+
+/* Wider About menu if you want consistency */
+#dropdownAbout + .dropdown-menu.jj-surface {
+  min-width: 280px;
+  max-width: 90vw;
+}
+
 
 /* index.html */
 
