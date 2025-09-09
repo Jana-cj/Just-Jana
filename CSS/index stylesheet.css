@@ -223,6 +223,37 @@ backdrop-filter: blur(10px);
   }
 }
 
+/* ===== NAV: mobile-friendly dropdown scrolling ===== */
+@media (max-width: 1199.98px){
+  /* Make mega menus full-width and scrollable inside the opened navbar */
+  .navbar .dropdown-menu.dropdown-mega {
+    width: 100%;
+    min-width: 100%;
+    max-height: calc(100vh - var(--nav-h) - 16px);
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: .25rem 0 0 0;
+    background: rgba(255,255,255,.96);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  /* Regular dropdowns (About, Diaries, submenus) also scroll safely */
+  .navbar .dropdown-menu:not(.dropdown-mega) {
+    max-height: calc(100vh - var(--nav-h) - 16px);
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Prevent the page under it from peeking during menu scroll */
+  body.nav-open {
+    overflow: hidden;          /* lock body scroll while menu is open */
+    touch-action: none;
+  }
+}
+
+/* Optional: keep navbar visible while user interacts with it */
+#siteNav.navbar:hover { transform: translateY(0); }
 
 
 /* index.html */
