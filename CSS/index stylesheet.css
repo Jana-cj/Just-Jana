@@ -804,12 +804,12 @@ color: #7b7b7b;
 .jj-journeys-head{
   text-align:center; margin-bottom: 12px; padding: 0 12px;
 }
-.jj-journeys-head h2{
+/* .jj-journeys-head h2{
   font-family: "Playfair Display", serif;
   font-size: clamp(24px,4.2vw,34px);
   color: var(--jj-ink); margin: 0 0 6px;
   letter-spacing:.2px;
-}
+} */
 .jj-journeys-head p{
   font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
   color: var(--jj-muted); margin:0;
