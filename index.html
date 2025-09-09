@@ -452,6 +452,82 @@
 </div>
   <br>
 
+  <!-- ===================== My Journeys (Auto-Scroll) ===================== -->
+   <div class="pastel-group">
+<section class="jj-journeys" aria-label="My Journeys">
+  <div class="jj-journeys-head">
+    <h2>My Journeys</h2>
+    <p>Personal stories that shaped Body • Mind • Heart • Soul</p>
+  </div>
+
+  <div class="jj-journeys-viewport" id="jjViewport">
+    <div class="jj-journeys-track" id="jjTrack">
+      <!-- 1) Fitness -->
+      <a class="jj-journey"
+         href="fitnessstory.html"
+         aria-label="Read Fitness Journey">
+        <span class="jj-avatar">
+          <img src="img/Fitness/fitness-pic.png" alt="Fitness Journey">
+        </span>
+        <span class="jj-title">My Fitness Journey</span>
+      </a>
+
+      <!-- 2) Food -->
+      <a class="jj-journey"
+         href="foodjourney.html"
+         aria-label="Read Food Journey">
+        <span class="jj-avatar">
+          <img src="images/journeys/food.jpg" alt="Food Journey">
+        </span>
+        <span class="jj-title">My Food Journey</span>
+      </a>
+
+      <!-- 3) Mental Health -->
+      <a class="jj-journey"
+         href="mentalhealth.html"
+         aria-label="Read Mental Health Journey">
+        <span class="jj-avatar">
+          <img src="img/Me/mental health.png" alt="Mental Health Journey">
+        </span>
+        <span class="jj-title">My Mental Health Journey</span>
+      </a>
+
+      <!-- 4) Curly Hair -->
+      <a class="jj-journey"
+         href="hair.html"
+         aria-label="Read Curly Hair Journey">
+        <span class="jj-avatar">
+          <img src="img/me/curly hair.png" alt="Curly Hair Journey">
+        </span>
+        <span class="jj-title">My Curly Hair Journey</span>
+      </a>
+
+      <!-- 5) Tan Skin -->
+      <a class="jj-journey"
+         href="skin.html"
+         aria-label="Read Tan Skin Journey">
+        <span class="jj-avatar">
+          <img src="img/Me/glow skin.png" alt="Tan Skin Journey">
+        </span>
+        <span class="jj-title">My Tan Skin Journey</span>
+      </a>
+
+      <!-- 6) Music -->
+      <a class="jj-journey"
+         href="musicstory.html"
+         aria-label="Read Music Journey">
+        <span class="jj-avatar">
+          <img src="img/Music/music dp.png" alt="Music Journey">
+        </span>
+        <span class="jj-title">My Music Journey</span>
+      </a>
+    </div>
+  </div>
+</section>
+   </div>
+
+
+
     <div class="pastel-group">
 <section class="diary-section py-5">
   <div class="container">
@@ -845,6 +921,119 @@ window.addEventListener('wheel', () => {
 })();
 </script>
 
+<!-- my journeys -->
+ <script>
+/* ===== Journeys Rail: seamless auto-scroll, swipe, pause on interaction ===== */
+(function(){
+  const viewport = document.getElementById('jjViewport');
+  const track = document.getElementById('jjTrack');
+  if(!viewport || !track) return;
+
+  // ---- Config ----
+  const PX_PER_SEC = 40;     // speed (increase for faster)
+  const RESUME_DELAY = 1800; // ms to resume after interaction ends
+
+  // Respect prefers-reduced-motion
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const speed = prefersReduced ? 0 : PX_PER_SEC;
+
+  // Duplicate children until width > 2.5x viewport for smooth looping
+  function fillLoop(){
+    const vpw = viewport.clientWidth;
+    let total = track.scrollWidth;
+    const originals = Array.from(track.children);
+    while(total < vpw * 2.5){
+      originals.forEach(node => track.appendChild(node.cloneNode(true)));
+      total = track.scrollWidth;
+    }
+  }
+  fillLoop();
+
+  // Auto-scroll using rAF
+  let rafId = null;
+  let last = performance.now();
+  let pausedUntil = 0;
+  let interacting = false;
+
+  function tick(now){
+    const dt = (now - last) / 1000; last = now;
+    if(speed > 0 && now > pausedUntil && !interacting){
+      viewport.scrollLeft += speed * dt;
+      // Loop: when we reach the end, wrap to start
+      const max = track.scrollWidth - viewport.clientWidth;
+      if(viewport.scrollLeft >= max - 1){
+        viewport.scrollLeft = 0;
+      }
+    }
+    rafId = requestAnimationFrame(tick);
+  }
+  rafId = requestAnimationFrame(tick);
+
+  function pause(ms = RESUME_DELAY){ pausedUntil = performance.now() + ms; }
+  function beginInteract(){ interacting = true; pause(RESUME_DELAY); }
+  function endInteract(){ interacting = false; pause(RESUME_DELAY); }
+
+  // Hover pause (desktop)
+  viewport.addEventListener('mouseenter', () => pause(999999));
+  viewport.addEventListener('mouseleave', () => pause(RESUME_DELAY));
+
+  // Keyboard focus pause
+  track.addEventListener('focusin', () => pause(999999));
+  track.addEventListener('focusout', () => pause(RESUME_DELAY));
+
+  // Pointer swipe/drag
+  let isDown = false, startX = 0, startScroll = 0, pointerId = null;
+
+  viewport.addEventListener('pointerdown', (e)=>{
+    isDown = true; pointerId = e.pointerId;
+    viewport.setPointerCapture(pointerId);
+    beginInteract();
+    startX = e.clientX; startScroll = viewport.scrollLeft;
+  });
+  viewport.addEventListener('pointermove', (e)=>{
+    if(!isDown) return;
+    const dx = e.clientX - startX;
+    viewport.scrollLeft = startScroll - dx; // natural swipe
+  });
+  function pointerEnd(e){
+    if(!isDown) return;
+    isDown = false;
+    try{ viewport.releasePointerCapture(pointerId); }catch(_){}
+    endInteract();
+  }
+  viewport.addEventListener('pointerup', pointerEnd);
+  viewport.addEventListener('pointercancel', pointerEnd);
+  viewport.addEventListener('pointerleave', pointerEnd);
+
+  // Click safety: if user drags then clicks, prevent accidental nav
+  let dragMoved = false;
+  viewport.addEventListener('pointermove', ()=>{
+    if(isDown) dragMoved = true;
+  });
+  track.addEventListener('click', (e)=>{
+    if(dragMoved){
+      e.preventDefault();
+      dragMoved = false;
+    }
+  });
+
+  // Rebuild clones on resize (debounced)
+  let rTimer;
+  window.addEventListener('resize', ()=>{
+    clearTimeout(rTimer);
+    rTimer = setTimeout(()=>{
+      // Keep only first unique set (by href+title), delete clones
+      const seen = new Set();
+      [...track.children].forEach(el=>{
+        const key = (el.getAttribute('href')||'') + '|' + (el.querySelector('.jj-title')?.textContent||'');
+        if(seen.has(key)) el.remove();
+        else seen.add(key);
+      });
+      fillLoop();
+    }, 250);
+  });
+})();
+</script>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {

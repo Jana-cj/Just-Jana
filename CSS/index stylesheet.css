@@ -770,15 +770,125 @@ color: #7b7b7b;
   }
 }
 
- .journey-link {
-  color: inherit;          
-  text-decoration: none;   
-    transition: color 0.3s ease;
+/* ===================== Brand tokens ===================== */
+:root{
+  --jj-ink: #1f1f1f;
+  --jj-muted: #5b5b5b;
+  --jj-bg: #ffffff;
+  --jj-soft: rgba(179,131,152,.10);
+  --jj-accent: #b38398; /* dusty rose */
+  --jj-gap: 16px;
+  --jj-card-w: 240px;   /* desktop baseline */
+  --jj-radius: 22px;
+
+  /* soft dreamy background wash */
+  --jj-wash:
+    radial-gradient(60% 80% at 0% 0%, rgba(179,131,152,.18), transparent 60%),
+    radial-gradient(40% 60% at 100% 100%, rgba(233,190,205,.22), transparent 60%);
 }
 
-.journey-link:hover {
-  color:#b38398; 
+/* ===================== Section shell ===================== */
+.jj-journeys{
+  position: relative;
+  padding: clamp(20px,4vw,40px) 0 48px;
+  background: var(--jj-bg);
+  overflow: hidden;
 }
+.jj-journeys::before{
+  content:"";
+  position:absolute; inset:0 0 auto 0; height: 66%;
+  background: var(--jj-wash);
+  pointer-events:none;
+}
+
+.jj-journeys-head{
+  text-align:center; margin-bottom: 12px; padding: 0 12px;
+}
+.jj-journeys-head h2{
+  font-family: "Playfair Display", serif;
+  font-size: clamp(24px,4.2vw,34px);
+  color: var(--jj-ink); margin: 0 0 6px;
+  letter-spacing:.2px;
+}
+.jj-journeys-head p{
+  font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  color: var(--jj-muted); margin:0;
+  font-size: clamp(13px,2.6vw,15px);
+}
+
+/* ===================== Viewport & Track ===================== */
+.jj-journeys-viewport{
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  touch-action: pan-x;
+  /* soft edge fade */
+  mask-image: linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%);
+}
+.jj-journeys-track{
+  display:flex; align-items:stretch;
+  gap: var(--jj-gap);
+  padding: 18px 10px;
+  will-change: transform;
+}
+
+/* ===================== Card ===================== */
+.jj-journey{
+  flex: 0 0 var(--jj-card-w);
+  display:flex; align-items:center; gap:12px;
+  background: #ffffffa8;
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(179,131,152,.18);
+  border-radius: var(--jj-radius);
+  padding: 12px 14px;
+  text-decoration:none;
+  color: var(--jj-ink);
+  box-shadow: 0 10px 30px rgba(0,0,0,.06), 0 2px 10px rgba(0,0,0,.04) inset;
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.jj-journey:hover{
+  transform: translateY(-3px);
+  border-color: rgba(179,131,152,.35);
+  box-shadow: 0 12px 34px rgba(0,0,0,.08), 0 2px 10px rgba(0,0,0,.04) inset;
+}
+.jj-journey:focus{ outline:none; }
+.jj-journey:focus-visible{ box-shadow: 0 0 0 3px rgba(179,131,152,.35); }
+
+/* circle image */
+.jj-avatar{
+  width: 86px; height: 86px; flex: 0 0 auto;
+  border-radius: 999px; overflow: hidden; position: relative;
+  border: 2px solid rgba(179,131,152,.35);
+  box-shadow: 0 6px 16px rgba(0,0,0,.10);
+}
+.jj-avatar img{
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+
+/* title */
+.jj-title{
+  font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  font-weight: 600; font-size: 16px; line-height: 1.2;
+  letter-spacing: .2px;
+}
+
+/* ===================== Responsive ===================== */
+@media (max-width: 1040px){
+  :root{ --jj-card-w: 220px; --jj-gap: 14px; }
+  .jj-avatar{ width: 80px; height: 80px; }
+}
+@media (max-width: 640px){
+  :root{ --jj-card-w: 200px; --jj-gap: 12px; }
+  .jj-avatar{ width: 74px; height: 74px; }
+  .jj-title{ font-size: 15px; }
+}
+
+/* Accessibility: respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .jj-journeys-viewport{ mask-image: none; -webkit-mask-image: none; }
+}
+
 /* diary entry section */
 
 .diary-heading {
