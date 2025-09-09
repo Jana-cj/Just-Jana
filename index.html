@@ -685,35 +685,52 @@
 
 
 
-    <script>
+   <script>
 (function () {
   const XL_UP = window.matchMedia('(min-width: 1200px)');
   const TOUCH  = window.matchMedia('(hover: none)');
 
-  // Prevent accidental nav on mobile for top-level toggles
+  const nav = document.getElementById('siteNav');
+  const dropdownItems = Array.from(document.querySelectorAll('.nav-item.dropdown'));
+
+  // ---------- Helpers ----------
+  const getDD = el => bootstrap.Dropdown.getOrCreateInstance(el.querySelector(':scope > a.dropdown-toggle'));
+  const isMenuOpen = () => document.querySelector('.nav-item.dropdown.show') || document.querySelector('.navbar-collapse.show');
+
+  function closeAllDropdowns(exceptEl=null){
+    dropdownItems.forEach(li => {
+      if (li !== exceptEl && li.classList.contains('show')) {
+        getDD(li).hide();
+      }
+    });
+  }
+
+  // ---------- Two-tap (mobile) on top-level toggles ----------
   document.querySelectorAll('.nav-item.dropdown > a.dropdown-toggle').forEach(a => {
     a.addEventListener('click', function (e) {
       if (TOUCH.matches || !XL_UP.matches) {
-        const isOpen = this.closest('.nav-item.dropdown')?.classList.contains('show');
-        // NEW: two-tap-to-follow behavior
+        const li = this.closest('.nav-item.dropdown');
+        const isOpen = li?.classList.contains('show');
         if (!isOpen && !this.dataset.openedOnce) {
           e.preventDefault();
           this.dataset.openedOnce = 'true';
+          // open this one explicitly
+          getDD(li).show();
         } else if (!this.hasAttribute('data-allow-follow')) {
-          // Still prevent follow if user wants pure toggle behavior
+          // Pure toggle behavior by default
           e.preventDefault();
+          if (isOpen) { getDD(li).hide(); } else { getDD(li).show(); }
         }
       }
     });
 
-    // NEW: reset two-tap flag when pointer leaves the dropdown area
     a.closest('.nav-item.dropdown')?.addEventListener('hide.bs.dropdown', () => {
       delete a.dataset.openedOnce;
     });
   });
 
-  // Submenu toggle (mobile / touch)
-  const closeSiblings = (submenu) => {
+  // ---------- Submenu toggle (mobile / touch) ----------
+  const closeSubmenuSiblings = (submenu) => {
     const parentMenu = submenu.closest('.dropdown-menu');
     if (!parentMenu) return;
     parentMenu.querySelectorAll(':scope > .dropdown-submenu > .dropdown-menu.show').forEach(m => {
@@ -726,30 +743,24 @@
   };
 
   document.querySelectorAll('.dropdown-submenu > .submenu-toggle').forEach(trigger => {
-    // Click/tap
     trigger.addEventListener('click', function (e) {
-      if (TOUCH.matches || !XL_UP.matches) { // Only intercept on mobile/touch
-        e.preventDefault();
-        e.stopPropagation();
-        const submenu = this.nextElementSibling; // <ul.dropdown-menu>
+      if (TOUCH.matches || !XL_UP.matches) {
+        e.preventDefault(); e.stopPropagation();
+        const submenu = this.nextElementSibling;
         const willShow = !submenu.classList.contains('show');
-        closeSiblings(submenu);
+        closeSubmenuSiblings(submenu);
         submenu.classList.toggle('show', willShow);
         this.setAttribute('aria-expanded', String(willShow));
       }
     });
 
-    // NEW: keyboard support (Enter/Space toggles on mobile; Esc closes)
     trigger.addEventListener('keydown', function (e) {
-      const submenu = this.nextElementSibling;
-      if (!submenu) return;
-
-      // On mobile/tablet layout we treat submenus as accordions
+      const submenu = this.nextElementSibling; if (!submenu) return;
       if (TOUCH.matches || !XL_UP.matches) {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
           const willShow = !submenu.classList.contains('show');
-          closeSiblings(submenu);
+          closeSubmenuSiblings(submenu);
           submenu.classList.toggle('show', willShow);
           this.setAttribute('aria-expanded', String(willShow));
         } else if (e.key === 'Escape') {
@@ -762,44 +773,74 @@
     });
   });
 
-  // Sync ARIA on parent dropdown open/close (desktop & mobile)
-  document.querySelectorAll('.nav-item.dropdown').forEach(drop => {
-    drop.addEventListener('show.bs.dropdown', function () {
+  // ---------- Single-open enforcement ----------
+  dropdownItems.forEach(li => {
+    li.addEventListener('show.bs.dropdown', function () {
+      // close all others immediately
+      closeAllDropdowns(this);
       const t = this.querySelector(':scope > a.dropdown-toggle');
-      if (t) t.setAttribute('aria-expanded','true'); // NEW
+      if (t) t.setAttribute('aria-expanded','true');
     });
-    drop.addEventListener('hide.bs.dropdown', function () {
+
+    li.addEventListener('hide.bs.dropdown', function () {
       // collapse any nested submenus
       this.querySelectorAll('.dropdown-submenu > .dropdown-menu.show').forEach(m => m.classList.remove('show'));
       this.querySelectorAll('.dropdown-submenu > .submenu-toggle[aria-expanded="true"]').forEach(t => t.setAttribute('aria-expanded','false'));
       const t = this.querySelector(':scope > a.dropdown-toggle');
-      if (t) t.setAttribute('aria-expanded','false'); // NEW
+      if (t) t.setAttribute('aria-expanded','false');
     });
+
+    // Hover-to-switch on desktop: open this, close others
+    if (window.matchMedia('(hover:hover)').matches) {
+      li.addEventListener('mouseenter', function () {
+        if (XL_UP.matches) {
+          // visually it's already open via CSS on hover, but we also sync Bootstrap state:
+          const dd = getDD(this);
+          if (!this.classList.contains('show')) dd.show();
+          closeAllDropdowns(this);
+        }
+      });
+    }
   });
 
-  // Reset when resizing up to desktop layout
+  // ---------- Close on page scroll ----------
+  let lastY = window.scrollY;
+  const setH = () => document.documentElement.style.setProperty('--nav-h', nav.offsetHeight + 'px');
+  if (nav){ setH(); window.addEventListener('resize', setH, { passive: true }); }
+
+  function handleScroll(){
+    // Always close any open dropdowns when page scrolls
+    closeAllDropdowns();
+    // Auto-hide behavior, but NOT while nav/menu is in use
+    if (!nav) return;
+    const y = window.scrollY;
+    const menuIsInUse = isMenuOpen() || nav.matches(':hover');
+    nav.classList.toggle('nav-hidden', !menuIsInUse && (y > lastY) && (y > nav.offsetHeight));
+    lastY = y <= 0 ? 0 : y;
+  }
+  window.addEventListener('scroll', handleScroll, { passive: true });
+
+  // Prevent header auto-hide while user interacts with nav / menus
+  ['mouseenter','focusin','touchstart'].forEach(ev => {
+    nav?.addEventListener(ev, () => nav?.classList.remove('nav-hidden'), { passive: true });
+  });
+
+  // Also close when clicking anywhere outside the nav
+  document.addEventListener('click', (e) => {
+    const insideNav = e.target.closest('#siteNav');
+    if (!insideNav) closeAllDropdowns();
+  }, { passive: true });
+
+  // Reset nested submenu state when switching to desktop
   window.addEventListener('resize', function () {
     if (XL_UP.matches) {
       document.querySelectorAll('.dropdown-submenu > .dropdown-menu.show').forEach(m => m.classList.remove('show'));
       document.querySelectorAll('.dropdown-submenu > .submenu-toggle[aria-expanded="true"]').forEach(t => t.setAttribute('aria-expanded','false'));
     }
-  });
-
-  // Hide-on-scroll
-  const nav = document.getElementById('siteNav');
-  if (nav) {
-    let lastY = window.scrollY;
-    const setH = () => document.documentElement.style.setProperty('--nav-h', nav.offsetHeight + 'px');
-    setH(); window.addEventListener('resize', setH, { passive: true });
-
-    window.addEventListener('scroll', () => {
-      const y = window.scrollY;
-      nav.classList.toggle('nav-hidden', y > lastY && y > nav.offsetHeight);
-      lastY = y <= 0 ? 0 : y;
-    }, { passive: true });
-  }
+  }, { passive: true });
 })();
 </script>
+
 
 
 <script>
