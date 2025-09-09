@@ -255,6 +255,11 @@ backdrop-filter: blur(10px);
 /* Optional: keep navbar visible while user interacts with it */
 #siteNav.navbar:hover { transform: translateY(0); }
 
+.navbar .nav-link:focus,
+.navbar .nav-link:active,
+.navbar .nav-link:focus-visible {
+  outline: none !important;
+}
 
 /* index.html */
 
