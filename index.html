@@ -91,9 +91,8 @@
 
 
           <div class="dropdown-submenu submenu-wide">
-<button type="button" class="dropdown-item submenu-toggle" aria-expanded="false" aria-controls="bc-submenu">
-  Body Composition
-</button>            <ul class="dropdown-menu">
+            <a class="dropdown-item submenu-toggle" href="#" aria-expanded="false">Body Composition</a>
+            <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">Why It Matters</a></li>
               <li><a class="dropdown-item" href="#">How to Calculate Body Composition</a></li>
               <li><a class="dropdown-item" href="#">How to Calculate BMR</a></li>
@@ -114,9 +113,8 @@
         <div class="mega-col">
           <h6 class="dropdown-header">Conscious Choices</h6>
           <div class="dropdown-submenu submenu-wide">
-<button type="button" class="dropdown-item submenu-toggle" aria-expanded="false" aria-controls="pe-submenu">
-  Plant-based Eating
-</button>            <ul class="dropdown-menu">
+            <a class="dropdown-item submenu-toggle" href="#" aria-expanded="false">Plant-based Eating</a>
+            <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">Benefits of Wholefoods</a></li>
               <li><a class="dropdown-item" href="#">My Journey With Food</a></li>
             </ul>
@@ -129,9 +127,8 @@
         <div class="mega-col">
           <h6 class="dropdown-header">Gentle Self-Care</h6>
           <div class="dropdown-submenu submenu-wide submenu-end">
-<button type="button" class="dropdown-item submenu-toggle" aria-expanded="false" aria-controls="cc-submenu">
-  Curly Hair Care
-</button>            <ul class="dropdown-menu">
+            <a class="dropdown-item submenu-toggle" href="#" aria-expanded="false">Curly Hair Care</a>
+            <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">Curly Hair Routine</a></li>
               <li><a class="dropdown-item" href="#">Maintaining Healthy Hair</a></li>
             </ul>
@@ -276,9 +273,8 @@
           <a class="dropdown-item" href="movement.html">Reconnecting With Childhood Joys</a>
           <a class="dropdown-item" href="movement.html">Creativity as Healing</a>
           <div class="dropdown-submenu submenu-wide submenu-end">
-<button type="button" class="dropdown-item submenu-toggle" aria-expanded="false" aria-controls="hm-submenu">
-  Healing Through Music
-</button>            <ul class="dropdown-menu">
+            <a class="dropdown-item submenu-toggle" href="#" aria-expanded="false">Healing Through Music</a>
+            <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">Music as Medicine for the Soul</a></li>
               <li><a class="dropdown-item" href="musicstory.html">My Music Journey</a></li>
               <li><a class="dropdown-item" href="healing-compositions.html">Healing Compositions</a></li>
@@ -853,40 +849,6 @@ window.addEventListener('wheel', () => {
     });
   }
 })();
-</script>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  // Don’t close the top-level dropdown when a submenu toggle is clicked
-  document.querySelectorAll('.nav-item.dropdown').forEach(dd => {
-    dd.addEventListener('hide.bs.dropdown', function (e) {
-      const src = e.clickEvent?.target;
-      if (src && (src.closest('.submenu-toggle') || src.closest('.dropdown-submenu'))) {
-        e.preventDefault(); // keep the mega open
-      }
-    });
-  });
-
-  // Submenu toggles: open/close on tap (mobile/tablet) and also work on desktop click
-  document.querySelectorAll('.dropdown-submenu > .submenu-toggle').forEach(trigger => {
-    trigger.addEventListener('click', function (e) {
-      e.preventDefault();
-      e.stopPropagation();
-      const submenu = this.nextElementSibling;               // the UL
-      const parentMenu = this.closest('.dropdown-menu');     // the containing UL
-
-      // close siblings first (accordion behavior)
-      parentMenu?.querySelectorAll(':scope > .dropdown-submenu > .dropdown-menu.show')
-        .forEach(m => { if (m !== submenu) m.classList.remove('show'); });
-      parentMenu?.querySelectorAll(':scope > .dropdown-submenu > .submenu-toggle[aria-expanded="true"]')
-        .forEach(t => { if (t !== this) t.setAttribute('aria-expanded', 'false'); });
-
-      const willShow = !submenu.classList.contains('show');
-      submenu.classList.toggle('show', willShow);
-      this.setAttribute('aria-expanded', String(willShow));
-    });
-  });
-});
 </script>
 
 
