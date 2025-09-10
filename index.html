@@ -467,6 +467,14 @@
   </div>
 
   <div class="jj-journeys-viewport" id="jjViewport">
+    <!-- Desktop-only arrows -->
+    <button class="jj-arrow jj-arrow-left" type="button" aria-label="Scroll left" id="jjArrowLeft">
+      <span aria-hidden="true">‹</span>
+    </button>
+    <button class="jj-arrow jj-arrow-right" type="button" aria-label="Scroll right" id="jjArrowRight">
+      <span aria-hidden="true">›</span>
+    </button>
+
     <div class="jj-journeys-track" id="jjTrack">
       <!-- 1) Fitness -->
       <a class="jj-journey" href="fitnessstory.html" aria-label="Read Fitness Journey">
@@ -912,40 +920,41 @@ window.addEventListener('wheel', () => {
 
 <!-- my journeys -->
  <script>
-/* ===== Smooth, GPU-accelerated Auto-Scroll with Drag/Swipe Pause ===== */
+/* ===== Smooth auto-scroll + drag/swipe + desktop arrows ===== */
 (function(){
   const viewport = document.getElementById('jjViewport');
   const track = document.getElementById('jjTrack');
+  const leftBtn = document.getElementById('jjArrowLeft');
+  const rightBtn = document.getElementById('jjArrowRight');
   if(!viewport || !track) return;
 
   // ----- Config -----
   const PX_PER_SEC = 40;        // auto speed (increase for faster)
   const RESUME_DELAY = 1800;    // ms after user interaction to resume
+  const NUDGE_FACTOR = 0.8;     // arrow click moves ~80% viewport width
+  const TWEEN_MS = 380;         // arrow tween duration (ms)
   const prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const autoSpeed = prefersReduced ? 0 : PX_PER_SEC;
 
-  // Keep original set for width calc & de-dup on resize
+  // Keep original set for wrap calculations
   const originals = Array.from(track.children);
 
-  // Utility: sum width of a node list (including CSS gap)
+  // Width helpers
   function widthOf(nodes){
     const gap = parseFloat(getComputedStyle(track).gap || 0);
-    const totalCards = nodes.length;
     let total = 0;
     nodes.forEach(n => { total += n.getBoundingClientRect().width; });
-    // add gap * (n-1)
-    return total + Math.max(0, totalCards - 1) * gap;
+    return total + Math.max(0, nodes.length - 1) * gap;
   }
 
-  // Fill with clones until track width > ~2.5x viewport
+  // Clone until long enough
   function fillLoop(){
-    // remove prior clones (keep only first unique set)
+    // remove prior clones, keep first unique set
     const seen = new Set();
     [...track.children].forEach(el=>{
       const key = (el.getAttribute('href')||'') + '|' + (el.querySelector('.jj-title')?.textContent||'');
       if(seen.has(key)) el.remove(); else seen.add(key);
     });
-
     const vpw = viewport.clientWidth;
     let total = track.scrollWidth;
     while(total < vpw * 2.5){
@@ -955,16 +964,17 @@ window.addEventListener('wheel', () => {
   }
   fillLoop();
 
-  // Distance of one original cycle (used for seamless wrap)
+  // One full original cycle width
   let setWidth = widthOf(originals);
 
   // Animation state
   let rafId, last = performance.now(), pausedUntil = 0, interacting = false;
-  let x = 0;        // current offset in px (0..setWidth)
+  let x = 0;        // current offset (0..setWidth)
   let moved = false;
+  let tweening = false;
 
   function render(){
-    // Wrap x to [0, setWidth)
+    // normalize x into [0, setWidth)
     if (x >= setWidth) x -= setWidth;
     else if (x < 0) x += setWidth;
     track.style.transform = `translate3d(${-x}px,0,0)`;
@@ -972,7 +982,7 @@ window.addEventListener('wheel', () => {
 
   function frame(now){
     const dt = (now - last) / 1000; last = now;
-    if(autoSpeed > 0 && now > pausedUntil && !interacting){
+    if(autoSpeed > 0 && now > pausedUntil && !interacting && !tweening){
       x += autoSpeed * dt;
       render();
     }
@@ -985,7 +995,7 @@ window.addEventListener('wheel', () => {
   function beginInteract(){ interacting = true; pause(RESUME_DELAY); }
   function endInteract(){ interacting = false; pause(RESUME_DELAY); }
 
-  // Hover pause (desktop) — passive so it never blocks
+  // Hover pause (desktop)
   viewport.addEventListener('mouseenter', () => pause(999999), {passive:true});
   viewport.addEventListener('mouseleave', () => pause(RESUME_DELAY), {passive:true});
 
@@ -993,7 +1003,7 @@ window.addEventListener('wheel', () => {
   track.addEventListener('focusin', () => pause(999999));
   track.addEventListener('focusout', () => pause(RESUME_DELAY));
 
-  // Drag/Swipe (desktop & mobile via Pointer Events)
+  // Drag/Swipe via Pointer Events
   let isDown = false, startX = 0, xAtStart = 0, pointerId = null;
 
   viewport.addEventListener('pointerdown', (e)=>{
@@ -1022,10 +1032,69 @@ window.addEventListener('wheel', () => {
   viewport.addEventListener('pointercancel', endPointer, {passive:true});
   viewport.addEventListener('pointerleave', endPointer, {passive:true});
 
-  // Prevent accidental link activation after a drag gesture
+  // Prevent accidental link activation after drag
   track.addEventListener('click', (e)=>{
     if(moved){ e.preventDefault(); moved = false; }
   });
+
+  // ----- Desktop arrow controls -----
+  function easeOutCubic(t){ return 1 - Math.pow(1 - t, 3); }
+
+  function tweenTo(targetX, ms = TWEEN_MS){
+    // normalize start & target into continuous space near current x
+    let start = x;
+    // snap target within +/- setWidth/2 for the shortest path
+    let delta = targetX - start;
+    if (delta >  setWidth/2)  delta -= setWidth;
+    if (delta < -setWidth/2)  delta += setWidth;
+
+    const end = start + delta;
+    const t0 = performance.now();
+    tweening = true; beginInteract();
+
+    function step(t){
+      const p = Math.min(1, (t - t0)/ms);
+      const e = easeOutCubic(p);
+      x = start + delta * e;
+      render();
+      if(p < 1) requestAnimationFrame(step);
+      else { tweening = false; endInteract(); }
+    }
+    requestAnimationFrame(step);
+  }
+
+  function nudge(direction){
+    // direction: -1 left (content moves right), +1 right (content moves left)
+    const distance = viewport.clientWidth * NUDGE_FACTOR;
+    const target = x + (direction > 0 ? distance : -distance);
+    tweenTo(target);
+  }
+
+  if(leftBtn && rightBtn){
+    leftBtn.addEventListener('click', ()=> nudge(-1));
+    rightBtn.addEventListener('click', ()=> nudge(+1));
+
+    // Hold to scroll: press & hold arrow to keep nudging
+    let holdTimer = null, holdInterval = null;
+    function startHold(dir){
+      nudge(dir);
+      holdTimer = setTimeout(()=>{
+        holdInterval = setInterval(()=> nudge(dir), 260);
+      }, 450);
+    }
+    function endHold(){
+      clearTimeout(holdTimer); clearInterval(holdInterval);
+      holdTimer = holdInterval = null;
+    }
+    ['mousedown','touchstart'].forEach(ev=>{
+      leftBtn.addEventListener(ev, (e)=>{ e.preventDefault(); startHold(-1); }, {passive:false});
+      rightBtn.addEventListener(ev, (e)=>{ e.preventDefault(); startHold(+1); }, {passive:false});
+    });
+    ['mouseup','mouseleave','touchend','touchcancel'].forEach(ev=>{
+      leftBtn.addEventListener(ev, endHold, {passive:true});
+      rightBtn.addEventListener(ev, endHold, {passive:true});
+    });
+  }
 
   // Recompute on resize (debounced)
   let rTimer;
@@ -1039,6 +1108,7 @@ window.addEventListener('wheel', () => {
   });
 })();
 </script>
+
 
 
 <script>

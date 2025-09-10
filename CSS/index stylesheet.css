@@ -796,7 +796,7 @@ color: #7b7b7b;
   content:"";
   position:absolute;
   inset: 0 0 auto 0; /* cover from top; adjust height below */
-  height: 100%;       /* ← make the pink gradient “longer/shorter” here */
+  height: 100%;       /* adjust to lengthen/shorten pink wash */
   background: var(--jj-pink-wash);
   pointer-events:none;
 }
@@ -804,12 +804,7 @@ color: #7b7b7b;
 .jj-journeys-head{
   text-align:center; margin-bottom: 12px; padding: 0 12px;
 }
-.jj-journeys-head h2{
-  font-family: "Playfair Display", serif;
-  font-size: clamp(24px,4.2vw,34px);
-  color: var(--jj-ink); margin: 0 0 6px;
-  letter-spacing:.2px;
-}
+
 .jj-journeys-head p{
   font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
   color: var(--jj-muted); margin:0;
@@ -822,7 +817,6 @@ color: #7b7b7b;
   overflow: hidden;
   user-select: none;
   touch-action: pan-x;
-  /* optional soft edge fade (disabled on small screens below) */
   mask-image: linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%);
   -webkit-mask-image: linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%);
 }
@@ -834,11 +828,11 @@ color: #7b7b7b;
   will-change: transform;
 }
 
-/* ===================== Card ===================== */
+/* ===================== Cards ===================== */
 .jj-journey{
   flex: 0 0 var(--jj-card-w);
   display:flex; align-items:center; gap:12px;
-  background: #ffffff;               /* solid for cheaper paint on mobile */
+  background: #ffffff;
   border: 1px solid rgba(179,131,152,.18);
   border-radius: var(--jj-radius);
   padding: 12px 14px;
@@ -854,23 +848,47 @@ color: #7b7b7b;
 }
 .jj-journey:focus{ outline:none; }
 .jj-journey:focus-visible{ box-shadow: 0 0 0 3px rgba(179,131,152,.35); }
-
-/* circle image */
 .jj-avatar{
   width: 86px; height: 86px; flex: 0 0 auto;
   border-radius: 999px; overflow: hidden;
   border: 2px solid rgba(179,131,152,.35);
   box-shadow: 0 6px 16px rgba(0,0,0,.10);
 }
-.jj-avatar img{
-  width: 100%; height: 100%; object-fit: cover; display: block;
-}
-
-/* title */
+.jj-avatar img{ width:100%; height:100%; object-fit:cover; display:block; }
 .jj-title{
   font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-  font-weight: 600; font-size: 16px; line-height: 1.2;
-  letter-spacing: .2px;
+  font-weight: 600; font-size: 16px; line-height: 1.2; letter-spacing: .2px;
+}
+
+/* ===================== Desktop-only arrows ===================== */
+.jj-arrow{
+  position: absolute;
+  top: 50%;
+  translate: 0 -50%;
+  z-index: 2;
+  width: 44px; height: 44px;
+  border-radius: 999px;
+  border: 1px solid rgba(179,131,152,.35);
+  background: rgba(255,255,255,.9);
+  box-shadow: 0 6px 16px rgba(0,0,0,.10);
+  color: var(--jj-ink);
+  font-size: 28px;
+  line-height: 1;
+  display: none; /* hidden by default, shown on desktop */
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease;
+}
+.jj-arrow:hover{ transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,.12); }
+.jj-arrow:focus{ outline: none; }
+.jj-arrow:focus-visible{ box-shadow: 0 0 0 3px rgba(179,131,152,.35); }
+.jj-arrow-left{ left: 6px; }
+.jj-arrow-right{ right: 6px; }
+
+/* show arrows on desktop only */
+@media (min-width: 960px){
+  .jj-arrow{ display: inline-flex; }
 }
 
 /* ===================== Responsive ===================== */
