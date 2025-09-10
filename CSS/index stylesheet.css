@@ -144,16 +144,28 @@ html, body {
 #dropdownAbout + .dropdown-menu.jj-surface{ min-width:14rem; }
 #dropdownDiaries + .dropdown-menu.jj-surface{ min-width:16rem; }
 
-/* ---------- Mega layout + stacking fix ---------- */
+/* ---------- Mega layout + stacking (fixed) ---------- */
 .body-grid{
   display:grid;
   grid-template-columns: repeat(2, minmax(260px,1fr));
   gap:20px 32px;
 }
 
-/* Create predictable layers so flyout sits on top */
-.dropdown-menu.dropdown-mega{ position:relative; z-index:30; } /* base */
-.mega-col{ position:relative; z-index:10; }                    /* columns */
+/* Base layers */
+.dropdown-menu.dropdown-mega{ position:relative; z-index:10; } /* whole mega */
+.mega-col{ position:relative; z-index:1; }                      /* each column */
+
+/* Lift the column that owns the open/hovered submenu above neighbors */
+@supports(selector(:has(*))){
+  .mega-col:hover,
+  .mega-col:has(.dropdown-submenu:hover),
+  .mega-col:has(.dropdown-submenu:focus-within),
+  .mega-col:has(.dropdown-menu:hover){
+    z-index:100;
+  }
+}
+/* Fallback for browsers without :has() */
+.mega-col:hover{ z-index:100; }
 
 /* Flyout submenu panel */
 .dropdown-submenu{ position: relative; display:inline-block; }
@@ -161,10 +173,12 @@ html, body {
   position:absolute; top:0; left:100%;
   margin-left:.5rem; margin-top:-.25rem;
   min-width:auto; width:max-content; max-width:14rem; white-space:normal;
+
+  /* Self-contained and above the lifted column */
   overflow:hidden; border-radius:8px;
-  background:#fff;                 /* opaque: nothing shows through */
-  z-index:40;                      /* above columns and mega base */
+  background:#fff;                                  /* opaque prevents show-through */
   box-shadow:0 8px 24px rgba(0,0,0,.12);
+  z-index:110;                                      /* above the lifted column */
 }
 
 /* Stack to 1 column on small screens */
@@ -179,9 +193,10 @@ html, body {
     transform: translateY(-2px);
     background: var(--jj-soft);
     box-shadow: 0 10px 24px rgba(0,0,0,.06);
-    z-index:10; /* do NOT rise above submenu */
+    /* z-index handled above */
   }
 }
+
 /* also open when the trigger is focused via keyboard */
 .dropdown-submenu:focus-within > .dropdown-menu{ display:block; }
 
