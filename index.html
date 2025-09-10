@@ -747,92 +747,141 @@
   
 <script>
 /* ==========================================================================
-   Just Jana — Navbar / Mega Menu (hover + tap) with submenu tap-to-close
+   Just Jana — Navbar (fully mobile-friendly)
+   - Desktop: hover opens, mouseout closes
+   - Mobile: accordions (single top-level open; tap toggles; submenus toggle)
+   - Tap again closes; overlay + body scroll lock on mobile
+   - Opaque panels on mobile (no see-through)
+   Requires: Bootstrap 5 bundle (already on your page)
    ========================================================================== */
 (function () {
   const XL_UP        = window.matchMedia('(min-width: 1200px)');
   const HOVER_DEVICE = window.matchMedia('(hover:hover)');
-  const TOUCH        = window.matchMedia('(hover: none)');
+  const TOUCH_DEVICE = window.matchMedia('(hover:none)');
 
   const nav        = document.getElementById('siteNav');
   const collapseEl = document.getElementById('navbarSupportedContent');
 
-  /* ---------- Inject CSS: opaque submenus + mobile scroll ---------- */
+  /* ---------- Inject minimal CSS so this is drop-in ---------- */
   (function injectCSS(){
     const css = `
-      .dropdown-submenu > .dropdown-menu{
-        background:#fff !important;
-        backdrop-filter:none !important;
-        -webkit-backdrop-filter:none !important;
-        z-index:110;
+      /* overlay lives under fixed navbar (which is z=999) */
+      #jjNavOverlay{
+        position: fixed; inset: var(--nav-h) 0 0 0;
+        background: rgba(0,0,0,.25);
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
+        z-index: 998; display:none;
       }
+      body.nav-open #jjNavOverlay{ display:block; }
+
+      /* collapsed area scroll comfort */
       @media (max-width:1199.98px){
-        .dropdown-submenu > .dropdown-menu{
-          max-height:300px;
-          overflow-y:auto;
-          -webkit-overflow-scrolling:touch;
+        #navbarSupportedContent{
+          max-height: calc(100vh - var(--nav-h));
+          overflow: auto; -webkit-overflow-scrolling: touch;
         }
+        .dropdown-menu{
+          background:#fff !important;
+          backdrop-filter:none !important;
+          -webkit-backdrop-filter:none !important;
+        }
+      }
+      /* flyout safety */
+      .dropdown-submenu > .dropdown-menu{ z-index: 110 !important; }
+      /* avoid hover underline anim on touch */
+      @media (hover:none){
+        .navbar .nav-link::after{ display:none; }
       }
     `;
     const tag = document.createElement('style');
-    tag.setAttribute('data-jj-nav','submenu-opaque');
+    tag.setAttribute('data-jj-nav','mobile-safe');
     tag.textContent = css;
     document.head.appendChild(tag);
   })();
 
-  /* ----------------------------- Helpers ----------------------------- */
-  const qsa  = (sel, root=document) => Array.from(root.querySelectorAll(sel));
-  const getDD = (el) => bootstrap.Dropdown.getOrCreateInstance(el);
-  const allDropdownItems = () => qsa('.nav-item.dropdown');
-  const anyDropdownOpen  = () => document.querySelector('.nav-item.dropdown.show');
-  const collapseIsOpen   = () => collapseEl && collapseEl.classList.contains('show');
+  /* ---------- Overlay element ---------- */
+  let overlay = document.getElementById('jjNavOverlay');
+  if(!overlay){
+    overlay = document.createElement('div');
+    overlay.id = 'jjNavOverlay';
+    document.body.appendChild(overlay);
+  }
+  overlay.addEventListener('click', () => {
+    if (collapseEl && collapseEl.classList.contains('show')) {
+      bootstrap.Collapse.getOrCreateInstance(collapseEl).hide();
+    }
+    closeAllDropdowns();
+    unlockBody();
+  }, {passive:true});
 
-  function closeAllDropdowns(exceptNode=null){
-    allDropdownItems().forEach(node => {
-      if (node !== exceptNode && node.classList.contains('show')) {
-        node.classList.add('nav-freeze');  // suppress :hover flash
-        const t = node.querySelector(':scope > a.dropdown-toggle');
+  /* ---------- Helpers ---------- */
+  const $$  = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+  const getDD = (toggle) => bootstrap.Dropdown.getOrCreateInstance(toggle);
+
+  const topItems   = $$('.nav-item.dropdown');
+  const topToggles = $$('.nav-item.dropdown > a.dropdown-toggle');
+
+  function anyDropdownOpen(){ return !!document.querySelector('.nav-item.dropdown.show'); }
+  function collapseIsOpen(){ return collapseEl && collapseEl.classList.contains('show'); }
+
+  function closeAllDropdowns(except=null){
+    topItems.forEach(li=>{
+      if (li !== except && li.classList.contains('show')) {
+        const t = li.querySelector(':scope > a.dropdown-toggle');
         if (t) getDD(t).hide();
-        const unfreeze = () => node.classList.remove('nav-freeze');
-        node.addEventListener('mouseleave', unfreeze, { once: true });
-        setTimeout(unfreeze, 250);
       }
+      $$('.dropdown-submenu > .dropdown-menu.show', li).forEach(menu=>{
+        menu.classList.remove('show');
+        menu.previousElementSibling?.setAttribute('aria-expanded','false');
+      });
     });
   }
 
-  function closeAllSubmenus(scope){
-    qsa('.dropdown-submenu > .dropdown-menu.show', scope).forEach(m => {
-      m.classList.remove('show');
-      m.previousElementSibling?.setAttribute('aria-expanded','false');
-    });
+  function lockBody(){
+    document.body.classList.add('nav-open');
+    // hard lock as fallback for custom CSS stacks
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+    overlay.style.display = 'block';
+  }
+  function unlockBody(){
+    document.body.classList.remove('nav-open');
+    document.documentElement.style.overflow = '';
+    document.body.style.overflow = '';
+    overlay.style.display = 'none';
   }
 
-  /* ----------------- Top-level dropdown behavior -------------------- */
-  allDropdownItems().forEach(node => {
-    node.addEventListener('show.bs.dropdown', function () {
-      closeAllDropdowns(this);
+  /* ---------- Top-level behaviors ---------- */
+  topItems.forEach(li=>{
+    li.addEventListener('show.bs.dropdown', function(){
+      // mobile: keep only one open
+      if (!XL_UP.matches) closeAllDropdowns(this);
+      if (!XL_UP.matches) lockBody();
       const t = this.querySelector(':scope > a.dropdown-toggle');
       if (t) t.setAttribute('aria-expanded','true');
-      if (!XL_UP.matches) document.body.classList.add('nav-open'); // lock scroll on mobile
     });
 
-    node.addEventListener('hide.bs.dropdown', function () {
-      closeAllSubmenus(this);
+    li.addEventListener('hide.bs.dropdown', function(){
       const t = this.querySelector(':scope > a.dropdown-toggle');
       if (t) t.setAttribute('aria-expanded','false');
-      setTimeout(() => {
-        if (!anyDropdownOpen() && !collapseIsOpen()) document.body.classList.remove('nav-open');
-      }, 0);
+      // close submenus inside too
+      $$('.dropdown-submenu > .dropdown-menu.show', this).forEach(menu=>{
+        menu.classList.remove('show');
+        menu.previousElementSibling?.setAttribute('aria-expanded','false');
+      });
+      // unlock if nothing else open
+      setTimeout(()=>{ if (!anyDropdownOpen() && !collapseIsOpen()) unlockBody(); }, 0);
     });
 
     // Desktop hover open/close
     if (HOVER_DEVICE.matches) {
-      node.addEventListener('mouseenter', function () {
+      li.addEventListener('mouseenter', function(){
         if (!XL_UP.matches) return;
         const t = this.querySelector(':scope > a.dropdown-toggle');
         if (t) getDD(t).show();
       });
-      node.addEventListener('mouseleave', function () {
+      li.addEventListener('mouseleave', function(){
         if (!XL_UP.matches) return;
         const t = this.querySelector(':scope > a.dropdown-toggle');
         if (t) getDD(t).hide();
@@ -840,27 +889,27 @@
     }
   });
 
-  /* --- Mobile: top-level link is a pure toggle; second tap closes --- */
-  qsa('.nav-item.dropdown > a.dropdown-toggle').forEach(a => {
-    a.addEventListener('click', function (e) {
-      if (TOUCH.matches || !XL_UP.matches) {
+  // Mobile: make the top-level link a pure toggle; second tap closes
+  topToggles.forEach(a=>{
+    a.addEventListener('click', function(e){
+      if (!XL_UP.matches) {
         e.preventDefault();
         const parent = this.closest('.nav-item.dropdown');
         const isOpen = parent?.classList.contains('show');
-        getDD(this)[isOpen ? 'hide' : 'show'](); // toggle open/close
+        getDD(this)[isOpen ? 'hide' : 'show']();
       }
     });
   });
 
-  /* --------------- Submenus (hover + tap-to-toggle/close) --------------- */
-  qsa('.dropdown-submenu').forEach(sub => {
+  /* ---------- Submenus (tap-to-toggle & desktop hover) ---------- */
+  $$('.dropdown-submenu').forEach(sub=>{
     const trigger = sub.querySelector(':scope > .submenu-toggle');
     const menu    = sub.querySelector(':scope > .dropdown-menu');
     if (!trigger || !menu) return;
 
-    function closeSiblings() {
+    function closeSiblingSubmenus(){
       const parentMenu = sub.closest('.dropdown-menu');
-      qsa(':scope > .dropdown-submenu > .dropdown-menu.show', parentMenu).forEach(m => {
+      $$('.dropdown-submenu > .dropdown-menu.show', parentMenu).forEach(m=>{
         if (m !== menu) {
           m.classList.remove('show');
           m.previousElementSibling?.setAttribute('aria-expanded','false');
@@ -868,90 +917,79 @@
       });
     }
 
-    // Tap/click: toggle THIS submenu (open <-> close)
-    trigger.addEventListener('click', function (e) {
+    // Tap/click toggles submenu (tap again closes)
+    trigger.addEventListener('click', (e)=>{
       e.preventDefault();
       e.stopPropagation();
       const isOpen = menu.classList.contains('show');
-      if (isOpen) {
+      if (isOpen){
         menu.classList.remove('show');
         trigger.setAttribute('aria-expanded','false');
       } else {
-        closeSiblings();
+        closeSiblingSubmenus();
         menu.classList.add('show');
         trigger.setAttribute('aria-expanded','true');
       }
     });
 
-    // Desktop hover open/close (also respects sibling close)
-    if (HOVER_DEVICE.matches) {
-      let hoverTimer;
-      const open = () => {
-        clearTimeout(hoverTimer);
-        closeSiblings();
+    // Desktop hover: graceful, with small delay on close
+    if (HOVER_DEVICE.matches){
+      let timer;
+      const open = ()=>{
+        clearTimeout(timer);
+        closeSiblingSubmenus();
         menu.classList.add('show');
         trigger.setAttribute('aria-expanded','true');
       };
-      const close = () => {
-        clearTimeout(hoverTimer);
-        hoverTimer = setTimeout(() => {
+      const close = ()=>{
+        clearTimeout(timer);
+        timer = setTimeout(()=>{
           menu.classList.remove('show');
           trigger.setAttribute('aria-expanded','false');
         }, 120);
       };
-      trigger.addEventListener('mouseenter', open);
-      trigger.addEventListener('mouseleave', close);
-      menu.addEventListener('mouseenter', open);
-      menu.addEventListener('mouseleave', close);
+      trigger.addEventListener('mouseenter', ()=>{ if (XL_UP.matches) open(); });
+      trigger.addEventListener('mouseleave', ()=>{ if (XL_UP.matches) close(); });
+      menu.addEventListener('mouseenter',    ()=>{ if (XL_UP.matches) open(); });
+      menu.addEventListener('mouseleave',    ()=>{ if (XL_UP.matches) close(); });
     }
   });
 
-  /* --------------- Header sizing + hide-on-scroll ------------------ */
+  /* ---------- Collapse events: lock/unlock + cleanup ---------- */
+  if (collapseEl){
+    collapseEl.addEventListener('shown.bs.collapse', ()=>{ lockBody(); });
+    collapseEl.addEventListener('hidden.bs.collapse', ()=>{
+      closeAllDropdowns();
+      unlockBody();
+    });
+  }
+
+  /* ---------- Link navigation inside collapsed menu ---------- */
+  document.addEventListener('click', (e)=>{
+    const a = e.target.closest('a[href]');
+    if (!a) return;
+    if (collapseIsOpen()){
+      bootstrap.Collapse.getOrCreateInstance(collapseEl).hide();
+      closeAllDropdowns();
+      unlockBody();
+      // allow natural navigation
+    }
+  }, {capture:true});
+
+  /* ---------- Header height + hide-on-scroll (desktop) ---------- */
   let lastY = window.scrollY;
   const setH = () =>
     document.documentElement.style.setProperty('--nav-h', (nav?.offsetHeight || 80) + 'px');
-  setH(); window.addEventListener('resize', setH, { passive: true });
+  setH(); addEventListener('resize', setH, {passive:true});
 
-  window.addEventListener('scroll', () => {
-    const y = window.scrollY;
-
+  addEventListener('scroll', ()=>{
     if (XL_UP.matches) closeAllDropdowns();  // close on desktop scroll
-
+    const y = window.scrollY;
     const mayHide = (y > lastY && y > (nav?.offsetHeight || 80)) && !collapseIsOpen() && !anyDropdownOpen();
     if (nav) nav.classList.toggle('nav-hidden', mayHide);
-
     lastY = y <= 0 ? 0 : y;
-  }, { passive: true });
+  }, {passive:true});
 
-  // Close on wheel (desktop)
-  window.addEventListener('wheel', () => {
-    if (HOVER_DEVICE.matches) closeAllDropdowns();
-  }, { passive: true, capture: true });
-
-  // Close on common page-scroll keys (desktop)
-  document.addEventListener('keydown', (e) => {
-    if (!XL_UP.matches) return;
-    const keys = ['PageDown','PageUp','Home','End','ArrowDown','ArrowUp',' '];
-    if (!keys.includes(e.key)) return;
-    const withinNav = document.activeElement && document.activeElement.closest('#siteNav');
-    if (!withinNav) closeAllDropdowns();
-  });
-
-  // Keep header visible while interacting with navbar
-  if (nav) {
-    nav.addEventListener('mouseenter', () => nav.classList.remove('nav-hidden'));
-    nav.addEventListener('focusin',  () => nav.classList.remove('nav-hidden'));
-  }
-
-  // Track collapse to lock/unlock body scroll on mobile
-  if (collapseEl) {
-    collapseEl.addEventListener('shown.bs.collapse', () => {
-      document.body.classList.add('nav-open');
-    });
-    collapseEl.addEventListener('hidden.bs.collapse', () => {
-      if (!anyDropdownOpen()) document.body.classList.remove('nav-open');
-    });
-  }
 })();
 </script>
 

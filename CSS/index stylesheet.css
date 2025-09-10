@@ -323,6 +323,41 @@ header{ height: var(--nav-h); }
   }
 }
 
+/* ===== Mobile nav overlay + scroll comfort ===== */
+#jjNavOverlay{
+  position: fixed; inset: var(--nav-h) 0 0 0;   /* sit below the fixed navbar */
+  background: rgba(0,0,0,.25);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  z-index: 998; /* just under the navbar (which is 999) */
+  display:none;
+}
+body.nav-open #jjNavOverlay{ display:block; }
+
+/* Make collapsed panel comfortably scrollable on small screens */
+@media (max-width:1199.98px){
+  #navbarSupportedContent{
+    max-height: calc(100vh - var(--nav-h));
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  /* Larger tap targets on mobile */
+  .dropdown-item, .nav-link{ padding:.75rem 1rem; }
+}
+
+/* Ensure all dropdown panels are opaque on mobile (no see-through) */
+@media (max-width:1199.98px){
+  .dropdown-menu{
+    background: #fff !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+}
+
+/* Prevent awkward hover effects on touch */
+@media (hover:none){
+  .navbar .nav-link::after{ display:none; }
+}
 
 
 /* index.html */
