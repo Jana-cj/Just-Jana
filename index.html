@@ -40,24 +40,23 @@
        <nav id="siteNav" class="navbar navbar-expand-xl navbar-light">
 
         <div class="container-fluid">
-          <a class="Just Jana" href="index.html">
-            <img src="img/Logos/logohanddrawnbw.png" alt="Logo" width="47" height="40" class="d-inline-block align-text-top">
-          </a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link" href="index.html">
-                  <span style="color:#b38398"><strong>Home</strong></span>
-                </a>
-              </li>
+          <!-- Left: Logo -->
+    <a class="Just Jana" href="index.html">
+      <img src="img/Logos/logohanddrawnbw.png" alt="Logo" width="47" height="40" 
+           class="d-inline-block align-text-top">
+    </a>
+          <!-- Toggler -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
               <!-- Dropdowns -->
 
-              
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item"><a class="nav-link" href="index.html"><span style="color:#b38398"><strong>Home</strong></span></a></li>
 
               <li class="nav-item dropdown" data-bs-auto-close="outside">
                 <a class="nav-link dropdown-toggle" href="#about" id="dropdownAbout" 
@@ -321,15 +320,16 @@
                 </ul>
               </li>
 
+              <!-- Right: Search -->
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-light" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
             
-              <form class="d-flex ms-4">
-                <input class="form-control me-2" type=" search" aria-label="Search">
-                <button class="btn btn-light" type="submit">Search</button>
-              </form>
-            </ul>
-          </div>
-        </div>
-      </nav>
     </header>
 
     <main>
