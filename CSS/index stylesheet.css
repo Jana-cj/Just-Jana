@@ -300,6 +300,21 @@ header{ height: var(--nav-h); }
   width:auto;
 }
 
+.dropdown-submenu > .dropdown-menu {
+  background: #fff !important;  /* solid white */
+  backdrop-filter: none !important; 
+  -webkit-backdrop-filter: none !important;
+  z-index: 9999;  /* stay on top */
+}
+
+@media (max-width:1199.98px){
+  .dropdown-submenu > .dropdown-menu {
+    max-height: 300px;   /* default visible height */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
 
 
 /* index.html */
