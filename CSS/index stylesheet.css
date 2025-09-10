@@ -150,10 +150,13 @@ html, body {
   color: var(--jj-ink) !important;
 }
 
-#dropdownAbout + .dropdown-menu.jj-surface,
-#dropdownDiaries + .dropdown-menu.jj-surface {
+#dropdownAbout + .dropdown-menu.jj-surface {
   min-width: 14rem;
-  max-width:20rem;
+}
+
+#dropdownDiaries + .dropdown-menu.jj-surface {
+  min-width: 20rem;
+  max-width:25rem;
 }
 
 
