@@ -185,7 +185,7 @@ html, body {
 @media (min-width:1200px){
   /* widen the container */
   .dropdown-menu[aria-labelledby="dropdownMind"]{
-    width: 600px;                     /* tweak this number */
+    width: 650px;                     /* tweak this number */
     max-width: calc(100vw - 32px);    /* keep it inside the viewport */
   }}
 
