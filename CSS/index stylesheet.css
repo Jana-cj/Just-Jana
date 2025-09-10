@@ -87,9 +87,7 @@ html, body {
   transition: color .2s ease;
 }
 .navbar .nav-link:hover,
-.navbar .nav-link:focus{
-  color: var(--jj-accent);
-}
+.navbar .nav-link:focus{ color: var(--jj-accent); }
 .navbar .nav-link::after{
   content:""; position:absolute; left:.5rem; right:.5rem; bottom:.25rem;
   height:2px; transform: scaleX(0); transform-origin:left center;
@@ -112,88 +110,80 @@ html, body {
 /* =================== Dropdown / Mega =================== */
 .dropdown-menu{
   border:0; border-radius:14px; box-shadow:0 20px 40px rgba(0,0,0,.08);
-  background:#fff; 
+  background:#fff;
 }
 .dropdown-item{ color: var(--jj-ink); white-space: normal; }
 
-/* Apply rounded pink-box styling to About & Brown Girl Diaries too */
-.dropdown-menu.jj-surface {
-  border-radius: 14px;                  /* rounded corners */
-  background: rgba(255,255,255,.85);    /* same subtle glassy background */
+/* Glassy surface for simple dropdowns */
+.dropdown-menu.jj-surface{
+  border-radius:14px;
+  background: rgba(255,255,255,.85);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(179,131,152,.15);
-  box-shadow: 0 20px 40px rgba(0,0,0,.08);
-  padding: .5rem;
+  border:1px solid rgba(179,131,152,.15);
+  box-shadow:0 20px 40px rgba(0,0,0,.08);
+  padding:.5rem;
 }
-
-/* Items look/spacing like the mega menu */
 .dropdown-menu.jj-surface .dropdown-item{
-  color: var(--jj-ink);
-  padding: .45rem .6rem;
-  border-radius: 8px;
+  color:var(--jj-ink);
+  padding:.45rem .6rem;
+  border-radius:8px;
   transition: background .2s ease, color .2s ease;
-  white-space: normal;                 /* wrap nicely */
+  white-space:normal;
 }
-
-/* Same slightly-darker pink on hover/focus as pillars */
 .dropdown-menu.jj-surface .dropdown-item:hover,
 .dropdown-menu.jj-surface .dropdown-item:focus{
-  background: rgba(179,131,152,.15) !important;     /* dusty-rose wash */
-  color: var(--jj-ink) !important;                  /* keep text dark */
+  background: rgba(179,131,152,.15) !important;
+  color: var(--jj-ink) !important;
 }
-
-/* Active state aligned with brand color (optional but tidy) */
 .dropdown-menu.jj-surface .dropdown-item.active,
 .dropdown-menu.jj-surface .dropdown-item:active{
   background: rgba(179,131,152,.22) !important;
   color: var(--jj-ink) !important;
 }
+#dropdownAbout + .dropdown-menu.jj-surface{ min-width:14rem; }
+#dropdownDiaries + .dropdown-menu.jj-surface{ min-width:16rem; }
 
-#dropdownAbout + .dropdown-menu.jj-surface {
-  min-width: 14rem;
-}
-
-#dropdownDiaries + .dropdown-menu.jj-surface {
-  min-width: 16rem;
-}
-
-
-/* Mega layout */
+/* ---------- Mega layout + stacking fix ---------- */
 .body-grid{
-  display: grid;
-  grid-template-columns: repeat(2, minmax(260px, 1fr)); /* 2 side-by-side */
-  gap: 20px 32px; /* a little breathing room */
+  display:grid;
+  grid-template-columns: repeat(2, minmax(260px,1fr));
+  gap:20px 32px;
 }
 
-/* Make submenu boxes self-contained */
-.dropdown-submenu > .dropdown-menu {
-  overflow: hidden;          /* hide anything outside the box */
-  border-radius: 8px;        /* optional: keeps rounded corners */
-  background: #fff;          /* ensure background is solid */
-  z-index: 2000;             /* stay above sibling arrows/text */
+/* Create predictable layers so flyout sits on top */
+.dropdown-menu.dropdown-mega{ position:relative; z-index:30; } /* base */
+.mega-col{ position:relative; z-index:10; }                    /* columns */
+
+/* Flyout submenu panel */
+.dropdown-submenu{ position: relative; display:inline-block; }
+.dropdown-submenu > .dropdown-menu{
+  position:absolute; top:0; left:100%;
+  margin-left:.5rem; margin-top:-.25rem;
+  min-width:auto; width:max-content; max-width:14rem; white-space:normal;
+  overflow:hidden; border-radius:8px;
+  background:#fff;                 /* opaque: nothing shows through */
+  z-index:40;                      /* above columns and mega base */
+  box-shadow:0 8px 24px rgba(0,0,0,.12);
 }
 
 /* Stack to 1 column on small screens */
-@media (max-width: 575.98px){
-  .body-grid{ grid-template-columns: 1fr; }
-}
+@media (max-width:575.98px){ .body-grid{ grid-template-columns:1fr; } }
 
 .mega-col{
   padding:.25rem .5rem .75rem; border-radius:12px;
-  transition: transform .2s ease, box-shadow .2s ease, background .2s ease; 
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
 }
 @media (hover:hover){
   .mega-col:hover{
     transform: translateY(-2px);
     background: var(--jj-soft);
     box-shadow: 0 10px 24px rgba(0,0,0,.06);
+    z-index:10; /* do NOT rise above submenu */
   }
-  /* .dropdown-submenu:hover > .dropdown-menu { display:block; } */
 }
 /* also open when the trigger is focused via keyboard */
-.dropdown-submenu:focus-within > .dropdown-menu { display:block; }
-
+.dropdown-submenu:focus-within > .dropdown-menu{ display:block; }
 
 /* Section headers */
 .dropdown-header{
@@ -202,22 +192,10 @@ html, body {
 }
 
 /* Hover feedback for items */
-.dropdown-mega .dropdown-item{
-  padding:.35rem .5rem; border-radius:8px;
-}
+.dropdown-mega .dropdown-item{ padding:.35rem .5rem; border-radius:8px; }
 .dropdown-mega .dropdown-item:hover,
 .dropdown-mega .dropdown-item:focus{
   background: rgba(179,131,152,.15) !important; color: var(--jj-ink) !important;
-}
-
-/* Desktop submenu: flyout */
-.dropdown-submenu{ position: relative; display:inline-block; }
-.dropdown-submenu > .dropdown-menu{ position: absolute;
-  top:0; left:100%; margin-left:-.2rem; margin-top:-.25rem;
-   min-width: auto;  width: max-content; max-width: 14rem; white-space: normal; 
-}
-@media (min-width: 1200px){
-  .dropdown-submenu.submenu-wide > .dropdown-menu{ min-width: auto; max-width: 14rem; }
 }
 
 /* Submenu chevron */
@@ -231,11 +209,12 @@ html, body {
 @media (hover:hover){ .dropdown:hover > .dropdown-menu.dropdown-mega{ display:block; } }
 
 /* Mobile: submenus become accordions */
-@media (max-width: 1199.98px){
+@media (max-width:1199.98px){
   .dropdown-mega{ min-width:100%; }
   .dropdown-submenu > .dropdown-menu{
-    position: static; float:none; display:none; margin:.25rem 0 0 0;
+    position:static; float:none; display:none; margin:.25rem 0 0 0;
     border:0; box-shadow:none; background:transparent; padding-left:.75rem;
+    z-index:auto;
   }
   .dropdown-submenu > .dropdown-menu.show{ display:block; }
 }
@@ -257,68 +236,53 @@ html, body {
 }
 
 /* ===== NAV: mobile-friendly dropdown scrolling ===== */
-@media (max-width: 1199.98px){
-  /* Make mega menus full-width and scrollable inside the opened navbar */
-  .navbar .dropdown-menu.dropdown-mega {
-    width: 100%;
-    min-width: 100%;
+@media (max-width:1199.98px){
+  .navbar .dropdown-menu.dropdown-mega{
+    width:100%; min-width:100%;
     max-height: calc(100vh - var(--nav-h) - 16px);
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
-    margin: .25rem 0 0 0;
+    overflow:auto; -webkit-overflow-scrolling:touch;
+    margin:.25rem 0 0 0;
     background: rgba(255,255,255,.96);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
   }
-
-  /* Regular dropdowns (About, Diaries, submenus) also scroll safely */
-  .navbar .dropdown-menu:not(.dropdown-mega) {
+  .navbar .dropdown-menu:not(.dropdown-mega){
     max-height: calc(100vh - var(--nav-h) - 16px);
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
+    overflow:auto; -webkit-overflow-scrolling:touch;
   }
-
-  /* Prevent the page under it from peeking during menu scroll */
-  body.nav-open {
+  body.nav-open{
     overflow: hidden;          /* lock body scroll while menu is open */
     touch-action: none;
   }
 }
 
 /* Optional: keep navbar visible while user interacts with it */
-#siteNav.navbar:hover { transform: translateY(0); }
+#siteNav.navbar:hover{ transform: translateY(0); }
 
 .navbar .nav-link:focus,
 .navbar .nav-link:active,
-.navbar .nav-link:focus-visible {
-  outline: none !important;
-}
+.navbar .nav-link:focus-visible{ outline: none !important; }
 
 /* Reserve space for the fixed navbar on every page */
-header { height: var(--nav-h); }
+header{ height: var(--nav-h); }
 
-/* Bonus: make in-page anchors (e.g. #section links) not hide under the nav */
-:root { scroll-padding-top: var(--nav-h); }
+/* In-page anchors don’t hide under the fixed nav */
+:root{ scroll-padding-top: var(--nav-h); }
 
 /* Fallback if JS didn't set --nav-h yet */
-@supports not (height: var(--nav-h)) {
-  header { height: 80px; } /* your default */
-}
+@supports not (height: var(--nav-h)){ header{ height: 80px; } }
 
-
-.navbar-brand {
-  display: flex;
-  align-items: center;   /* vertical centering */
-  padding-top: 0;
-  padding-bottom: 0;     /* remove Bootstrap’s default extra padding */
-  height: var(--nav-h);  /* same as navbar height */
+/* Brand */
+.navbar-brand{
+  display:flex; align-items:center;
+  padding-top:0; padding-bottom:0;
+  height: var(--nav-h);
   margin-right: 1.5rem;
 }
-
-.navbar-brand img {
-  display: block;        /* removes extra bottom spacing from inline images */
-  max-height: calc(var(--nav-h) - 20px); /* keep some breathing room */
-  width: auto;           /* preserve aspect ratio */
+.navbar-brand img{
+  display:block;
+  max-height: calc(var(--nav-h) - 20px);
+  width:auto;
 }
 
 
