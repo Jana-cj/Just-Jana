@@ -125,8 +125,6 @@ html, body {
   border: 1px solid rgba(179,131,152,.15);
   box-shadow: 0 20px 40px rgba(0,0,0,.08);
   padding: .5rem;
-  min-width: 16rem;   /* default ~10rem, try 16rem for more room */
-  max-width: 20rem;   /* optional: cap the width so it doesn’t stretch too far */                       
 }
 
 /* Items look/spacing like the mega menu */
@@ -151,6 +149,13 @@ html, body {
   background: rgba(179,131,152,.22) !important;
   color: var(--jj-ink) !important;
 }
+
+#dropdownAbout + .dropdown-menu.jj-surface,
+#dropdownDiaries + .dropdown-menu.jj-surface {
+  min-width: 14rem;
+  max-width:20rem;
+}
+
 
 /* Mega layout */
 .body-grid{
