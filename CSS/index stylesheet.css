@@ -124,7 +124,9 @@ html, body {
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(179,131,152,.15);
   box-shadow: 0 20px 40px rgba(0,0,0,.08);
-  padding: .5rem;                       /* optional: spacing inside */
+  padding: .5rem;
+  min-width: 16rem;   /* default ~10rem, try 16rem for more room */
+  max-width: 20rem;   /* optional: cap the width so it doesn’t stretch too far */                       
 }
 
 /* Items look/spacing like the mega menu */
