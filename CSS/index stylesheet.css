@@ -842,7 +842,7 @@ color: #7b7b7b;
   transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
 }
 .jj-journey:hover{
-  background-color: #a86f75;     /* dusty rose background */
+  background-color: #c59ca0;     /* dusty rose background */
   color: var(--jj-ink);          /* keep text black */
   transform: translateY(-3px);
   border-color: rgba(179,131,152,.35);
