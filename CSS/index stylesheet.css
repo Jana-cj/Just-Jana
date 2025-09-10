@@ -796,7 +796,7 @@ color: #7b7b7b;
   content:"";
   position:absolute;
   inset: 0 0 auto 0; /* cover from top; adjust height below */
-  height: 80%;       /* ← make the pink gradient “longer/shorter” here */
+  height: 100%;       /* ← make the pink gradient “longer/shorter” here */
   background: var(--jj-pink-wash);
   pointer-events:none;
 }
