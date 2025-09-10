@@ -300,6 +300,38 @@ header{ height: var(--nav-h); }
   width:auto;
 }
 
+/* Make sure mega is a stacking context we can layer on */
+.dropdown-menu.dropdown-mega{
+  position: relative;           /* you already have this */
+  z-index: 30;                  /* base layer for the whole mega menu */
+}
+
+/* Submenu flyout sits above the shield */
+.dropdown-submenu > .dropdown-menu{
+  z-index: 40;                  /* higher than the shield/columns */
+  background:#fff;              /* opaque so nothing shows through visually */
+}
+
+/* Invisible shield that blocks hovers/clicks on the columns while a submenu is open */
+.dropdown-menu.dropdown-mega .submenu-shield{
+  position: absolute;
+  inset: 0;
+  display: none;                /* shown only while a submenu is open */
+  z-index: 35;                  /* between columns (base 30) and submenu (40) */
+  background: transparent;      /* we only need to block pointer events */
+  pointer-events: auto;
+}
+
+/* Turn the shield on when any submenu inside this mega is open */
+.dropdown-menu.dropdown-mega.submenu-open .submenu-shield{
+  display: block;
+}
+
+/* Optional: while a submenu is open, mute hover styles on items below */
+.dropdown-menu.dropdown-mega.submenu-open .mega-col .dropdown-item:hover{
+  background: transparent !important;
+}
+
 
 /* index.html */
 
