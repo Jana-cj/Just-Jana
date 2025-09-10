@@ -181,6 +181,14 @@ html, body {
   z-index:110;                                      /* above the lifted column */
 }
 
+/* Make only the "Mind" mega menu wider on desktop */
+@media (min-width:1200px){
+  /* widen the container */
+  .dropdown-menu[aria-labelledby="dropdownMind"]{
+    width: 980px;                     /* tweak this number */
+    max-width: calc(100vw - 32px);    /* keep it inside the viewport */
+  }}
+
 /* Stack to 1 column on small screens */
 @media (max-width:575.98px){ .body-grid{ grid-template-columns:1fr; } }
 
