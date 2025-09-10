@@ -842,10 +842,17 @@ color: #7b7b7b;
   transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
 }
 .jj-journey:hover{
+  background-color: #a86f75;     /* dusty rose background */
+  color: var(--jj-ink);          /* keep text black */
   transform: translateY(-3px);
   border-color: rgba(179,131,152,.35);
   box-shadow: 0 14px 30px rgba(0,0,0,.08);
 }
+
+.jj-journey:hover .jj-title {
+  color: var(--jj-ink); /* force text to stay black */
+}
+
 .jj-journey:focus{ outline:none; }
 .jj-journey:focus-visible{ box-shadow: 0 0 0 3px rgba(179,131,152,.35); }
 .jj-avatar{
