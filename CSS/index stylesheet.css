@@ -127,6 +127,28 @@ html, body {
   padding: .5rem;                       /* optional: spacing inside */
 }
 
+/* Items look/spacing like the mega menu */
+.dropdown-menu.jj-surface .dropdown-item{
+  color: var(--jj-ink);
+  padding: .45rem .6rem;
+  border-radius: 8px;
+  transition: background .2s ease, color .2s ease;
+  white-space: normal;                 /* wrap nicely */
+}
+
+/* Same slightly-darker pink on hover/focus as pillars */
+.dropdown-menu.jj-surface .dropdown-item:hover,
+.dropdown-menu.jj-surface .dropdown-item:focus{
+  background: rgba(179,131,152,.15) !important;     /* dusty-rose wash */
+  color: var(--jj-ink) !important;                  /* keep text dark */
+}
+
+/* Active state aligned with brand color (optional but tidy) */
+.dropdown-menu.jj-surface .dropdown-item.active,
+.dropdown-menu.jj-surface .dropdown-item:active{
+  background: rgba(179,131,152,.22) !important;
+  color: var(--jj-ink) !important;
+}
 
 /* Mega layout */
 .body-grid{
