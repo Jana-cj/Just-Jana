@@ -920,26 +920,31 @@ window.addEventListener('wheel', () => {
 
 <!-- my journeys -->
  <script>
-/* ===== Smooth auto-scroll + drag/swipe + desktop arrows ===== */
+/* ==========================================================================
+   Just Jana — Journeys Rail (smooth auto-scroll + drag/swipe + arrows)
+   Fix: desktop links sometimes not opening due to overzealous click guard
+   Drop-in script. No dependencies.
+   ========================================================================== */
 (function(){
-  const viewport = document.getElementById('jjViewport');
-  const track = document.getElementById('jjTrack');
-  const leftBtn = document.getElementById('jjArrowLeft');
-  const rightBtn = document.getElementById('jjArrowRight');
+  const viewport  = document.getElementById('jjViewport');
+  const track     = document.getElementById('jjTrack');
+  const leftBtn   = document.getElementById('jjArrowLeft');
+  const rightBtn  = document.getElementById('jjArrowRight');
   if(!viewport || !track) return;
 
-  // ----- Config -----
-  const PX_PER_SEC = 40;        // auto speed (increase for faster)
-  const RESUME_DELAY = 1800;    // ms after user interaction to resume
-  const NUDGE_FACTOR = 0.8;     // arrow click moves ~80% viewport width
-  const TWEEN_MS = 380;         // arrow tween duration (ms)
-  const prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const autoSpeed = prefersReduced ? 0 : PX_PER_SEC;
+  /* ----------------------- Config (tweak as needed) ---------------------- */
+  const PX_PER_SEC      = 40;    // auto-scroll speed (px/s)
+  const RESUME_DELAY    = 1800;  // ms to resume after interaction
+  const NUDGE_FACTOR    = 0.8;   // arrow step = 80% of viewport width
+  const TWEEN_MS        = 380;   // arrow tween duration (ms)
+  const DRAG_THRESHOLD  = 12;    // px: if total drag < threshold -> treat as click
 
-  // Keep original set for wrap calculations
+  const prefersReduced  = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const autoSpeed       = prefersReduced ? 0 : PX_PER_SEC;
+
+  /* -------------------- Prepare clones for seamless loop ----------------- */
   const originals = Array.from(track.children);
 
-  // Width helpers
   function widthOf(nodes){
     const gap = parseFloat(getComputedStyle(track).gap || 0);
     let total = 0;
@@ -947,7 +952,6 @@ window.addEventListener('wheel', () => {
     return total + Math.max(0, nodes.length - 1) * gap;
   }
 
-  // Clone until long enough
   function fillLoop(){
     // remove prior clones, keep first unique set
     const seen = new Set();
@@ -957,6 +961,7 @@ window.addEventListener('wheel', () => {
     });
     const vpw = viewport.clientWidth;
     let total = track.scrollWidth;
+    // ensure at least ~2.5x viewport width for smooth wrap
     while(total < vpw * 2.5){
       originals.forEach(node => track.appendChild(node.cloneNode(true)));
       total = track.scrollWidth;
@@ -964,19 +969,16 @@ window.addEventListener('wheel', () => {
   }
   fillLoop();
 
-  // One full original cycle width
-  let setWidth = widthOf(originals);
+  let setWidth = widthOf(originals); // width of a single original cycle
 
-  // Animation state
-  let rafId, last = performance.now(), pausedUntil = 0, interacting = false;
-  let x = 0;        // current offset (0..setWidth)
-  let moved = false;
-  let tweening = false;
+  /* ------------------------- Animation state ----------------------------- */
+  let rafId, last = performance.now();
+  let pausedUntil = 0, interacting = false, tweening = false;
+  let x = 0; // current offset (0..setWidth)
 
   function render(){
-    // normalize x into [0, setWidth)
     if (x >= setWidth) x -= setWidth;
-    else if (x < 0) x += setWidth;
+    else if (x < 0)    x += setWidth;
     track.style.transform = `translate3d(${-x}px,0,0)`;
   }
 
@@ -995,62 +997,73 @@ window.addEventListener('wheel', () => {
   function beginInteract(){ interacting = true; pause(RESUME_DELAY); }
   function endInteract(){ interacting = false; pause(RESUME_DELAY); }
 
-  // Hover pause (desktop)
+  /* -------------------------- Hover/focus pause -------------------------- */
   viewport.addEventListener('mouseenter', () => pause(999999), {passive:true});
   viewport.addEventListener('mouseleave', () => pause(RESUME_DELAY), {passive:true});
-
-  // Keyboard focus pause
-  track.addEventListener('focusin', () => pause(999999));
+  track.addEventListener('focusin',  () => pause(999999));
   track.addEventListener('focusout', () => pause(RESUME_DELAY));
 
-  // Drag/Swipe via Pointer Events
+  /* ------------------ Drag/Swipe with safe link handling ----------------- */
   let isDown = false, startX = 0, xAtStart = 0, pointerId = null;
+  let dragDist = 0;
+  let downAnchor = null; // anchor pressed on pointerdown
 
   viewport.addEventListener('pointerdown', (e)=>{
-    isDown = true; pointerId = e.pointerId; moved = false;
+    isDown = true;
+    pointerId = e.pointerId;
     viewport.setPointerCapture(pointerId);
+
     beginInteract();
+
     startX = e.clientX;
     xAtStart = x;
+    dragDist = 0;
+
+    downAnchor = e.target.closest && e.target.closest('a.jj-journey');
   }, {passive:true});
 
   viewport.addEventListener('pointermove', (e)=>{
     if(!isDown) return;
     const dx = e.clientX - startX;
+    dragDist = Math.max(dragDist, Math.abs(dx));
     x = xAtStart - dx;   // natural drag
     render();
-    if (Math.abs(dx) > 4) moved = true; // click guard
   }, {passive:true});
 
   function endPointer(){
     if(!isDown) return;
     isDown = false;
     try{ viewport.releasePointerCapture(pointerId); }catch(_){}
+
+    // If it wasn't a real drag, treat as click and navigate explicitly.
+    if (dragDist < DRAG_THRESHOLD && downAnchor && downAnchor.href){
+      window.location.href = downAnchor.href;
+    }
+
     endInteract();
+    dragDist = 0;
+    downAnchor = null;
   }
   viewport.addEventListener('pointerup', endPointer, {passive:true});
   viewport.addEventListener('pointercancel', endPointer, {passive:true});
   viewport.addEventListener('pointerleave', endPointer, {passive:true});
 
-  // Prevent accidental link activation after drag
-  track.addEventListener('click', (e)=>{
-    if(moved){ e.preventDefault(); moved = false; }
-  });
+  // IMPORTANT: If you had a previous global click guard on the track, remove it.
+  // e.g., track.removeEventListener('click', oldHandler);
 
-  // ----- Desktop arrow controls -----
+  /* ------------------------- Desktop arrow tween ------------------------- */
   function easeOutCubic(t){ return 1 - Math.pow(1 - t, 3); }
 
   function tweenTo(targetX, ms = TWEEN_MS){
-    // normalize start & target into continuous space near current x
+    // pick shortest wrap path
     let start = x;
-    // snap target within +/- setWidth/2 for the shortest path
     let delta = targetX - start;
     if (delta >  setWidth/2)  delta -= setWidth;
     if (delta < -setWidth/2)  delta += setWidth;
 
     const end = start + delta;
-    const t0 = performance.now();
-    tweening = true; beginInteract();
+    const t0  = performance.now();
+    tweening  = true; beginInteract();
 
     function step(t){
       const p = Math.min(1, (t - t0)/ms);
@@ -1064,17 +1077,17 @@ window.addEventListener('wheel', () => {
   }
 
   function nudge(direction){
-    // direction: -1 left (content moves right), +1 right (content moves left)
+    // direction: -1 (scroll left / content right), +1 (scroll right / content left)
     const distance = viewport.clientWidth * NUDGE_FACTOR;
-    const target = x + (direction > 0 ? distance : -distance);
+    const target   = x + (direction > 0 ? distance : -distance);
     tweenTo(target);
   }
 
   if(leftBtn && rightBtn){
-    leftBtn.addEventListener('click', ()=> nudge(-1));
+    leftBtn.addEventListener('click',  ()=> nudge(-1));
     rightBtn.addEventListener('click', ()=> nudge(+1));
 
-    // Hold to scroll: press & hold arrow to keep nudging
+    // Optional: press & hold to keep nudging
     let holdTimer = null, holdInterval = null;
     function startHold(dir){
       nudge(dir);
@@ -1096,7 +1109,7 @@ window.addEventListener('wheel', () => {
     });
   }
 
-  // Recompute on resize (debounced)
+  /* ------------------------------ Resize -------------------------------- */
   let rTimer;
   addEventListener('resize', ()=>{
     clearTimeout(rTimer);
