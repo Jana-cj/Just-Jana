@@ -935,8 +935,8 @@ window.addEventListener('wheel', () => {
   /* ----------------------- Config (tweak as needed) ---------------------- */
   const PX_PER_SEC      = 40;    // auto-scroll speed (px/s)
   const RESUME_DELAY    = 1800;  // ms to resume after interaction
-  const NUDGE_FACTOR    = 0.8;   // arrow step = 80% of viewport width
-  const TWEEN_MS        = 380;   // arrow tween duration (ms)
+  const NUDGE_FACTOR    = 0.6;   // arrow step = 80% of viewport width
+  const TWEEN_MS        = 700;   // arrow tween duration (ms)
   const DRAG_THRESHOLD  = 12;    // px: if total drag < threshold -> treat as click
 
   const prefersReduced  = matchMedia('(prefers-reduced-motion: reduce)').matches;
