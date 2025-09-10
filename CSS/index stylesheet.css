@@ -271,10 +271,10 @@ header { height: var(--nav-h); }
 
 /* Fallback if JS didn't set --nav-h yet */
 @supports not (height: var(--nav-h)) {
-  header { height: 60px; } /* your default */
+  header { height: 80px; } /* your default */
 }
 
-.navbar-brand { margin-right: 1rem; }
+.navbar-brand { margin-right: 1.5rem; }
 
 
 /* index.html */
