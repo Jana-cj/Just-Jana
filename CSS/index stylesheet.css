@@ -263,6 +263,18 @@ html, body {
   outline: none !important;
 }
 
+/* Reserve space for the fixed navbar on every page */
+header { height: var(--nav-h); }
+
+/* Bonus: make in-page anchors (e.g. #section links) not hide under the nav */
+:root { scroll-padding-top: var(--nav-h); }
+
+/* Fallback if JS didn't set --nav-h yet */
+@supports not (height: var(--nav-h)) {
+  header { height: 80px; } /* your default */
+}
+
+
 /* index.html */
 
 /* Hero banner */
