@@ -155,7 +155,7 @@ html, body {
 }
 
 #dropdownDiaries + .dropdown-menu.jj-surface {
-  min-width: 17rem;
+  min-width: 16rem;
 }
 
 
@@ -305,7 +305,21 @@ header { height: var(--nav-h); }
   header { height: 80px; } /* your default */
 }
 
-.navbar-brand { margin-right: 1.5rem; }
+
+.navbar-brand {
+  display: flex;
+  align-items: center;   /* vertical centering */
+  padding-top: 0;
+  padding-bottom: 0;     /* remove Bootstrap’s default extra padding */
+  height: var(--nav-h);  /* same as navbar height */
+  margin-right: 1.5rem;
+}
+
+.navbar-brand img {
+  display: block;        /* removes extra bottom spacing from inline images */
+  max-height: calc(var(--nav-h) - 20px); /* keep some breathing room */
+  width: auto;           /* preserve aspect ratio */
+}
 
 
 /* index.html */
