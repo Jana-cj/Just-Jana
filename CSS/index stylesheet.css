@@ -274,7 +274,7 @@ header { height: var(--nav-h); }
   header { height: 80px; } /* your default */
 }
 
-.navbar-brand { margin-right: 2rem; }
+.navbar-brand { margin-right: 1rem; }
 
 
 /* index.html */
