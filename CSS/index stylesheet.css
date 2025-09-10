@@ -64,7 +64,7 @@ html, body {
 
 /* =================== Brand tokens =================== */
 :root{
-  --jj-accent: #b38398;         /* main brand */
+  --jj-accent: #c6a0b1;         /* main brand */
   --jj-ink:    #1f1f1f;
   --jj-bg:     #ffffff;
   --jj-soft:   rgba(179,131,152,.1);
