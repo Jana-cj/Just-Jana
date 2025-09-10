@@ -34,127 +34,271 @@
     
     <header>
       
-      <!-- Navigation Bar -->  
-       <nav id="siteNav" class="navbar navbar-expand-xl navbar-light">
-
-        <div class="container-fluid">
-          <a class="Just Jana" href="index.html">
-            <img src="img/Logos/logohanddrawnbw.png" alt="Logo" width="47" height="40" class="d-inline-block align-text-top">
-          </a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-          <a class="nav-link" href="index.html">Home</a>
-        </li>
+<!-- Navbar -->
+       <nav id="siteNav" class="navbar navbar-expand-xl navbar-light py-1">
+  <div class="container-fluid pe-0">
+          <!-- Left: Logo -->
+    <a class="navbar-brand me-3" href="index.html">
+      <img src="img/Logos/logohanddrawnbw.png" alt="Logo" width="50" height="45" 
+           class="d-inline-block align-text-top">
+    </a>
+          <!-- Toggler -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
               <!-- Dropdowns -->
+
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+              <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+
               <li class="nav-item dropdown" data-bs-auto-close="outside">
                 <a class="nav-link dropdown-toggle" href="#about" id="dropdownAbout" 
                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            About
+                  About
                 </a>
                 
-                <ul class="dropdown-menu" aria-labelledby="dropdownAbout">
-                  <li><a class="dropdown-item" href="janasstory.html">Jana's Story</a></li> 
+                <ul class="dropdown-menu jj-surface p-3" aria-labelledby="dropdownAbout">
+                    <li><a class="dropdown-item" href="janasstory.html">My Story</a></li> 
                   <li><a class="dropdown-item" href="missionvalues.html">Our Mission & Values</a></li>
                 </ul>
               </li>
               
               <li class="nav-item dropdown" data-bs-auto-close="outside">
-                <a class="nav-link dropdown-toggle" href="#fitness" id="dropdownFitness"
-                role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Fitness
-              </a>
-               
+  <a class="nav-link dropdown-toggle" href="#body" id="dropdownBody"
+     role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Body
+  </a>
 
-                <ul class="dropdown-menu" aria-labelledby="dropdownFitness">
-                  <li><a class="dropdown-item" href="fitnessstory.html">Jana's Fitness Journey</a></li> 
-                  <!-- Submenu -->
-                <li class="dropdown-submenu">
-                  <a class="dropdown-item submenu-toggle" href="#"aria-expanded="false">Programs</a>
-                  <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Beginner</a></li>
-                    <li><a class="dropdown-item" href="#">Intermediate</a></li>
-                    <li><a class="dropdown-item" href="#">Advanced</a></li>
-                  </ul>
-                </li>
-                  <li><a class="dropdown-item" href="#Countryid">Body Composition</a></li>
-                </ul>
-              </li>
-              
+  <ul class="dropdown-menu dropdown-mega jj-surface p-3" aria-labelledby="dropdownBody">
+    <li>
+      <div class="mega-wrap body-grid">
+
+        <!-- MOVE -->
+        <div class="mega-col">
+          <h6 class="dropdown-header">Move to heal</h6>
+          <a class="dropdown-item" href="movement.html">Importance of movement</a>
+          <a class="dropdown-item" href="fitnessstory.html">My Fitness Journey</a>
+          <a class="dropdown-item" href="movement.html">Fitness Programs</a>
+          <a class="dropdown-item" href="movement.html">Balancing Strength, Cardio & Flexibility</a>
+
+
+          <div class="dropdown-submenu submenu-wide">
+            <a class="dropdown-item submenu-toggle" href="#" aria-expanded="false">Body Composition</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Why It Matters</a></li>
+              <li><a class="dropdown-item" href="#">How to Calculate Body Composition</a></li>
+              <li><a class="dropdown-item" href="#">How to Calculate BMR</a></li>
+              <li><a class="dropdown-item" href="#">Estimate Your Calories</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- NOURISH -->
+        <div class="mega-col">
+          <h6 class="dropdown-header">Nourish & Restore</h6>
+          <a class="dropdown-item" href="movement.html">Nutrition</a>
+          <a class="dropdown-item" href="foodstory.html">My Journey With Food</a>
+          <a class="dropdown-item" href="movement.html">Recovery & Rest</a>
+          <a class="dropdown-item" href="movement.html">Environment & Health</a>
+        </div>
+
+        <!-- CONSCIOUS -->
+        <div class="mega-col">
+          <h6 class="dropdown-header">Conscious Choices</h6>
+          <a class="dropdown-item" href="movement.html">Plant-based Eating</a>       
+          <a class="dropdown-item" href="movement.html">Barefoot vs Conventional Footwear</a>
+          <a class="dropdown-item" href="movement.html">Toxin-free Living</a>
+        </div>
+
+        <!-- SELF-CARE -->
+        <div class="mega-col">
+          <h6 class="dropdown-header">Gentle Self-Care</h6>
+          <div class="dropdown-submenu submenu-wide submenu-end">
+            <a class="dropdown-item submenu-toggle" href="#" aria-expanded="false">Curly Hair Care</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Curly Hair Routine</a></li>
+              <li><a class="dropdown-item" href="#">Maintaining Healthy Hair</a></li>
+            </ul>
+          </div>
+          <a class="dropdown-item" href="movement.html">Skin Care</a>
+          <a class="dropdown-item" href="movement.html">Daily Body Rituals</a>
+        </div>
+
+      </div>
+    </li>
+  </ul>
+</li>
+
+
+<li class="nav-item dropdown" data-bs-auto-close="outside">
+  <a class="nav-link dropdown-toggle" href="#body" id="dropdownMind"
+     role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Mind
+  </a>
+
+  <ul class="dropdown-menu dropdown-mega jj-surface p-3" aria-labelledby="dropdownMind">
+    <li>
+      <div class="mega-wrap body-grid">
+
+        <!-- MINDFUL PRACTICES -->
+        <div class="mega-col">
+          <h6 class="dropdown-header">Mindful Presence</h6>
+          <a class="dropdown-item" href="movement.html">Mindfulness Explained</a>
+          <a class="dropdown-item" href="fitnessstory.html">Meditation Basics</a>
+          <a class="dropdown-item" href="movement.html">Journaling for Clarity</a>
+          <a class="dropdown-item" href="movement.html">Focus & Productivity</a>
+        </div>
+
+        <!-- SELF WORTH -->
+        <div class="mega-col">
+          <h6 class="dropdown-header">Affirming Self-Worth</h6>
+          <a class="dropdown-item" href="movement.html">Monthly Mantra, Affirmation & Quote </a>
+          <a class="dropdown-item" href="movement.html">Rewiring Negative Self Talk</a>
+          <a class="dropdown-item" href="movement.html">Embrace Your Roots</a>
+        </div>
+
+        <!-- CONSCIOUS -->
+        <div class="mega-col">
+          <h6 class="dropdown-header">Conscious Reframing</h6>
+          <a class="dropdown-item" href="movement.html">Questioning Convention & Limiting Beliefs</a>
+          <a class="dropdown-item" href="movement.html">Living With Curiosity</a>
+          <a class="dropdown-item" href="movement.html">Practicing Gratitude</a>
+        </div>
+
+        <!-- MENTAL WELLBEING -->
+        <div class="mega-col">
+          <h6 class="dropdown-header">Mental Wellbeing</h6>
+          <div class="dropdown-submenu submenu-wide submenu-end">
+            <a class="dropdown-item submenu-toggle" href="#" aria-expanded="false">Mental Health</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Why Mental Health Matters</a></li>
+              <li><a class="dropdown-item" href="mentalhealthstory.html">My Mental Health Journey</a></li>
+            </ul>
+          </div>
+          <a class="dropdown-item" href="movement.html">Navigating Toxic Relationships</a>
+          <a class="dropdown-item" href="movement.html">Breaking the Silence: Taboos & Stigma in Culture</a>
+          <a class="dropdown-item" href="movement.html">Mental Health in Sport & Performance</a>
+
+
+
+        </div>
+
+      </div>
+    </li>
+  </ul>
+</li>
             
+<li class="nav-item dropdown" data-bs-auto-close="outside">
+  <a class="nav-link dropdown-toggle" href="#body" id="dropdownHeart"
+     role="button" data-bs-toggle="dropdown" aria-expanded="false"><span style="color:#b38398"><strong>Heart</strong></span>
+  </a>
 
-              <li class="nav-item dropdown" data-bs-auto-close="outside">
-                <a class="nav-link dropdown-toggle" href="#music" id="dropdownMusic"
-                role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Music
-              </a>
-               
+  <ul class="dropdown-menu dropdown-mega jj-surface p-3" aria-labelledby="dropdownHeart">
+    <li>
+      <div class="mega-wrap body-grid">
 
-                <ul class="dropdown-menu" aria-labelledby="dropdownMusic">
-                  <li><a class="dropdown-item" href="musicstory.html">Jana's Music Journey</a></li> 
-                  <li><a class="dropdown-item" href="healing-compositions.html">Healing Compositions</a></li>
-                  <li><a class="dropdown-item" href="musicmeaning.html">Behind the Music</a></li>
-                </ul>
-              </li>
+        <!-- CONNECTION -->
+        <div class="mega-col">
+          <h6 class="dropdown-header">Connection</h6>
+          <a class="dropdown-item" href="movement.html">Importance of Community & Belonging</a>
+          <a class="dropdown-item" href="fitnessstory.html">Boundaries</a>
+          <a class="dropdown-item" href="movement.html">Communication With Compassion & Clarity</a>
+        </div>
+
+        <!-- EMBRACING UNIQUENESS -->
+        <div class="mega-col">
+          <h6 class="dropdown-header">Embracing Uniqueness</h6>
+          <a class="dropdown-item" href="movement.html">My Curly Hair Journey</a>
+          <a class="dropdown-item" href="movement.html"><span style="color:#b38398"><strong>My Tan Skin Journey</strong></span></a>
+          <a class="dropdown-item" href="conscious-comfort-over-conformity.html">Honouring Uniqueness As Beauty</a>
+          <a class="dropdown-item" href="conscious-comfort-over-conformity.html">Courage in Authenticity</a>
 
 
-             <li class="nav-item dropdown" data-bs-auto-close="outside">
-                <a class="nav-link dropdown-toggle" href="#wellness" id="dropdownWellness"
-                role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <span style = "color:#b38398"><strong>Health & Wellness</strong></span>
-              </a>
+        </div>
+
+        <!-- CONSCIOUS COMPASSION -->
+        <div class="mega-col">
+          <h6 class="dropdown-header">Conscious Compassion</h6>
+          <a class="dropdown-item" href="movement.html">Living Compassionately</a>
+          <a class="dropdown-item" href="movement.html">Relationships: Quality Over Quantity</a>
+          <a class="dropdown-item" href="conscious-comfort-over-conformity.html">Soothing Ourselves Through The 5 Senses</a>
+        </div>
+
+        
+        <!-- LOVE IN ACTION -->
+        <div class="mega-col">
+          <h6 class="dropdown-header">Practicing Love</h6>
+          <a class="dropdown-item" href="movement.html">Joy Practices</a>
+          <a class="dropdown-item" href="movement.html">Acts of Service & Kindness</a>
+          <a class="dropdown-item" href="movement.html">Love Languages</a>
+
+        </div>
+
+      </div>
+    </li>
+  </ul>
+</li>
+             
+<li class="nav-item dropdown" data-bs-auto-close="outside">
+  <a class="nav-link dropdown-toggle" href="#body" id="dropdownSoul"
+     role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Soul
+  </a>
+
+  <ul class="dropdown-menu dropdown-mega jj-surface p-3" aria-labelledby="dropdownSoul">
+    <li>
+      <div class="mega-wrap body-grid">
+
+            <!-- CONNECTION -->
+        <div class="mega-col">
+          <h6 class="dropdown-header">Living With Purpose</h6>
+          <a class="dropdown-item" href="movement.html">Living With Intention</a>
+          <a class="dropdown-item" href="fitnessstory.html">Exploring Purpose Beyond Roles & Titles</a>
+          <a class="dropdown-item" href="movement.html">What's Your Legacy?</a>
+        </div>
+
+
+                <!-- CREATIVE EXPRESSION-->
+        <div class="mega-col">
+          <h6 class="dropdown-header">Creative Expression</h6>
+          <a class="dropdown-item" href="movement.html">Reconnecting With Childhood Joys</a>
+          <a class="dropdown-item" href="movement.html">Creativity as Healing</a>
+          <div class="dropdown-submenu submenu-wide submenu-end">
+            <a class="dropdown-item submenu-toggle" href="#" aria-expanded="false">Healing Through Music</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Music as Medicine for the Soul</a></li>
+              <li><a class="dropdown-item" href="healing-compositions.html">Healing Compositions</a></li>
+              <li><a class="dropdown-item" href="musicmeaning.html">Behind the Music</a></li>
+            </ul>
+          </div>
+          <a class="dropdown-item" href="musicstory.html">My Music Journey</a>
+        </div>
+
+        <!-- CONSCIOUS LIVING -->
+        <div class="mega-col">
+          <h6 class="dropdown-header">Conscious Living</h6>
+          <a class="dropdown-item" href="movement.html">Compassion & Karma</a>
+          <a class="dropdown-item" href="conscious-comfort-over-conformity.html">Breaking Conditioned Cycles</a>
+        </div>
+
+        <!-- EMBRACING ACCEPTANCE -->
+        <div class="mega-col">
+          <h6 class="dropdown-header">Embracing Acceptance</h6>
+          <a class="dropdown-item" href="movement.html">Letting Go of Others' Expectations</a>
+          <a class="dropdown-item" href="movement.html">Surrender & Trust Your Intuition</a>
+          <a class="dropdown-item" href="movement.html">You Are Enough</a>
+        </div>
+
+      </div>
+    </li>
+  </ul>
+</li>
+
               
-              
-                <ul class="dropdown-menu" aria-labelledby="dropdownWellness">
-                  <!-- Submenu -->
-                <li class="dropdown-submenu">
-                  <a class="dropdown-item submenu-toggle" href="#"aria-expanded="false">Nutrition</a>
-                  <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Jana's Journey With Food</a></li>
-                    <li><a class="dropdown-item" href="#">Healthy Eating</a></li>
-                  </ul>
-                </li>
-                  <li><a class="dropdown-item" href="#Countryid">Sleep & Recovery</a></li>
-                  <!-- Submenu -->
-                <li class="dropdown-submenu">
-                  <a class="dropdown-item submenu-toggle" href="#"aria-expanded="false"><span style = "color:#b38398"><strong>Natural Beauty</strong></a>
-                  <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="hair.html">Curly Hair</a></li>
-                    <li><a class="dropdown-item" href="skin.html"><span style = "color:#b38398"><strong>Tan Skin</strong></a></li>
-                  </ul>
-                </li>     
-                  <!-- Submenu -->
-                <li class="dropdown-submenu">
-                  <a class="dropdown-item submenu-toggle" href="#"aria-expanded="false">Conscious Choices</a>
-                  <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Barefoot Shoes</a></li>
-                    <li><a class="dropdown-item" href="#">Vegan Lifestyle</a></li>
-                  </ul>
-                </li>             
-                </ul>
-              </li>
-
-
-              <li class="nav-item dropdown" data-bs-auto-close="outside">
-                <a class="nav-link dropdown-toggle" href="#mentalhealth" id="dropdownMentalHealth"
-                role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Mental Health
-              </a>
-               
-
-                <ul class="dropdown-menu" aria-labelledby="dropdownMentalhealth">
-                  <li><a class="dropdown-item" href="#Countryid">Navigating Toxic Relationships</a></li> 
-                  <li><a class="dropdown-item" href="#Countryid">Breaking the Silence (taboos)</a></li>
-                  <li><a class="dropdown-item" href="#Countryid">For My Brown Sisters</a></li>
-                  <li><a class="dropdown-item" href="#Countryid">Mental Health in Sport</a></li>
-                  <li><a class="dropdown-item" href="#Countryid">Healing Toolkit</a></li>
-                </ul>
-              </li>
 
                                          
               <li class="nav-item dropdown" data-bs-auto-close="outside">
@@ -162,26 +306,25 @@
                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Brown Girl Diaries
               </a>
-               
-
-                <ul class="dropdown-menu" aria-labelledby="dropdownDiaries">
+              
+              <ul class="dropdown-menu jj-surface p-3" aria-labelledby="dropdownDiaries">
                   <li><a class="dropdown-item" href="#Classicalid">Unlearn and Reclaim</a></li> 
                   <li><a class="dropdown-item" href="#Countryid">Healing the Inner Child</a></li>
                   <li><a class="dropdown-item" href="#Countryid">Mindful Strength</a></li>
                   <li><a class="dropdown-item" href="#Countryid">From Surviving to Thriving</a></li>
-                  <li><a class="dropdown-item" href="#Countryid">Letters to My Brown Sisters</a></li>
+                  <li><a class="dropdown-item" href="#Countryid">Letters to My Sisters</a></li>
                 </ul>
               </li>
+              </div>
 
-            
-              <form class="d-flex ms-4">
-                <input class="form-control me-2" type=" search" aria-label="Search">
-                <button class="btn btn-light" type="submit">Search</button>
-              </form>
-            </ul>
-          </div>
-        </div>
-      </nav>
+              <!-- Right: Search (already correct) -->
+      <form class="d-flex ms-auto me-3" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-light" type="submit">Search</button>
+      </form>
+  </div>
+</nav>
+
   </header>
 
    <img src="img/Main banners/skin banner.jpg" alt="Hero Image" class="full-width-image">
