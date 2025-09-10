@@ -292,7 +292,7 @@ header{ height: var(--nav-h); }
   display:flex; align-items:center;
   padding-top:0; padding-bottom:0;
   height: var(--nav-h);
-  margin-right: 1.5rem;
+  margin-right: 1rem;
 }
 .navbar-brand img{
   display:block;
