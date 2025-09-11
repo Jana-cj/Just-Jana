@@ -1490,25 +1490,7 @@ color: #7b7b7b;
 
 
 
-/* =========================================================
-   Just Jana — Mission & Values (missionvalues.html)
-   Light mode only — does not modify navbar
-   ========================================================= */
-
-/* ---------- Brand tokens ---------- */
-:root{
-  --jj-ink:       #1f1f1f;
-  --jj-bg:        #ffffff;
-  --jj-accent:    #b38398;   /* main brand rose-mauve */
-  --jj-rose:      #a86f75;   /* deeper rose */
-  --jj-soft:      rgba(179,131,152,.12); /* soft glow */
-  --jj-card:      #fff;
-  --jj-shadow:    0 10px 28px rgba(0,0,0,.08);
-}
-
-/* =========================================================
-   Base layout & typography (Mission section intact)
-   ========================================================= */
+/* CSS for missionvalues.html */
 
 .mission-title {
   font-size: 2rem;
@@ -1518,139 +1500,94 @@ color: #7b7b7b;
 
 .values-title {
   font-size: 2rem;
-  margin-bottom: 0.25rem;
-  color: #4b2e2e;
-}
-
-.container-narrow {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 4rem 2rem;
-}
-
-h1 {
-  font-size: 2.8rem;
-  text-align: center;
   margin-bottom: 2rem;
-  color: #693e67;
-}
-
-.section {
-  margin-bottom: 4rem;
-}
-
-.section h2 {
-  font-size: 2rem;
   color: #4b2e2e;
-  margin-bottom: 1rem;
 }
 
-.section p {
-  font-size: 1.1rem;
-  margin-bottom: 1rem;
+
+    .container-narrow {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #693e67;
+    }
+
+    .section {
+      margin-bottom: 4rem;
+    }
+
+    .section h2 {
+      font-size: 2rem;
+      color: #4b2e2e;
+      margin-bottom: 1rem;
+    }
+
+    .section p {
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+    }
+
+    ul.values-list p.values-list-titles {
+  font-size: 1.4rem;
+  color: #272626;
+  margin-bottom: 2rem;
 }
 
-/* ===== Mobile-Only Mission Banner images ===== */
+    .values-list {
+      padding-left: 0;
+      list-style: none;
+    }
+
+    .values-list li {
+      margin-bottom: 2rem;
+      background: #fff5f8;
+      padding: 1.5rem;
+      border-left: 5px solid #7a3e56;
+      border-radius: 8px;
+    }
+
+    .values-list strong {
+      display: block;
+      font-size: 1.2rem;
+      color: #7a3e56;
+      margin-bottom: 0.5rem;
+    }
+
+/* Show only on mobile */
 @media (max-width: 768px) {
-  .mission-logo { max-width: 65px; max-height: 65px; margin-bottom: 0.5rem; }
-  .mission-text { max-width: 70px; margin-bottom: 2rem; }
-  .mission-maintitle { max-width: 90%; margin-bottom: 3rem; margin-top: 2rem; }
-  h1 { font-size: 2rem; }
-  .section h2 { font-size: 1.5rem; }
+  
+  .mission-logo {
+    max-width: 65px;
+    max-height: 65px;
+    margin-bottom: 0.5rem;
+    
+  }
+
+  .mission-text {
+    max-width: 70px;
+    margin-bottom: 2rem;
+  }
+
+   .mission-maintitle {
+    max-width: 90%;
+    margin-bottom: 3rem;
+    margin-top: 2rem;
+  }
+  
+  h1 {
+    font-size: 2rem;
+  }
+  
+  .section h2 {
+    font-size: 1.5rem;
+  }
 }
-
-/* =========================================================
-   Values list — upgraded to soft cards + chips
-   (keeps your existing .values-list HTML)
-   ========================================================= */
-
-.values-list{
-  padding-left: 0;
-  list-style: none;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 18px;
-  margin-top: 0.75rem;
-}
-
-/* Responsive grid */
-@media (min-width: 640px){
-  .values-list{ grid-template-columns: 1fr 1fr; }
-}
-@media (min-width: 992px){
-  .values-list{ grid-template-columns: 1fr 1fr 1fr; }
-}
-
-.values-list li{
-  position: relative;
-  background: var(--jj-card);
-  border: 1px solid rgba(168,111,117,.18);
-  border-radius: 18px;
-  padding: 20px 18px 16px;
-  box-shadow: var(--jj-shadow);
-  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
-}
-
-/* soft ambient glow behind each card */
-.values-list li::before{
-  content: "";
-  position: absolute; inset: -6% -4% auto -4%;
-  height: 22px;
-  background: radial-gradient(40% 60% at 50% 0%, rgba(179,131,152,.22), transparent 70%);
-  border-radius: 24px;
-  filter: blur(8px);
-  pointer-events: none;
-}
-
-.values-list li:hover{
-  transform: translateY(-3px);
-  border-color: rgba(168,111,117,.34);
-  box-shadow: 0 14px 36px rgba(0,0,0,.12);
-}
-
-.values-list p.values-list-titles{
-  margin: 0 0 .35rem;
-  font-size: 1.35rem;
-  font-weight: 700;
-  color: var(--jj-ink);
-  letter-spacing: .2px;
-}
-
-/* body copy inside cards */
-.values-list li{
-  color: color-mix(in oklab, var(--jj-ink) 82%, #666);
-  line-height: 1.6;
-  font-size: 1rem;
-}
-
-/* Optional subtle link chips (used under some values) */
-.chip-links{
-  margin-top: .7rem;
-  display: flex;
-  flex-wrap: wrap;
-  gap: .45rem;
-}
-
-.chip-links a{
-  display: inline-block;
-  padding: .35rem .7rem;
-  font-size: .85rem;
-  border-radius: 999px;
-  text-decoration: none;
-  color: var(--jj-ink);
-  background: rgba(179,131,152,.12);
-  border: 1px solid rgba(179,131,152,.22);
-  transition: background-color .25s ease, color .25s ease, border-color .25s ease, transform .2s ease;
-}
-
-.chip-links a:hover{
-  background: var(--jj-rose);
-  border-color: var(--jj-rose);
-  color: #fff;
-  transform: translateY(-1px);
-}
-
-
     
 
 /* CSS for fitness page    */
