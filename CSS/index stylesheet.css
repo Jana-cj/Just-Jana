@@ -171,7 +171,7 @@ html, body {
 .dropdown-submenu{ position: relative; display:inline-block; }
 .dropdown-submenu > .dropdown-menu{
   position:absolute; top:0; left:100%;
-  margin-left:.5rem; margin-top:-.25rem;
+  margin-left:.25rem; margin-top:-.25rem;
   min-width:auto; width:max-content; max-width:14rem; white-space:normal;
 
   /* Self-contained and above the lifted column */
