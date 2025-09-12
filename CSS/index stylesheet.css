@@ -466,7 +466,7 @@ body.nav-open{
 
   /* 3) Reduce the gap between logo and titles */
   #siteNav .navbar-brand{
-    margin-right: .35rem !important; /* tighten the logo→menu gap */
+    margin-right: .5rem !important; /* tighten the logo→menu gap */
   }
 
   /* 4) Shift titles slightly to the left (closer to the logo) */
