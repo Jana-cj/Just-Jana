@@ -948,26 +948,26 @@
     });
   }
 
-/* ---------- Link navigation inside collapsed menu (guarded) ---------- */
+/* ---------- Link navigation inside collapsed menu (mobile-safe) ---------- */
 document.addEventListener('click', (e)=>{
   const a = e.target.closest('a[href]');
   if (!a) return;
 
-  // If the click is on a dropdown toggle or submenu toggle, DO NOT close.
   const isTopToggle   = a.matches('.nav-item.dropdown > a.dropdown-toggle,[data-bs-toggle="dropdown"]');
   const isSubmenuTog  = a.matches('.submenu-toggle');
   const insideDropdown= a.closest('.dropdown-menu') !== null;
 
   if (collapseIsOpen()){
-    // Keep the menu open when interacting with toggles or inside dropdown content
+    // Keep the menu open when tapping toggles or interacting inside panels
     if (isTopToggle || isSubmenuTog || insideDropdown) return;
 
-    // Otherwise (true navigation link), close the collapsed nav and proceed.
+    // True navigation? Close collapsed nav then let the browser navigate.
     bootstrap.Collapse.getOrCreateInstance(collapseEl).hide();
     closeAllDropdowns();
     unlockBody();
   }
 }, {capture:true});
+
 
 
   /* ---------- Header height + hide-on-scroll (desktop) ---------- */
