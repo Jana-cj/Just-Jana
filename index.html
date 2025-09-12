@@ -726,13 +726,11 @@
   </footer>
   
 <script>
-/* ==========================================================================
-   Just Jana — NAVBAR (bulletproof mobile toggle)
-   - Mobile (<1200px): one open at a time; second tap closes
+/* ======================================================================
+   Just Jana — NAVBAR (bulletproof mobile toggle + fixed mobile height)
+   - Mobile (<1200px): one open at a time; second tap closes; no height drift
    - Desktop (≥1200px): hover opens, mouseout closes (Bootstrap-driven)
-   - We disable Bootstrap's data-API on mobile to avoid double toggles,
-     and restore it on desktop.
-   ========================================================================== */
+   ====================================================================== */
 (function () {
   const XL = '(min-width: 1200px)';
   const XL_UP = window.matchMedia(XL);
@@ -771,23 +769,6 @@
     closeAllDropdowns();
     unlockBody();
   }, {passive:true});
-
-  /* ---------- Minimal CSS injection for overlay/mobile scroll ---------- */
-  (function injectCSS(){
-    if (document.querySelector('style[data-jj-nav="mobile-safe"]')) return;
-    const tag = document.createElement('style');
-    tag.setAttribute('data-jj-nav','mobile-safe');
-    tag.textContent = `
-      #jjNavOverlay{position:fixed; inset: var(--nav-h) 0 0 0; background:rgba(0,0,0,.25);
-        backdrop-filter:blur(2px); -webkit-backdrop-filter:blur(2px); z-index:998; display:none;}
-      body.nav-open #jjNavOverlay{display:block;}
-      @media (max-width:1199.98px){
-        #navbarSupportedContent{max-height:calc(100vh - var(--nav-h)); overflow:auto; -webkit-overflow-scrolling:touch;}
-        .dropdown-menu{background:#fff !important; backdrop-filter:none !important; -webkit-backdrop-filter:none !important;}
-      }
-    `;
-    document.head.appendChild(tag);
-  })();
 
   /* ---------- Helpers ---------- */
   function isMobile(){ return !XL_UP.matches; }
@@ -962,9 +943,19 @@
     }
   }, {capture:true});
 
-  /* ---------- Header height var + hide-on-scroll (desktop) ---------- */
-  const setH = () => document.documentElement.style.setProperty('--nav-h', (nav?.offsetHeight || 80) + 'px');
-  setH(); addEventListener('resize', setH, {passive:true});
+  /* ---------- Header height var + hide-on-scroll ---------- */
+  const setH = () => {
+    if (XL_UP.matches) {
+      // Desktop: compute from actual nav height
+      document.documentElement.style.setProperty('--nav-h', (nav?.offsetHeight || 80) + 'px');
+    } else {
+      // Mobile: keep CSS-locked value; do NOT recompute
+      const cssVal = getComputedStyle(document.documentElement).getPropertyValue('--nav-h').trim();
+      document.documentElement.style.setProperty('--nav-h', cssVal || '56px');
+    }
+  };
+  setH();
+  addEventListener('resize', setH, {passive:true});
 
   let lastY = window.scrollY;
   addEventListener('scroll', ()=>{
@@ -980,12 +971,13 @@
   /* ---------- Boot it up ---------- */
   function applyMode(){
     if (isMobile()){
-      disableBootstrapOnMobile(); // we take full control
+      disableBootstrapOnMobile(); // take full control on mobile
     } else {
       restoreBootstrapOnDesktop();
       closeAllDropdowns();
       unlockBody();
     }
+    setH(); // ensure var is correct after mode change
   }
   bindMobileHandlers();
   bindSubmenus();
@@ -993,6 +985,7 @@
   XL_UP.addEventListener('change', applyMode);
 })();
 </script>
+
 
 <script>
 /* ==========================================================================
