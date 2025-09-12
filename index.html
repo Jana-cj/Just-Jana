@@ -869,21 +869,27 @@
     }
   });
 
-// Mobile: make the top-level link a pure toggle; second tap closes
-topToggles.forEach(a=>{
-  a.addEventListener('click', function(e){
-    if (!XL_UP.matches) {
-      e.preventDefault();
-      // Block Bootstrap's delegated click handler so it doesn't re-toggle behind us
-      e.stopPropagation();
-      if (typeof e.stopImmediatePropagation === 'function') e.stopImmediatePropagation();
+// Mobile: single-open + second-tap-to-close (let Bootstrap handle the toggling)
+topToggles.forEach(t => {
+  t.addEventListener('click', function (e) {
+    if (XL_UP.matches) return;       // desktop handled by hover listeners
+    e.preventDefault();               // avoid jumping to #hash
 
-      const parent = this.closest('.nav-item.dropdown');
-      const isOpen = parent?.classList.contains('show');
-      const dd = getDD(this);
-      isOpen ? dd.hide() : dd.show();
-    }
-  }, {capture: true}); // capture helps us intercept before Bootstrap's bubbling handler
+    const meItem = this.closest('.nav-item.dropdown');
+    const isOpen = meItem.classList.contains('show');
+    const dd = bootstrap.Dropdown.getOrCreateInstance(this, { autoClose: 'outside' });
+
+    // Close any other open top-level dropdown
+    document.querySelectorAll('.nav-item.dropdown.show').forEach(openItem => {
+      if (openItem !== meItem) {
+        const openToggle = openItem.querySelector(':scope > a.dropdown-toggle');
+        if (openToggle) bootstrap.Dropdown.getOrCreateInstance(openToggle).hide();
+      }
+    });
+
+    // Toggle the tapped one (second tap closes)
+    isOpen ? dd.hide() : dd.show();
+  }, { passive: false });  // IMPORTANT: no capture, no stopPropagation
 });
 
 
