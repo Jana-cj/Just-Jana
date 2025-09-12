@@ -869,27 +869,22 @@
     }
   });
 
-// Mobile: pure toggle on the same title (second tap closes reliably)
-topToggles.forEach(t => {
-  t.addEventListener('click', function (e) {
-    if (XL_UP.matches) return;             // desktop: let hover logic handle it
+// Mobile: make the top-level link a pure toggle; second tap closes
+topToggles.forEach(a=>{
+  a.addEventListener('click', function(e){
+    if (!XL_UP.matches) {
+      e.preventDefault();
+      // Block Bootstrap's delegated click handler so it doesn't re-toggle behind us
+      e.stopPropagation();
+      if (typeof e.stopImmediatePropagation === 'function') e.stopImmediatePropagation();
 
-    e.preventDefault();
-    e.stopPropagation();
-    if (typeof e.stopImmediatePropagation === 'function') e.stopImmediatePropagation();
-
-    // Bootstrap instance (explicitly set autoClose to keep control on mobile)
-    const dd   = bootstrap.Dropdown.getOrCreateInstance(this, { autoClose: 'outside' });
-    const menu = this.nextElementSibling;  // the UL.dropdown-menu next to the toggle
-
-    // Robust "is open?" check
-    const isOpen = (this.getAttribute('aria-expanded') === 'true') ||
-                   (menu && menu.classList.contains('show'));
-
-    isOpen ? dd.hide() : dd.show();
-  }, { capture: true }); // capture so we beat Bootstrap’s delegated handler
+      const parent = this.closest('.nav-item.dropdown');
+      const isOpen = parent?.classList.contains('show');
+      const dd = getDD(this);
+      isOpen ? dd.hide() : dd.show();
+    }
+  }, {capture: true}); // capture helps us intercept before Bootstrap's bubbling handler
 });
-
 
   /* ---------- Submenus (tap-to-toggle & desktop hover) ---------- */
   $$('.dropdown-submenu').forEach(sub=>{
