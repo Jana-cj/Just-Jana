@@ -727,100 +727,39 @@
   
 <script>
 /* ==========================================================================
-   Just Jana — Navbar (fully mobile-friendly)
-   - Desktop: hover opens, mouseout closes
-   - Mobile: accordions (single top-level open; tap toggles; submenus toggle)
-   - Tap again closes; overlay + body scroll lock on mobile
-   - Opaque panels on mobile (no see-through)
-   Requires: Bootstrap 5 bundle (already on your page)
+   Just Jana — NAVBAR (mobile single-open + second-tap-to-close)
+   - Mobile (<1200px): one top-level dropdown open at a time; second tap closes
+   - Desktop (≥1200px): hover-to-open remains
+   - Overlay + body scroll lock preserved
+   - Submenus: tap-to-toggle on mobile; hover-friendly on desktop
+   Requires: Bootstrap 5 bundle loaded before this script
    ========================================================================== */
 (function () {
   const XL_UP        = window.matchMedia('(min-width: 1200px)');
   const HOVER_DEVICE = window.matchMedia('(hover:hover)');
-  const TOUCH_DEVICE = window.matchMedia('(hover:none)');
 
   const nav        = document.getElementById('siteNav');
   const collapseEl = document.getElementById('navbarSupportedContent');
 
-  /* ---------- Inject minimal CSS so this is drop-in ---------- */
-  (function injectCSS(){
-    const css = `
-      /* overlay lives under fixed navbar (which is z=999) */
-      #jjNavOverlay{
-        position: fixed; inset: var(--nav-h) 0 0 0;
-        background: rgba(0,0,0,.25);
-        backdrop-filter: blur(2px);
-        -webkit-backdrop-filter: blur(2px);
-        z-index: 998; display:none;
-      }
-      body.nav-open #jjNavOverlay{ display:block; }
+  // ---------- Helpers ----------
+  const $$  = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+  const getDD = (toggle) => bootstrap.Dropdown.getOrCreateInstance(toggle, { autoClose: 'outside' });
 
-      /* collapsed area scroll comfort */
-      @media (max-width:1199.98px){
-        #navbarSupportedContent{
-          max-height: calc(100vh - var(--nav-h));
-          overflow: auto; -webkit-overflow-scrolling: touch;
-        }
-        .dropdown-menu{
-          background:#fff !important;
-          backdrop-filter:none !important;
-          -webkit-backdrop-filter:none !important;
-        }
-      }
-      /* flyout safety */
-      .dropdown-submenu > .dropdown-menu{ z-index: 110 !important; }
-      /* avoid hover underline anim on touch */
-      // @media (hover:none){
-      //   .navbar .nav-link::after{ display:none; }
-      // }
-    `;
-    const tag = document.createElement('style');
-    tag.setAttribute('data-jj-nav','mobile-safe');
-    tag.textContent = css;
-    document.head.appendChild(tag);
-  })();
+  const topItems   = $$('.nav-item.dropdown', nav);
+  const topToggles = $$('.nav-item.dropdown > a.dropdown-toggle', nav);
 
-  /* ---------- Overlay element ---------- */
+  function collapseIsOpen(){ return collapseEl && collapseEl.classList.contains('show'); }
+  function anyDropdownOpen(){ return !!document.querySelector('.nav-item.dropdown.show'); }
+
+  // ---------- Overlay element + body lock ----------
   let overlay = document.getElementById('jjNavOverlay');
   if(!overlay){
     overlay = document.createElement('div');
     overlay.id = 'jjNavOverlay';
     document.body.appendChild(overlay);
   }
-  overlay.addEventListener('click', () => {
-    if (collapseEl && collapseEl.classList.contains('show')) {
-      bootstrap.Collapse.getOrCreateInstance(collapseEl).hide();
-    }
-    closeAllDropdowns();
-    unlockBody();
-  }, {passive:true});
-
-  /* ---------- Helpers ---------- */
-  const $$  = (sel, root=document) => Array.from(root.querySelectorAll(sel));
-  const getDD = (toggle) => bootstrap.Dropdown.getOrCreateInstance(toggle);
-
-  const topItems   = $$('.nav-item.dropdown');
-  const topToggles = $$('.nav-item.dropdown > a.dropdown-toggle');
-
-  function anyDropdownOpen(){ return !!document.querySelector('.nav-item.dropdown.show'); }
-  function collapseIsOpen(){ return collapseEl && collapseEl.classList.contains('show'); }
-
-  function closeAllDropdowns(except=null){
-    topItems.forEach(li=>{
-      if (li !== except && li.classList.contains('show')) {
-        const t = li.querySelector(':scope > a.dropdown-toggle');
-        if (t) getDD(t).hide();
-      }
-      $$('.dropdown-submenu > .dropdown-menu.show', li).forEach(menu=>{
-        menu.classList.remove('show');
-        menu.previousElementSibling?.setAttribute('aria-expanded','false');
-      });
-    });
-  }
-
   function lockBody(){
     document.body.classList.add('nav-open');
-    // hard lock as fallback for custom CSS stacks
     document.documentElement.style.overflow = 'hidden';
     document.body.style.overflow = 'hidden';
     overlay.style.display = 'block';
@@ -831,31 +770,51 @@
     document.body.style.overflow = '';
     overlay.style.display = 'none';
   }
+  overlay.addEventListener('click', () => {
+    if (collapseIsOpen()) bootstrap.Collapse.getOrCreateInstance(collapseEl).hide();
+    closeAllDropdowns();
+    unlockBody();
+  }, {passive:true});
 
-  /* ---------- Top-level behaviors ---------- */
-  topItems.forEach(li=>{
-    li.addEventListener('show.bs.dropdown', function(){
-      // mobile: keep only one open
-      if (!XL_UP.matches) closeAllDropdowns(this);
-      if (!XL_UP.matches) lockBody();
-      const t = this.querySelector(':scope > a.dropdown-toggle');
-      if (t) t.setAttribute('aria-expanded','true');
+  // ---------- Inject small CSS needed for overlay + mobile scroll comfort ----------
+  (function injectCSS(){
+    if (document.querySelector('style[data-jj-nav="mobile-safe"]')) return;
+    const css = `
+      #jjNavOverlay{ position:fixed; inset: var(--nav-h) 0 0 0; background: rgba(0,0,0,.25);
+        backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); z-index:998; display:none; }
+      body.nav-open #jjNavOverlay{ display:block; }
+      @media (max-width:1199.98px){
+        #navbarSupportedContent{ max-height: calc(100vh - var(--nav-h)); overflow:auto; -webkit-overflow-scrolling:touch; }
+        .dropdown-menu{ background:#fff !important; backdrop-filter:none !important; -webkit-backdrop-filter:none !important; }
+      }
+      .dropdown-submenu > .dropdown-menu{ z-index:110 !important; }
+    `;
+    const tag = document.createElement('style');
+    tag.setAttribute('data-jj-nav','mobile-safe');
+    tag.textContent = css;
+    document.head.appendChild(tag);
+  })();
+
+  // ---------- Close helpers ----------
+  function closeSubmenus(root){
+    $$('.dropdown-submenu > .dropdown-menu.show', root || document).forEach(menu=>{
+      menu.classList.remove('show');
+      menu.previousElementSibling?.setAttribute('aria-expanded','false');
     });
+  }
+  function closeDropdownByToggle(toggle){
+    try { getDD(toggle).hide(); } catch(_){}
+    toggle.setAttribute('aria-expanded','false');
+    toggle.closest('.nav-item.dropdown')?.classList.remove('show');
+  }
+  function closeAllDropdowns(exceptToggle=null){
+    topToggles.forEach(t => { if (t !== exceptToggle) closeDropdownByToggle(t); });
+    closeSubmenus();
+  }
 
-    li.addEventListener('hide.bs.dropdown', function(){
-      const t = this.querySelector(':scope > a.dropdown-toggle');
-      if (t) t.setAttribute('aria-expanded','false');
-      // close submenus inside too
-      $$('.dropdown-submenu > .dropdown-menu.show', this).forEach(menu=>{
-        menu.classList.remove('show');
-        menu.previousElementSibling?.setAttribute('aria-expanded','false');
-      });
-      // unlock if nothing else open
-      setTimeout(()=>{ if (!anyDropdownOpen() && !collapseIsOpen()) unlockBody(); }, 0);
-    });
-
-    // Desktop hover open/close
-    if (HOVER_DEVICE.matches) {
+  // ---------- Desktop hover open/close ----------
+  if (HOVER_DEVICE.matches) {
+    topItems.forEach(li => {
       li.addEventListener('mouseenter', function(){
         if (!XL_UP.matches) return;
         const t = this.querySelector(':scope > a.dropdown-toggle');
@@ -866,37 +825,61 @@
         const t = this.querySelector(':scope > a.dropdown-toggle');
         if (t) getDD(t).hide();
       });
-    }
+    });
+  }
+
+  // ---------- Mobile: single-open + second-tap-to-close (THE FIX) ----------
+  let currentOpenToggle = null;
+
+  topToggles.forEach(toggle => {
+    // Use capture so we beat Bootstrap's data-API click handler
+    toggle.addEventListener('click', function (e) {
+      if (XL_UP.matches) return; // desktop handled by hover
+      e.preventDefault();
+      e.stopPropagation();
+      if (typeof e.stopImmediatePropagation === 'function') e.stopImmediatePropagation();
+
+      const me = this;
+      const dd = getDD(me);
+      const item = me.closest('.nav-item.dropdown');
+      const isOpen = item?.classList.contains('show');
+
+      // Only one open at a time
+      if (currentOpenToggle && currentOpenToggle !== me) {
+        closeDropdownByToggle(currentOpenToggle);
+      }
+
+      // Toggle this one
+      if (isOpen) {
+        dd.hide();
+        currentOpenToggle = null;
+      } else {
+        dd.show();
+        currentOpenToggle = me;
+        lockBody(); // ensure body lock when a dropdown is open on mobile
+      }
+    }, true);
   });
 
-// Mobile: single-open + second-tap-to-close
-topToggles.forEach(t => {
-  t.addEventListener('click', function (e) {
-    if (XL_UP.matches) return;       // desktop handled by hover listeners
-    e.preventDefault();               // avoid jumping to #hash
-    e.stopPropagation();              // ✨ add
-    if (typeof e.stopImmediatePropagation === 'function') e.stopImmediatePropagation(); // ✨ add
-
-    const meItem = this.closest('.nav-item.dropdown');
-    const isOpen = meItem.classList.contains('show');
-    const dd = bootstrap.Dropdown.getOrCreateInstance(this, { autoClose: 'outside' });
-
-    // Close any other open top-level dropdown
-    document.querySelectorAll('.nav-item.dropdown.show').forEach(openItem => {
-      if (openItem !== meItem) {
-        const openToggle = openItem.querySelector(':scope > a.dropdown-toggle');
-        if (openToggle) bootstrap.Dropdown.getOrCreateInstance(openToggle).hide();
+  // Keep tracker in sync with Bootstrap
+  topItems.forEach(li => {
+    li.addEventListener('shown.bs.dropdown', () => {
+      if (!XL_UP.matches) {
+        const t = li.querySelector(':scope > a.dropdown-toggle');
+        currentOpenToggle = t;
+        lockBody();
       }
     });
+    li.addEventListener('hidden.bs.dropdown', () => {
+      const t = li.querySelector(':scope > a.dropdown-toggle');
+      if (currentOpenToggle === t) currentOpenToggle = null;
+      closeSubmenus(li);
+      setTimeout(()=>{ if (!anyDropdownOpen() && !collapseIsOpen()) unlockBody(); }, 0);
+    });
+  });
 
-    // Toggle the tapped one (second tap closes)
-    isOpen ? dd.hide() : dd.show();
-  }, { passive: false });
-});
-
-
-  /* ---------- Submenus (tap-to-toggle & desktop hover) ---------- */
-  $$('.dropdown-submenu').forEach(sub=>{
+  // ---------- Submenus: tap-to-toggle mobile, hover-friendly desktop ----------
+  $$('.dropdown-submenu', nav).forEach(sub => {
     const trigger = sub.querySelector(':scope > .submenu-toggle');
     const menu    = sub.querySelector(':scope > .dropdown-menu');
     if (!trigger || !menu) return;
@@ -911,7 +894,7 @@ topToggles.forEach(t => {
       });
     }
 
-    // Tap/click toggles submenu (tap again closes)
+    // Tap/click toggles submenu
     trigger.addEventListener('click', (e)=>{
       e.preventDefault();
       e.stopPropagation();
@@ -926,7 +909,7 @@ topToggles.forEach(t => {
       }
     });
 
-    // Desktop hover: graceful, with small delay on close
+    // Desktop hover nicety
     if (HOVER_DEVICE.matches){
       let timer;
       const open = ()=>{
@@ -949,41 +932,40 @@ topToggles.forEach(t => {
     }
   });
 
-  /* ---------- Collapse events: lock/unlock + cleanup ---------- */
+  // ---------- Collapse events ----------
   if (collapseEl){
     collapseEl.addEventListener('shown.bs.collapse', ()=>{ lockBody(); });
     collapseEl.addEventListener('hidden.bs.collapse', ()=>{
       closeAllDropdowns();
+      currentOpenToggle = null;
       unlockBody();
     });
   }
 
-/* ---------- Link navigation inside collapsed menu (mobile-safe) ---------- */
-document.addEventListener('click', (e)=>{
-  const a = e.target.closest('a[href]');
-  if (!a) return;
+  // ---------- Link navigation inside collapsed area ----------
+  document.addEventListener('click', (e)=>{
+    const a = e.target.closest && e.target.closest('a[href]');
+    if (!a) return;
 
-  const isTopToggle   = a.matches('.nav-item.dropdown > a.dropdown-toggle,[data-bs-toggle="dropdown"]');
-  const isSubmenuTog  = a.matches('.submenu-toggle');
-  const insideDropdown= a.closest('.dropdown-menu') !== null;
+    const isTopToggle   = a.matches('.nav-item.dropdown > a.dropdown-toggle,[data-bs-toggle="dropdown"]');
+    const isSubmenuTog  = a.matches('.submenu-toggle');
+    const insideDropdown= a.closest('.dropdown-menu') !== null;
 
-  if (collapseIsOpen()){
-    // Keep the menu open when tapping toggles or interacting inside panels
-    if (isTopToggle || isSubmenuTog || insideDropdown) return;
+    if (collapseIsOpen()){
+      // Keep menu open for toggles and interactions inside panels
+      if (isTopToggle || isSubmenuTog || insideDropdown) return;
 
-    // True navigation? Close collapsed nav then let the browser navigate.
-    bootstrap.Collapse.getOrCreateInstance(collapseEl).hide();
-    closeAllDropdowns();
-    unlockBody();
-  }
-}, {capture:true});
+      // True navigation: close then allow navigation
+      bootstrap.Collapse.getOrCreateInstance(collapseEl).hide();
+      closeAllDropdowns();
+      unlockBody();
+    }
+  }, {capture:true});
 
-
-
-  /* ---------- Header height + hide-on-scroll (desktop) ---------- */
+  // ---------- Header height var + hide-on-scroll (desktop) ----------
   let lastY = window.scrollY;
-  const setH = () =>
-    document.documentElement.style.setProperty('--nav-h', (nav?.offsetHeight || 80) + 'px');
+  const setH = () => document.documentElement
+      .style.setProperty('--nav-h', (nav?.offsetHeight || 80) + 'px');
   setH(); addEventListener('resize', setH, {passive:true});
 
   addEventListener('scroll', ()=>{
@@ -991,21 +973,16 @@ document.addEventListener('click', (e)=>{
     const y = window.scrollY;
     const mayHide = (y > lastY && y > (nav?.offsetHeight || 80)) && !collapseIsOpen() && !anyDropdownOpen();
     if (nav) nav.classList.toggle('nav-hidden', mayHide);
-    lastY = y <= 0 ? 0 : y;
+    lastY = Math.max(0, y);
   }, {passive:true});
-
 })();
 </script>
 
-
-
-
-<!-- my journeys -->
- <script>
+<script>
 /* ==========================================================================
    Just Jana — Journeys Rail (smooth auto-scroll + drag/swipe + arrows)
-   Fix: desktop links sometimes not opening due to overzealous click guard
-   Drop-in script. No dependencies.
+   Fix included: desktop links always open (click guard removed)
+   No dependencies.
    ========================================================================== */
 (function(){
   const viewport  = document.getElementById('jjViewport');
@@ -1014,28 +991,25 @@ document.addEventListener('click', (e)=>{
   const rightBtn  = document.getElementById('jjArrowRight');
   if(!viewport || !track) return;
 
-  /* ----------------------- Config (tweak as needed) ---------------------- */
-  const PX_PER_SEC      = 40;    // auto-scroll speed (px/s)
-  const RESUME_DELAY    = 1800;  // ms to resume after interaction
-  const NUDGE_FACTOR    = 0.6;   // arrow step = 80% of viewport width
-  const TWEEN_MS        = 700;   // arrow tween duration (ms)
-  const DRAG_THRESHOLD  = 12;    // px: if total drag < threshold -> treat as click
+  // Config
+  const PX_PER_SEC      = 40;
+  const RESUME_DELAY    = 1800;
+  const NUDGE_FACTOR    = 0.6;
+  const TWEEN_MS        = 700;
+  const DRAG_THRESHOLD  = 12;
 
   const prefersReduced  = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const autoSpeed       = prefersReduced ? 0 : PX_PER_SEC;
 
-  /* -------------------- Prepare clones for seamless loop ----------------- */
+  // Clone to fill loop
   const originals = Array.from(track.children);
-
   function widthOf(nodes){
     const gap = parseFloat(getComputedStyle(track).gap || 0);
     let total = 0;
     nodes.forEach(n => { total += n.getBoundingClientRect().width; });
     return total + Math.max(0, nodes.length - 1) * gap;
   }
-
   function fillLoop(){
-    // remove prior clones, keep first unique set
     const seen = new Set();
     [...track.children].forEach(el=>{
       const key = (el.getAttribute('href')||'') + '|' + (el.querySelector('.jj-title')?.textContent||'');
@@ -1043,27 +1017,23 @@ document.addEventListener('click', (e)=>{
     });
     const vpw = viewport.clientWidth;
     let total = track.scrollWidth;
-    // ensure at least ~2.5x viewport width for smooth wrap
     while(total < vpw * 2.5){
       originals.forEach(node => track.appendChild(node.cloneNode(true)));
       total = track.scrollWidth;
     }
   }
   fillLoop();
+  let setWidth = widthOf(originals);
 
-  let setWidth = widthOf(originals); // width of a single original cycle
-
-  /* ------------------------- Animation state ----------------------------- */
+  // Animation state
   let rafId, last = performance.now();
   let pausedUntil = 0, interacting = false, tweening = false;
-  let x = 0; // current offset (0..setWidth)
-
+  let x = 0;
   function render(){
     if (x >= setWidth) x -= setWidth;
     else if (x < 0)    x += setWidth;
     track.style.transform = `translate3d(${-x}px,0,0)`;
   }
-
   function frame(now){
     const dt = (now - last) / 1000; last = now;
     if(autoSpeed > 0 && now > pausedUntil && !interacting && !tweening){
@@ -1079,28 +1049,23 @@ document.addEventListener('click', (e)=>{
   function beginInteract(){ interacting = true; pause(RESUME_DELAY); }
   function endInteract(){ interacting = false; pause(RESUME_DELAY); }
 
-  /* -------------------------- Hover/focus pause -------------------------- */
+  // Hover/focus pause
   viewport.addEventListener('mouseenter', () => pause(999999), {passive:true});
   viewport.addEventListener('mouseleave', () => pause(RESUME_DELAY), {passive:true});
   track.addEventListener('focusin',  () => pause(999999));
   track.addEventListener('focusout', () => pause(RESUME_DELAY));
 
-  /* ------------------ Drag/Swipe with safe link handling ----------------- */
+  // Drag/Swipe
   let isDown = false, startX = 0, xAtStart = 0, pointerId = null;
   let dragDist = 0;
-  let downAnchor = null; // anchor pressed on pointerdown
+  let downAnchor = null;
 
   viewport.addEventListener('pointerdown', (e)=>{
     isDown = true;
     pointerId = e.pointerId;
     viewport.setPointerCapture(pointerId);
-
     beginInteract();
-
-    startX = e.clientX;
-    xAtStart = x;
-    dragDist = 0;
-
+    startX = e.clientX; xAtStart = x; dragDist = 0;
     downAnchor = e.target.closest && e.target.closest('a.jj-journey');
   }, {passive:true});
 
@@ -1108,7 +1073,7 @@ document.addEventListener('click', (e)=>{
     if(!isDown) return;
     const dx = e.clientX - startX;
     dragDist = Math.max(dragDist, Math.abs(dx));
-    x = xAtStart - dx;   // natural drag
+    x = xAtStart - dx;
     render();
   }, {passive:true});
 
@@ -1116,37 +1081,25 @@ document.addEventListener('click', (e)=>{
     if(!isDown) return;
     isDown = false;
     try{ viewport.releasePointerCapture(pointerId); }catch(_){}
-
-    // If it wasn't a real drag, treat as click and navigate explicitly.
     if (dragDist < DRAG_THRESHOLD && downAnchor && downAnchor.href){
       window.location.href = downAnchor.href;
     }
-
     endInteract();
-    dragDist = 0;
-    downAnchor = null;
+    dragDist = 0; downAnchor = null;
   }
   viewport.addEventListener('pointerup', endPointer, {passive:true});
   viewport.addEventListener('pointercancel', endPointer, {passive:true});
   viewport.addEventListener('pointerleave', endPointer, {passive:true});
 
-  // IMPORTANT: If you had a previous global click guard on the track, remove it.
-  // e.g., track.removeEventListener('click', oldHandler);
-
-  /* ------------------------- Desktop arrow tween ------------------------- */
+  // Arrows + tween
   function easeOutCubic(t){ return 1 - Math.pow(1 - t, 3); }
-
   function tweenTo(targetX, ms = TWEEN_MS){
-    // pick shortest wrap path
     let start = x;
     let delta = targetX - start;
     if (delta >  setWidth/2)  delta -= setWidth;
     if (delta < -setWidth/2)  delta += setWidth;
-
-    const end = start + delta;
     const t0  = performance.now();
-    tweening  = true; beginInteract();
-
+    let tweeningLocal = true; tweening = true; beginInteract();
     function step(t){
       const p = Math.min(1, (t - t0)/ms);
       const e = easeOutCubic(p);
@@ -1157,30 +1110,20 @@ document.addEventListener('click', (e)=>{
     }
     requestAnimationFrame(step);
   }
-
   function nudge(direction){
-    // direction: -1 (scroll left / content right), +1 (scroll right / content left)
     const distance = viewport.clientWidth * NUDGE_FACTOR;
     const target   = x + (direction > 0 ? distance : -distance);
     tweenTo(target);
   }
-
   if(leftBtn && rightBtn){
     leftBtn.addEventListener('click',  ()=> nudge(-1));
     rightBtn.addEventListener('click', ()=> nudge(+1));
-
-    // Optional: press & hold to keep nudging
     let holdTimer = null, holdInterval = null;
     function startHold(dir){
       nudge(dir);
-      holdTimer = setTimeout(()=>{
-        holdInterval = setInterval(()=> nudge(dir), 260);
-      }, 450);
+      holdTimer = setTimeout(()=>{ holdInterval = setInterval(()=> nudge(dir), 260); }, 450);
     }
-    function endHold(){
-      clearTimeout(holdTimer); clearInterval(holdInterval);
-      holdTimer = holdInterval = null;
-    }
+    function endHold(){ clearTimeout(holdTimer); clearInterval(holdInterval); holdTimer = holdInterval = null; }
     ['mousedown','touchstart'].forEach(ev=>{
       leftBtn.addEventListener(ev, (e)=>{ e.preventDefault(); startHold(-1); }, {passive:false});
       rightBtn.addEventListener(ev, (e)=>{ e.preventDefault(); startHold(+1); }, {passive:false});
@@ -1191,7 +1134,7 @@ document.addEventListener('click', (e)=>{
     });
   }
 
-  /* ------------------------------ Resize -------------------------------- */
+  // Resize
   let rTimer;
   addEventListener('resize', ()=>{
     clearTimeout(rTimer);
@@ -1204,24 +1147,24 @@ document.addEventListener('click', (e)=>{
 })();
 </script>
 
-
-
 <script>
+/* ==========================================================================
+   Monthly Carousel — updates download button + swipe on mobile
+   ========================================================================== */
 document.addEventListener('DOMContentLoaded', () => {
   const carouselEl = document.getElementById('monthlyCarousel');
   const downloadBtn = document.getElementById('downloadBtn');
-  if (!carouselEl || !downloadBtn) return; // no-op if not present
+  if (!carouselEl || !downloadBtn) return;
 
   const items  = carouselEl.querySelectorAll('.carousel-item');
   const prevBtn = carouselEl.querySelector('.carousel-control-prev');
   const nextBtn = carouselEl.querySelector('.carousel-control-next');
 
   const slides = [
-    { href: "img/Monthly positivity/mantra.png",         label: "Download Mantra" },
+    { href: "img/Monthly positivity/mantra.png",           label: "Download Mantra" },
     { href: "img/Monthly positivity/Self-affirmation.png", label: "Download Affirmation" },
     { href: "img/Monthly positivity/Quote.png",            label: "Download Quote" }
   ];
-
   const clampIndex = i => Math.max(0, Math.min(i, items.length - 1));
 
   function updateArrowState() {
@@ -1230,12 +1173,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (nextBtn) nextBtn.style.display = activeIndex >= items.length - 1 ? 'none' : 'flex';
   }
 
-  // Ensure a Carousel instance exists
   const instance = bootstrap.Carousel.getOrCreateInstance
     ? bootstrap.Carousel.getOrCreateInstance(carouselEl)
     : (bootstrap.Carousel.getInstance(carouselEl) || new bootstrap.Carousel(carouselEl));
 
-  // Swipe
+  // Touch swipe
   let startX = 0;
   carouselEl.addEventListener('touchstart', e => { startX = e.changedTouches[0].screenX; }, {passive:true});
   carouselEl.addEventListener('touchend',   e => {
@@ -1247,7 +1189,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (dx >  threshold && activeIndex > 0)                instance.prev();
   }, {passive:true});
 
-  // Update download button + arrows after slide
+  // Sync download button
   carouselEl.addEventListener('slid.bs.carousel', e => {
     const i = clampIndex(e.to ?? [...items].findIndex(x => x.classList.contains('active')));
     const slide = slides[i] || slides[0];
@@ -1261,7 +1203,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initial state
   updateArrowState();
-  // Set initial download button
   const startIdx = clampIndex([...items].findIndex(x => x.classList.contains('active')) || 0);
   const startSlide = slides[startIdx] || slides[0];
   if (startSlide) {
@@ -1273,6 +1214,9 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
 <script>
+/* ==========================================================================
+   Freebies filter buttons
+   ========================================================================== */
 document.addEventListener('DOMContentLoaded', () => {
   const filterButtons = document.querySelectorAll('.filter-btn');
   const cards = document.querySelectorAll('.freebie-card');
