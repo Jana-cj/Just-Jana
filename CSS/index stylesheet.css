@@ -334,13 +334,13 @@ header{ height: var(--nav-h); }
 
   /* Put the collapsible area (that contains the <ul>) in the middle column */
   #siteNav .navbar-collapse{
-    grid-column: 2;                 /* middle column */
     justify-content: center !important;  /* center its contents */
   }
 
   /* Make sure the list itself doesn’t fight the centering */
   #siteNav .navbar-nav{
-    margin: 0 !important;
+    margin: 0 auto !important;
+    max-width: 800px;
     gap: 0.85rem; /* optional: spacing between titles */
   }
 
