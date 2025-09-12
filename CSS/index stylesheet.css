@@ -452,6 +452,47 @@ body.nav-open{
 }
 
 
+/* ================= Side flyout submenus on desktop ================= */
+@media (min-width:1200px){
+  /* Ensure the parent mega panel doesn't clip the flyout */
+  .dropdown-menu.dropdown-mega{
+    overflow: visible; /* allow flyouts to extend beyond the column */
+  }
+
+  /* Each submenu becomes a side flyout */
+  .dropdown-submenu{ position: relative; }
+
+  .dropdown-submenu > .dropdown-menu{
+    position: absolute !important;
+    top: -0.25rem;                 /* align nicely with the trigger */
+    left: calc(100% + 8px);        /* fly out to the RIGHT of the column */
+    display: none;                 /* shown via .show class from your JS */
+    min-width: 220px;              /* tweak to taste */
+    padding: .5rem;
+    background: #fff !important;
+    border: 1px solid rgba(179,131,152,.15);
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0,0,0,.08);
+    z-index: 9999;                 /* sit above neighbors */
+  }
+
+  /* When JS toggles .show, display the flyout */
+  .dropdown-submenu > .dropdown-menu.show{
+    display: block;
+  }
+
+  /* If you want certain flyouts to open to the LEFT, add .submenu-end on the parent */
+  .dropdown-submenu.submenu-end > .dropdown-menu{
+    left: auto;
+    right: calc(100% + 8px);
+  }
+
+  /* Optional: subtle hover affordance on the trigger row */
+  .dropdown-submenu > .submenu-toggle:hover{
+    background: rgba(179,131,152,.10);
+    border-radius: 8px;
+  }
+}
 
 
 /* index.html */
