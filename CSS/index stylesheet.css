@@ -319,6 +319,39 @@ header{ height: var(--nav-h); }
   z-index: 9999;  /* stay on top */
 }
 
+/* Center nav titles across the full bar on desktop (≥1200px) */
+@media (min-width:1200px){
+  #siteNav .container-fluid{
+    display: grid;
+    grid-template-columns: auto 1fr auto; /* [logo] [nav] [toggler/empty] */
+    align-items: center;
+  }
+
+  /* Logo stays left; trim the gap as you like */
+  #siteNav .navbar-brand{
+    margin-right: .5rem !important; /* tweak to taste */
+  }
+
+  /* Put the collapsible area (that contains the <ul>) in the middle column */
+  #siteNav .navbar-collapse{
+    grid-column: 2;                 /* middle column */
+    justify-content: center !important;  /* center its contents */
+  }
+
+  /* Make sure the list itself doesn’t fight the centering */
+  #siteNav .navbar-nav{
+    margin: 0 !important;
+    gap: 0.85rem; /* optional: spacing between titles */
+  }
+
+  /* Keep the toggler (if visible at xl in your setup) aligned right */
+  #siteNav .navbar-toggler{
+    grid-column: 3;
+    justify-self: end;
+  }
+}
+
+
 @media (max-width:1199.98px){
   .dropdown-submenu > .dropdown-menu {
     max-height: 300px;   /* default visible height */
