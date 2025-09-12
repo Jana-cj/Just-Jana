@@ -869,11 +869,13 @@
     }
   });
 
-// Mobile: single-open + second-tap-to-close (let Bootstrap handle the toggling)
+// Mobile: single-open + second-tap-to-close
 topToggles.forEach(t => {
   t.addEventListener('click', function (e) {
     if (XL_UP.matches) return;       // desktop handled by hover listeners
     e.preventDefault();               // avoid jumping to #hash
+    e.stopPropagation();              // ✨ add
+    if (typeof e.stopImmediatePropagation === 'function') e.stopImmediatePropagation(); // ✨ add
 
     const meItem = this.closest('.nav-item.dropdown');
     const isOpen = meItem.classList.contains('show');
@@ -889,7 +891,7 @@ topToggles.forEach(t => {
 
     // Toggle the tapped one (second tap closes)
     isOpen ? dd.hide() : dd.show();
-  }, { passive: false });  // IMPORTANT: no capture, no stopPropagation
+  }, { passive: false });
 });
 
 
