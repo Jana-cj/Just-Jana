@@ -307,6 +307,11 @@ header{ height: var(--nav-h); }
   width:auto;
 }
 
+.navbar-nav {
+  margin-left: 0 !important;   /* remove auto centering */
+  margin-right: auto !important; /* keep it aligned */
+}
+
 .dropdown-submenu > .dropdown-menu {
   background: #fff !important;  /* solid white */
   backdrop-filter: none !important; 
