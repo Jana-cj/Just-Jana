@@ -454,7 +454,7 @@ body.nav-open{
 @media (min-width:1200px){
   /* 1) Bump the navbar height a touch on desktop so the logo can grow */
   :root{
-    --nav-h: 50px; /* was 40px — tweak as you like (52–60px looks nice) */
+    --nav-h: 45px; /* was 40px — tweak as you like (52–60px looks nice) */
   }
 
   /* 2) Enlarge the brand image and override inline width/height from HTML */
