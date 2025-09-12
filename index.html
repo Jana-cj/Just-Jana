@@ -727,31 +727,25 @@
   
 <script>
 /* ==========================================================================
-   Just Jana — NAVBAR (mobile single-open + second-tap-to-close)
-   - Mobile (<1200px): one top-level dropdown open at a time; second tap closes
-   - Desktop (≥1200px): hover-to-open remains
-   - Overlay + body scroll lock preserved
-   - Submenus: tap-to-toggle on mobile; hover-friendly on desktop
-   Requires: Bootstrap 5 bundle loaded before this script
+   Just Jana — NAVBAR (bulletproof mobile toggle)
+   - Mobile (<1200px): one open at a time; second tap closes
+   - Desktop (≥1200px): hover opens, mouseout closes (Bootstrap-driven)
+   - We disable Bootstrap's data-API on mobile to avoid double toggles,
+     and restore it on desktop.
    ========================================================================== */
 (function () {
-  const XL_UP        = window.matchMedia('(min-width: 1200px)');
+  const XL = '(min-width: 1200px)';
+  const XL_UP = window.matchMedia(XL);
   const HOVER_DEVICE = window.matchMedia('(hover:hover)');
 
   const nav        = document.getElementById('siteNav');
   const collapseEl = document.getElementById('navbarSupportedContent');
 
-  // ---------- Helpers ----------
   const $$  = (sel, root=document) => Array.from(root.querySelectorAll(sel));
-  const getDD = (toggle) => bootstrap.Dropdown.getOrCreateInstance(toggle, { autoClose: 'outside' });
-
   const topItems   = $$('.nav-item.dropdown', nav);
   const topToggles = $$('.nav-item.dropdown > a.dropdown-toggle', nav);
 
-  function collapseIsOpen(){ return collapseEl && collapseEl.classList.contains('show'); }
-  function anyDropdownOpen(){ return !!document.querySelector('.nav-item.dropdown.show'); }
-
-  // ---------- Overlay element + body lock ----------
+  /* ---------- Overlay + body lock ---------- */
   let overlay = document.getElementById('jjNavOverlay');
   if(!overlay){
     overlay = document.createElement('div');
@@ -771,178 +765,187 @@
     overlay.style.display = 'none';
   }
   overlay.addEventListener('click', () => {
-    if (collapseIsOpen()) bootstrap.Collapse.getOrCreateInstance(collapseEl).hide();
+    if (collapseEl && collapseEl.classList.contains('show')) {
+      bootstrap.Collapse.getOrCreateInstance(collapseEl).hide();
+    }
     closeAllDropdowns();
     unlockBody();
   }, {passive:true});
 
-  // ---------- Inject small CSS needed for overlay + mobile scroll comfort ----------
+  /* ---------- Minimal CSS injection for overlay/mobile scroll ---------- */
   (function injectCSS(){
     if (document.querySelector('style[data-jj-nav="mobile-safe"]')) return;
-    const css = `
-      #jjNavOverlay{ position:fixed; inset: var(--nav-h) 0 0 0; background: rgba(0,0,0,.25);
-        backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); z-index:998; display:none; }
-      body.nav-open #jjNavOverlay{ display:block; }
-      @media (max-width:1199.98px){
-        #navbarSupportedContent{ max-height: calc(100vh - var(--nav-h)); overflow:auto; -webkit-overflow-scrolling:touch; }
-        .dropdown-menu{ background:#fff !important; backdrop-filter:none !important; -webkit-backdrop-filter:none !important; }
-      }
-      .dropdown-submenu > .dropdown-menu{ z-index:110 !important; }
-    `;
     const tag = document.createElement('style');
     tag.setAttribute('data-jj-nav','mobile-safe');
-    tag.textContent = css;
+    tag.textContent = `
+      #jjNavOverlay{position:fixed; inset: var(--nav-h) 0 0 0; background:rgba(0,0,0,.25);
+        backdrop-filter:blur(2px); -webkit-backdrop-filter:blur(2px); z-index:998; display:none;}
+      body.nav-open #jjNavOverlay{display:block;}
+      @media (max-width:1199.98px){
+        #navbarSupportedContent{max-height:calc(100vh - var(--nav-h)); overflow:auto; -webkit-overflow-scrolling:touch;}
+        .dropdown-menu{background:#fff !important; backdrop-filter:none !important; -webkit-backdrop-filter:none !important;}
+      }
+    `;
     document.head.appendChild(tag);
   })();
 
-  // ---------- Close helpers ----------
+  /* ---------- Helpers ---------- */
+  function isMobile(){ return !XL_UP.matches; }
+  function anyDropdownOpen(){ return !!nav.querySelector('.nav-item.dropdown.show'); }
+
   function closeSubmenus(root){
-    $$('.dropdown-submenu > .dropdown-menu.show', root || document).forEach(menu=>{
+    (root ? root.querySelectorAll('.dropdown-submenu > .dropdown-menu.show')
+          : document.querySelectorAll('.dropdown-submenu > .dropdown-menu.show'))
+    .forEach(menu=>{
       menu.classList.remove('show');
       menu.previousElementSibling?.setAttribute('aria-expanded','false');
     });
   }
-  function closeDropdownByToggle(toggle){
-    try { getDD(toggle).hide(); } catch(_){}
-    toggle.setAttribute('aria-expanded','false');
-    toggle.closest('.nav-item.dropdown')?.classList.remove('show');
-  }
-  function closeAllDropdowns(exceptToggle=null){
-    topToggles.forEach(t => { if (t !== exceptToggle) closeDropdownByToggle(t); });
-    closeSubmenus();
+
+  function forceHideItem(li){
+    li.classList.remove('show');
+    const toggle = li.querySelector(':scope > a.dropdown-toggle');
+    const menu   = li.querySelector(':scope > .dropdown-menu');
+    if (toggle) toggle.setAttribute('aria-expanded','false');
+    if (menu)   menu.classList.remove('show');
+    closeSubmenus(li);
   }
 
-  // ---------- Desktop hover open/close ----------
+  function closeAllDropdowns(exceptLi=null){
+    topItems.forEach(li => { if (li !== exceptLi) forceHideItem(li); });
+  }
+
+  /* ---------- Desktop hover (Bootstrap keeps doing the work) ---------- */
   if (HOVER_DEVICE.matches) {
     topItems.forEach(li => {
-      li.addEventListener('mouseenter', function(){
+      li.addEventListener('mouseenter', () => {
         if (!XL_UP.matches) return;
-        const t = this.querySelector(':scope > a.dropdown-toggle');
-        if (t) getDD(t).show();
+        const t = li.querySelector(':scope > a.dropdown-toggle');
+        if (t) bootstrap.Dropdown.getOrCreateInstance(t, {autoClose:'outside'}).show();
       });
-      li.addEventListener('mouseleave', function(){
+      li.addEventListener('mouseleave', () => {
         if (!XL_UP.matches) return;
-        const t = this.querySelector(':scope > a.dropdown-toggle');
-        if (t) getDD(t).hide();
+        const t = li.querySelector(':scope > a.dropdown-toggle');
+        if (t) bootstrap.Dropdown.getOrCreateInstance(t).hide();
       });
     });
   }
 
-  // ---------- Mobile: single-open + second-tap-to-close (THE FIX) ----------
-  let currentOpenToggle = null;
-
-  topToggles.forEach(toggle => {
-    // Use capture so we beat Bootstrap's data-API click handler
-    toggle.addEventListener('click', function (e) {
-      if (XL_UP.matches) return; // desktop handled by hover
-      e.preventDefault();
-      e.stopPropagation();
-      if (typeof e.stopImmediatePropagation === 'function') e.stopImmediatePropagation();
-
-      const me = this;
-      const dd = getDD(me);
-      const item = me.closest('.nav-item.dropdown');
-      const isOpen = item?.classList.contains('show');
-
-      // Only one open at a time
-      if (currentOpenToggle && currentOpenToggle !== me) {
-        closeDropdownByToggle(currentOpenToggle);
-      }
-
-      // Toggle this one
-      if (isOpen) {
-        dd.hide();
-        currentOpenToggle = null;
-      } else {
-        dd.show();
-        currentOpenToggle = me;
-        lockBody(); // ensure body lock when a dropdown is open on mobile
-      }
-    }, true);
-  });
-
-  // Keep tracker in sync with Bootstrap
-  topItems.forEach(li => {
-    li.addEventListener('shown.bs.dropdown', () => {
-      if (!XL_UP.matches) {
-        const t = li.querySelector(':scope > a.dropdown-toggle');
-        currentOpenToggle = t;
-        lockBody();
+  /* ---------- MOBILE MODE: disable Bootstrap data-API + manual toggle ---- */
+  function disableBootstrapOnMobile(){
+    topToggles.forEach(t=>{
+      if (t.hasAttribute('data-bs-toggle')) {
+        t.dataset.jjOrigToggle = t.getAttribute('data-bs-toggle'); // save
+        t.removeAttribute('data-bs-toggle');                       // disable BS
       }
     });
-    li.addEventListener('hidden.bs.dropdown', () => {
-      const t = li.querySelector(':scope > a.dropdown-toggle');
-      if (currentOpenToggle === t) currentOpenToggle = null;
-      closeSubmenus(li);
-      setTimeout(()=>{ if (!anyDropdownOpen() && !collapseIsOpen()) unlockBody(); }, 0);
+  }
+  function restoreBootstrapOnDesktop(){
+    topToggles.forEach(t=>{
+      if (t.dataset.jjOrigToggle){
+        t.setAttribute('data-bs-toggle', t.dataset.jjOrigToggle);
+        delete t.dataset.jjOrigToggle;
+      }
     });
-  });
+  }
 
-  // ---------- Submenus: tap-to-toggle mobile, hover-friendly desktop ----------
-  $$('.dropdown-submenu', nav).forEach(sub => {
-    const trigger = sub.querySelector(':scope > .submenu-toggle');
-    const menu    = sub.querySelector(':scope > .dropdown-menu');
-    if (!trigger || !menu) return;
+  let currentOpenLi = null;
 
-    function closeSiblingSubmenus(){
-      const parentMenu = sub.closest('.dropdown-menu');
-      $$('.dropdown-submenu > .dropdown-menu.show', parentMenu).forEach(m=>{
-        if (m !== menu) {
-          m.classList.remove('show');
-          m.previousElementSibling?.setAttribute('aria-expanded','false');
-        }
-      });
+  function openItem(li){
+    forceHideItem(li); // clear stale state first
+    li.classList.add('show');
+    const t = li.querySelector(':scope > a.dropdown-toggle');
+    const m = li.querySelector(':scope > .dropdown-menu');
+    if (t) t.setAttribute('aria-expanded','true');
+    if (m) m.classList.add('show');
+    currentOpenLi = li;
+    lockBody();
+  }
+  function hideItem(li){
+    forceHideItem(li);
+    if (currentOpenLi === li) currentOpenLi = null;
+    if (!anyDropdownOpen() && !(collapseEl && collapseEl.classList.contains('show'))) {
+      unlockBody();
     }
+  }
 
-    // Tap/click toggles submenu
-    trigger.addEventListener('click', (e)=>{
-      e.preventDefault();
-      e.stopPropagation();
-      const isOpen = menu.classList.contains('show');
-      if (isOpen){
-        menu.classList.remove('show');
-        trigger.setAttribute('aria-expanded','false');
-      } else {
-        closeSiblingSubmenus();
-        menu.classList.add('show');
-        trigger.setAttribute('aria-expanded','true');
-      }
+  // Manual mobile tap handling (second tap closes; opening another closes current)
+  function bindMobileHandlers(){
+    topToggles.forEach(toggle=>{
+      toggle.addEventListener('click', function(e){
+        if (!isMobile()) return;          // only on mobile
+        e.preventDefault();
+        e.stopPropagation();
+        if (typeof e.stopImmediatePropagation === 'function') e.stopImmediatePropagation();
+
+        const li = this.closest('.nav-item.dropdown');
+        const isOpen = li.classList.contains('show');
+
+        // close others first (single-open)
+        closeAllDropdowns(li);
+
+        if (isOpen) {
+          hideItem(li);                   // second tap closes
+        } else {
+          openItem(li);                   // open tapped
+        }
+      }, true); // capture to beat any stray listeners
     });
+  }
 
-    // Desktop hover nicety
-    if (HOVER_DEVICE.matches){
-      let timer;
-      const open = ()=>{
-        clearTimeout(timer);
-        closeSiblingSubmenus();
-        menu.classList.add('show');
-        trigger.setAttribute('aria-expanded','true');
-      };
-      const close = ()=>{
-        clearTimeout(timer);
-        timer = setTimeout(()=>{
+  // Submenus: tap-to-toggle on mobile; hover niceties on desktop
+  function bindSubmenus(){
+    document.querySelectorAll('.dropdown-submenu').forEach(sub=>{
+      const trigger = sub.querySelector(':scope > .submenu-toggle');
+      const menu    = sub.querySelector(':scope > .dropdown-menu');
+      if (!trigger || !menu) return;
+
+      function closeSiblings(){
+        const parentMenu = sub.closest('.dropdown-menu');
+        parentMenu?.querySelectorAll('.dropdown-submenu > .dropdown-menu.show').forEach(m=>{
+          if (m !== menu){
+            m.classList.remove('show');
+            m.previousElementSibling?.setAttribute('aria-expanded','false');
+          }
+        });
+      }
+
+      trigger.addEventListener('click', (e)=>{
+        e.preventDefault(); e.stopPropagation();
+        const isOpen = menu.classList.contains('show');
+        if (isOpen){
           menu.classList.remove('show');
           trigger.setAttribute('aria-expanded','false');
-        }, 120);
-      };
-      trigger.addEventListener('mouseenter', ()=>{ if (XL_UP.matches) open(); });
-      trigger.addEventListener('mouseleave', ()=>{ if (XL_UP.matches) close(); });
-      menu.addEventListener('mouseenter',    ()=>{ if (XL_UP.matches) open(); });
-      menu.addEventListener('mouseleave',    ()=>{ if (XL_UP.matches) close(); });
-    }
-  });
+        } else {
+          closeSiblings();
+          menu.classList.add('show');
+          trigger.setAttribute('aria-expanded','true');
+        }
+      });
 
-  // ---------- Collapse events ----------
+      if (HOVER_DEVICE.matches){
+        let timer;
+        const open = ()=>{ clearTimeout(timer); closeSiblings(); menu.classList.add('show'); trigger.setAttribute('aria-expanded','true'); };
+        const close= ()=>{ clearTimeout(timer); timer=setTimeout(()=>{ menu.classList.remove('show'); trigger.setAttribute('aria-expanded','false'); },120); };
+        trigger.addEventListener('mouseenter', ()=>{ if (XL_UP.matches) open(); });
+        trigger.addEventListener('mouseleave', ()=>{ if (XL_UP.matches) close(); });
+        menu.addEventListener('mouseenter',    ()=>{ if (XL_UP.matches) open(); });
+        menu.addEventListener('mouseleave',    ()=>{ if (XL_UP.matches) close(); });
+      }
+    });
+  }
+
+  /* ---------- Collapse events ---------- */
   if (collapseEl){
     collapseEl.addEventListener('shown.bs.collapse', ()=>{ lockBody(); });
     collapseEl.addEventListener('hidden.bs.collapse', ()=>{
       closeAllDropdowns();
-      currentOpenToggle = null;
+      currentOpenLi = null;
       unlockBody();
     });
   }
 
-  // ---------- Link navigation inside collapsed area ----------
+  /* ---------- Link navigation inside collapsed area ---------- */
   document.addEventListener('click', (e)=>{
     const a = e.target.closest && e.target.closest('a[href]');
     if (!a) return;
@@ -951,38 +954,49 @@
     const isSubmenuTog  = a.matches('.submenu-toggle');
     const insideDropdown= a.closest('.dropdown-menu') !== null;
 
-    if (collapseIsOpen()){
-      // Keep menu open for toggles and interactions inside panels
-      if (isTopToggle || isSubmenuTog || insideDropdown) return;
-
-      // True navigation: close then allow navigation
-      bootstrap.Collapse.getOrCreateInstance(collapseEl).hide();
+    if (collapseEl && collapseEl.classList.contains('show')){
+      if (isTopToggle || isSubmenuTog || insideDropdown) return; // keep menu for interactions
+      bootstrap.Collapse.getOrCreateInstance(collapseEl).hide(); // real navigation: close
       closeAllDropdowns();
       unlockBody();
     }
   }, {capture:true});
 
-  // ---------- Header height var + hide-on-scroll (desktop) ----------
-  let lastY = window.scrollY;
-  const setH = () => document.documentElement
-      .style.setProperty('--nav-h', (nav?.offsetHeight || 80) + 'px');
+  /* ---------- Header height var + hide-on-scroll (desktop) ---------- */
+  const setH = () => document.documentElement.style.setProperty('--nav-h', (nav?.offsetHeight || 80) + 'px');
   setH(); addEventListener('resize', setH, {passive:true});
 
+  let lastY = window.scrollY;
   addEventListener('scroll', ()=>{
-    if (XL_UP.matches) closeAllDropdowns();  // close on desktop scroll
+    if (XL_UP.matches) closeAllDropdowns();
     const y = window.scrollY;
-    const mayHide = (y > lastY && y > (nav?.offsetHeight || 80)) && !collapseIsOpen() && !anyDropdownOpen();
+    const mayHide = (y > lastY && y > (nav?.offsetHeight || 80)) &&
+                    !(collapseEl && collapseEl.classList.contains('show')) &&
+                    !anyDropdownOpen();
     if (nav) nav.classList.toggle('nav-hidden', mayHide);
     lastY = Math.max(0, y);
   }, {passive:true});
+
+  /* ---------- Boot it up ---------- */
+  function applyMode(){
+    if (isMobile()){
+      disableBootstrapOnMobile(); // we take full control
+    } else {
+      restoreBootstrapOnDesktop();
+      closeAllDropdowns();
+      unlockBody();
+    }
+  }
+  bindMobileHandlers();
+  bindSubmenus();
+  applyMode();
+  XL_UP.addEventListener('change', applyMode);
 })();
 </script>
 
 <script>
 /* ==========================================================================
    Just Jana — Journeys Rail (smooth auto-scroll + drag/swipe + arrows)
-   Fix included: desktop links always open (click guard removed)
-   No dependencies.
    ========================================================================== */
 (function(){
   const viewport  = document.getElementById('jjViewport');
@@ -991,246 +1005,149 @@
   const rightBtn  = document.getElementById('jjArrowRight');
   if(!viewport || !track) return;
 
-  // Config
-  const PX_PER_SEC      = 40;
-  const RESUME_DELAY    = 1800;
-  const NUDGE_FACTOR    = 0.6;
-  const TWEEN_MS        = 700;
-  const DRAG_THRESHOLD  = 12;
+  const PX_PER_SEC   = 40, RESUME_DELAY = 1800, NUDGE_FACTOR = 0.6, TWEEN_MS = 700, DRAG_THRESHOLD = 12;
+  const prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const autoSpeed = prefersReduced ? 0 : PX_PER_SEC;
 
-  const prefersReduced  = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const autoSpeed       = prefersReduced ? 0 : PX_PER_SEC;
-
-  // Clone to fill loop
   const originals = Array.from(track.children);
-  function widthOf(nodes){
-    const gap = parseFloat(getComputedStyle(track).gap || 0);
-    let total = 0;
-    nodes.forEach(n => { total += n.getBoundingClientRect().width; });
-    return total + Math.max(0, nodes.length - 1) * gap;
-  }
+  function widthOf(nodes){ const gap=parseFloat(getComputedStyle(track).gap||0); return nodes.reduce((s,n)=>s+n.getBoundingClientRect().width,0)+Math.max(0,nodes.length-1)*gap; }
   function fillLoop(){
     const seen = new Set();
     [...track.children].forEach(el=>{
-      const key = (el.getAttribute('href')||'') + '|' + (el.querySelector('.jj-title')?.textContent||'');
+      const key=(el.getAttribute('href')||'')+'|'+(el.querySelector('.jj-title')?.textContent||'');
       if(seen.has(key)) el.remove(); else seen.add(key);
     });
     const vpw = viewport.clientWidth;
     let total = track.scrollWidth;
-    while(total < vpw * 2.5){
-      originals.forEach(node => track.appendChild(node.cloneNode(true)));
-      total = track.scrollWidth;
-    }
+    while(total < vpw*2.5){ originals.forEach(n=>track.appendChild(n.cloneNode(true))); total = track.scrollWidth; }
   }
   fillLoop();
   let setWidth = widthOf(originals);
 
-  // Animation state
-  let rafId, last = performance.now();
-  let pausedUntil = 0, interacting = false, tweening = false;
-  let x = 0;
-  function render(){
-    if (x >= setWidth) x -= setWidth;
-    else if (x < 0)    x += setWidth;
-    track.style.transform = `translate3d(${-x}px,0,0)`;
-  }
-  function frame(now){
-    const dt = (now - last) / 1000; last = now;
-    if(autoSpeed > 0 && now > pausedUntil && !interacting && !tweening){
-      x += autoSpeed * dt;
-      render();
-    }
-    rafId = requestAnimationFrame(frame);
-  }
-  track.style.willChange = 'transform';
-  rafId = requestAnimationFrame(frame);
+  let last=performance.now(), pausedUntil=0, interacting=false, tweening=false, x=0;
+  function render(){ if(x>=setWidth) x-=setWidth; else if(x<0) x+=setWidth; track.style.transform=`translate3d(${-x}px,0,0)`; }
+  function frame(now){ const dt=(now-last)/1000; last=now; if(autoSpeed>0 && now>pausedUntil && !interacting && !tweening){ x+=autoSpeed*dt; render(); } requestAnimationFrame(frame); }
+  track.style.willChange='transform'; requestAnimationFrame(frame);
+  const pause=(ms=RESUME_DELAY)=>{ pausedUntil=performance.now()+ms; };
+  const begin=()=>{ interacting=true; pause(); };
+  const end=()=>{ interacting=false; pause(); };
 
-  function pause(ms=RESUME_DELAY){ pausedUntil = performance.now() + ms; }
-  function beginInteract(){ interacting = true; pause(RESUME_DELAY); }
-  function endInteract(){ interacting = false; pause(RESUME_DELAY); }
+  viewport.addEventListener('mouseenter', ()=>pause(999999), {passive:true});
+  viewport.addEventListener('mouseleave', ()=>pause(), {passive:true});
+  track.addEventListener('focusin', ()=>pause(999999));
+  track.addEventListener('focusout', ()=>pause());
 
-  // Hover/focus pause
-  viewport.addEventListener('mouseenter', () => pause(999999), {passive:true});
-  viewport.addEventListener('mouseleave', () => pause(RESUME_DELAY), {passive:true});
-  track.addEventListener('focusin',  () => pause(999999));
-  track.addEventListener('focusout', () => pause(RESUME_DELAY));
-
-  // Drag/Swipe
-  let isDown = false, startX = 0, xAtStart = 0, pointerId = null;
-  let dragDist = 0;
-  let downAnchor = null;
-
-  viewport.addEventListener('pointerdown', (e)=>{
-    isDown = true;
-    pointerId = e.pointerId;
-    viewport.setPointerCapture(pointerId);
-    beginInteract();
-    startX = e.clientX; xAtStart = x; dragDist = 0;
-    downAnchor = e.target.closest && e.target.closest('a.jj-journey');
+  let down=false, startX=0, x0=0, pid=null, drag=0, downA=null;
+  viewport.addEventListener('pointerdown', e=>{
+    down=true; pid=e.pointerId; viewport.setPointerCapture(pid);
+    begin(); startX=e.clientX; x0=x; drag=0; downA=e.target.closest&&e.target.closest('a.jj-journey');
   }, {passive:true});
-
-  viewport.addEventListener('pointermove', (e)=>{
-    if(!isDown) return;
-    const dx = e.clientX - startX;
-    dragDist = Math.max(dragDist, Math.abs(dx));
-    x = xAtStart - dx;
-    render();
-  }, {passive:true});
-
-  function endPointer(){
-    if(!isDown) return;
-    isDown = false;
-    try{ viewport.releasePointerCapture(pointerId); }catch(_){}
-    if (dragDist < DRAG_THRESHOLD && downAnchor && downAnchor.href){
-      window.location.href = downAnchor.href;
-    }
-    endInteract();
-    dragDist = 0; downAnchor = null;
+  viewport.addEventListener('pointermove', e=>{ if(!down) return; const dx=e.clientX-startX; drag=Math.max(drag,Math.abs(dx)); x=x0-dx; render(); }, {passive:true});
+  function endPtr(){ if(!down) return; down=false; try{viewport.releasePointerCapture(pid);}catch(_){}
+    if(drag<DRAG_THRESHOLD && downA && downA.href){ window.location.href = downA.href; }
+    end(); drag=0; downA=null;
   }
-  viewport.addEventListener('pointerup', endPointer, {passive:true});
-  viewport.addEventListener('pointercancel', endPointer, {passive:true});
-  viewport.addEventListener('pointerleave', endPointer, {passive:true});
+  viewport.addEventListener('pointerup', endPtr, {passive:true});
+  viewport.addEventListener('pointercancel', endPtr, {passive:true});
+  viewport.addEventListener('pointerleave', endPtr, {passive:true});
 
-  // Arrows + tween
-  function easeOutCubic(t){ return 1 - Math.pow(1 - t, 3); }
-  function tweenTo(targetX, ms = TWEEN_MS){
-    let start = x;
-    let delta = targetX - start;
-    if (delta >  setWidth/2)  delta -= setWidth;
-    if (delta < -setWidth/2)  delta += setWidth;
-    const t0  = performance.now();
-    let tweeningLocal = true; tweening = true; beginInteract();
-    function step(t){
-      const p = Math.min(1, (t - t0)/ms);
-      const e = easeOutCubic(p);
-      x = start + delta * e;
-      render();
-      if(p < 1) requestAnimationFrame(step);
-      else { tweening = false; endInteract(); }
-    }
-    requestAnimationFrame(step);
+  function easeOutCubic(t){ return 1-Math.pow(1-t,3); }
+  function tweenTo(target, ms=TWEEN_MS){
+    let start=x, delta=target-start; if(delta>setWidth/2) delta-=setWidth; if(delta<-setWidth/2) delta+=setWidth;
+    const t0=performance.now(); tweening=true; begin();
+    (function step(t){ const p=Math.min(1,(t-t0)/ms), e=easeOutCubic(p); x=start+delta*e; render(); if(p<1) requestAnimationFrame(step); else {tweening=false; end();} })(t0);
   }
-  function nudge(direction){
-    const distance = viewport.clientWidth * NUDGE_FACTOR;
-    const target   = x + (direction > 0 ? distance : -distance);
-    tweenTo(target);
-  }
+  function nudge(dir){ const d=viewport.clientWidth*NUDGE_FACTOR; tweenTo(x+(dir>0?d:-d)); }
   if(leftBtn && rightBtn){
-    leftBtn.addEventListener('click',  ()=> nudge(-1));
-    rightBtn.addEventListener('click', ()=> nudge(+1));
-    let holdTimer = null, holdInterval = null;
-    function startHold(dir){
-      nudge(dir);
-      holdTimer = setTimeout(()=>{ holdInterval = setInterval(()=> nudge(dir), 260); }, 450);
-    }
-    function endHold(){ clearTimeout(holdTimer); clearInterval(holdInterval); holdTimer = holdInterval = null; }
+    leftBtn.addEventListener('click', ()=>nudge(-1));
+    rightBtn.addEventListener('click', ()=>nudge(+1));
+    let holdT=null, holdI=null;
+    function startHold(dir){ nudge(dir); holdT=setTimeout(()=>{ holdI=setInterval(()=>nudge(dir),260); },450); }
+    function stopHold(){ clearTimeout(holdT); clearInterval(holdI); holdT=holdI=null; }
     ['mousedown','touchstart'].forEach(ev=>{
-      leftBtn.addEventListener(ev, (e)=>{ e.preventDefault(); startHold(-1); }, {passive:false});
-      rightBtn.addEventListener(ev, (e)=>{ e.preventDefault(); startHold(+1); }, {passive:false});
+      leftBtn.addEventListener(ev, e=>{ e.preventDefault(); startHold(-1); }, {passive:false});
+      rightBtn.addEventListener(ev, e=>{ e.preventDefault(); startHold(+1); }, {passive:false});
     });
     ['mouseup','mouseleave','touchend','touchcancel'].forEach(ev=>{
-      leftBtn.addEventListener(ev, endHold, {passive:true});
-      rightBtn.addEventListener(ev, endHold, {passive:true});
+      leftBtn.addEventListener(ev, stopHold, {passive:true});
+      rightBtn.addEventListener(ev, stopHold, {passive:true});
     });
   }
 
-  // Resize
-  let rTimer;
-  addEventListener('resize', ()=>{
-    clearTimeout(rTimer);
-    rTimer = setTimeout(()=>{
-      fillLoop();
-      setWidth = widthOf(originals);
-      x = 0; render();
-    }, 200);
-  });
+  let rTimer; addEventListener('resize', ()=>{ clearTimeout(rTimer); rTimer=setTimeout(()=>{ fillLoop(); setWidth=widthOf(originals); x=0; render(); },200); });
 })();
 </script>
 
 <script>
 /* ==========================================================================
-   Monthly Carousel — updates download button + swipe on mobile
+   Monthly Carousel — download button sync + swipe
    ========================================================================== */
 document.addEventListener('DOMContentLoaded', () => {
-  const carouselEl = document.getElementById('monthlyCarousel');
-  const downloadBtn = document.getElementById('downloadBtn');
-  if (!carouselEl || !downloadBtn) return;
+  const el = document.getElementById('monthlyCarousel');
+  const btn = document.getElementById('downloadBtn');
+  if (!el || !btn) return;
 
-  const items  = carouselEl.querySelectorAll('.carousel-item');
-  const prevBtn = carouselEl.querySelector('.carousel-control-prev');
-  const nextBtn = carouselEl.querySelector('.carousel-control-next');
+  const items  = el.querySelectorAll('.carousel-item');
+  const prevBtn= el.querySelector('.carousel-control-prev');
+  const nextBtn= el.querySelector('.carousel-control-next');
 
   const slides = [
     { href: "img/Monthly positivity/mantra.png",           label: "Download Mantra" },
     { href: "img/Monthly positivity/Self-affirmation.png", label: "Download Affirmation" },
     { href: "img/Monthly positivity/Quote.png",            label: "Download Quote" }
   ];
-  const clampIndex = i => Math.max(0, Math.min(i, items.length - 1));
+  const clamp = i => Math.max(0, Math.min(i, items.length-1));
 
-  function updateArrowState() {
-    const activeIndex = [...items].findIndex(item => item.classList.contains('active'));
-    if (prevBtn) prevBtn.style.display = activeIndex <= 0 ? 'none' : 'flex';
-    if (nextBtn) nextBtn.style.display = activeIndex >= items.length - 1 ? 'none' : 'flex';
+  function updateArrows(){
+    const idx = [...items].findIndex(i=>i.classList.contains('active'));
+    if (prevBtn) prevBtn.style.display = idx <= 0 ? 'none' : 'flex';
+    if (nextBtn) nextBtn.style.display = idx >= items.length-1 ? 'none' : 'flex';
   }
 
-  const instance = bootstrap.Carousel.getOrCreateInstance
-    ? bootstrap.Carousel.getOrCreateInstance(carouselEl)
-    : (bootstrap.Carousel.getInstance(carouselEl) || new bootstrap.Carousel(carouselEl));
+  const inst = bootstrap.Carousel.getOrCreateInstance
+    ? bootstrap.Carousel.getOrCreateInstance(el)
+    : (bootstrap.Carousel.getInstance(el) || new bootstrap.Carousel(el));
 
-  // Touch swipe
-  let startX = 0;
-  carouselEl.addEventListener('touchstart', e => { startX = e.changedTouches[0].screenX; }, {passive:true});
-  carouselEl.addEventListener('touchend',   e => {
-    const endX = e.changedTouches[0].screenX;
-    const dx = endX - startX;
-    const threshold = 50;
-    const activeIndex = [...items].findIndex(i => i.classList.contains('active'));
-    if (dx < -threshold && activeIndex < items.length - 1) instance.next();
-    if (dx >  threshold && activeIndex > 0)                instance.prev();
+  let startX=0;
+  el.addEventListener('touchstart', e=>{ startX=e.changedTouches[0].screenX; }, {passive:true});
+  el.addEventListener('touchend',   e=>{
+    const dx = e.changedTouches[0].screenX - startX;
+    const th = 50, idx = [...items].findIndex(i=>i.classList.contains('active'));
+    if (dx < -th && idx < items.length-1) inst.next();
+    if (dx >  th && idx > 0)               inst.prev();
   }, {passive:true});
 
-  // Sync download button
-  carouselEl.addEventListener('slid.bs.carousel', e => {
-    const i = clampIndex(e.to ?? [...items].findIndex(x => x.classList.contains('active')));
-    const slide = slides[i] || slides[0];
-    if (slide) {
-      downloadBtn.href = slide.href;
-      downloadBtn.download = slide.href.split('/').pop();
-      downloadBtn.textContent = slide.label;
-    }
-    updateArrowState();
+  el.addEventListener('slid.bs.carousel', e=>{
+    const i = clamp(e.to ?? [...items].findIndex(x => x.classList.contains('active')));
+    const s = slides[i] || slides[0];
+    if (s){ btn.href=s.href; btn.download=s.href.split('/').pop(); btn.textContent=s.label; }
+    updateArrows();
   });
 
-  // Initial state
-  updateArrowState();
-  const startIdx = clampIndex([...items].findIndex(x => x.classList.contains('active')) || 0);
-  const startSlide = slides[startIdx] || slides[0];
-  if (startSlide) {
-    downloadBtn.href = startSlide.href;
-    downloadBtn.download = startSlide.href.split('/').pop();
-    downloadBtn.textContent = startSlide.label;
-  }
+  updateArrows();
+  const start = clamp([...items].findIndex(x=>x.classList.contains('active')) || 0);
+  const s0 = slides[start] || slides[0];
+  if (s0){ btn.href=s0.href; btn.download=s0.href.split('/').pop(); btn.textContent=s0.label; }
 });
 </script>
 
 <script>
 /* ==========================================================================
-   Freebies filter buttons
+   Freebies filter
    ========================================================================== */
 document.addEventListener('DOMContentLoaded', () => {
-  const filterButtons = document.querySelectorAll('.filter-btn');
-  const cards = document.querySelectorAll('.freebie-card');
-  if (!filterButtons.length || !cards.length) return;
+  const buttons = document.querySelectorAll('.filter-btn');
+  const cards   = document.querySelectorAll('.freebie-card');
+  if (!buttons.length || !cards.length) return;
 
-  filterButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      filterButtons.forEach(btn => btn.classList.remove('active'));
-      button.classList.add('active');
-      const filter = button.getAttribute('data-filter');
-
-      cards.forEach(card => {
-        const category = card.getAttribute('data-category');
-        card.style.display = (filter === 'all' || category === filter) ? 'flex' : 'none';
+  buttons.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      buttons.forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.getAttribute('data-filter');
+      cards.forEach(card=>{
+        const cat = card.getAttribute('data-category');
+        card.style.display = (filter === 'all' || cat === filter) ? 'flex' : 'none';
       });
     });
   });
