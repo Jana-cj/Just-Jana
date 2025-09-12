@@ -60,13 +60,15 @@ html, body {
 }
 
 
+/* Nav bar */
+
 /* =================== Brand tokens =================== */
 :root{
   --jj-accent: #c6a0b1;         /* main brand */
   --jj-ink:    #1f1f1f;
   --jj-bg:     #ffffff;
   --jj-soft:   rgba(179,131,152,.1);
-  --nav-h:     80px;            /* desktop default; JS updates on desktop only */
+  --nav-h:     40px;
 }
 
 /* =================== Navbar shell =================== */
@@ -142,7 +144,7 @@ html, body {
 #dropdownAbout + .dropdown-menu.jj-surface{ min-width:14rem; }
 #dropdownDiaries + .dropdown-menu.jj-surface{ min-width:16rem; }
 
-/* ---------- Mega layout + stacking ---------- */
+/* ---------- Mega layout + stacking (fixed) ---------- */
 .body-grid{
   display:grid;
   grid-template-columns: repeat(2, minmax(260px,1fr));
@@ -150,71 +152,41 @@ html, body {
 }
 
 /* Base layers */
-.dropdown-menu.dropdown-mega{ position:relative; z-index:10; overflow:visible; } /* allow flyouts */
-.mega-col{ position:relative; z-index:1; }
+.dropdown-menu.dropdown-mega{ position:relative; z-index:10; } /* whole mega */
+.mega-col{ position:relative; z-index:1; }                      /* each column */
 
-/* Lift hovered column above neighbors */
+/* Lift the column that owns the open/hovered submenu above neighbors */
 @supports(selector(:has(*))){
   .mega-col:hover,
   .mega-col:has(.dropdown-submenu:hover),
   .mega-col:has(.dropdown-submenu:focus-within),
-  .mega-col:has(.dropdown-menu:hover){ z-index:100; }
+  .mega-col:has(.dropdown-menu:hover){
+    z-index:100;
+  }
 }
+/* Fallback for browsers without :has() */
 .mega-col:hover{ z-index:100; }
 
-/* Submenu chevron */
-.dropdown-submenu > a::after{
-  content:"▸"; display:inline-block; margin-left:6px; font-size:.8rem;
-  transition: transform .2s ease;
-}
-.dropdown-submenu > a[aria-expanded="true"]::after{ transform: rotate(90deg); }
+/* Flyout submenu panel */
+.dropdown-submenu{ position: relative; display:inline-block; }
+.dropdown-submenu > .dropdown-menu{
+  position:static; display:none;
+    max-height: 320px;              /* tweak this */
+    overflow:auto;
+    -webkit-overflow-scrolling:touch;
+    border:0; box-shadow:none; background:transparent;
+  }
+  .dropdown-submenu > .dropdown-menu.show{ display:block; }
 
-/* Hover feedback for items */
-.dropdown-mega .dropdown-item{ padding:.35rem .5rem; border-radius:8px; }
-.dropdown-mega .dropdown-item:hover,
-.dropdown-mega .dropdown-item:focus{
-  background: rgba(179,131,152,.15) !important; color: var(--jj-ink) !important;
-}
 
-/* Section headers */
-.dropdown-header{
-  margin:.25rem 0 .25rem; padding:0;
-  font-weight:800; letter-spacing:.2px; color: var(--jj-accent);
-}
 
-/* Show mega on hover for pointer devices */
-@media (hover:hover){ .dropdown:hover > .dropdown-menu.dropdown-mega{ display:block; } }
-
-/* ---------- DESKTOP: side flyout submenus (RIGHT) ---------- */
+/* Make only the "Mind" mega menu wider on desktop */
 @media (min-width:1200px){
-  .dropdown-submenu{ position: relative; }
-  .dropdown-submenu > .dropdown-menu{
-    position: absolute !important;
-    top: 0;                 /* aligns with trigger row */
-    left: 100%;             /* fly out to the RIGHT */
-    margin-left: 8px;
-    display: none;
-    min-width: 220px;
-    padding: .5rem;
-    background: #fff !important;
-    border: 1px solid rgba(179,131,152,.15);
-    border-radius: 12px;
-    box-shadow: 0 20px 40px rgba(0,0,0,.08);
-    z-index: 9999;
-  }
-  .dropdown-submenu > .dropdown-menu.show{ display: block; }
-
-  /* Even if HTML has .submenu-end, keep opening to the RIGHT */
-  .dropdown-submenu.submenu-end > .dropdown-menu{
-    left: 100%; right: auto; margin-left: 8px;
-  }
-
-  /* Make only the "Mind" mega menu wider on desktop (optional) */
+  /* widen the container */
   .dropdown-menu[aria-labelledby="dropdownMind"]{
-    width: 650px;
-    max-width: calc(100vw - 32px);
-  }
-}
+    width: 650px;                     /* tweak this number */
+    max-width: calc(100vw - 32px);    /* keep it inside the viewport */
+  }}
 
 /* Stack to 1 column on small screens */
 @media (max-width:575.98px){ .body-grid{ grid-template-columns:1fr; } }
@@ -228,92 +200,46 @@ html, body {
     transform: translateY(-2px);
     background: var(--jj-soft);
     box-shadow: 0 10px 24px rgba(0,0,0,.06);
+    /* z-index handled above */
   }
 }
 
 /* also open when the trigger is focused via keyboard */
 .dropdown-submenu:focus-within > .dropdown-menu{ display:block; }
 
-/* =================== Desktop grid structure =================== */
-@media (min-width:1200px){
-  #siteNav .container-fluid{
-    display: grid;
-    grid-template-columns: auto 1fr auto; /* [logo] [nav] [toggler/empty] */
-    align-items: center;
-  }
-  #siteNav .navbar-collapse{ justify-content: center !important; }
-  #siteNav .navbar-nav{
-    margin-left: 0 !important;
-    margin-right: auto !important;
-    gap: 0.75rem;
-  }
+/* Section headers */
+.dropdown-header{
+  margin:.25rem 0 .25rem; padding:0;
+  font-weight:800; letter-spacing:.2px; color: var(--jj-accent);
 }
 
-/* =================== MOBILE BEHAVIOR (LOCK HEIGHT) =================== */
+/* Hover feedback for items */
+.dropdown-mega .dropdown-item{ padding:.35rem .5rem; border-radius:8px; }
+.dropdown-mega .dropdown-item:hover,
+.dropdown-mega .dropdown-item:focus{
+  background: rgba(179,131,152,.15) !important; color: var(--jj-ink) !important;
+}
+
+/* Submenu chevron */
+.dropdown-submenu > a::after{
+  content:"▸"; display:inline-block; margin-left:6px; font-size:.8rem;
+  transition: transform .2s ease;
+}
+.dropdown-submenu > a[aria-expanded="true"]::after{ transform: rotate(90deg); }
+
+/* Show mega on hover for pointer devices */
+@media (hover:hover){ .dropdown:hover > .dropdown-menu.dropdown-mega{ display:block; } }
+
+/* Mobile: submenus become accordions */
 @media (max-width:1199.98px){
-  :root{ --nav-h: 56px; }               /* lock mobile navbar height */
-
-  #siteNav.navbar{
-    padding-top: 0; padding-bottom: 0;
-    height: var(--nav-h);
-  }
-  .navbar-brand{
-    height: var(--nav-h);
-    padding-top: 0; padding-bottom: 0;
-  }
-  .navbar-brand img{
-    display:block;
-    max-height: calc(var(--nav-h) - 12px) !important;
-    width: auto;
-  }
-
-  /* Collapsed area scroll */
-  #navbarSupportedContent{
-    max-height: calc(100vh - var(--nav-h));
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior: contain;
-  }
-
-  /* Opaque dropdown panels + internal scroll */
-  .navbar .dropdown-menu{
-    position: static !important;
-    max-height: 65vh;
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
-    margin: .25rem 0 .5rem 0;
-    background: #fff !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-  }
-  .navbar .dropdown-menu.dropdown-mega{
-    width: 100%; min-width: 100%;
-    max-height: 70vh;
-  }
-
-  /* Submenus as accordions on mobile */
+  .dropdown-mega{ min-width:100%; }
   .dropdown-submenu > .dropdown-menu{
-    position: static;
-    display: none;
-    max-height: 40vh;
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
-    border: 0; box-shadow: none; background: transparent;
+    position:static; float:none; display:none; margin:.25rem 0 0 0;
+    border:0; box-shadow:none; background:transparent; padding-left:.75rem;
+    z-index:auto;
   }
   .dropdown-submenu > .dropdown-menu.show{ display:block; }
-
-  /* Larger tap targets */
-  .dropdown-item, .nav-link{ padding:.75rem 1rem; }
 }
-
-/* ===== Mobile nav overlay + scroll comfort ===== */
-#jjNavOverlay{
-  position: fixed; inset: var(--nav-h) 0 0 0;
-  background: rgba(0,0,0,.25);
-  backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
-  z-index: 998; display:none;
-}
-body.nav-open #jjNavOverlay{ display:block; }
 
 /* A11y: visible keyboard focus on links */
 .navbar a:focus-visible,
@@ -323,7 +249,7 @@ body.nav-open #jjNavOverlay{ display:block; }
   outline-offset: 2px;
 }
 
-/* Touch cleanups */
+/* Touch cleanups (no tap highlight) */
 @media (hover:none) and (pointer:coarse){
   .navbar a, .navbar button, .navbar .dropdown-item{ -webkit-tap-highlight-color: transparent; }
   .navbar .nav-link:focus, .navbar .dropdown-item:focus, .navbar .navbar-toggler:focus{
@@ -331,8 +257,33 @@ body.nav-open #jjNavOverlay{ display:block; }
   }
 }
 
-/* Keep navbar visible while interacting */
+/* ===== NAV: mobile-friendly dropdown scrolling ===== */
+@media (max-width:1199.98px){
+  .navbar .dropdown-menu.dropdown-mega{
+    width:100%; min-width:100%;
+    max-height: calc(100vh - var(--nav-h) - 16px);
+    overflow:auto; -webkit-overflow-scrolling:touch;
+    margin:.25rem 0 0 0;
+    background: rgba(255,255,255,.96);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  .navbar .dropdown-menu:not(.dropdown-mega){
+    max-height: calc(100vh - var(--nav-h) - 16px);
+    overflow:auto; -webkit-overflow-scrolling:touch;
+  }
+  body.nav-open{
+    overflow: hidden;          /* lock body scroll while menu is open */
+    touch-action: none;
+  }
+}
+
+/* Optional: keep navbar visible while user interacts with it */
 #siteNav.navbar:hover{ transform: translateY(0); }
+
+.navbar .nav-link:focus,
+.navbar .nav-link:active,
+.navbar .nav-link:focus-visible{ outline: none !important; }
 
 /* Reserve space for the fixed navbar on every page */
 header{ height: var(--nav-h); }
@@ -343,6 +294,197 @@ header{ height: var(--nav-h); }
 /* Fallback if JS didn't set --nav-h yet */
 @supports not (height: var(--nav-h)){ header{ height: 80px; } }
 
+/* Brand */
+.navbar-brand{
+  display:flex; align-items:center;
+  padding-top:0; padding-bottom:0;
+  height: var(--nav-h);
+  margin-right: .5rem;
+}
+.navbar-brand img{
+  display:block;
+  max-height: calc(var(--nav-h) - 10px);
+  width:auto;
+}
+
+.navbar-nav {
+  margin-left: 0 !important;   /* remove auto centering */
+  margin-right: auto !important; /* keep it aligned */
+  gap: 0.6rem; /* tighten spacing between titles */
+}
+
+.dropdown-submenu > .dropdown-menu {
+  background: #fff !important;  /* solid white */
+  backdrop-filter: none !important; 
+  -webkit-backdrop-filter: none !important;
+  z-index: 9999;  /* stay on top */
+}
+
+/* Center nav titles across the full bar on desktop (≥1200px) */
+@media (min-width:1200px){
+  #siteNav .container-fluid{
+    display: grid;
+    grid-template-columns: auto 1fr auto; /* [logo] [nav] [toggler/empty] */
+    align-items: center;
+  }
+
+  /* Logo stays left; trim the gap as you like */
+  #siteNav .navbar-brand{
+    margin-right: 280px !important; /* tweak to taste */
+  }
+
+  /* Put the collapsible area (that contains the <ul>) in the middle column */
+  #siteNav .navbar-collapse{
+    justify-content: center !important;  /* center its contents */
+  }
+
+  /* Make sure the list itself doesn’t fight the centering */
+  #siteNav .navbar-nav{
+    margin-left: 0 !important;
+    margin-right: auto !important;
+    gap: 0.75rem; /* adjust to taste */
+  }
+
+  /* Keep the toggler (if visible at xl in your setup) aligned right */
+  #siteNav .navbar-toggler{
+    grid-column: 3;
+    justify-self: end;
+  }
+}
+
+
+@media (max-width:1199.98px){
+  .dropdown-submenu > .dropdown-menu {
+    max-height: 300px;   /* default visible height */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* ===== Mobile nav overlay + scroll comfort ===== */
+#jjNavOverlay{
+  position: fixed; inset: var(--nav-h) 0 0 0;   /* sit below the fixed navbar */
+  background: rgba(0,0,0,.25);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  z-index: 998; /* just under the navbar (which is 999) */
+  display:none;
+}
+body.nav-open #jjNavOverlay{ display:block; }
+
+/* Make collapsed panel comfortably scrollable on small screens */
+@media (max-width:1199.98px){
+  #navbarSupportedContent{
+    max-height: calc(100vh - var(--nav-h));
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  /* Larger tap targets on mobile */
+  .dropdown-item, .nav-link{ padding:.75rem 1rem; }
+}
+
+/* Ensure all dropdown panels are opaque on mobile (no see-through) */
+@media (max-width:1199.98px){
+  .dropdown-menu{
+    background: #fff !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+}
+
+/* Mobile: keep underline for active/open titles */
+@media (hover:none){
+  .navbar .nav-link::after{
+    display:block;                 /* don't hide on mobile */
+    transform: scaleX(0);
+  }
+  .nav-item.show > .nav-link::after,
+  .navbar .nav-link[aria-expanded="true"]::after,
+  .navbar .nav-link:focus-visible::after{
+    transform: scaleX(1);          /* pink line visible when open/focused */
+  }
+}
+
+/* Collapsed area: lock body & keep scroll inside the menu area */
+@media (max-width:1199.98px){
+  #navbarSupportedContent{
+    max-height: calc(100vh - var(--nav-h));
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;          /* keep scroll inside */
+  }
+
+  /* All dropdowns get an internal scroll and a sane default height */
+  .navbar .dropdown-menu{
+    position: static !important;           /* flow inside collapsed panel */
+    max-height: 65vh;                      /* default visible height */
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: .25rem 0 .5rem 0;
+    background: #fff !important;           /* opaque; no show-through */
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  /* Mega menus full-width + own scroll */
+  .navbar .dropdown-menu.dropdown-mega{
+    width: 100%;
+    min-width: 100%;
+    max-height: 70vh;                      /* a touch taller for mega */
+  }
+
+  /* Submenus behave like accordions with their own scroll if long */
+  .dropdown-submenu > .dropdown-menu{
+    position: static;
+    display: none;
+    max-height: 40vh;                      /* fits within mega panel */
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 0; box-shadow: none; background: transparent;
+  }
+  .dropdown-submenu > .dropdown-menu.show{ display:block; }
+}
+
+/* While any mobile menu is open, prevent page scroll */
+body.nav-open{
+  overflow: hidden;
+  touch-action: none;
+}
+
+
+/* ================= Force submenus to fly out to the RIGHT ================= */
+@media (min-width:1200px){
+  .dropdown-menu.dropdown-mega{
+    overflow: visible; /* prevent clipping */
+  }
+
+  .dropdown-submenu { position: relative; }
+
+  .dropdown-submenu > .dropdown-menu{
+    position: absolute !important;
+    top: 0;                     /* align with trigger item */
+    left: 100%;                 /* fly out to the RIGHT */
+    margin-left: 8px;           /* small gap */
+    display: none;
+    min-width: 220px;
+    padding: .5rem;
+    background: #fff !important;
+    border: 1px solid rgba(179,131,152,.15);
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0,0,0,.08);
+    z-index: 9999;
+  }
+
+  .dropdown-submenu > .dropdown-menu.show{
+    display: block;
+  }
+
+  /* Remove/ignore submenu-end flip */
+  .dropdown-submenu.submenu-end > .dropdown-menu{
+    left: 100%;   /* force right anyway */
+    right: auto;
+  }
+}
 
 
 /* index.html */
