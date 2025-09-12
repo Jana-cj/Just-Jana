@@ -770,9 +770,9 @@
       /* flyout safety */
       .dropdown-submenu > .dropdown-menu{ z-index: 110 !important; }
       /* avoid hover underline anim on touch */
-      @media (hover:none){
-        .navbar .nav-link::after{ display:none; }
-      }
+      // @media (hover:none){
+      //   .navbar .nav-link::after{ display:none; }
+      // }
     `;
     const tag = document.createElement('style');
     tag.setAttribute('data-jj-nav','mobile-safe');
@@ -869,17 +869,22 @@
     }
   });
 
-  // Mobile: make the top-level link a pure toggle; second tap closes
-  topToggles.forEach(a=>{
-    a.addEventListener('click', function(e){
-      if (!XL_UP.matches) {
-        e.preventDefault();
-        const parent = this.closest('.nav-item.dropdown');
-        const isOpen = parent?.classList.contains('show');
-        getDD(this)[isOpen ? 'hide' : 'show']();
-      }
-    });
-  });
+// Mobile: make the top-level link a pure toggle; second tap closes
+topToggles.forEach(a=>{
+  a.addEventListener('click', function(e){
+    if (!XL_UP.matches) {
+      e.preventDefault();
+      // Block Bootstrap's delegated click handler so it doesn't re-toggle behind us
+      e.stopPropagation();
+      if (typeof e.stopImmediatePropagation === 'function') e.stopImmediatePropagation();
+
+      const parent = this.closest('.nav-item.dropdown');
+      const isOpen = parent?.classList.contains('show');
+      const dd = getDD(this);
+      isOpen ? dd.hide() : dd.show();
+    }
+  }, {capture: true}); // capture helps us intercept before Bootstrap's bubbling handler
+});
 
   /* ---------- Submenus (tap-to-toggle & desktop hover) ---------- */
   $$('.dropdown-submenu').forEach(sub=>{
