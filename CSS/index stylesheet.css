@@ -1504,6 +1504,12 @@ color: #7b7b7b;
   color: #4b2e2e;
 }
 
+
+    .container-narrow {
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
     h1 {
       font-size: 2.8rem;
       text-align: center;
