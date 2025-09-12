@@ -450,46 +450,6 @@ body.nav-open{
   touch-action: none;
 }
 
-/* ====== DESKTOP TWEAKS (≥1200px) — bigger logo + titles closer to logo ====== */
-@media (min-width:1200px){
-  /* 1) Bump the navbar height a touch on desktop so the logo can grow */
-  :root{
-    --nav-h: 45px; /* was 40px — tweak as you like (52–60px looks nice) */
-  }
-
-  /* 2) Enlarge the brand image and override inline width/height from HTML */
-  #siteNav .navbar-brand img{
-    height: calc(var(--nav-h) - 10px) !important; /* visual breathing room */
-    width: auto !important;                        /* keeps aspect ratio */
-    max-height: none !important;                   /* ignore previous cap */
-  }
-
-  /* 3) Reduce the gap between logo and titles */
-  #siteNav .navbar-brand{
-    margin-right: .5rem !important; /* tighten the logo→menu gap */
-  }
-
-  /* 4) Shift titles slightly to the left (closer to the logo) */
-  #siteNav .navbar-collapse{
-    justify-content: flex-start !important; /* was center */
-  }
-
-  /* 5) Keep the list neatly spaced (you can trim this more if you want) */
-  #siteNav .navbar-nav{
-    margin: 0 !important;
-    gap: .75rem; /* tighten title spacing a touch; try .6–.9rem */
-  }
-
-  /* 6) Keep the grid shell as-is but add a tiny nudge left if needed */
-  #siteNav .container-fluid{
-    column-gap: .5rem; /* reduces implicit spacing between grid columns */
-  }
-}
-
-/* Optional: if your underline is too close after the nudge, lower it slightly */
-@media (min-width:1200px){
-  .navbar .nav-link::after{ bottom: .15rem; }
-}
 
 
 
