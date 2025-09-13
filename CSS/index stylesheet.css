@@ -486,23 +486,16 @@ body.nav-open{
   }
 }
 
-@media (max-width: 1199.98px){ /* matches navbar-expand-xl collapse range */
-  .navbar .nav-link.pillar::after{
-    content: " \2013 " attr(data-desc); /* en dash + descriptor */
-    font-size: .85rem;
-    opacity: .8;
-    margin-left: .15rem;
-    white-space: nowrap;
-  }
+/* Mobile-only descriptor style (inline, no wrap) */
+.nav-desc{
+  font-size: .9rem;
+  opacity: .85;
+  margin-left: .25rem;
+  white-space: nowrap; /* keep it next to the title */
 }
 
-/* Optional: prevent mobile menu items from wrapping badly */
-@media (max-width: 575.98px){
-  .navbar .nav-link.pillar{
-    display: inline-flex;
-    align-items: baseline;
-  }
-}
+
+
 
 
 /* index.html */
