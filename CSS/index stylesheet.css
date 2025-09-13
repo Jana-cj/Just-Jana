@@ -863,34 +863,30 @@ body.nav-open{
 
 /* Remove Bootstrap's utility padding on the bar itself (py-1 on your <nav>) */
 #siteNav.navbar{ padding-top:0 !important; padding-bottom:0 !important; }
-/* 1) Kill native underlines so only the pink ::after shows */
-#siteNav .nav-link,
-#siteNav .nav-link:link,
-#siteNav .nav-link:visited,
-#siteNav .nav-link:hover,
-#siteNav .nav-link:active,
-#siteNav .nav-link:focus {
-  text-decoration: none !important;
-}
 
-/* 2) Mobile: keep underline pink when a dropdown is open / focused */
+/* Keep top-level title underline PINK on mobile, no matter what */
 @media (max-width:1199.98px){
-  .navbar .nav-link::after{
-    background: var(--jj-accent) !important;   /* always pink */
-  }
-  .nav-item.show > .nav-link::after,
-  .navbar .nav-link[aria-expanded="true"]::after,
-  .navbar .nav-link:focus-visible::after {
-    transform: scaleX(1);                       /* underline visible */
-    background: var(--jj-accent) !important;    /* force pink */
+  /* Always use brand pink for the underline */
+  .navbar .nav-item.dropdown > .nav-link::after{
+    background: var(--jj-accent) !important;
   }
 
-  /* Optional: remove iOS tap overlay that can darken colors */
-  .navbar a, .navbar button, .navbar .dropdown-item{
+  /* Show + keep pink while open or interacting */
+  .navbar .nav-item.show > .nav-link::after,
+  .navbar .nav-item.dropdown > .nav-link[aria-expanded="true"]::after,
+  .navbar .nav-item.dropdown > .nav-link:active::after,
+  .navbar .nav-item.dropdown > .nav-link:focus::after,
+  .navbar .nav-item.dropdown > .nav-link:focus-visible::after{
+    transform: scaleX(1) !important;
+    background: var(--jj-accent) !important;
+  }
+
+  /* Optional: if any global rule flips link color to black on tap,
+     still keep the underline pink */
+  .navbar .nav-item.dropdown > .nav-link{
     -webkit-tap-highlight-color: transparent;
   }
 }
-
 
 
 /* index.html */
