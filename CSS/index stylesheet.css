@@ -887,44 +887,27 @@ body.nav-open{
     -webkit-tap-highlight-color: transparent;
   }
 }
-/* 1) Retire Bootstrap's caret so it doesn't hijack ::after */
-#siteNav .navbar-nav > .nav-item > .dropdown-toggle::after{
-  content: none !important;
-}
-
-/* 2) Stop using ::after for the underline (kill any earlier rules) */
-#siteNav .navbar-nav > .nav-item > .nav-link::after{
-  content: none !important;
-}
-
-/* 3) NEW underline lives on ::before (always pink) */
-#siteNav .navbar-nav > .nav-item > .nav-link{
-  position: relative; /* anchor for the underline */
-}
-#siteNav .navbar-nav > .nav-item > .nav-link::before{
-  content:"";
-  position:absolute;
-  left:.5rem; right:.5rem; bottom:.25rem;
-  height:2px; border-radius:2px;
-  background: var(--jj-accent) !important;      /* keep it pink */
-  transform: scaleX(0); transform-origin:left center;
-  transition: transform .2s ease;
-}
-
-/* Show the pink underline on hover/focus/open (desktop & mobile) */
-#siteNav .navbar-nav > .nav-item.show > .nav-link::before,
-#siteNav .navbar-nav > .nav-item > .nav-link[aria-expanded="true"]::before,
-#siteNav .navbar-nav > .nav-item > .nav-link:hover::before,
-#siteNav .navbar-nav > .nav-item > .nav-link:focus::before,
-#siteNav .navbar-nav > .nav-item > .nav-link:active::before{
-  transform: scaleX(1);
-}
-
-/* Mobile: ensure it stays visible while the dropdown is open */
+/* Keep top-level title underline PINK on mobile, no matter what */
 @media (max-width:1199.98px){
-  #siteNav .navbar-nav > .nav-item.show > .nav-link::before,
-  #siteNav .navbar-nav > .nav-item > .nav-link[aria-expanded="true"]::before{
+  /* Always use brand pink for the underline */
+  .navbar .nav-item.dropdown > .nav-link::after{
+    background: var(--jj-accent) !important;
+  }
+
+  /* Show + keep pink while open or interacting */
+  .navbar .nav-item.show > .nav-link::after,
+  .navbar .nav-item.dropdown > .nav-link[aria-expanded="true"]::after,
+  .navbar .nav-item.dropdown > .nav-link:active::after,
+  .navbar .nav-item.dropdown > .nav-link:focus::after,
+  .navbar .nav-item.dropdown > .nav-link:focus-visible::after{
     transform: scaleX(1) !important;
+    background: var(--jj-accent) !important;
+  }
+
+  /* Optional: if any global rule flips link color to black on tap,
+     still keep the underline pink */
+  .navbar .nav-item.dropdown > .nav-link{
+    -webkit-tap-highlight-color: transparent;
   }
 }
 
