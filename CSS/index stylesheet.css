@@ -979,6 +979,62 @@ body.nav-open{
   }
 }
 
+/* ===== Mobile: make the collapsed area its own fixed, scrollable layer ===== */
+@media (max-width:1199.98px){
+  /* 1) Don't kill touch gestures for children while menu is open */
+  body.nav-open{
+    overflow: hidden;          /* lock page behind */
+    touch-action: auto !important;  /* (was: none) allow vertical pan in children */
+  }
+
+  /* 2) Promote the collapsed panel to a fixed sheet that can scroll on its own */
+  #navbarSupportedContent{
+    position: fixed !important;
+    z-index: 1000;                      /* above #jjNavOverlay (998) */
+    top: var(--nav-h);
+    left: 0; right: 0;
+    height: calc(100dvh - var(--nav-h));/* dynamic viewport; avoids iOS chrome jump */
+    max-height: none !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    background:
+      linear-gradient(180deg,#fff 0%, #fdfafc 40%, #f9f5f7 100%);
+    border-radius: 18px 18px 14px 14px;
+    margin-top: .35rem;
+    padding: .35rem .5rem .75rem .5rem;
+    border: 1px solid rgba(179,131,152,.15);
+    box-shadow: 0 22px 40px rgba(0,0,0,.10);
+  }
+
+  /* 3) All dropdown panels inside get natural height; they can scroll if needed */
+  .navbar .dropdown-menu{
+    position: static !important;        /* flow inside the fixed sheet */
+    max-height: none;                    /* let the sheet handle scrolling */
+    overflow: visible;
+    background: #fff !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  /* If you prefer diaries to scroll independently, uncomment below instead:
+  .navbar .dropdown-menu.jj-surface{
+    max-height: calc(100dvh - var(--nav-h) - 24px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    touch-action: pan-y;
+  } */
+
+  /* Keep submenus tidy if they’re long */
+  .dropdown-submenu > .dropdown-menu{
+    max-height: 38vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+}
+
 
 
 /* index.html */
