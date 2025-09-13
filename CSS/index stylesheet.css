@@ -924,6 +924,19 @@ body.nav-open{
   .navbar .nav-item.dropdown > .nav-link.dropdown-toggle::after{ content:none !important; }
 }
 
+/* === Nav bar titles: text stays black, underline stays pink === */
+.navbar .nav-link:hover,
+.navbar .nav-link:focus {
+  color: var(--jj-ink) !important;   /* force text to stay black */
+}
+
+.navbar .nav-link:hover::before,
+.navbar .nav-link:focus::before,
+.navbar .nav-item.show > .nav-link::before {
+  background: var(--jj-accent) !important;  /* keep underline pink */
+  transform: scaleX(1);                     /* show underline */
+}
+
 
 
 
