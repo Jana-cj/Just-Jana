@@ -52,8 +52,24 @@
 
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-              <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-
+<li class="nav-item">
+  <a class="nav-link home-link" href="index.html" aria-label="Home">
+    <svg class="home-icon" viewBox="0 0 64 64" width="30" height="28" role="img" aria-hidden="true">
+      <g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <!-- Roof -->
+        <path d="M8 28 L32 10 L56 28" />
+        <!-- Walls (no bottom stroke) -->
+        <path d="M14 26 V54 A4 4 0 0 0 18 58 H46 A4 4 0 0 0 50 54 V26" />
+        <!-- Heart (moved up ~4px so it sits in the visual center) -->
+        <path class="home-heart" d="M32 36
+                 c-4 -5 -12 -3 -12 3
+                 c0 6 8 10 12 14
+                 c4 -4 12 -8 12 -14
+                 c0 -6 -8 -8 -12 -3z" />
+      </g>
+    </svg>
+  </a>
+</li>
               <li class="nav-item dropdown" data-bs-auto-close="outside">
                 <a class="nav-link dropdown-toggle" href="#about" id="dropdownAbout" 
                 role="button" data-bs-toggle="dropdown" aria-expanded="false"><span style="color:#b38398"><strong>About</strong></span></a>
