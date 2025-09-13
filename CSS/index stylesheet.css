@@ -888,6 +888,44 @@ body.nav-open{
   }
 }
 
+/* --- Fix: stop caret/underline collision & keep underline pink --- */
+
+/* Hide Bootstrap caret on top-level dropdown titles (all viewports or just mobile) */
+.navbar .nav-item.dropdown > .nav-link.dropdown-toggle::after{
+  content: none !important;
+}
+
+/* Use ::before for the underline so it never conflicts with the caret */
+.navbar .nav-item.dropdown > .nav-link{
+  position: relative;
+}
+.navbar .nav-item.dropdown > .nav-link::before{
+  content:"";
+  position:absolute;
+  left:.5rem; right:.5rem; bottom:.25rem;
+  height:2px; border-radius:2px;
+  background: var(--jj-accent) !important;   /* always pink */
+  transform: scaleX(0);
+  transform-origin:left center;
+  transition: transform .2s ease;
+}
+
+/* Show/keep the pink underline in all the interactive states */
+.navbar .nav-item.show > .nav-link::before,
+.navbar .nav-item.dropdown > .nav-link[aria-expanded="true"]::before,
+.navbar .nav-item.dropdown > .nav-link:focus::before,
+.navbar .nav-item.dropdown > .nav-link:active::before,
+.navbar .nav-item.dropdown > .nav-link:focus-visible::before{
+  transform: scaleX(1) !important;
+}
+
+/* Optional: if you only want to apply this behavior on mobile, wrap in media query */
+@media (max-width:1199.98px){
+  .navbar .nav-item.dropdown > .nav-link.dropdown-toggle::after{ content:none !important; }
+}
+
+
+
 
 /* index.html */
 
