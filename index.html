@@ -1028,6 +1028,18 @@ addEventListener('scroll', ()=>{
 </script>
 
 <script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Allow scroll inside the fixed sheet / menus only; block background
+  document.body.addEventListener('touchmove', function (e) {
+    if (!document.body.classList.contains('nav-open')) return;
+    const scroller = e.target.closest('#navbarSupportedContent, .dropdown-menu');
+    if (!scroller) { e.preventDefault(); }  // touch outside the sheet = no scroll
+  }, { passive: false });
+});
+</script>
+
+
+<script>
 /* ==========================================================================
    Just Jana — Journeys Rail (smooth auto-scroll + drag/swipe + arrows)
    ========================================================================== */
