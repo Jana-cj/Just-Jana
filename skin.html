@@ -527,24 +527,27 @@
 
  <script>
 /* ==========================================================================
-   Just Jana — NAVBAR (hover-only open + tap-as-hover)
-   - Desktop (>=1200px): opens on hover, closes on mouseleave
-   - Mobile (<1200px): tap behaves like hover; leaving the area closes
-   - Always: only one dropdown open at a time, second tap closes
+   Just Jana — NAVBAR (bulletproof mobile toggle)
+   - Mobile (<1200px): one open at a time; second tap closes
+   - Desktop (≥1200px): hover opens, mouseout closes (Bootstrap-driven)
+   - We disable Bootstrap's data-API on mobile to avoid double toggles,
+     and restore it on desktop.
    ========================================================================== */
 (function () {
-  const XL_UP = matchMedia('(min-width:1200px)');
-  const HOVER_DEVICE = matchMedia('(hover:hover)');
+  const XL = '(min-width: 1200px)';
+  const XL_UP = window.matchMedia(XL);
+  const HOVER_DEVICE = window.matchMedia('(hover:hover)');
 
   const nav        = document.getElementById('siteNav');
   const collapseEl = document.getElementById('navbarSupportedContent');
+
   const $$  = (sel, root=document) => Array.from(root.querySelectorAll(sel));
   const topItems   = $$('.nav-item.dropdown', nav);
   const topToggles = $$('.nav-item.dropdown > a.dropdown-toggle', nav);
 
-  /* ---------- Overlay to eat outside taps while a menu is open ---------- */
+  /* ---------- Overlay + body lock ---------- */
   let overlay = document.getElementById('jjNavOverlay');
-  if (!overlay) {
+  if(!overlay){
     overlay = document.createElement('div');
     overlay.id = 'jjNavOverlay';
     document.body.appendChild(overlay);
@@ -561,51 +564,79 @@
     document.body.style.overflow = '';
     overlay.style.display = 'none';
   }
+  overlay.addEventListener('click', () => {
+    if (collapseEl && collapseEl.classList.contains('show')) {
+      bootstrap.Collapse.getOrCreateInstance(collapseEl).hide();
+    }
+    closeAllDropdowns();
+    unlockBody();
+  }, {passive:true});
+
+  /* ---------- Minimal CSS injection for overlay/mobile scroll ---------- */
+  (function injectCSS(){
+    if (document.querySelector('style[data-jj-nav="mobile-safe"]')) return;
+    const tag = document.createElement('style');
+    tag.setAttribute('data-jj-nav','mobile-safe');
+    tag.textContent = `
+      #jjNavOverlay{position:fixed; inset: var(--nav-h) 0 0 0; background:rgba(0,0,0,.25);
+        backdrop-filter:blur(2px); -webkit-backdrop-filter:blur(2px); z-index:998; display:none;}
+      body.nav-open #jjNavOverlay{display:block;}
+      @media (max-width:1199.98px){
+        #navbarSupportedContent{max-height:calc(100vh - var(--nav-h)); overflow:auto; -webkit-overflow-scrolling:touch;}
+        .dropdown-menu{background:#fff !important; backdrop-filter:none !important; -webkit-backdrop-filter:none !important;}
+      }
+    `;
+    document.head.appendChild(tag);
+  })();
 
   /* ---------- Helpers ---------- */
   function isMobile(){ return !XL_UP.matches; }
   function anyDropdownOpen(){ return !!nav.querySelector('.nav-item.dropdown.show'); }
-  function getToggle(li){ return li.querySelector(':scope > a.dropdown-toggle'); }
-  function getMenu(li){ return li.querySelector(':scope > .dropdown-menu'); }
+
+  function closeSubmenus(root){
+    (root ? root.querySelectorAll('.dropdown-submenu > .dropdown-menu.show')
+          : document.querySelectorAll('.dropdown-submenu > .dropdown-menu.show'))
+    .forEach(menu=>{
+      menu.classList.remove('show');
+      menu.previousElementSibling?.setAttribute('aria-expanded','false');
+    });
+  }
 
   function forceHideItem(li){
     li.classList.remove('show');
-    const t = getToggle(li), m = getMenu(li);
-    if (t) t.setAttribute('aria-expanded','false');
-    if (m) m.classList.remove('show');
-    // close any flyout submenus inside this li
-    li.querySelectorAll('.dropdown-submenu > .dropdown-menu.show').forEach(s=>{
-      s.classList.remove('show');
-      s.previousElementSibling?.setAttribute('aria-expanded','false');
-    });
-  }
-  function closeAllDropdowns(except=null){
-    topItems.forEach(li => { if (li !== except) forceHideItem(li); });
-    if (!anyDropdownOpen() && !(collapseEl && collapseEl.classList.contains('show'))) {
-      unlockBody();
-    }
-  }
-  function openItem(li){
-    closeAllDropdowns(li);
-    li.classList.add('show');
-    const t = getToggle(li), m = getMenu(li);
-    if (t) t.setAttribute('aria-expanded','true');
-    if (m) m.classList.add('show');
-    lockBody();
-  }
-  function hideItem(li){
-    forceHideItem(li);
-    if (!anyDropdownOpen() && !(collapseEl && collapseEl.classList.contains('show'))) {
-      unlockBody();
-    }
+    const toggle = li.querySelector(':scope > a.dropdown-toggle');
+    const menu   = li.querySelector(':scope > .dropdown-menu');
+    if (toggle) toggle.setAttribute('aria-expanded','false');
+    if (menu)   menu.classList.remove('show');
+    closeSubmenus(li);
   }
 
-  /* ---------- Disable Bootstrap click-toggles so we control behavior ---------- */
+  function closeAllDropdowns(exceptLi=null){
+    topItems.forEach(li => { if (li !== exceptLi) forceHideItem(li); });
+  }
+
+  /* ---------- Desktop hover (Bootstrap keeps doing the work) ---------- */
+  if (HOVER_DEVICE.matches) {
+    topItems.forEach(li => {
+      li.addEventListener('mouseenter', () => {
+        if (!XL_UP.matches) return;
+        const t = li.querySelector(':scope > a.dropdown-toggle');
+        if (t) bootstrap.Dropdown.getOrCreateInstance(t, {autoClose:'outside'}).show();
+      });
+      li.addEventListener('mouseleave', () => {
+        if (!XL_UP.matches) return;
+        const t = li.querySelector(':scope > a.dropdown-toggle');
+        if (t) bootstrap.Dropdown.getOrCreateInstance(t).hide();
+      });
+    });
+  }
+
+  /* ---------- MOBILE MODE: disable Bootstrap data-API + manual toggle ---- */
   function disableBootstrapOnMobile(){
     topToggles.forEach(t=>{
       if (t.hasAttribute('data-bs-toggle')) {
-        t.dataset.jjOrigToggle = t.getAttribute('data-bs-toggle');
-        t.removeAttribute('data-bs-toggle');
+        t.dataset.jjOrigToggle = t.getAttribute('data-bs-toggle'); // save
+        t.removeAttribute('data-bs-toggle');                       // disable BS
       }
     });
   }
@@ -618,57 +649,52 @@
     });
   }
 
-  /* ---------- Desktop: pure hover open/close ---------- */
-  function wireDesktopHover(){
-    if (!HOVER_DEVICE.matches) return;
-    topItems.forEach(li=>{
-      li.addEventListener('mouseenter', ()=>{
-        if (!XL_UP.matches) return;
-        openItem(li);
-      });
-      li.addEventListener('mouseleave', ()=>{
-        if (!XL_UP.matches) return;
-        hideItem(li);
-      });
-    });
+  let currentOpenLi = null;
+
+  function openItem(li){
+    forceHideItem(li); // clear stale state first
+    li.classList.add('show');
+    const t = li.querySelector(':scope > a.dropdown-toggle');
+    const m = li.querySelector(':scope > .dropdown-menu');
+    if (t) t.setAttribute('aria-expanded','true');
+    if (m) m.classList.add('show');
+    currentOpenLi = li;
+    lockBody();
   }
-
-  /* ---------- Mobile/Tablet: tap behaves like hover; leave = close ---------- */
-  function wireMobileTapAsHover(){
-    // Open/close on tap of the title
-    topToggles.forEach(t=>{
-      t.addEventListener('click', (e)=>{
-        if (!isMobile()) return;
-        e.preventDefault(); e.stopPropagation();
-        const li = t.closest('.nav-item.dropdown');
-        const isOpen = li.classList.contains('show');
-        if (isOpen) {
-          hideItem(li);           // second tap closes
-        } else {
-          openItem(li);           // first tap opens like hover
-        }
-      }, true);
-    });
-
-    // Close when the pointer/touch leaves the dropdown area (title + panel)
-    // On touch screens there is no "hoverleave", so we simulate:
-    //  - tap outside -> close
-    //  - start scrolling -> close
-    function outsideTapClose(e){
-      if (!isMobile()) return;
-      // If tap is NOT inside any open dropdown area, close all
-      const tappedInsideOpen = e.target.closest('.nav-item.dropdown.show, .dropdown-menu.show');
-      if (!tappedInsideOpen) closeAllDropdowns();
+  function hideItem(li){
+    forceHideItem(li);
+    if (currentOpenLi === li) currentOpenLi = null;
+    if (!anyDropdownOpen() && !(collapseEl && collapseEl.classList.contains('show'))) {
+      unlockBody();
     }
-    document.addEventListener('pointerdown', outsideTapClose, {passive:true});
-    document.addEventListener('touchstart', outsideTapClose, {passive:true});
-
-    // If user scrolls the page or the menu panel, treat as "left the area"
-    addEventListener('scroll', ()=>{ if (isMobile()) closeAllDropdowns(); }, {passive:true});
   }
 
-  /* ---------- Submenus (flyouts on desktop, accordions on mobile) ---------- */
-  function wireSubmenus(){
+  // Manual mobile tap handling (second tap closes; opening another closes current)
+  function bindMobileHandlers(){
+    topToggles.forEach(toggle=>{
+      toggle.addEventListener('click', function(e){
+        if (!isMobile()) return;          // only on mobile
+        e.preventDefault();
+        e.stopPropagation();
+        if (typeof e.stopImmediatePropagation === 'function') e.stopImmediatePropagation();
+
+        const li = this.closest('.nav-item.dropdown');
+        const isOpen = li.classList.contains('show');
+
+        // close others first (single-open)
+        closeAllDropdowns(li);
+
+        if (isOpen) {
+          hideItem(li);                   // second tap closes
+        } else {
+          openItem(li);                   // open tapped
+        }
+      }, true); // capture to beat any stray listeners
+    });
+  }
+
+  // Submenus: tap-to-toggle on mobile; hover niceties on desktop
+  function bindSubmenus(){
     document.querySelectorAll('.dropdown-submenu').forEach(sub=>{
       const trigger = sub.querySelector(':scope > .submenu-toggle');
       const menu    = sub.querySelector(':scope > .dropdown-menu');
@@ -684,7 +710,6 @@
         });
       }
 
-      // Tap/click toggling (mobile & desktop accessibility)
       trigger.addEventListener('click', (e)=>{
         e.preventDefault(); e.stopPropagation();
         const isOpen = menu.classList.contains('show');
@@ -698,11 +723,10 @@
         }
       });
 
-      // Desktop hover for flyouts
       if (HOVER_DEVICE.matches){
         let timer;
         const open = ()=>{ clearTimeout(timer); closeSiblings(); menu.classList.add('show'); trigger.setAttribute('aria-expanded','true'); };
-        const close= ()=>{ clearTimeout(timer); timer=setTimeout(()=>{ menu.classList.remove('show'); trigger.setAttribute('aria-expanded','false'); },110); };
+        const close= ()=>{ clearTimeout(timer); timer=setTimeout(()=>{ menu.classList.remove('show'); trigger.setAttribute('aria-expanded','false'); },120); };
         trigger.addEventListener('mouseenter', ()=>{ if (XL_UP.matches) open(); });
         trigger.addEventListener('mouseleave', ()=>{ if (XL_UP.matches) close(); });
         menu.addEventListener('mouseenter',    ()=>{ if (XL_UP.matches) open(); });
@@ -711,77 +735,72 @@
     });
   }
 
-  /* ---------- Collapse events (mobile sheet) ---------- */
+  /* ---------- Collapse events ---------- */
   if (collapseEl){
     collapseEl.addEventListener('shown.bs.collapse', ()=>{ lockBody(); });
     collapseEl.addEventListener('hidden.bs.collapse', ()=>{
       closeAllDropdowns();
+      currentOpenLi = null;
       unlockBody();
     });
   }
 
-  /* ---------- Close the collapse when navigating to a real link ---------- */
+  /* ---------- Link navigation inside collapsed area ---------- */
   document.addEventListener('click', (e)=>{
     const a = e.target.closest && e.target.closest('a[href]');
     if (!a) return;
-    const isToggle   = a.matches('.nav-item.dropdown > a.dropdown-toggle,[data-bs-toggle="dropdown"]');
-    const isSubTog   = a.matches('.submenu-toggle');
-    const inDropdown = !!a.closest('.dropdown-menu');
+
+    const isTopToggle   = a.matches('.nav-item.dropdown > a.dropdown-toggle,[data-bs-toggle="dropdown"]');
+    const isSubmenuTog  = a.matches('.submenu-toggle');
+    const insideDropdown= a.closest('.dropdown-menu') !== null;
+
     if (collapseEl && collapseEl.classList.contains('show')){
-      if (isToggle || isSubTog || inDropdown) return;
-      bootstrap.Collapse.getOrCreateInstance(collapseEl).hide();
+      if (isTopToggle || isSubmenuTog || insideDropdown) return; // keep menu for interactions
+      bootstrap.Collapse.getOrCreateInstance(collapseEl).hide(); // real navigation: close
       closeAllDropdowns();
+      unlockBody();
     }
   }, {capture:true});
 
-  /* ---------- Desktop nav height + hide-on-scroll nicety ---------- */
-  const setH = () => {
-    if (XL_UP.matches) {
-      document.documentElement.style.setProperty('--nav-h', (nav?.offsetHeight || 80) + 'px');
-    }
-  };
-  setH();
-  addEventListener('resize', setH, {passive:true});
-  let lastY = window.scrollY;
-  addEventListener('scroll', ()=>{
-    if (XL_UP.matches) closeAllDropdowns();
-    const y = window.scrollY;
-    const mayHide = (y > lastY && y > (nav?.offsetHeight || 80)) &&
-                    !(collapseEl && collapseEl.classList.contains('show')) &&
-                    !anyDropdownOpen();
-    if (nav) nav.classList.toggle('nav-hidden', mayHide);
-    lastY = Math.max(0, y);
-  }, {passive:true});
+/* ---------- Header height var + hide-on-scroll (desktop) ---------- */
+const setH = () => {
+  // Only recompute on DESKTOP (≥1200px). Mobile uses a fixed CSS value.
+  if (XL_UP.matches) {
+    document.documentElement.style
+      .setProperty('--nav-h', (nav?.offsetHeight || 80) + 'px');
+  }
+};
+setH();
+addEventListener('resize', setH, {passive:true});
 
-  /* ---------- Mode switching ---------- */
+let lastY = window.scrollY;
+addEventListener('scroll', ()=>{
+  if (XL_UP.matches) closeAllDropdowns();
+  const y = window.scrollY;
+  const mayHide = (y > lastY && y > (nav?.offsetHeight || 80)) &&
+                  !(collapseEl && collapseEl.classList.contains('show')) &&
+                  !anyDropdownOpen();
+  if (nav) nav.classList.toggle('nav-hidden', mayHide);
+  lastY = Math.max(0, y);
+}, {passive:true});
+
+
+  /* ---------- Boot it up ---------- */
   function applyMode(){
     if (isMobile()){
-      disableBootstrapOnMobile();  // we fully own tap behavior
+      disableBootstrapOnMobile(); // we take full control
     } else {
-      restoreBootstrapOnDesktop(); // keep Bootstrap semantics for a11y
+      restoreBootstrapOnDesktop();
       closeAllDropdowns();
       unlockBody();
     }
   }
-
-  /* ---------- Boot ---------- */
-  wireDesktopHover();
-  wireMobileTapAsHover();
-  wireSubmenus();
+  bindMobileHandlers();
+  bindSubmenus();
   applyMode();
   XL_UP.addEventListener('change', applyMode);
-
-  /* Overlay click closes everything */
-  overlay.addEventListener('click', ()=>{
-    if (collapseEl && collapseEl.classList.contains('show')) {
-      bootstrap.Collapse.getOrCreateInstance(collapseEl).hide();
-    }
-    closeAllDropdowns();
-    unlockBody();
-  }, {passive:true});
 })();
 </script>
-
 
 <script>
   (function(){
