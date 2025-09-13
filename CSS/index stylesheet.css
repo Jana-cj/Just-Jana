@@ -820,6 +820,9 @@ body.nav-open{
 /* micro-adjust the heart position if desired */
 .home-link .home-heart{ transform: translateY(-3px); } /* negative = up, positive = down */
 
+.home-link .home-icon {
+  transform: translateY(-4px); /* raise it up; adjust px to taste */
+}
 
 
 
