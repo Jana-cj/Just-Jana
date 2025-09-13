@@ -818,7 +818,7 @@ body.nav-open{
 }
 
 /* micro-adjust the heart position if desired */
-.home-link .home-heart{ transform: translateY(-1px); } /* negative = up, positive = down */
+.home-link .home-heart{ transform: translateY(-3px); } /* negative = up, positive = down */
 
 
 
