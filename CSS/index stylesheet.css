@@ -91,7 +91,7 @@ html, body {
 .navbar .nav-link::after{
   content:""; position:absolute; left:.5rem; right:.5rem; bottom:.25rem;
   height:2px; transform: scaleX(0); transform-origin:left center;
-  background: var(--jj-accent); 
+  background: var(--jj-accent);
   border-radius: 2px; transition: transform .2s ease;
 }
 .navbar .nav-link:hover::after,
