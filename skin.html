@@ -63,17 +63,26 @@
   </a>
 </li>
 
-              <li class="nav-item dropdown" data-bs-auto-close="outside">
-                <a class="nav-link dropdown-toggle" href="#about" id="dropdownAbout" 
-                role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  About
-                </a>
-                
-                <ul class="dropdown-menu jj-surface p-3" aria-labelledby="dropdownAbout">
-                    <li><a class="dropdown-item" href="janasstory.html">My Story</a></li> 
-                  <li><a class="dropdown-item" href="missionvalues.html">Our Mission & Values</a></li>
-                </ul>
-              </li>
+             <li class="nav-item">
+  <a class="nav-link home-link" href="index.html" aria-label="Home">
+    <!-- Just Jana "home" icon (SVG) -->
+    <svg class="home-icon" viewBox="0 0 64 64" width="28" height="28" role="img" aria-hidden="true">
+      <g fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+        <!-- House outline -->
+        <path d="M8 28 L32 10 L56 28" />
+        <path d="M14 26 V54 A4 4 0 0 0 18 58 H46 A4 4 0 0 0 50 54 V26" />
+        <path d="M44 22 V12" />
+        <!-- Heart -->
+        <path class="home-heart" d="M32 40
+                 c-4 -5 -12 -3 -12 3
+                 c0 6 8 10 12 14
+                 c4 -4 12 -8 12 -14
+                 c0 -6 -8 -8 -12 -3z" />
+      </g>
+    </svg>
+  </a>
+</li>
+
               
               <li class="nav-item dropdown" data-bs-auto-close="outside">
   <a class="nav-link dropdown-toggle" href="#body" id="dropdownBody"
@@ -777,6 +786,21 @@
   XL_UP.addEventListener('change', applyMode);
 })();
 </script>
+
+<script>
+  (function(){
+    // consider "/" and "/index.html" as home; tweak if your hosting path differs
+    var path = location.pathname.replace(/\/+$/, ''); // trim trailing slash
+    var isHome = (path === '' || path.endsWith('/index.html') || path === '/');
+    if(isHome){
+      document.body.classList.add('is-home');
+      // Optional a11y: mark the home link as the current page
+      var homeLink = document.querySelector('.home-link');
+      if(homeLink) homeLink.setAttribute('aria-current','page');
+    }
+  })();
+</script>
+
 
   </body>
 </html>

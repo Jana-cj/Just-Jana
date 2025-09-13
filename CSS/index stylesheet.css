@@ -768,6 +768,54 @@ body.nav-open{
   }
 }
 
+/* ====== Home icon base ====== */
+.home-link .home-icon{
+  display:inline-block;
+  vertical-align:middle;
+  /* inherit nav link color (your hover/active styles already change it) */
+  color: #000;                /* fallback */
+  color: var(--jj-ink, #1f1f1f);
+  transition: color .25s ease, transform .25s ease, filter .25s ease;
+}
+
+/* subtle hover lift */
+.home-link:hover .home-icon,
+.home-link:focus .home-icon{
+  transform: translateY(-1px);
+  color: var(--jj-accent, #c6a0b1);
+}
+
+/* Heart inside the house — we’ll animate this on the home page only */
+.home-link .home-heart{
+  transition: transform .25s ease, stroke .25s ease, fill .25s ease;
+  transform-origin: 32px 46px;  /* center-ish of the heart in our viewBox */
+  fill: transparent;            /* outline-only by default off-home */
+}
+
+/* ====== ON the Home page: breathe, glow, brand color ====== */
+.is-home .home-link .home-icon{
+  color: var(--jj-accent, #c6a0b1);
+  filter: drop-shadow(0 0 6px rgba(198,160,177,.55));
+}
+
+.is-home .home-link .home-heart{
+  fill: color-mix(in srgb, var(--jj-accent, #c6a0b1) 22%, white);
+  animation: jj-heart-breathe 2.2s ease-in-out infinite;
+}
+
+/* Gentle heartbeat / breathe animation */
+@keyframes jj-heart-breathe{
+  0%   { transform: scale(1);   }
+  50%  { transform: scale(1.10);}
+  100% { transform: scale(1);   }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .is-home .home-link .home-heart{ animation: none; }
+  .home-link .home-icon,
+  .home-link .home-heart{ transition: none; }
+}
 
 
 
