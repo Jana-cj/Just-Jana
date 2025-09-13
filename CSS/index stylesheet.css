@@ -824,6 +824,46 @@ body.nav-open{
   transform: translateY(-4px); /* raise it up; adjust px to taste */
 }
 
+/* --- Lock navbar height on mobile to prevent "thickening" on scroll --- */
+@media (max-width:1199.98px){
+  :root{ --nav-h: 64px; }                 /* pick your exact height */
+
+  #siteNav.navbar{
+    height: var(--nav-h);
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    line-height: 1;                       /* avoid line-height growth */
+    border-bottom: 1px solid rgba(179,131,152,.12);
+  }
+
+  /* Brand area exactly matches the bar height */
+  .navbar-brand{
+    height: var(--nav-h) !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  .navbar-brand img{
+    height: calc(var(--nav-h) - 10px) !important; /* fixed, not max-height */
+    width: auto;
+  }
+
+  /* Toggler sized consistently and centered */
+  .navbar-toggler{
+    height: 44px !important;
+    width: 44px !important;
+    align-self: center;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding: .35rem .5rem !important;
+  }
+
+  /* Ensure the collapse starts below a fixed-height bar */
+  header{ height: var(--nav-h) !important; }
+}
+
+/* Remove Bootstrap's utility padding on the bar itself (py-1 on your <nav>) */
+#siteNav.navbar{ padding-top:0 !important; padding-bottom:0 !important; }
+
 
 
 /* index.html */
