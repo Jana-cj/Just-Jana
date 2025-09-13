@@ -624,13 +624,13 @@ body.nav-open{
   }
   .mega-col + .mega-col{ margin-top: .5rem; }
 
-  .dropdown-header{
+  /* .dropdown-header{
     font-family: "Playfair Display", Georgia, serif;
     font-weight: 600;
     color: #a56f86;
     font-size: 1rem;
     margin: .1rem 0 .35rem;
-  }
+  } */
 
   .dropdown-mega .dropdown-item{
     border-radius: 10px;
