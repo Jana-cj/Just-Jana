@@ -495,6 +495,227 @@ body.nav-open{
   
 }
 
+/* ============================================================
+   Just Jana — Mobile Nav Vibe Pack
+   Paste this AT THE END of your current stylesheet
+   Affects only < 1200px (mobile/tablet)
+   ============================================================ */
+
+/* Brand tweaks / tokens you already use */
+:root{
+  --jj-accent: #c6a0b1;             /* main brand pink-lilac */
+  --jj-ink:    #1f1f1f;
+  --jj-bg:     #ffffff;
+  --jj-soft:   rgba(179,131,152,.10);
+  --jj-soft-2: rgba(179,131,152,.18);
+}
+
+/* Subtle drop-shadow to separate fixed nav from content */
+@media (max-width:1199.98px){
+  #siteNav.navbar{
+    background: var(--jj-bg);
+    box-shadow: 0 6px 22px rgba(0,0,0,.08);
+    border-bottom: 1px solid rgba(179,131,152,.12);
+  }
+}
+
+/* COLLAPSED PANEL: make it feel like a soft sheet */
+@media (max-width:1199.98px){
+  #navbarSupportedContent{
+    background:
+      linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(253,250,252,1) 40%, rgba(249,245,247,1) 100%);
+    border-radius: 18px 18px 14px 14px;
+    margin-top: .35rem;
+    padding: .35rem .5rem .75rem .5rem;
+    border: 1px solid rgba(179,131,152,.15);
+    box-shadow: 0 22px 40px rgba(0,0,0,.10);
+  }
+}
+
+/* NAV LINKS: bigger, calmer, easy to read */
+@media (max-width:1199.98px){
+  .navbar .nav-link{
+    font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    font-weight: 600;
+    letter-spacing: .15px;
+    font-size: 1.05rem;
+    line-height: 1.25;
+    padding: .9rem 1rem !important;
+    border-radius: 12px;
+  }
+
+  /* Gentle ink with on-tap feedback */
+  .navbar .nav-link:active{
+    background: var(--jj-soft);
+  }
+
+  /* Keep your underline cue, a bit lower for breathing room */
+  .navbar .nav-link::after{
+    bottom: .35rem;
+    height: 2px;
+    background: var(--jj-accent);
+    opacity: .9;
+  }
+
+  /* Slightly larger tappable area for dropdown toggles */
+  .nav-item.dropdown > .nav-link{
+    display: flex; align-items: center; gap: .45rem;
+  }
+}
+
+/* DESCRIPTORS: inline soft-pill next to title (mobile only) */
+@media (max-width:1199.98px){
+  .nav-desc{
+    display: inline-flex !important;
+    align-items: center;
+    font-size: .85rem;
+    font-weight: 500;
+    letter-spacing: .1px;
+    color: #9a6f82;
+    background: var(--jj-soft);
+    padding: .18rem .5rem;
+    border-radius: 999px;
+    margin-left: .15rem;
+    white-space: nowrap;
+    transform: translateY(-1px);
+  }
+}
+
+/* SIMPLE DROPDOWNS (About, Diaries): airy and readable */
+@media (max-width:1199.98px){
+  .dropdown-menu.jj-surface{
+    background: #fff !important;
+    border: 1px solid rgba(179,131,152,.15);
+    border-radius: 14px;
+    padding: .4rem;
+  }
+  .dropdown-menu.jj-surface .dropdown-item{
+    padding: .75rem .75rem;
+    border-radius: 10px;
+    font-size: .98rem;
+    line-height: 1.2;
+  }
+  .dropdown-menu.jj-surface .dropdown-item + .dropdown-item{
+    margin-top: .15rem;
+  }
+}
+
+/* MEGA PANELS: full width, internal scroll, gentle grouping */
+@media (max-width:1199.98px){
+  .dropdown-menu.dropdown-mega{
+    width: 100%;
+    min-width: 100%;
+    max-height: 70vh;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: .5rem;
+    border: 1px solid rgba(179,131,152,.14);
+    border-radius: 14px;
+    background: #fff !important;
+    box-shadow: 0 16px 28px rgba(0,0,0,.08);
+  }
+
+  /* Columns look like cards */
+  .mega-col{
+    background: linear-gradient(180deg, rgba(179,131,152,.06), rgba(179,131,152,.03));
+    border: 1px solid rgba(179,131,152,.10);
+    border-radius: 12px;
+    padding: .6rem .65rem .8rem;
+  }
+  .mega-col + .mega-col{ margin-top: .5rem; }
+
+  .dropdown-header{
+    font-family: "Playfair Display", Georgia, serif;
+    font-weight: 600;
+    color: #a56f86;
+    font-size: 1rem;
+    margin: .1rem 0 .35rem;
+  }
+
+  .dropdown-mega .dropdown-item{
+    border-radius: 10px;
+    padding: .7rem .65rem;
+    font-size: .96rem;
+  }
+  .dropdown-mega .dropdown-item:hover,
+  .dropdown-mega .dropdown-item:active{
+    background: var(--jj-soft);
+  }
+}
+
+/* SUBMENUS (accordion-like on mobile) */
+@media (max-width:1199.98px){
+  .dropdown-submenu > .submenu-toggle{
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .dropdown-submenu > .submenu-toggle::after{
+    content: "▾";
+    font-size: .85rem;
+    opacity: .85;
+    transform: translateY(1px);
+  }
+  .dropdown-submenu > .submenu-toggle[aria-expanded="true"]::after{
+    transform: rotate(180deg) translateY(-1px);
+  }
+  .dropdown-submenu > .dropdown-menu{
+    background: transparent !important;
+    padding-left: .35rem;
+    margin-top: .35rem;
+    border-left: 2px dashed rgba(179,131,152,.25);
+    max-height: 38vh;
+  }
+  .dropdown-submenu > .dropdown-menu .dropdown-item{
+    padding-left: .55rem;
+  }
+}
+
+/* DIVIDERS between top-level items for visual rhythm */
+@media (max-width:1199.98px){
+  .navbar-nav > .nav-item + .nav-item{
+    margin-top: .15rem;
+  }
+  .navbar-nav > .nav-item{
+    position: relative;
+  }
+  .navbar-nav > .nav-item::after{
+    content:"";
+    display:block;
+    height:1px;
+    background: linear-gradient(90deg, transparent, rgba(179,131,152,.25), transparent);
+    margin: .1rem .25rem 0;
+  }
+  /* Remove divider after the last item inside the collapse */
+  .navbar-nav > .nav-item:last-child::after{ display:none; }
+}
+
+/* Bigger, cleaner toggler (hamburger ↔ X you already have) */
+@media (max-width:1199.98px){
+  .navbar-toggler{
+    border: 1px solid rgba(31,31,31,.15);
+    border-radius: 12px;
+    padding: .35rem .5rem;
+    background: #fff;
+  }
+  .navbar-toggler:active{ transform: scale(.98); }
+}
+
+/* Keep page from scrolling while menu is open (you already do; this ensures it) */
+@media (max-width:1199.98px){
+  body.nav-open{ overflow: hidden; touch-action: none; }
+  #jjNavOverlay{ backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); }
+}
+
+/* Accessibility: strong focus ring that matches brand */
+@media (max-width:1199.98px){
+  .navbar a:focus-visible,
+  .navbar button:focus-visible,
+  .navbar .dropdown-item:focus-visible{
+    outline: 2px solid var(--jj-accent);
+    outline-offset: 2px;
+    border-radius: 10px;
+  }
+}
+
 
 
 
