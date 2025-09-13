@@ -937,6 +937,47 @@ body.nav-open{
   transform: scaleX(1);                     /* show underline */
 }
 
+/* ===== Fix: allow full scrolling in mobile dropdowns (e.g., Brown Girl Diaries) ===== */
+@media (max-width:1199.98px){
+  /* Let the page be locked, but DO NOT kill touch panning for children */
+  body.nav-open{
+    overflow: hidden;             /* keep page behind locked */
+    touch-action: auto;           /* (was: none) allow vertical panning in children */
+  }
+
+  /* Collapsed panel uses dynamic viewport height to avoid browser chrome bugs */
+  #navbarSupportedContent{
+    max-height: calc(100dvh - var(--nav-h));
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    touch-action: pan-y;
+  }
+
+  /* All dropdown panels inside the collapsed area get their own scroll */
+  .navbar .dropdown-menu{
+    position: static !important;
+    max-height: calc(100dvh - var(--nav-h) - 20px - env(safe-area-inset-bottom));
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    touch-action: pan-y;
+    margin: .25rem 0 .5rem 0;
+    background: #fff !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  /* Make sure the simple glassy menus (About, Brown Girl Diaries) inherit it too */
+  .navbar .dropdown-menu.jj-surface{
+    max-height: calc(100dvh - var(--nav-h) - 20px - env(safe-area-inset-bottom));
+  }
+
+  /* Submenus keep their own smaller scroll, unchanged */
+  .dropdown-submenu > .dropdown-menu{
+    max-height: 40vh;
+  }
+}
 
 
 
