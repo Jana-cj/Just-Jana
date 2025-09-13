@@ -729,7 +729,7 @@
   </div>
   </footer>
   
-<script>
+ <script>
 /* ==========================================================================
    Just Jana — NAVBAR (bulletproof mobile toggle)
    - Mobile (<1200px): one open at a time; second tap closes
@@ -1004,6 +1004,20 @@ addEventListener('scroll', ()=>{
   applyMode();
   XL_UP.addEventListener('change', applyMode);
 })();
+</script>
+
+<script>
+  (function(){
+    // consider "/" and "/index.html" as home; tweak if your hosting path differs
+    var path = location.pathname.replace(/\/+$/, ''); // trim trailing slash
+    var isHome = (path === '' || path.endsWith('/index.html') || path === '/');
+    if(isHome){
+      document.body.classList.add('is-home');
+      // Optional a11y: mark the home link as the current page
+      var homeLink = document.querySelector('.home-link');
+      if(homeLink) homeLink.setAttribute('aria-current','page');
+    }
+  })();
 </script>
 
 <script>
