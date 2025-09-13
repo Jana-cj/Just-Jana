@@ -35,7 +35,7 @@
     <header>
       
 <!-- Navbar -->
-       <nav id="siteNav" class="navbar navbar-expand-xl navbar-light py-1">
+       <nav id="siteNav" class="navbar navbar-expand-xl navbar-light">
   <div class="container-fluid pe-0">
           <!-- Left: Logo -->
     <a class="navbar-brand me-3" href="index.html">
@@ -894,20 +894,28 @@
     }
   }, {capture:true});
 
-  /* ---------- Header height var + hide-on-scroll (desktop) ---------- */
-  const setH = () => document.documentElement.style.setProperty('--nav-h', (nav?.offsetHeight || 80) + 'px');
-  setH(); addEventListener('resize', setH, {passive:true});
+/* ---------- Header height var + hide-on-scroll (desktop) ---------- */
+const setH = () => {
+  // Only recompute on DESKTOP (≥1200px). Mobile uses a fixed CSS value.
+  if (XL_UP.matches) {
+    document.documentElement.style
+      .setProperty('--nav-h', (nav?.offsetHeight || 80) + 'px');
+  }
+};
+setH();
+addEventListener('resize', setH, {passive:true});
 
-  let lastY = window.scrollY;
-  addEventListener('scroll', ()=>{
-    if (XL_UP.matches) closeAllDropdowns();
-    const y = window.scrollY;
-    const mayHide = (y > lastY && y > (nav?.offsetHeight || 80)) &&
-                    !(collapseEl && collapseEl.classList.contains('show')) &&
-                    !anyDropdownOpen();
-    if (nav) nav.classList.toggle('nav-hidden', mayHide);
-    lastY = Math.max(0, y);
-  }, {passive:true});
+let lastY = window.scrollY;
+addEventListener('scroll', ()=>{
+  if (XL_UP.matches) closeAllDropdowns();
+  const y = window.scrollY;
+  const mayHide = (y > lastY && y > (nav?.offsetHeight || 80)) &&
+                  !(collapseEl && collapseEl.classList.contains('show')) &&
+                  !anyDropdownOpen();
+  if (nav) nav.classList.toggle('nav-hidden', mayHide);
+  lastY = Math.max(0, y);
+}, {passive:true});
+
 
   /* ---------- Boot it up ---------- */
   function applyMode(){
