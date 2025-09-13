@@ -489,9 +489,11 @@ body.nav-open{
 /* Mobile-only descriptor style (inline, no wrap) */
 .nav-desc{
   font-size: .9rem;
+  color: #b38398;
   opacity: .85;
   margin-left: .25rem;
   white-space: nowrap; /* keep it next to the title */
+  
 }
 
 
