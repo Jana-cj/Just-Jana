@@ -87,16 +87,27 @@ html, body {
   transition: color .2s ease;
 }
 .navbar .nav-link:hover,
-.navbar .nav-link:focus{ color: var(--jj-ink); }
+.navbar .nav-link:focus,
 .navbar .nav-link::after{
   content:""; position:absolute; left:.5rem; right:.5rem; bottom:.25rem;
   height:2px; transform: scaleX(0); transform-origin:left center;
-  background: var(--jj-accent) !important; 
   border-radius: 2px; transition: transform .2s ease;
 }
 .navbar .nav-link:hover::after,
 .navbar .nav-link:focus::after,
 .navbar .nav-item.show > .nav-link::after{ transform: scaleX(1); }
+
+/* Keep text black on hover/focus, but underline stays pink */
+.navbar .nav-link:hover,
+.navbar .nav-link:focus {
+  color: var(--jj-ink) !important;        /* text stays black */
+}
+
+.navbar .nav-link:hover::after,
+.navbar .nav-link:focus::after {
+  background: var(--jj-accent) !important; /* force underline pink */
+}
+
 
 /* Toggler (hamburger → X) */
 .navbar { --bs-navbar-toggler-focus-width: 0; }
