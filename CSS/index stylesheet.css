@@ -486,6 +486,25 @@ body.nav-open{
   }
 }
 
+/* Show " – Descriptor" next to pillar names on mobile only */
+@media (max-width: 991.98px){ /* matches Bootstrap lg breakpoint */
+  .navbar .nav-link.pillar::after{
+    content: " \2013 " attr(data-desc); /* en dash + descriptor */
+    font-size: .85rem;
+    opacity: .8;
+    margin-left: .15rem;
+    white-space: nowrap;            /* keep it on one line; remove if you'd like wrapping */
+  }
+}
+
+/* Optional: prevent mobile menu items from wrapping badly */
+@media (max-width: 575.98px){
+  .navbar .nav-link.pillar{
+    display: inline-flex;
+    align-items: baseline;
+  }
+}
+
 
 /* index.html */
 
