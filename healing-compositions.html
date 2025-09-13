@@ -735,5 +735,30 @@ addEventListener('scroll', ()=>{
 })();
 </script>
 
+<script>
+  (function(){
+    // consider "/" and "/index.html" as home; tweak if your hosting path differs
+    var path = location.pathname.replace(/\/+$/, ''); // trim trailing slash
+    var isHome = (path === '' || path.endsWith('/index.html') || path === '/');
+    if(isHome){
+      document.body.classList.add('is-home');
+      // Optional a11y: mark the home link as the current page
+      var homeLink = document.querySelector('.home-link');
+      if(homeLink) homeLink.setAttribute('aria-current','page');
+    }
+  })();
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Allow scroll inside the fixed sheet / menus only; block background
+  document.body.addEventListener('touchmove', function (e) {
+    if (!document.body.classList.contains('nav-open')) return;
+    const scroller = e.target.closest('#navbarSupportedContent, .dropdown-menu');
+    if (!scroller) { e.preventDefault(); }  // touch outside the sheet = no scroll
+  }, { passive: false });
+});
+</script>
+
   </body>
 </html>
