@@ -1105,6 +1105,38 @@ body.nav-open{
   }
 }
 
+/* ===== Mobile: kill gaps while the navbar is closing so it snaps shut cleanly ===== */
+@media (max-width:1199.98px){
+  /* Bootstrap toggles these classes during the animation */
+  #navbarSupportedContent.collapsing,
+  #navbarSupportedContent.collapse:not(.show){
+    /* no extra space while we animate height → 0 */
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-top: 0 !important;
+    border-width: 0 !important;
+    overflow: hidden !important;   /* hide any internal scrollbars during the tween */
+  }
+
+  /* When fully open, restore your pretty “sheet” styling */
+  #navbarSupportedContent.collapse.show{
+    margin-top: .35rem !important;
+    padding: .35rem .5rem .75rem .5rem !important;
+    border: 1px solid rgba(179,131,152,.15) !important;
+  }
+
+  /* Defensive: remove bottom gaps from children during close to avoid a lingering pixel */
+  #navbarSupportedContent.collapsing .dropdown-menu,
+  #navbarSupportedContent.collapse:not(.show) .dropdown-menu{
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  #navbarSupportedContent.collapsing .navbar-nav > .nav-item::after,
+  #navbarSupportedContent.collapse:not(.show) .navbar-nav > .nav-item::after{
+    display: none !important;
+  }
+}
+
 
 /* index.html */
 
