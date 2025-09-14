@@ -1013,6 +1013,48 @@ body.nav-open{
   }
 }
 
+/* Brown Girl Diaries: fixed height + internal scroll on mobile */
+@media (max-width:1199.98px){
+  /* Keep the collapsed sheet scrollable (needed by iOS) */
+  #navbarSupportedContent{
+    max-height: calc(100dvh - var(--nav-h)) !important;
+    overflow: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: contain !important;
+  }
+
+  /* Make Diaries panel a self-scrolling pane with a default height */
+  #dropdownDiaries + .dropdown-menu.menu-scroll{
+    position: static !important;
+    display: block;                    /* keep layout stable */
+    max-height: 48vh !important;       /* <— default visible size */
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: contain !important;
+    touch-action: pan-y !important;
+    background: #fff !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    margin: .25rem 0 .5rem 0 !important;
+    padding: .5rem !important;
+    border: 1px solid rgba(179,131,152,.15) !important;
+    border-radius: 14px !important;
+  }
+
+  /* Ensure each item is comfortably tappable */
+  #dropdownDiaries + .dropdown-menu.menu-scroll .dropdown-item{
+    padding: .75rem .85rem !important;
+    border-radius: 10px !important;
+    white-space: normal !important;
+  }
+
+  /* Lock the page behind, but DO allow panning inside menus */
+  body.nav-open{
+    overflow: hidden !important;
+    touch-action: auto !important;     /* not 'none' */
+  }
+}
+
 
 /* index.html */
 
