@@ -979,6 +979,39 @@ body.nav-open{
   }
 }
 
+/* ==== Mobile: keep navbar short but let dropdowns scroll ==== */
+@media (max-width:1199.98px){
+  /* Keep the sheet height fixed; scroll inside it */
+  #navbarSupportedContent{
+    max-height: calc(100dvh - var(--nav-h));
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    touch-action: pan-y;
+  }
+
+  /* All simple dropdowns (About, Brown Girl Diaries, etc.) get their own scroll */
+  .navbar .dropdown-menu{
+    position: static !important;
+    max-height: calc(100dvh - var(--nav-h) - 20px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    touch-action: pan-y;
+    background: #fff !important;
+  }
+
+  /* (Optional but helpful) Explicitly target the Diaries menu */
+  #dropdownDiaries + .dropdown-menu{
+    max-height: calc(100dvh - var(--nav-h) - 20px);
+  }
+
+  /* While the menu is open, lock the page behind it—but allow vertical panning in the menu */
+  body.nav-open{
+    overflow: hidden;
+    touch-action: auto; /* not 'none' – lets the inner scrollers work */
+  }
+}
 
 
 /* index.html */
