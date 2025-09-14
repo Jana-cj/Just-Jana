@@ -1168,26 +1168,6 @@ body.nav-open{
     transform: translateY(0) !important;
   }
 }
-/* ===== Blush band above navbar (mobile only) ===== */
-@media (max-width:1199.98px){
-  :root{
-    --jj-nav-offset: 6px;  /* matches your earlier offset */
-  }
-
-  body::before{
-    content: "";
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    height: var(--jj-nav-offset);
-    background: linear-gradient(
-      180deg,
-      rgba(198,160,177,0.35) 0%,
-      rgba(198,160,177,0.12) 100%
-    );
-    z-index: 1000; /* sits just under navbar (which is 999) */
-    pointer-events: none; /* don’t block clicks */
-  }
-}
 
 
 
