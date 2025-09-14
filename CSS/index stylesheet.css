@@ -1026,29 +1026,6 @@ body.nav-open{
   }
 }
 
-/* Mobile: make dropdowns actually scroll on touch */
-@media (max-width:1199.98px){
-  /* all dropdowns */
-  .navbar .dropdown-menu{
-    max-height: min(70dvh, 560px) !important;   /* gives it room */
-    overflow-y: auto !important;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior: contain;
-    touch-action: pan-y;                          /* 👉 key for iOS */
-  }
-
-  /* give Brown Girl Diaries a little extra */
-  #dropdownDiaries + .dropdown-menu{
-    max-height: min(75dvh, 620px) !important;
-    touch-action: pan-y;
-  }
-
-  /* if you use the glassy surface class anywhere, ensure it can pan */
-  .dropdown-menu.jj-surface{
-    touch-action: pan-y;
-  }
-}
-
 
 /* index.html */
 

@@ -1030,17 +1030,11 @@ addEventListener('scroll', ()=>{
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   // Allow scroll inside the fixed sheet / menus only; block background
-document.body.addEventListener('touchmove', function (e) {
-  if (!document.body.classList.contains('nav-open')) return;
-
-  // allow scroll anywhere inside the collapsed nav (including all descendants)
-  const insideCollapse = e.target.closest('#navbarSupportedContent');
-  if (insideCollapse) return;   // let it scroll
-
-  // outside the sheet? lock the page
-  e.preventDefault();
-}, { passive: false });
-
+  document.body.addEventListener('touchmove', function (e) {
+    if (!document.body.classList.contains('nav-open')) return;
+    const scroller = e.target.closest('#navbarSupportedContent, .dropdown-menu');
+    if (!scroller) { e.preventDefault(); }  // touch outside the sheet = no scroll
+  }, { passive: false });
 });
 </script>
 
