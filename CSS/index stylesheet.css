@@ -1137,41 +1137,6 @@ body.nav-open{
   }
 }
 
-/* ===== Navbar: always glued slightly down on mobile ===== */
-@media (max-width:1199.98px){
-  :root{
-    --jj-nav-offset: 6px;   /* adjust the size of the gap */
-  }
-
-  #siteNav.navbar{
-    top: var(--jj-nav-offset) !important;  /* navbar always sits below top */
-    border-radius: 0 0 14px 14px;          /* optional: soften top corners */
-    box-shadow: 0 6px 22px rgba(0,0,0,.08);
-  }
-
-  /* Push page content down by the same amount */
-  header{
-    margin-top: var(--jj-nav-offset);
-  }
-
-  /* Collapse panel attaches flush to the bar’s bottom edge */
-  #navbarSupportedContent,
-  #navbarSupportedContent.collapse,
-  #navbarSupportedContent.collapsing,
-  #navbarSupportedContent.collapse.show{
-    margin-top: 0 !important;
-    border-top: 1px solid rgba(179,131,152,.15) !important;
-  }
-
-  /* Prevent hide-on-scroll from pulling it back up */
-  #siteNav.navbar.nav-hidden{
-    transform: translateY(0) !important;
-  }
-}
-
-
-
-
 
 /* index.html */
 
