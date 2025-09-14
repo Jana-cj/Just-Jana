@@ -1175,6 +1175,36 @@ body.nav-open{
 @media (min-width:1200px){
   .mega-col:hover{ z-index: 10001; }
 }
+/* ===== Desktop: solid backgrounds + correct stacking for flyouts ===== */
+@media (min-width:1200px){
+  /* Make all desktop dropdown panels fully opaque */
+  .dropdown-menu.jj-surface,
+  .dropdown-menu.dropdown-mega,
+  .dropdown-submenu > .dropdown-menu{
+    background: #fff !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  /* Stop every column from being its own stacking context by default */
+  .mega-col{
+    z-index: auto !important;   /* overrides earlier z-index:1 */
+    position: relative;
+  }
+
+  /* Hover can still lift slightly if you want */
+  .mega-col:hover{ z-index: 2; }
+
+  /* When a submenu is open, force its column above neighbors */
+  .mega-col.submenu-open{ z-index: 10002 !important; }
+
+  /* The flyout itself should sit above everything in the mega */
+  .dropdown-submenu > .dropdown-menu{
+    z-index: 10003 !important;
+    isolation: isolate;           /* avoid edge bleed on some GPUs */
+    background-clip: padding-box; /* crisp edges */
+  }
+}
 
 
 /* index.html */

@@ -904,12 +904,15 @@
     });
   }
 
-  // Submenus: tap-to-toggle on mobile; hover niceties on desktop
+// Submenus: tap-to-toggle on mobile; hover niceties on desktop
   function bindSubmenus(){
     document.querySelectorAll('.dropdown-submenu').forEach(sub=>{
       const trigger = sub.querySelector(':scope > .submenu-toggle');
       const menu    = sub.querySelector(':scope > .dropdown-menu');
+      const col     = sub.closest('.mega-col');
       if (!trigger || !menu) return;
+
+      const markOpen = (on)=>{ if(col) col.classList.toggle('submenu-open', !!on); };
 
       function closeSiblings(){
         const parentMenu = sub.closest('.dropdown-menu');
@@ -917,6 +920,8 @@
           if (m !== menu){
             m.classList.remove('show');
             m.previousElementSibling?.setAttribute('aria-expanded','false');
+            const c = m.closest('.mega-col');
+            if (c) c.classList.remove('submenu-open');
           }
         });
       }
@@ -927,23 +932,41 @@
         if (isOpen){
           menu.classList.remove('show');
           trigger.setAttribute('aria-expanded','false');
+          markOpen(false);
         } else {
           closeSiblings();
           menu.classList.add('show');
           trigger.setAttribute('aria-expanded','true');
+          markOpen(true);
         }
       });
 
-      if (HOVER_DEVICE.matches){
+      // Desktop hover support: keep column lifted while submenu is open/hovered
+      if (matchMedia('(hover:hover)').matches){
         let timer;
-        const open = ()=>{ clearTimeout(timer); closeSiblings(); menu.classList.add('show'); trigger.setAttribute('aria-expanded','true'); };
-        const close= ()=>{ clearTimeout(timer); timer=setTimeout(()=>{ menu.classList.remove('show'); trigger.setAttribute('aria-expanded','false'); },120); };
-        trigger.addEventListener('mouseenter', ()=>{ if (XL_UP.matches) open(); });
-        trigger.addEventListener('mouseleave', ()=>{ if (XL_UP.matches) close(); });
-        menu.addEventListener('mouseenter',    ()=>{ if (XL_UP.matches) open(); });
-        menu.addEventListener('mouseleave',    ()=>{ if (XL_UP.matches) close(); });
+        const open = ()=>{ clearTimeout(timer); closeSiblings(); menu.classList.add('show'); trigger.setAttribute('aria-expanded','true'); markOpen(true); };
+        const close= ()=>{ clearTimeout(timer); timer=setTimeout(()=>{ menu.classList.remove('show'); trigger.setAttribute('aria-expanded','false'); markOpen(false); },120); };
+
+        trigger.addEventListener('mouseenter', ()=>{ if (matchMedia('(min-width:1200px)').matches) open(); });
+        trigger.addEventListener('mouseleave', ()=>{ if (matchMedia('(min-width:1200px)').matches) close(); });
+        menu.addEventListener('mouseenter',    ()=>{ if (matchMedia('(min-width:1200px)').matches) open(); });
+        menu.addEventListener('mouseleave',    ()=>{ if (matchMedia('(min-width:1200px)').matches) close(); });
       }
     });
+  }
+
+  // Also update closeSubmenus() so it clears the helper class everywhere:
+  function closeSubmenus(root){
+    (root ? root.querySelectorAll('.dropdown-submenu > .dropdown-menu.show')
+          : document.querySelectorAll('.dropdown-submenu > .dropdown-menu.show'))
+    .forEach(menu=>{
+      menu.classList.remove('show');
+      menu.previousElementSibling?.setAttribute('aria-expanded','false');
+    });
+
+    (root ? root.querySelectorAll('.mega-col.submenu-open')
+          : document.querySelectorAll('.mega-col.submenu-open'))
+    .forEach(c => c.classList.remove('submenu-open'));
   }
 
   /* ---------- Collapse events ---------- */
