@@ -979,6 +979,75 @@ body.nav-open{
   }
 }
 
+/* === Mobile: collapse shrinks to content; long dropdowns scroll === */
+@media (max-width:1199.98px){
+  /* 1) Let the collapsed sheet size itself to content (no giant panel) */
+  #navbarSupportedContent{
+    max-height: none !important;
+    overflow: visible !important;
+    padding-bottom: .35rem; /* small breathing room */
+  }
+
+  /* 2) Each dropdown panel can scroll independently if tall */
+  .navbar .dropdown-menu{
+    position: static !important;               /* flow inside collapse */
+    max-height: min(62vh, 520px) !important;   /* keeps it short */
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    margin: .25rem 0 .35rem 0;                 /* trim bottom gap */
+    background: #fff !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  /* 3) Brown Girl Diaries specifically — allow a touch more height */
+  #dropdownDiaries + .dropdown-menu{
+    max-height: min(70dvh, 560px) !important;
+  }
+
+  /* 4) Submenus inside mega/simple menus keep a smaller internal scroll */
+  .dropdown-submenu > .dropdown-menu{
+    max-height: 40vh !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* 5) Remove any “phantom” space at the end of the list */
+  .navbar-nav > .nav-item:last-child::after{ display:none !important; }
+  .navbar .dropdown-menu:last-child{ margin-bottom: 0 !important; }
+}
+
+/* Ensure background page stays locked, but child panels can pan vertically */
+@media (max-width:1199.98px){
+  body.nav-open{ 
+    overflow: hidden;
+    touch-action: auto;      /* allow pan-y on children */
+  }
+}
+
+/* Mobile: make dropdowns actually scroll on touch */
+@media (max-width:1199.98px){
+  /* all dropdowns */
+  .navbar .dropdown-menu{
+    max-height: min(70dvh, 560px) !important;   /* gives it room */
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    touch-action: pan-y;                          /* 👉 key for iOS */
+  }
+
+  /* give Brown Girl Diaries a little extra */
+  #dropdownDiaries + .dropdown-menu{
+    max-height: min(75dvh, 620px) !important;
+    touch-action: pan-y;
+  }
+
+  /* if you use the glassy surface class anywhere, ensure it can pan */
+  .dropdown-menu.jj-surface{
+    touch-action: pan-y;
+  }
+}
 
 
 /* index.html */
