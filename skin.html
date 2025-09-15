@@ -525,7 +525,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
 
 
- <script>
+<script>
 /* ==========================================================================
    Just Jana — NAVBAR (bulletproof mobile toggle)
    - Mobile (<1200px): one open at a time; second tap closes
@@ -824,6 +824,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const scroller = e.target.closest('#navbarSupportedContent, .dropdown-menu');
     if (!scroller) { e.preventDefault(); }  // touch outside the sheet = no scroll
   }, { passive: false });
+});
+</script>
+
+<script>
+/* Allow scroll only inside the collapsed panel or any dropdown while nav is open */
+document.addEventListener('DOMContentLoaded', () => {
+  const allowInside = sel => e => {
+    if (!document.body.classList.contains('nav-open')) return;
+    const scroller = e.target.closest('#navbarSupportedContent, .dropdown-menu');
+    if (!scroller) { e.preventDefault(); return; }
+    // for wheel events on desktop-sized touchpads
+    if (e.type === 'wheel') {
+      const {scrollTop, scrollHeight, clientHeight} = scroller;
+      const delta = e.deltaY || 0;
+      const atTop    = scrollTop <= 0 && delta < 0;
+      const atBottom = scrollTop + clientHeight >= scrollHeight - 1 && delta > 0;
+      if (atTop || atBottom) e.preventDefault();
+    }
+  };
+  // Touch scroll
+  document.body.addEventListener('touchmove', allowInside(), {passive:false});
+  // Wheel scroll (some Android/iPad keyboards/trackpads)
+  document.body.addEventListener('wheel', allowInside(), {passive:false});
 });
 </script>
 

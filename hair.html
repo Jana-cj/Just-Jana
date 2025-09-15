@@ -416,7 +416,7 @@
     <h2>When Curls Became the Villain</h2>
     <p>Even the media seemed to whisper the same message - sometimes loudly, sometimes so subtly you almost missed it.<br> In Sri Lanka, shampoo ads would feature fair-skinned women with pin-straight hair, women who looked nothing like anyone I knew.</p>
     <p>On screen, the “beautiful” heroines so often shared the same template - in <em>Tangled</em>, the radiant main character had long, straight blonde hair, while the villain was given dark, curly locks.<br>
-    It didn’t stop there. <em>The Princess Diaries</em> makeover scene was designed to show the audience that curly hair represented the “before,” while straight hair symbolised the “after.” By doing so, it framed the natural, curly-haired version of a girl as something messy or flawed - a problem that needed fixing. <br> In <em>Harry Potter</em>, Bellatrix Lestrange’s chaotic curls were used as a visual cue for madness. <br> Over and over again, curls became shorthand for “messy,” “unruly,” “untrustworthy.”</p>
+    It didn’t stop there. <em>The Princess Diaries</em> makeover scene was designed to show the audience that curly hair represented the “before,” while straight hair symbolised the “after.”<br> In <em>Harry Potter</em>, Bellatrix Lestrange’s chaotic curls were used as a visual cue for madness. <br> Over and over again, curls became shorthand for “messy,” “unruly,” “untrustworthy.”</p>
     <p>The only time I can remember curls being shown as something beautiful was in <em>Brave</em>&nbsp; (2012) - and even then, they belonged to a fair-skinned, red-haired character. <br>Never dark skin. Never dark hair. Never someone who looked like me, or like so many other South Asian girls.</p>
     <p>I can count on one hand the times I saw curls celebrated - not as a punchline, not as a villain’s mark, but as something powerful, heroic, and worthy.<br> That absence left an imprint on me… and I know it’s one many other curly-haired girls have carried too.</p>
   </div>
@@ -542,7 +542,7 @@
         <div class="story-block">
           <div class="story-text">
             <h2>The Real Hair Journey</h2>
-<p>In Australia, strangers would ask where I was from and then compliment my hair.<br> At first, it startled me. Other than my partner, no one had ever praised my curls before.</p>
+<p>In Australia, strangers would ask where I was from and then compliment my hair and skin tone.<br> At first, it startled me. Other than my partner, no one had ever praised my curls before.</p>
   <p>That curiosity led me down a rabbit hole of research. I stumbled across videos on curly hair care - things like the Curly Girl Method. I experimented, learning about hydration, curl patterns, protein-moisture balance, etc.<br> For my birthday, my partner gifted me a hair diffuser - a simple tool that felt like freedom.</p>
               <p>Piece by piece, I built a routine that worked for me. And somewhere along the way, I stopped trying to “tame” my hair and started honouring it.</p>
 <p>One of the very first people I shared this discovery with was my mum. <br>I longed for her to see her own beauty the way I was beginning to see mine.<br> I wanted her to feel the liberation I felt when I stopped fighting my reflection.<br> I sent her products, tutorials, everything I thought might help her reconnect with her curls. But years of conditioning had left their mark, and she chose keratin treatments instead.</p>
@@ -980,6 +980,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const scroller = e.target.closest('#navbarSupportedContent, .dropdown-menu');
     if (!scroller) { e.preventDefault(); }  // touch outside the sheet = no scroll
   }, { passive: false });
+});
+</script>
+
+<script>
+/* Allow scroll only inside the collapsed panel or any dropdown while nav is open */
+document.addEventListener('DOMContentLoaded', () => {
+  const allowInside = sel => e => {
+    if (!document.body.classList.contains('nav-open')) return;
+    const scroller = e.target.closest('#navbarSupportedContent, .dropdown-menu');
+    if (!scroller) { e.preventDefault(); return; }
+    // for wheel events on desktop-sized touchpads
+    if (e.type === 'wheel') {
+      const {scrollTop, scrollHeight, clientHeight} = scroller;
+      const delta = e.deltaY || 0;
+      const atTop    = scrollTop <= 0 && delta < 0;
+      const atBottom = scrollTop + clientHeight >= scrollHeight - 1 && delta > 0;
+      if (atTop || atBottom) e.preventDefault();
+    }
+  };
+  // Touch scroll
+  document.body.addEventListener('touchmove', allowInside(), {passive:false});
+  // Wheel scroll (some Android/iPad keyboards/trackpads)
+  document.body.addEventListener('wheel', allowInside(), {passive:false});
 });
 </script>
 
