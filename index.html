@@ -326,6 +326,8 @@
 
               
   </div>
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
+
   <!-- Search button -->
 <button class="btn jj-search-btn ms-2" type="button" id="jjSearchOpen"
         aria-expanded="false" aria-controls="jjSearchSheet" aria-label="Open search">
@@ -346,8 +348,15 @@
            placeholder="Search Just Jana…" aria-describedby="jjSearchHint" />
     <button class="jj-search-go" type="submit" aria-label="Search">Search</button>
   </form>
-  <p id="jjSearchHint" class="jj-search-hint">Tip: we’ll search within Just Jana (Google site search).</p>
+
+  <!-- results go here -->
+  <div id="jjSearchResults" class="jj-search-results" aria-live="polite"></div>
+
+  <p id="jjSearchHint" class="jj-search-hint">
+    Tip: try “curly”, “music”, “mantra”, “toxin-free”, “healing”, etc.
+  </p>
 </div>
+
 
             
     </header>
@@ -1084,106 +1093,139 @@ document.addEventListener('DOMContentLoaded', () => {
 <!-- Search Bar -->
 <script>
 (function(){
-  const openBtn   = document.getElementById('jjSearchOpen');
-  const sheet     = document.getElementById('jjSearchSheet');
-  const form      = document.getElementById('jjSearchForm');
-  const input     = document.getElementById('jjSearchInput');
-  const collapseEl= document.getElementById('navbarSupportedContent');
+  const openBtn    = document.getElementById('jjSearchOpen');
+  const sheet      = document.getElementById('jjSearchSheet');
+  const form       = document.getElementById('jjSearchForm');
+  const input      = document.getElementById('jjSearchInput');
+  const resultsBox = document.getElementById('jjSearchResults');
+  const collapseEl = document.getElementById('navbarSupportedContent');
+  const nav        = document.getElementById('siteNav');
+  const XL_UP      = window.matchMedia('(min-width: 1200px)');
 
-  // Reuse your existing overlay if present, else create (you already create one earlier)
   let overlay = document.getElementById('jjNavOverlay');
-  if(!overlay){
-    overlay = document.createElement('div');
-    overlay.id = 'jjNavOverlay';
-    document.body.appendChild(overlay);
-  }
+  if(!overlay){ overlay = document.createElement('div'); overlay.id = 'jjNavOverlay'; document.body.appendChild(overlay); }
 
-  const XL_UP = window.matchMedia('(min-width: 1200px)');
-
-  function lockBody(){
-    document.body.classList.add('nav-open');
-    document.documentElement.style.overflow = 'hidden';
-    document.body.style.overflow = 'hidden';
-    overlay.style.display = 'block';
-  }
-  function unlockBody(){
-    document.body.classList.remove('nav-open');
-    document.documentElement.style.overflow = '';
-    document.body.style.overflow = '';
-    overlay.style.display = 'none';
-  }
-
-  function closeNavbarIfOpen(){
-    if (collapseEl && collapseEl.classList.contains('show')) {
-      bootstrap.Collapse.getOrCreateInstance(collapseEl).hide();
-    }
-  }
+  function lockBody(){ document.body.classList.add('nav-open'); document.documentElement.style.overflow='hidden'; document.body.style.overflow='hidden'; overlay.style.display='block'; }
+  function unlockBody(){ document.body.classList.remove('nav-open'); document.documentElement.style.overflow=''; document.body.style.overflow=''; overlay.style.display='none'; }
+  function closeNavbarIfOpen(){ if (collapseEl && collapseEl.classList.contains('show')) bootstrap.Collapse.getOrCreateInstance(collapseEl).hide(); }
 
   function openSearch(){
     closeNavbarIfOpen();
     sheet.hidden = false;
-    // elevate above navbar (999) while open
     sheet.classList.add('is-open');
     openBtn?.setAttribute('aria-expanded','true');
     lockBody();
-    // Focus after paint so iOS keyboard behaves nicely
     setTimeout(()=>{ input?.focus(); input?.select(); }, 50);
   }
-
   function closeSearch(){
     sheet.classList.remove('is-open');
     openBtn?.setAttribute('aria-expanded','false');
     setTimeout(()=>{ sheet.hidden = true; }, 220);
-    // If nothing else is open (no navbar/collapse), free body
-    if (!(collapseEl && collapseEl.classList.contains('show'))) {
-      unlockBody();
+    if (!(collapseEl && collapseEl.classList.contains('show'))) unlockBody();
+  }
+
+  openBtn?.addEventListener('click', (e)=>{ e.preventDefault(); (sheet.classList.contains('is-open')? closeSearch(): openSearch()); });
+  overlay.addEventListener('click', ()=>{ if (sheet.classList.contains('is-open')) closeSearch(); });
+  document.addEventListener('keydown', (e)=>{ if (e.key==='Escape' && sheet.classList.contains('is-open')) closeSearch(); });
+
+  // Keep sheet aligned under navbar on desktop
+  const setH = () => { if (XL_UP.matches) document.documentElement.style.setProperty('--nav-h', (nav?.offsetHeight||80)+'px'); };
+  setH(); addEventListener('resize', setH, {passive:true});
+
+  /* ========= In-site search using Fuse.js ========= */
+  let fuse = null;
+  let fuseData = [];
+  let loaded = false;
+
+  async function loadIndex(){
+    if (loaded) return;
+    loaded = true;
+    try{
+      const res = await fetch('/search-index.json?v=1', {cache:'no-store'});
+      if(!res.ok) throw new Error('Index not found');
+      fuseData = await res.json();
+      fuse = new Fuse(fuseData, {
+        includeScore: true,
+        shouldSort: true,
+        threshold: 0.35,
+        minMatchCharLength: 2,
+        keys: [
+          {name:'title',   weight:0.5},
+          {name:'tags',    weight:0.2},
+          {name:'section', weight:0.15},
+          {name:'content', weight:0.15}
+        ]
+      });
+    } catch(err){
+      console.error('Search index load error:', err);
+      resultsBox.innerHTML = '<div class="jj-search-empty">Search is not ready yet. Try again in a moment.</div>';
     }
   }
 
-  // Toggle by button
-  openBtn?.addEventListener('click', (e)=>{
-    e.preventDefault();
-    const isOpen = sheet.classList.contains('is-open');
-    if (isOpen) closeSearch(); else openSearch();
-  });
+  // Debounce typing
+  let t;
+  function onType(){
+    clearTimeout(t);
+    t = setTimeout(()=> runSearch(input.value.trim()), 140);
+  }
 
-  // Click outside (overlay) closes search
-  overlay.addEventListener('click', ()=>{
-    if (sheet.classList.contains('is-open')) closeSearch();
-  });
+  // Highlight helper
+  function highlight(text, terms){
+    if (!text) return '';
+    const safe = text.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
+    let out = safe;
+    terms.forEach(term=>{
+      if (!term) return;
+      const re = new RegExp('('+term.replace(/[.*+?^${}()|[\\]\\\\]/g,'\\\\$&')+')','ig');
+      out = out.replace(re,'<mark>$1</mark>');
+    });
+    return out;
+  }
 
-  // ESC to close
-  document.addEventListener('keydown', (e)=>{
-    if (e.key === 'Escape' && sheet.classList.contains('is-open')) closeSearch();
-  });
+  function renderResults(items, q){
+    if (!items || !items.length){
+      resultsBox.innerHTML = '<div class="jj-search-empty">No results yet. Try different words like “curly”, “music”, “mantra”…</div>';
+      return;
+    }
+    const terms = q.split(/\s+/).filter(Boolean).slice(0,5);
+    const list = items.slice(0, 12).map(({item})=>{
+      const title = item.title || item.url;
+      const crumb = item.section ? `<span class="crumb">${item.section}</span>` : '';
+      const snip  = item.content ? highlight(item.content.slice(0, 180) + (item.content.length>180?'…':''), terms) : '';
+      return `<a class="res" href="${item.url}">
+                <h6>${title}</h6>
+                ${crumb}
+                <div class="snip">${snip}</div>
+              </a>`;
+    }).join('');
+    resultsBox.innerHTML = list;
+  }
 
-  // Submit → Google site search (works immediately)
+  async function runSearch(q){
+    await loadIndex();
+    if (!fuse || !q){ resultsBox.innerHTML = ''; return; }
+    const results = fuse.search(q);
+    renderResults(results, q);
+  }
+
+  input?.addEventListener('input', onType);
   form?.addEventListener('submit', (e)=>{
     e.preventDefault();
     const q = (input?.value || '').trim();
     if (!q) { input?.focus(); return; }
-    // Change this to your live domain when deployed
-    const domain = (location.hostname && location.hostname !== 'localhost')
-      ? location.hostname
-      : 'justjanaofficial.com';
-
-    const url = 'https://www.google.com/search?q=' + encodeURIComponent(`site:${domain} ${q}`);
-    // same tab or new tab? pick one:
-    window.open(url, '_blank', 'noopener');   // new tab
-    // window.location.href = url;            // same tab
-    closeSearch();
+    if (fuse){
+      const r = fuse.search(q);
+      if (r && r[0] && r[0].item && r[0].item.url){
+        window.location.href = r[0].item.url;
+        closeSearch();
+        return;
+      }
+    }
+    runSearch(q);
   });
 
-  // Keep sheet positioned right under the navbar on resize (desktop nav height can change)
-  const nav = document.getElementById('siteNav');
-  const setH = () => {
-    if (XL_UP.matches) {
-      document.documentElement.style
-        .setProperty('--nav-h', (nav?.offsetHeight || 80) + 'px');
-    }
-  };
-  setH();
-  addEventListener('resize', setH, {passive:true});
+  // Lazy-load index on first open
+  openBtn?.addEventListener('click', ()=>{ if (!loaded) loadIndex(); });
 })();
 </script>
 

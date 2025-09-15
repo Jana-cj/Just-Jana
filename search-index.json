@@ -1,0 +1,58 @@
+[
+  {
+    "title": "Home",
+    "url": "index.html",
+    "section": "Home",
+    "tags": ["welcome", "intro"],
+    "content": "Welcome to Just Jana — a healing and empowerment space..."
+  },
+  {
+    "title": "My Story",
+    "url": "janasstory.html",
+    "section": "About",
+    "tags": ["about", "journey"],
+    "content": "I grew up being told to shrink... This is where I began reclaiming myself..."
+  },
+  {
+    "title": "My Music Journey",
+    "url": "musicstory.html",
+    "section": "Soul",
+    "tags": ["music", "healing through music"],
+    "content": "Music became medicine — compositions, covers, how I record and produce..."
+  },
+  {
+    "title": "My Fitness Journey",
+    "url": "fitnessstory.html",
+    "section": "Body",
+    "tags": ["fitness", "journey"],
+    "content": "I grew up skinny... This is how I overcame skinny to strong..."
+  },
+  {
+    "title": "My Curly Hair Journey",
+    "url": "hair.html",
+    "section": "Heart",
+    "tags": ["curly hair", "journey"],
+    "content": "Learning to embrace my natural curls..."
+  },
+  {
+    "title": "My Tan Skin Journey",
+    "url": "skin.html",
+    "section": "Heart",
+    "tags": ["skin", "journey"],
+    "content": "Learning to embrace my tan complexion"
+  },
+  {
+    "title": "Curly Hair Routine",
+    "url": "hairroutine.html",
+    "section": "Body",
+    "tags": ["curly hair", "self-care"],
+    "content": "Simple, gentle curly routine… wash days, refresh, protecting curls overnight…"
+  },
+  {
+    "title": "Monthly Mantra",
+    "url": "mantra.html",
+    "section": "Mind",
+    "tags": ["affirmation", "mindfulness"],
+    "content": "This month’s mantra is about softness and strength coexisting…"
+  }
+]
