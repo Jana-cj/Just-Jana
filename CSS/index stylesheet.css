@@ -295,6 +295,12 @@ header{ height: var(--nav-h); }
 @supports not (height: var(--nav-h)){ header{ height: 80px; } }
 
 /* Brand */
+@media (max-width: 575.98px) {
+  .second-logo {
+    height: 28px;   /* smaller on mobile */
+    width: auto;    /* keep aspect ratio */
+  }
+}
 .navbar-brand{
   display:flex; align-items:center;
   padding-top:0; padding-bottom:0;
