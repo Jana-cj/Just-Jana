@@ -1444,7 +1444,7 @@ body.jj-modal-open{ overflow:hidden; }
 /* Mobile: slimmer "Search" button */
 @media (max-width: 575.98px){
   :root{
-    --jj-mob-btn-w: 88px;   /* was ~110px — tweak to 80–96px to taste */
+    --jj-mob-btn-w: 70px;   /* was ~110px — tweak to 80–96px to taste */
     --jj-mob-gap: .45rem;   /* optional: slightly smaller gap */
   }
   .jj-nav-search-btn{
