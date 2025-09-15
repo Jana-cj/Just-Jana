@@ -1260,35 +1260,6 @@ body.nav-open{
   text-align:center; color:#8a6b7b; padding:.5rem 0;
 }
 
-/* Mobile inline search (inside collapsed menu) */
-.jj-mob-search{ 
-  padding: .4rem .5rem .2rem;
-  position: sticky; top: 0; z-index: 2;
-  background: linear-gradient(180deg, #fff, rgba(253,250,252,1) 60%, rgba(249,245,247,1));
-  border: 1px solid rgba(179,131,152,.15);
-  border-radius: 12px;
-  margin: .35rem .35rem .5rem;
-  box-shadow: 0 10px 24px rgba(0,0,0,.06);
-}
-.jj-mob-search-form input[type="search"]{
-  width: 100%;
-  font: 600 1rem/1.2 "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-  color: var(--jj-ink);
-  background: #fff;
-  border: 1px solid rgba(179,131,152,.45);
-  border-radius: 12px;
-  padding: .7rem .85rem;
-  outline: none;
-  transition: box-shadow .2s ease, border-color .2s ease;
-}
-.jj-mob-search-form input[type="search"]::placeholder{ color:#a98ea0; }
-.jj-mob-search-form input[type="search"]:focus{
-  border-color: var(--jj-accent);
-  box-shadow: 0 10px 22px rgba(179,131,152,.16);
-}
-
-/* Reuse desktop results styling but keep it tight on mobile */
-.jj-search-results .res{ padding:.6rem .7rem; }
 
 
 /* index.html */
