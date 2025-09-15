@@ -1418,6 +1418,30 @@ body.jj-modal-open{ overflow:hidden; }
   box-shadow: 0 8px 22px rgba(179,131,152,.18);
 }
 
+/* === Mobile: slimmer nav search so hamburger never cuts off === */
+@media (max-width: 1199.98px) {
+  /* Container spacing */
+  .jj-nav-search-item {
+    flex: 1 1 auto;        /* shrink within nav bar */
+    max-width: 75%;        /* keep some room for the toggler */
+    padding-right: .25rem; /* breathing space */
+  }
+
+  /* Input field */
+  .jj-nav-search input[type="search"] {
+    font-size: .9rem;
+    height: 32px;             /* shorter */
+    padding: 0 .55rem;        /* slimmer sides */
+  }
+
+  /* Search button */
+  .jj-nav-search-btn {
+    height: 32px;             /* match input */
+    font-size: .85rem;        /* slightly smaller text */
+    padding-inline: .6rem;    /* less wide */
+    white-space: nowrap;
+  }
+}
 
 
 
