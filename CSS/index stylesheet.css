@@ -1259,6 +1259,9 @@ body.nav-open{
 .jj-search-empty{
   text-align:center; color:#8a6b7b; padding:.5rem 0;
 }
+@media (max-width:1199.98px){
+  .navbar-nav > .nav-item.search-divider{ margin-top:.35rem; }
+}
 
 
 
