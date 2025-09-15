@@ -326,8 +326,28 @@
 
               
   </div>
+  <!-- Search button -->
+<button class="btn jj-search-btn ms-2" type="button" id="jjSearchOpen"
+        aria-expanded="false" aria-controls="jjSearchSheet" aria-label="Open search">
+  <!-- Minimal magnifier icon -->
+  <svg class="jj-search-ic" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+    <circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="1.8"/>
+    <path d="M16.5 16.5 L21 21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+  </svg>
+</button>
+
   </div>
 </nav>
+<!-- Slide-down Search Sheet -->
+<div id="jjSearchSheet" class="jj-search-sheet" hidden>
+  <form id="jjSearchForm" class="jj-search-form" role="search" aria-label="Site search">
+    <label for="jjSearchInput" class="visually-hidden">Search Just Jana</label>
+    <input id="jjSearchInput" name="q" type="search" inputmode="search" autocomplete="off"
+           placeholder="Search Just Jana…" aria-describedby="jjSearchHint" />
+    <button class="jj-search-go" type="submit" aria-label="Search">Search</button>
+  </form>
+  <p id="jjSearchHint" class="jj-search-hint">Tip: we’ll search within Just Jana (Google site search).</p>
+</div>
 
             
     </header>
@@ -1061,6 +1081,111 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
+<!-- Search Bar -->
+<script>
+(function(){
+  const openBtn   = document.getElementById('jjSearchOpen');
+  const sheet     = document.getElementById('jjSearchSheet');
+  const form      = document.getElementById('jjSearchForm');
+  const input     = document.getElementById('jjSearchInput');
+  const collapseEl= document.getElementById('navbarSupportedContent');
+
+  // Reuse your existing overlay if present, else create (you already create one earlier)
+  let overlay = document.getElementById('jjNavOverlay');
+  if(!overlay){
+    overlay = document.createElement('div');
+    overlay.id = 'jjNavOverlay';
+    document.body.appendChild(overlay);
+  }
+
+  const XL_UP = window.matchMedia('(min-width: 1200px)');
+
+  function lockBody(){
+    document.body.classList.add('nav-open');
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+    overlay.style.display = 'block';
+  }
+  function unlockBody(){
+    document.body.classList.remove('nav-open');
+    document.documentElement.style.overflow = '';
+    document.body.style.overflow = '';
+    overlay.style.display = 'none';
+  }
+
+  function closeNavbarIfOpen(){
+    if (collapseEl && collapseEl.classList.contains('show')) {
+      bootstrap.Collapse.getOrCreateInstance(collapseEl).hide();
+    }
+  }
+
+  function openSearch(){
+    closeNavbarIfOpen();
+    sheet.hidden = false;
+    // elevate above navbar (999) while open
+    sheet.classList.add('is-open');
+    openBtn?.setAttribute('aria-expanded','true');
+    lockBody();
+    // Focus after paint so iOS keyboard behaves nicely
+    setTimeout(()=>{ input?.focus(); input?.select(); }, 50);
+  }
+
+  function closeSearch(){
+    sheet.classList.remove('is-open');
+    openBtn?.setAttribute('aria-expanded','false');
+    setTimeout(()=>{ sheet.hidden = true; }, 220);
+    // If nothing else is open (no navbar/collapse), free body
+    if (!(collapseEl && collapseEl.classList.contains('show'))) {
+      unlockBody();
+    }
+  }
+
+  // Toggle by button
+  openBtn?.addEventListener('click', (e)=>{
+    e.preventDefault();
+    const isOpen = sheet.classList.contains('is-open');
+    if (isOpen) closeSearch(); else openSearch();
+  });
+
+  // Click outside (overlay) closes search
+  overlay.addEventListener('click', ()=>{
+    if (sheet.classList.contains('is-open')) closeSearch();
+  });
+
+  // ESC to close
+  document.addEventListener('keydown', (e)=>{
+    if (e.key === 'Escape' && sheet.classList.contains('is-open')) closeSearch();
+  });
+
+  // Submit → Google site search (works immediately)
+  form?.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const q = (input?.value || '').trim();
+    if (!q) { input?.focus(); return; }
+    // Change this to your live domain when deployed
+    const domain = (location.hostname && location.hostname !== 'localhost')
+      ? location.hostname
+      : 'justjanaofficial.com';
+
+    const url = 'https://www.google.com/search?q=' + encodeURIComponent(`site:${domain} ${q}`);
+    // same tab or new tab? pick one:
+    window.open(url, '_blank', 'noopener');   // new tab
+    // window.location.href = url;            // same tab
+    closeSearch();
+  });
+
+  // Keep sheet positioned right under the navbar on resize (desktop nav height can change)
+  const nav = document.getElementById('siteNav');
+  const setH = () => {
+    if (XL_UP.matches) {
+      document.documentElement.style
+        .setProperty('--nav-h', (nav?.offsetHeight || 80) + 'px');
+    }
+  };
+  setH();
+  addEventListener('resize', setH, {passive:true});
+})();
+</script>
 
 <script>
 /* ==========================================================================
