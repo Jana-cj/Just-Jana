@@ -327,36 +327,23 @@
 
               
     <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
+<!-- Inline nav search (desktop & mobile) -->
+<li class="nav-item jj-nav-search-item">
+  <form id="jjNavSearchForm" class="jj-nav-search" role="search" aria-label="Search Just Jana">
+    <label for="jjNavSearchInput" class="visually-hidden">Search Just Jana</label>
+    <input id="jjNavSearchInput" name="q" type="search" inputmode="search" autocomplete="off"
+           placeholder="Search Just Jana…">
+    <button class="jj-nav-search-btn" type="submit">Search</button>
+  </form>
 
-  <!-- Search button -->
-<button class="btn jj-search-btn ms-2" type="button" id="jjSearchOpen"
-        aria-expanded="false" aria-controls="jjSearchSheet" aria-label="Open search">
-  <!-- Minimal magnifier icon -->
-  <svg class="jj-search-ic" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
-    <circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="1.8"/>
-    <path d="M16.5 16.5 L21 21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-  </svg>
-</button>
+  <!-- live suggestions (type-ahead) -->
+  <div id="jjNavSearchResults" class="jj-search-results jj-suggest" aria-live="polite"></div>
+</li>
 
   </div>
   </div>
 </nav>
-<!-- Slide-down Search Sheet -->
-<div id="jjSearchSheet" class="jj-search-sheet" hidden>
-  <form id="jjSearchForm" class="jj-search-form" role="search" aria-label="Site search">
-    <label for="jjSearchInput" class="visually-hidden">Search Just Jana</label>
-    <input id="jjSearchInput" name="q" type="search" inputmode="search" autocomplete="off"
-           placeholder="Search Just Jana…" aria-describedby="jjSearchHint" />
-    <button class="jj-search-go" type="submit" aria-label="Search">Search</button>
-  </form>
 
-  <!-- results go here -->
-  <div id="jjSearchResults" class="jj-search-results" aria-live="polite"></div>
-
-  <p id="jjSearchHint" class="jj-search-hint">
-    Tip: try “curly”, “music”, “mantra”, “toxin-free”, “healing”, etc.
-  </p>
-</div>
 
 
             
@@ -1091,144 +1078,113 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
-<!-- Search Bar -->
 <script>
 (function(){
-  const openBtn    = document.getElementById('jjSearchOpen');
-  const sheet      = document.getElementById('jjSearchSheet');
-  const form       = document.getElementById('jjSearchForm');
-  const input      = document.getElementById('jjSearchInput');
-  const resultsBox = document.getElementById('jjSearchResults');
+  const form   = document.getElementById('jjNavSearchForm');
+  const input  = document.getElementById('jjNavSearchInput');
+  const listEl = document.getElementById('jjNavSearchResults');
   const collapseEl = document.getElementById('navbarSupportedContent');
-  const nav        = document.getElementById('siteNav');
-  const XL_UP      = window.matchMedia('(min-width: 1200px)');
 
-  let overlay = document.getElementById('jjNavOverlay');
-  if(!overlay){ overlay = document.createElement('div'); overlay.id = 'jjNavOverlay'; document.body.appendChild(overlay); }
-
-  function lockBody(){ document.body.classList.add('nav-open'); document.documentElement.style.overflow='hidden'; document.body.style.overflow='hidden'; overlay.style.display='block'; }
-  function unlockBody(){ document.body.classList.remove('nav-open'); document.documentElement.style.overflow=''; document.body.style.overflow=''; overlay.style.display='none'; }
-  function closeNavbarIfOpen(){ if (collapseEl && collapseEl.classList.contains('show')) bootstrap.Collapse.getOrCreateInstance(collapseEl).hide(); }
-
-  function openSearch(){
-    closeNavbarIfOpen();
-    sheet.hidden = false;
-    sheet.classList.add('is-open');
-    openBtn?.setAttribute('aria-expanded','true');
-    lockBody();
-    setTimeout(()=>{ input?.focus(); input?.select(); }, 50);
-  }
-  function closeSearch(){
-    sheet.classList.remove('is-open');
-    openBtn?.setAttribute('aria-expanded','false');
-    setTimeout(()=>{ sheet.hidden = true; }, 220);
-    if (!(collapseEl && collapseEl.classList.contains('show'))) unlockBody();
-  }
-
-  openBtn?.addEventListener('click', (e)=>{ e.preventDefault(); (sheet.classList.contains('is-open')? closeSearch(): openSearch()); });
-  overlay.addEventListener('click', ()=>{ if (sheet.classList.contains('is-open')) closeSearch(); });
-  document.addEventListener('keydown', (e)=>{ if (e.key==='Escape' && sheet.classList.contains('is-open')) closeSearch(); });
-
-  // Keep sheet aligned under navbar on desktop
-  const setH = () => { if (XL_UP.matches) document.documentElement.style.setProperty('--nav-h', (nav?.offsetHeight||80)+'px'); };
-  setH(); addEventListener('resize', setH, {passive:true});
-
-  /* ========= In-site search using Fuse.js ========= */
-  let fuse = null;
-  let fuseData = [];
-  let loaded = false;
-
+  /* ----- Load index (adjust path if you moved it) ----- */
+  let fuse=null, loaded=false;
   async function loadIndex(){
     if (loaded) return;
     loaded = true;
     try{
+      // If your file is at /search-index.json, change this path:
       const res = await fetch('/search-index.json?v=1', {cache:'no-store'});
       if(!res.ok) throw new Error('Index not found');
-      fuseData = await res.json();
-      fuse = new Fuse(fuseData, {
-        includeScore: true,
-        shouldSort: true,
-        threshold: 0.35,
-        minMatchCharLength: 2,
-        keys: [
-          {name:'title',   weight:0.5},
-          {name:'tags',    weight:0.2},
+      const data = await res.json();
+      fuse = new Fuse(data, {
+        includeScore:true, shouldSort:true, minMatchCharLength:2, threshold:0.35,
+        keys:[
+          {name:'title', weight:0.5},
+          {name:'tags', weight:0.2},
           {name:'section', weight:0.15},
           {name:'content', weight:0.15}
         ]
       });
-    } catch(err){
-      console.error('Search index load error:', err);
-      resultsBox.innerHTML = '<div class="jj-search-empty">Search is not ready yet. Try again in a moment.</div>';
+    }catch(err){
+      console.error('search index error', err);
+      showSuggest(`<div class="jj-search-empty">Search isn’t ready yet.</div>`);
     }
   }
 
-  // Debounce typing
-  let t;
-  function onType(){
-    clearTimeout(t);
-    t = setTimeout(()=> runSearch(input.value.trim()), 140);
-  }
-
-  // Highlight helper
+  /* ----- Utils ----- */
+  const escHtml = s => s.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
   function highlight(text, terms){
-    if (!text) return '';
-    const safe = text.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
-    let out = safe;
-    terms.forEach(term=>{
-      if (!term) return;
-      const re = new RegExp('('+term.replace(/[.*+?^${}()|[\\]\\\\]/g,'\\\\$&')+')','ig');
-      out = out.replace(re,'<mark>$1</mark>');
+    if(!text) return '';
+    let out = escHtml(text);
+    terms.forEach(t=>{
+      if(!t) return;
+      const re = new RegExp('('+t.replace(/[.*+?^${}()|[\\]\\\\]/g,'\\\\$&')+')','ig');
+      out = out.replace(re, '<mark>$1</mark>');
     });
     return out;
   }
+  function showSuggest(html){ if(!listEl) return; listEl.innerHTML = html; listEl.classList.add('show'); }
+  function hideSuggest(){ if(!listEl) return; listEl.classList.remove('show'); listEl.innerHTML=''; }
 
-  function renderResults(items, q){
-    if (!items || !items.length){
-      resultsBox.innerHTML = '<div class="jj-search-empty">No results yet. Try different words like “curly”, “music”, “mantra”…</div>';
-      return;
-    }
+  /* ----- Run search ----- */
+  async function run(q){
+    await loadIndex();
+    if(!fuse || !q){ hideSuggest(); return; }
+    const results = fuse.search(q).slice(0, 8);
+    if(!results.length){ showSuggest('<div class="jj-search-empty">No matches. Try another word.</div>'); return; }
     const terms = q.split(/\s+/).filter(Boolean).slice(0,5);
-    const list = items.slice(0, 12).map(({item})=>{
+    const html = results.map(({item})=>{
       const title = item.title || item.url;
       const crumb = item.section ? `<span class="crumb">${item.section}</span>` : '';
-      const snip  = item.content ? highlight(item.content.slice(0, 180) + (item.content.length>180?'…':''), terms) : '';
+      const snip = item.content ? highlight(item.content.slice(0,130) + (item.content.length>130?'…':''), terms) : '';
       return `<a class="res" href="${item.url}">
-                <h6>${title}</h6>
-                ${crumb}
+                <h6>${escHtml(title)}</h6>${crumb}
                 <div class="snip">${snip}</div>
               </a>`;
     }).join('');
-    resultsBox.innerHTML = list;
+    showSuggest(html);
   }
 
-  async function runSearch(q){
-    await loadIndex();
-    if (!fuse || !q){ resultsBox.innerHTML = ''; return; }
-    const results = fuse.search(q);
-    renderResults(results, q);
-  }
+  /* ----- Events ----- */
+  // Debounce typing
+  let t;
+  input?.addEventListener('input', ()=>{
+    clearTimeout(t);
+    const q = (input.value||'').trim();
+    t = setTimeout(()=> run(q), 120);
+  });
 
-  input?.addEventListener('input', onType);
-  form?.addEventListener('submit', (e)=>{
+  // Enter → go to best match
+  form?.addEventListener('submit', async (e)=>{
     e.preventDefault();
-    const q = (input?.value || '').trim();
-    if (!q) { input?.focus(); return; }
-    if (fuse){
+    const q = (input?.value||'').trim();
+    if(!q){ input?.focus(); return; }
+    await loadIndex();
+    if(fuse){
       const r = fuse.search(q);
-      if (r && r[0] && r[0].item && r[0].item.url){
+      if(r && r[0] && r[0].item && r[0].item.url){
         window.location.href = r[0].item.url;
-        closeSearch();
+        // close the hamburger on mobile after navigating
+        if (collapseEl && collapseEl.classList.contains('show')) {
+          bootstrap.Collapse.getOrCreateInstance(collapseEl).hide();
+        }
         return;
       }
     }
-    runSearch(q);
+    // If nothing scored, leave suggestions visible
+    run(q);
   });
 
-  // Lazy-load index on first open
-  openBtn?.addEventListener('click', ()=>{ if (!loaded) loadIndex(); });
+  // Close suggestions on ESC / click-away
+  input?.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ hideSuggest(); input.blur(); } });
+  document.addEventListener('click', (e)=>{
+    if (!form.contains(e.target) && !listEl.contains(e.target)) hideSuggest();
+  });
+
+  // Preload index on first focus for snappy UX
+  input?.addEventListener('focus', ()=>{ if(!loaded) loadIndex(); });
 })();
 </script>
+
 
 <script>
 /* ==========================================================================

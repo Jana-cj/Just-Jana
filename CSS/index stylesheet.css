@@ -1263,6 +1263,69 @@ body.nav-open{
   .navbar-nav > .nav-item.search-divider{ margin-top:.35rem; }
 }
 
+/* === Inline nav search === */
+.jj-nav-search-item{ position:relative; display:flex; align-items:center; }
+.jj-nav-search{
+  display:grid; grid-template-columns: 1fr auto; gap:.5rem;
+}
+.jj-nav-search input[type="search"]{
+  font: 600 1rem/1.2 "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  color: var(--jj-ink);
+  background:#fff;
+  border:1px solid rgba(179,131,152,.45);
+  border-radius:12px;
+  padding:.6rem .8rem;
+  outline:0;
+  transition:border-color .2s ease, box-shadow .2s ease;
+}
+.jj-nav-search input::placeholder{ color:#a98ea0; }
+.jj-nav-search input:focus{
+  border-color: var(--jj-accent);
+  box-shadow: 0 8px 20px rgba(179,131,152,.16);
+}
+.jj-nav-search-btn{
+  padding:.6rem .8rem;
+  border-radius:12px;
+  border:1px solid rgba(179,131,152,.45);
+  background: var(--jj-accent);
+  color:#fff; font-weight:700; letter-spacing:.2px;
+  transition: transform .15s ease, box-shadow .2s ease;
+}
+.jj-nav-search-btn:hover,
+.jj-nav-search-btn:focus-visible{ box-shadow:0 10px 22px rgba(179,131,152,.22); }
+.jj-nav-search-btn:active{ transform: translateY(1px); }
+
+/* Width behavior */
+@media (min-width:1200px){
+  /* keep it compact so titles still fit */
+  .jj-nav-search{ width: clamp(220px, 24vw, 340px); }
+}
+@media (max-width:1199.98px){
+  .jj-nav-search-item{ width:100%; padding:.35rem .35rem .5rem; }
+  .jj-nav-search{ width:100%; }
+}
+
+/* Suggestions list (re-use your .jj-search-results look) */
+.jj-suggest{ display:none; }
+.jj-suggest.show{ display:block; }
+@media (min-width:1200px){
+  .jj-suggest{
+    position:absolute; top: calc(100% + 8px); left:0;
+    width: min(620px, 100vw - 24px);
+    z-index: 1000;
+  }
+}
+@media (max-width:1199.98px){
+  .jj-suggest{ position: static; margin-top:.4rem; }
+}
+
+/* (You already have .jj-search-results, .res, .snip, etc. styles) */
+
+/* Screen-reader helper */
+.visually-hidden{
+  position:absolute !important; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+}
 
 
 /* index.html */
