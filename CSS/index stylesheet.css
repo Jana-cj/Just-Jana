@@ -1506,6 +1506,26 @@ body.jj-modal-open{ overflow:hidden; }
 /* Prevent Safari from “auto text-sizing” */
 html{ -webkit-text-size-adjust: 100%; }
 
+/* === Desktop: push nav search to right corner === */
+@media (min-width: 1200px){
+  /* let the nav list fill available space */
+  #siteNav .navbar-nav{
+    flex: 1 1 auto;
+  }
+
+  /* send the search li to the far right */
+  .navbar-nav .jj-nav-search-item{
+    margin-left: auto;   /* pushes it away from the titles */
+    margin-right: 0;     /* flush with the edge */
+  }
+
+  /* keep the search form width under control */
+  .jj-nav-search{
+    width: clamp(200px, 22vw, 320px); /* adjust to taste */
+  }
+}
+
+
 
 
 
