@@ -1458,6 +1458,38 @@ body.jj-modal-open{ overflow:hidden; }
   background: #1f1f1f; /* e.g. dark ink */
 }
 
+/* ===== Stop iOS zooming the page when focusing inputs (mobile only) ===== */
+@media (max-width: 575.98px){
+  /* Your inline nav search */
+  .jj-nav-search input[type="search"]{
+    font-size: 16px !important;   /* key: >= 16px prevents zoom */
+    line-height: 1.2;             /* keep it tidy */
+    height: 34px;                 /* bump a touch so it doesn't feel cramped */
+    padding: 0 .6rem;
+  }
+
+  /* If you use the big slide-down/search sheet too */
+  .jj-search-form input[type="search"],
+  .jj-search-form input[type="text"]{
+    font-size: 16px !important;
+    line-height: 1.2;
+    height: 38px;
+    padding: 0 .7rem;
+  }
+
+  /* (Optional) apply globally to avoid surprises elsewhere */
+  input[type="text"],
+  input[type="search"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="number"],
+  textarea{
+    font-size: 16px;  /* prevents zoom for all form fields */
+  }
+}
+
+/* Prevent Safari from “auto text-sizing” */
+html{ -webkit-text-size-adjust: 100%; }
 
 
 
