@@ -1442,13 +1442,6 @@ body.jj-modal-open{ overflow:hidden; }
     white-space: nowrap;
   }
 }
-@media (max-width:1199.98px){
-  /* Push search block away from titles toward the right */
-  .navbar-nav .jj-nav-search-item{
-    margin-left: auto;    /* pushes it as far right as it can go */
-    margin-right: 48px;   /* leaves room so it doesn’t collide with the hamburger */
-  }
-}
 
 
 
