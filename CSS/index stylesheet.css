@@ -1422,6 +1422,26 @@ body.jj-modal-open{ overflow:hidden; }
    just tighten spacing slightly in the modal */
 .jj-search-results .res{ padding:.65rem .75rem; }
 
+/* Mobile: make the input slightly shorter so the button has room */
+:root{
+  --jj-mob-btn-w: 110px;   /* change to taste: 96–128px */
+  --jj-mob-gap: .5rem;     /* space between input & button */
+}
+
+@media (max-width: 575.98px){
+  .jj-nav-search{
+    /* input gets the remaining width after reserving button + gap */
+    grid-template-columns:
+      minmax(0, calc(100% - (var(--jj-mob-btn-w) + var(--jj-mob-gap))))
+      var(--jj-mob-btn-w);
+    gap: var(--jj-mob-gap);
+  }
+  .jj-nav-search-btn{
+    width: var(--jj-mob-btn-w);
+    white-space: nowrap;   /* keep label on one line */
+  }
+}
+
 
 
 
