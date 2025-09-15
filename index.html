@@ -53,12 +53,31 @@
         aria-label="Toggle navigation">
   <span class="jj-burger" aria-hidden="true"></span>
 </button>
+
+<button class="btn jj-search-btn d-xl-none ms-2" type="button" id="jjSearchOpen"
+            aria-controls="navbarSupportedContent" aria-label="Open search">
+      <svg class="jj-search-ic" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="1.8"/>
+        <path d="M16.5 16.5 L21 21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </button>
     
               <!-- Dropdowns -->
 
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- Mobile inline search (shows when hamburger opens) -->
+<div class="jj-mob-search d-xl-none">
+  <form id="jjSearchFormM" class="jj-mob-search-form" role="search" aria-label="Site search (mobile)">
+    <label for="jjSearchInputM" class="visually-hidden">Search Just Jana</label>
+    <input id="jjSearchInputM" name="q" type="search" inputmode="search" autocomplete="off"
+           placeholder="Search Just Jana…" />
+  </form>
+  <div id="jjMobResults" class="jj-search-results" aria-live="polite"></div>
+</div>
+
             <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
 
+              
 <li class="nav-item">
   <a class="nav-link home-link" href="index.html" aria-label="Home">
     <svg class="home-icon" viewBox="0 0 64 64" width="30" height="28" role="img" aria-hidden="true">
@@ -1228,6 +1247,145 @@ document.addEventListener('DOMContentLoaded', () => {
   openBtn?.addEventListener('click', ()=>{ if (!loaded) loadIndex(); });
 })();
 </script>
+
+<!-- Mobile search bar -->
+ <script>
+(function(){
+  const XL_UP       = window.matchMedia('(min-width: 1200px)');
+  const nav         = document.getElementById('siteNav');
+  const collapseEl  = document.getElementById('navbarSupportedContent');
+  const openBtn     = document.getElementById('jjSearchOpen');      // mobile icon
+  const inputM      = document.getElementById('jjSearchInputM');     // mobile field
+  const formM       = document.getElementById('jjSearchFormM');
+  const mobResults  = document.getElementById('jjMobResults');
+
+  // overlay/body-lock reuse
+  let overlay = document.getElementById('jjNavOverlay');
+  if(!overlay){ overlay = document.createElement('div'); overlay.id = 'jjNavOverlay'; document.body.appendChild(overlay); }
+  function lockBody(){ document.body.classList.add('nav-open'); document.documentElement.style.overflow='hidden'; document.body.style.overflow='hidden'; overlay.style.display='block'; }
+  function unlockBody(){ document.body.classList.remove('nav-open'); document.documentElement.style.overflow=''; document.body.style.overflow=''; overlay.style.display='none'; }
+
+  // Ensure --nav-h matches actual height on desktop
+  const setH = () => { if (XL_UP.matches) document.documentElement.style.setProperty('--nav-h', (nav?.offsetHeight||80)+'px'); };
+  setH(); addEventListener('resize', setH, {passive:true});
+
+  // Clicking the mobile search icon: open the hamburger panel (if closed) and focus field
+  openBtn?.addEventListener('click', (e)=>{
+    e.preventDefault();
+    if (XL_UP.matches) return; // mobile-only behavior
+    const inst = bootstrap.Collapse.getOrCreateInstance(collapseEl, {toggle:false});
+    if (!collapseEl.classList.contains('show')) {
+      inst.show();
+      lockBody();
+      // after animation
+      setTimeout(()=>{ inputM?.focus(); inputM?.select(); }, 220);
+    } else {
+      inputM?.focus(); inputM?.select();
+    }
+  });
+
+  // Close overlay if clicked while collapse is open (you already handle this elsewhere too)
+  overlay.addEventListener('click', ()=>{
+    if (collapseEl && collapseEl.classList.contains('show')) {
+      bootstrap.Collapse.getOrCreateInstance(collapseEl).hide();
+      unlockBody();
+    }
+  });
+
+  /* ========= In-site search using Fuse.js (shared) ========= */
+  let fuse = null, fuseData = [], loaded = false;
+
+  async function loadIndex(){
+    if (loaded) return;
+    loaded = true;
+    try{
+      // Use your foldered path since your JSON lives in /search/index.json
+      const res = await fetch('/search/index.json?v=1', {cache:'no-store'});
+      if(!res.ok) throw new Error('Index not found');
+      fuseData = await res.json();
+      fuse = new Fuse(fuseData, {
+        includeScore: true, shouldSort: true, threshold: 0.35, minMatchCharLength: 2,
+        keys: [
+          {name:'title',   weight:0.5},
+          {name:'tags',    weight:0.2},
+          {name:'section', weight:0.15},
+          {name:'content', weight:0.15}
+        ]
+      });
+    } catch(err){
+      console.error('Search index load error:', err);
+      if (mobResults) mobResults.innerHTML = '<div class="jj-search-empty">Search isn’t ready yet. Try again shortly.</div>';
+    }
+  }
+
+  // Simple highlighter
+  function highlight(text, terms){
+    if (!text) return '';
+    const safe = text.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
+    let out = safe;
+    terms.forEach(term=>{
+      if (!term) return;
+      const re = new RegExp('('+term.replace(/[.*+?^${}()|[\\]\\\\]/g,'\\\\$&')+')','ig');
+      out = out.replace(re,'<mark>$1</mark>');
+    });
+    return out;
+  }
+
+  function renderMob(items, q){
+    if (!mobResults) return;
+    if (!items || !items.length){
+      mobResults.innerHTML = '';
+      return;
+    }
+    const terms = q.split(/\s+/).filter(Boolean).slice(0,5);
+    const list = items.slice(0, 8).map(({item})=>{
+      const title = item.title || item.url;
+      const crumb = item.section ? `<span class="crumb">${item.section}</span>` : '';
+      const snip  = item.content ? highlight(item.content.slice(0, 120) + (item.content.length>120?'…':''), terms) : '';
+      return `<a class="res" href="${item.url}">
+                <h6>${title}</h6>${crumb}
+                <div class="snip">${snip}</div>
+              </a>`;
+    }).join('');
+    mobResults.innerHTML = list;
+  }
+
+  let dt; // debounce
+  async function run(q){
+    await loadIndex();
+    if (!fuse || !q){ renderMob([], ''); return; }
+    renderMob(fuse.search(q), q);
+  }
+
+  // Type-ahead on mobile field
+  inputM?.addEventListener('input', ()=>{
+    clearTimeout(dt);
+    const q = (inputM.value||'').trim();
+    dt = setTimeout(()=> run(q), 140);
+  });
+
+  // Enter: go to best match
+  formM?.addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    const q = (inputM?.value||'').trim();
+    if (!q){ inputM?.focus(); return; }
+    await loadIndex();
+    if (fuse){
+      const r = fuse.search(q);
+      if (r && r[0] && r[0].item && r[0].item.url){
+        window.location.href = r[0].item.url;
+        return;
+      }
+    }
+    // If nothing matched, just leave results list visible
+    await run(q);
+  });
+
+  // Preload index the first time user taps the icon
+  openBtn?.addEventListener('click', ()=>{ if (!loaded) loadIndex(); });
+})();
+</script>
+
 
 <script>
 /* ==========================================================================
