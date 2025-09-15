@@ -1364,6 +1364,63 @@ body.nav-open{
   font-size: .95rem;
   padding-inline: .75rem; /* a touch narrower than before */
 }
+/* ===== Centered search results modal ===== */
+body.jj-modal-open{ overflow:hidden; }
+
+.jj-search-overlay{
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.38);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  z-index: 1200; /* higher than navbar & overlays */
+  opacity: 0; transition: opacity .15s ease;
+}
+.jj-search-overlay.show{ opacity: 1; }
+
+.jj-search-modal{
+  position: fixed; inset: 0; z-index: 1201;
+  display: grid; place-items: center;
+  padding: clamp(12px, 3vw, 32px);
+  opacity: 0; transform: translateY(6px);
+  transition: opacity .18s ease, transform .18s ease;
+}
+.jj-search-modal.show{ opacity: 1; transform: translateY(0); }
+
+.jj-search-modal-card{
+  width: min(900px, 92vw);
+  max-height: min(78vh, calc(100dvh - 48px));
+  background: #fff;
+  border: 1px solid rgba(179,131,152,.15);
+  border-radius: 16px;
+  box-shadow: 0 30px 80px rgba(0,0,0,.20);
+  padding: clamp(.75rem, 1.6vw, 1.1rem);
+  overflow: auto;
+}
+
+.jj-search-title{
+  margin: .1rem 0 .5rem;
+  font-weight: 800;
+  letter-spacing: .2px;
+  color: var(--jj-ink);
+}
+
+/* Close button */
+.jj-search-close{
+  position: sticky; top: 0; float: right;
+  width: 36px; height: 36px;
+  border-radius: 10px; border: 1px solid rgba(179,131,152,.35);
+  background: #fff; color: var(--jj-ink); font-size: 20px;
+  display:flex; align-items:center; justify-content:center;
+  margin-left: .5rem;
+}
+.jj-search-close:hover, .jj-search-close:focus-visible{
+  border-color: var(--jj-accent);
+  box-shadow: 0 8px 22px rgba(179,131,152,.18);
+}
+
+/* Use your existing .jj-search-results styles for items;
+   just tighten spacing slightly in the modal */
+.jj-search-results .res{ padding:.65rem .75rem; }
 
 
 
