@@ -1442,6 +1442,55 @@ body.jj-modal-open{ overflow:hidden; }
     white-space: nowrap;
   }
 }
+/* === Make the hamburger always fully visible on mobile === */
+@media (max-width: 1199.98px){
+
+  /* 1) Header safety padding on the right so the toggler never clips */
+  #siteNav .container-fluid{
+    padding-right: 12px !important;   /* adjust if you want a bit more/less */
+    display: grid;                     /* 3-column header: [logo][middle][toggler] */
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+  }
+
+  /* 2) Let the middle (collapse) actually shrink instead of pushing toggler out */
+  #siteNav .navbar-collapse{ min-width: 0 !important; }
+  #siteNav .navbar-nav{ min-width: 0 !important; }
+
+  /* Ensure the inline search can shrink */
+  .jj-nav-search-item{
+    min-width: 0;         /* critical: allows shrinking */
+    flex: 1 1 auto; 
+    max-width: 65%;       /* cap the search block so it never hogs the row */
+    padding-right: .25rem;
+  }
+  .jj-nav-search{
+    grid-template-columns: minmax(0, 1fr) auto; /* input shrinks, button stays */
+  }
+  .jj-nav-search input{ min-width: 0; }
+
+  /* Slimmer controls so they fit comfortably */
+  .jj-nav-search input[type="search"]{
+    height: 30px; font-size: .9rem; padding: 0 .5rem;
+  }
+  .jj-nav-search-btn{
+    height: 30px; font-size: .85rem; padding-inline: .55rem;
+  }
+
+  /* 3) Kill any accidental horizontal overflow */
+  html, body, #siteNav{ overflow-x: hidden; }
+
+  /* Defensive: suggestions/results should never exceed the viewport width */
+  .jj-suggest, .jj-search-modal-card{ max-width: 100vw; }
+}
+
+/* If you still see the very edge of the hamburger clipped, also tighten this: */
+@media (max-width: 1199.98px){
+  .navbar-toggler{
+    width: 40px !important; height: 40px !important;
+    margin-right: 8px !important;   /* was 12px in your CSS */
+  }
+}
 
 
 
