@@ -1326,6 +1326,47 @@ body.nav-open{
   position:absolute !important; width:1px; height:1px; padding:0; margin:-1px;
   overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
 }
+/* === Slimmer inline search + softer placeholder === */
+:root{
+  /* tweak these if you want it even slimmer/taller */
+  --jj-search-h: 36px;          /* control height */
+  --jj-search-pad-x: .65rem;    /* left/right padding */
+}
+
+/* add vertical breathing room for the whole <li> */
+.jj-nav-search-item{
+  margin-block: .25rem; /* space above/below */
+}
+
+.jj-nav-search input[type="search"],
+.jj-nav-search-btn{
+  height: var(--jj-search-h);
+  line-height: calc(var(--jj-search-h) - 2px); /* account for borders */
+  padding: 0 var(--jj-search-pad-x);
+  border-radius: 12px;
+}
+
+/* slightly smaller text to match slimmer height */
+.jj-nav-search input[type="search"]{
+  font-size: .95rem;
+}
+
+/* more transparent placeholder */
+.jj-nav-search input[type="search"]::placeholder{ color: rgba(169,142,160,.55); }
+/* (optional cross-browser fallbacks) */
+.jj-nav-search input[type="search"]::-webkit-input-placeholder{ color: rgba(169,142,160,.55); }
+.jj-nav-search input[type="search"]::-moz-placeholder{ color: rgba(169,142,160,.55); }
+.jj-nav-search input[type="search"]:-ms-input-placeholder{ color: rgba(169,142,160,.55); }
+.jj-nav-search input[type="search"]:-moz-placeholder{ color: rgba(169,142,160,.55); }
+
+/* keep button text balanced at the slimmer height */
+.jj-nav-search-btn{
+  font-size: .95rem;
+  padding-inline: .75rem; /* a touch narrower than before */
+}
+
+
+
 
 
 /* index.html */
