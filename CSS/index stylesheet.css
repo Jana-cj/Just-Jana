@@ -1446,7 +1446,7 @@ body.jj-modal-open{ overflow:hidden; }
 /* === Mobile: slightly reduce search bar width === */
 @media (max-width: 1199.98px){
   .jj-nav-search-item{
-    max-width: 70% !important;   /* was 100%, trims it down */
+    max-width: 85% !important;   /* was 100%, trims it down */
   }
   .jj-nav-search{
     width: 100%;                 /* keeps the grid intact */
