@@ -1101,36 +1101,58 @@ document.addEventListener('DOMContentLoaded', () => {
   const resultsEl  = document.getElementById('jjSearchModalResults');
   const closeBtn   = modal?.querySelector('.jj-search-close');
 
-  /* ---------- Fuse index ---------- */
+  /* ===== Config =====
+     Set to a number (e.g. 0.12) to auto-navigate to the best match on submit.
+     Keep as null to ALWAYS show the modal after submit. */
+  const AUTO_NAV_THRESHOLD = null;
+
+  /* ===== Fuse index ===== */
   let fuse = null, loaded = false;
   async function loadIndex(){
     if (loaded) return;
     loaded = true;
     try{
-      // Adjust this path if your file is at /search-index.json
-      const res = await fetch('/search-index.json?v=1', {cache:'no-store'});
+      // CHANGE PATH if your file is at /search-index.json instead:
+      // const res = await fetch('/search-index.json?v=1', {cache:'no-store'});
+      const res = await fetch('/search/index.json?v=1', {cache:'no-store'});
       if(!res.ok) throw new Error('Index not found');
       const data = await res.json();
       fuse = new Fuse(data, {
-        includeScore: true, shouldSort: true, threshold: 0.35, minMatchCharLength: 2,
-        keys: [
+        includeScore:true, shouldSort:true, threshold:0.35, minMatchCharLength:2,
+        keys:[
           {name:'title',   weight:0.5},
           {name:'tags',    weight:0.2},
           {name:'section', weight:0.15},
           {name:'content', weight:0.15}
         ]
       });
-    } catch(err){
+    }catch(err){
       console.error('Search index load error:', err);
       openModal('<div class="jj-search-empty">Search isn’t ready yet.</div>');
     }
   }
 
-  /* ---------- Modal helpers ---------- */
+  /* ===== Modal helpers ===== */
   let lastFocus = null;
+
+  function getFocusable(container){
+    return Array.from(container.querySelectorAll(`
+      a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])
+    `)).filter(el => !el.hasAttribute('hidden'));
+  }
+
+  function trapFocus(e){
+    if (e.key !== 'Tab') return;
+    const items = getFocusable(modal);
+    if (!items.length) return;
+    const first = items[0], last = items[items.length - 1];
+    if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+  }
+
   function openModal(html){
     if(!modal || !overlay) return;
-    // Close the hamburger so nothing clips behind
+    // Close hamburger so nothing clips behind
     if (collapseEl && collapseEl.classList.contains('show')){
       bootstrap.Collapse.getOrCreateInstance(collapseEl).hide();
     }
@@ -1138,25 +1160,30 @@ document.addEventListener('DOMContentLoaded', () => {
     lastFocus = document.activeElement;
     document.body.classList.add('jj-modal-open');
     overlay.hidden = false; modal.hidden = false;
-    requestAnimationFrame(()=>{ overlay.classList.add('show'); modal.classList.add('show'); });
-    // focus first result or close button shortly after render
+    requestAnimationFrame(()=>{
+      overlay.classList.add('show'); modal.classList.add('show');
+    });
+    // focus first result or close button
     setTimeout(()=>{
-      (resultsEl.querySelector('a.res') || closeBtn)?.focus({preventScroll:true});
+      (resultsEl.querySelector('a.res') || closeBtn)?.focus?.({preventScroll:true});
     }, 30);
+    document.addEventListener('keydown', trapFocus);
   }
+
   function closeModal(){
     if(!modal || !overlay) return;
     overlay.classList.remove('show'); modal.classList.remove('show');
     setTimeout(()=>{ overlay.hidden = true; modal.hidden = true; }, 160);
     document.body.classList.remove('jj-modal-open');
-    (lastFocus || input)?.focus({preventScroll:true});
+    document.removeEventListener('keydown', trapFocus);
+    (lastFocus || input)?.focus?.({preventScroll:true});
   }
 
   overlay?.addEventListener('click', closeModal);
   closeBtn?.addEventListener('click', (e)=>{ e.preventDefault(); closeModal(); });
   document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && !modal.hidden) closeModal(); });
 
-  /* ---------- Rendering ---------- */
+  /* ===== Rendering ===== */
   const escHtml = s => (s||'').replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
   function highlight(text, terms){
     if(!text) return '';
@@ -1171,7 +1198,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function renderResults(q){
     await loadIndex();
-    if(!fuse || !q){ return openModal('<div class="jj-search-empty">Type something to search.</div>'); }
+    if(!fuse || !q){
+      return openModal('<div class="jj-search-empty">Type something to search.</div>');
+    }
     const hits = fuse.search(q).slice(0, 30);
     if(!hits.length){
       return openModal('<div class="jj-search-empty">No matches. Try different words.</div>');
@@ -1180,7 +1209,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const html = hits.map(({item})=>{
       const title = escHtml(item.title || item.url);
       const crumb = item.section ? `<span class="crumb">${escHtml(item.section)}</span>` : '';
-      const snip  = item.content ? highlight(item.content.slice(0, 160) + (item.content.length>160?'…':''), terms) : '';
+      const snippetRaw = item.content ? item.content.slice(0, 160) + (item.content.length>160?'…':'') : '';
+      const snip = highlight(snippetRaw, terms);
       return `<a class="res" href="${item.url}">
                 <h6>${title}</h6>${crumb}
                 <div class="snip">${snip}</div>
@@ -1189,37 +1219,30 @@ document.addEventListener('DOMContentLoaded', () => {
     openModal(html);
   }
 
-  /* ---------- Behavior ---------- */
-  // Submit → open centered modal with results (and also live-while-typing below)
+  /* ===== Behavior (submit-only) ===== */
   form?.addEventListener('submit', async (e)=>{
     e.preventDefault();
     const q = (input?.value || '').trim();
     if(!q){ input?.focus(); return; }
     await loadIndex();
-    // If there is a strong top hit, navigate immediately; else show modal
-    if (fuse){
+
+    if (AUTO_NAV_THRESHOLD !== null && fuse){
       const r = fuse.search(q);
-      if (r && r[0] && r[0].item && r[0].item.url && (r[0].score ?? 1) < 0.12){
-        window.location.href = r[0].item.url;
+      const score = r?.[0]?.score ?? 1;
+      const url   = r?.[0]?.item?.url;
+      if (url && score < AUTO_NAV_THRESHOLD){
+        window.location.href = url;
         return;
       }
     }
     renderResults(q);
   });
 
-  // Optional: open modal with live results as the user types (less tapping)
-  let t;
-  input?.addEventListener('input', ()=>{
-    clearTimeout(t);
-    const q = (input.value || '').trim();
-    if (q.length < 2){ return; }
-    t = setTimeout(()=> renderResults(q), 140);
-  });
-
-  // Preload index on first focus for snappier UX
+  // Preload index on first focus for snappier submit (does NOT show results)
   input?.addEventListener('focus', ()=>{ if(!loaded) loadIndex(); });
 })();
 </script>
+
 
 
 
