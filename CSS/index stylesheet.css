@@ -2088,6 +2088,28 @@ color: #7b7b7b;
   }
 }
 
+/* One-at-a-time reveal states */
+.pillar-box {
+  opacity: 1;                 /* normal state */
+  transform: none;
+  transition: opacity .55s ease, transform .55s ease;
+  will-change: opacity, transform;
+}
+
+.pillar-box.is-hidden {
+  opacity: 0;
+  transform: translateY(16px) scale(.98);
+}
+
+@media (prefers-reduced-motion: reduce){
+  .pillar-box,
+  .pillar-box.is-hidden {
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
 /* ===================== Brand tokens ===================== */
 :root{
   --jj-ink: #1f1f1f;

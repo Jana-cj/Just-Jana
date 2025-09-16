@@ -652,7 +652,6 @@
 
     // Cards/grids (staggered)
     jjStagger('.value-card', 0, 120);
-    jjStagger('.pillar-box', 0, 120);
     jjStagger('.jj-journey', 0, 100);
     jjStagger('.diary-card', 0, 120);
     jjStagger('.freebie-card', 0, 120);
@@ -1292,6 +1291,85 @@
         });
       });
     </script>
+    <script>
+/* =========================================================
+   Just Jana — Healing Pillars one-at-a-time reveal
+   ========================================================= */
+document.addEventListener('DOMContentLoaded', () => {
+  const links = Array.from(document.querySelectorAll('.healing-pillars .pillar-link'));
+  const boxes = links.map(a => a.querySelector('.pillar-box')).filter(Boolean);
+  if (!boxes.length) return;
+
+  // Respect reduced motion
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion) return; // show everything immediately (CSS handles it)
+
+  // Initial state: hide all
+  boxes.forEach(b => b.classList.add('is-hidden'));
+
+  // We reveal strictly in DOM order
+  let nextIndexToReveal = 0;
+
+  // Helper: reveal exactly one box (if it exists)
+  function revealNext() {
+    const b = boxes[nextIndexToReveal];
+    if (!b) return;
+    b.classList.remove('is-hidden');
+    nextIndexToReveal += 1;
+  }
+
+  // If first card is already on screen at load, reveal it
+  function maybeRevealOnLoad() {
+    const b = boxes[nextIndexToReveal];
+    if (!b) return;
+    const rect = b.getBoundingClientRect();
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    // 65% into viewport threshold feels natural
+    if (rect.top < vh * 0.65) revealNext();
+  }
+
+  // Observer watches the *next* unrevealed box only
+  let io = null;
+  function watchNext() {
+    if (io) { io.disconnect(); io = null; }
+    const b = boxes[nextIndexToReveal];
+    if (!b) return; // all done
+
+    io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) {
+          // Reveal exactly one, then start watching the following one
+          revealNext();
+          watchNext();
+          break;
+        }
+      }
+    }, {
+      root: null,
+      // Root margin nudges “when” we consider it visible
+      // Positive bottom margin means we trigger a little earlier
+      rootMargin: '0px 0px -25% 0px',
+      threshold: 0.35
+    });
+
+    io.observe(b);
+  }
+
+  // Kick off
+  maybeRevealOnLoad();
+  watchNext();
+
+  // If the user resizes/orientation changes, re-check the first not-yet-revealed
+  let rTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(rTimer);
+    rTimer = setTimeout(() => {
+      maybeRevealOnLoad();
+    }, 120);
+  }, { passive: true });
+});
+</script>
+
 
   </body>
 </html>
