@@ -1293,35 +1293,40 @@
     </script>
     <script>
 /* =========================================================
-   Just Jana — Healing Pillars one-at-a-time (stagger tuned)
+   Just Jana — Healing Pillars one-at-a-time (early trigger)
    ========================================================= */
 document.addEventListener('DOMContentLoaded', () => {
+  // Collect the pillar boxes in DOM order (works for desktop grid and mobile stack)
   const links = Array.from(document.querySelectorAll('.healing-pillars .pillar-link'));
   const boxes = links.map(a => a.querySelector('.pillar-box')).filter(Boolean);
   if (!boxes.length) return;
 
+  // Respect reduced motion users: show everything immediately
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduceMotion) return;
 
   // ---------- timing you can tune ----------
-  const FIRST_DELAY_MS   = 70;   // first pillar: faster pop
-  const STEP_GAP_MS      = 180;  // extra wait added for each next pillar
-  const ADDITIONAL_EASE  = 40;   // tiny extra bump as we go down
-  // Example actual delays by index: 0→70ms, 1→(70+180+40)=290ms, 2→(70+360+80)=510ms, ...
+  const FIRST_DELAY_MS   = 70;   // first pillar: quick pop
+  const STEP_GAP_MS      = 200;  // additional wait added for each *subsequent* pillar
+  const ADDITIONAL_EASE  = 60;   // gentle extra spacing as index grows (compounds the gap)
+  // Example delays by index: 
+  // 0 → 70ms
+  // 1 → 70 + 200 + 60  = 330ms
+  // 2 → 70 + 400 + 120 = 590ms
+  // 3 → 70 + 600 + 180 = 850ms
 
-  // On desktop, wait until the card is deeper in view before triggering
-  const isDesktop = window.matchMedia('(min-width: 992px)').matches;
-  const threshold = isDesktop ? 0.55 : 0.35;           // how much of the card must be visible
-  const rootMargin = isDesktop ? '0px 0px -35% 0px'    // delay trigger a bit on desktop
-                               : '0px 0px -20% 0px';
+  // Trigger a bit *before* cards reach the viewport
+  const isDesktop  = window.matchMedia('(min-width: 992px)').matches;
+  const threshold  = isDesktop ? 0.15 : 0.12;                      // small intersection counts
+  const rootMargin = isDesktop ? '0px 0px 35% 0px' : '0px 0px 45% 0px'; // expand viewport downward
 
-  // Initial state: hide all
+  // Initial hidden state
   boxes.forEach(b => b.classList.add('is-hidden'));
 
   let nextIndexToReveal = 0;
+  let io = null;
 
   function computedDelay(i){
-    // progressive spacing between reveals
     return FIRST_DELAY_MS + (i * STEP_GAP_MS) + (i * ADDITIONAL_EASE);
   }
 
@@ -1329,33 +1334,33 @@ document.addEventListener('DOMContentLoaded', () => {
     const idx = nextIndexToReveal;
     const b = boxes[idx];
     if (!b) return;
-
     const delay = computedDelay(idx);
     setTimeout(() => { b.classList.remove('is-hidden'); }, delay);
-
     nextIndexToReveal += 1;
   }
 
+  // If the first unrevealed box is already fairly in view, kick it
   function maybeRevealOnLoad() {
     const b = boxes[nextIndexToReveal];
     if (!b) return;
     const rect = b.getBoundingClientRect();
     const vh = window.innerHeight || document.documentElement.clientHeight;
-    // if first is already well within view, go ahead
-    if (rect.top < vh * (isDesktop ? 0.7 : 0.8)) revealNext();
+    // Be generous so it starts early on load if near
+    const loadThreshold = isDesktop ? 0.8 : 0.85;
+    if (rect.top < vh * loadThreshold) revealNext();
   }
 
-  let io = null;
+  // Watch only the next unrevealed card
   function watchNext() {
     if (io) { io.disconnect(); io = null; }
     const b = boxes[nextIndexToReveal];
-    if (!b) return; // done
+    if (!b) return; // all done
 
     io = new IntersectionObserver((entries) => {
       for (const e of entries) {
         if (e.isIntersecting) {
           revealNext();
-          watchNext();  // move observer to the following card
+          watchNext(); // move the observer to the following card
           break;
         }
       }
@@ -1364,15 +1369,36 @@ document.addEventListener('DOMContentLoaded', () => {
     io.observe(b);
   }
 
-  // kick off
+  // Pre-warm the first reveal when the whole section comes near the viewport
+  (function setupPrewarm(){
+    const section = document.querySelector('.healing-pillars');
+    if (!section) return;
+    const prewarm = new IntersectionObserver((entries) => {
+      const e = entries[0];
+      if (e && e.isIntersecting) {
+        if (nextIndexToReveal === 0) revealNext();
+        prewarm.disconnect();
+      }
+    }, {
+      root: null,
+      // Start pre-warming when the section is still below the viewport
+      rootMargin: '0px 0px 40% 0px',
+      threshold: 0.01
+    });
+    prewarm.observe(section);
+  })();
+
+  // Kick off
   maybeRevealOnLoad();
   watchNext();
 
-  // minor responsiveness guard
+  // Guard: if layout changes, we might need to nudge the first not-yet-revealed
   let rTimer;
   window.addEventListener('resize', () => {
     clearTimeout(rTimer);
-    rTimer = setTimeout(() => { maybeRevealOnLoad(); }, 120);
+    rTimer = setTimeout(() => {
+      maybeRevealOnLoad();
+    }, 120);
   }, { passive: true });
 });
 </script>
