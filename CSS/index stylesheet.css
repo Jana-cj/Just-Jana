@@ -1567,7 +1567,7 @@ html{ -webkit-text-size-adjust: 100%; }
 
 /* Hero parallax polish */
 .hero-wrap{ position:relative; overflow:hidden; }
-.hero-parallax{ will-change: transform; transform: translateZ(0); }
+.hero-parallax{ will-change: transform; transform: translateZ(0); display:block; }
 
 /* AOS reduced motion */
 @media (prefers-reduced-motion: reduce){
@@ -1610,14 +1610,9 @@ html{ -webkit-text-size-adjust: 100%; }
 }
 
 /* Show only on mobile */
-@media (max-width: 768px) {
-  .hero-mobile {
-    display: flex;
-  }
-
-  .full-width-image {
-    display: none;
-  }
+@media (max-width:768px){
+  .hero-mobile{ display:flex; }
+  .full-width-image{ display:none; }
 }
 
 
