@@ -2730,6 +2730,48 @@ color: #7b7b7b;
   will-change: filter, opacity;
 } */
 
+
+/* ---------- Scroll reveal base ---------- */
+.story-text,
+.story-image,
+.center-wrapper {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity .6s ease, transform .6s ease;
+  will-change: opacity, transform;
+}
+
+/* When revealed */
+.story-text.is-revealed,
+.story-image.is-revealed,
+.center-wrapper.is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+/* Stagger: text first, image after */
+.story-text.is-revealed { transition-delay: 0ms; }
+.story-image.is-revealed { transition-delay: 220ms; }
+
+/* Defensive: if a block becomes "already-seen" (e.g., jumped via anchor),
+   reveal instantly without delay */
+.story-block.already-seen .story-text,
+.story-block.already-seen .story-image {
+  transition-delay: 0ms !important;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .story-text,
+  .story-image,
+  .center-wrapper {
+    transition: none;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+
 /* CSS for missionvalues.html */
 
 .mission-title {

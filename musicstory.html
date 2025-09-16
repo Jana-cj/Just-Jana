@@ -360,9 +360,7 @@
     
 
 <!-- Desktop hero image block -->
-      <div class="hero-wrap">
-        <img src="img/Main banners/music banner.jpg" alt="Hero Image" class="full-width-image hero-parallax">
-      </div>
+        <img src="img/Main banners/music banner.jpg" alt="Hero Image" class="full-width-image">
 
     <!-- MOBILE-ONLY: Jana’s Fitness Journey -->
 <div class="mobile-banner">
@@ -614,128 +612,6 @@
   </div>
 
   </footer>
-
-    <!-- AOS: tag elements FIRST, then init -->
-<script>
-  function jjStagger(selector, baseDelay=0, step=120){
-    const nodes = document.querySelectorAll(selector);
-    nodes.forEach((el, i) => {
-      el.setAttribute('data-aos', el.getAttribute('data-aos') || 'fade-up');
-      el.setAttribute('data-aos-delay', String(baseDelay + i*step));
-    });
-  }
-  function jjTag(selector, aos='fade-up', delay=0){
-    document.querySelectorAll(selector).forEach(el=>{
-      el.setAttribute('data-aos', aos);
-      if(delay) el.setAttribute('data-aos-delay', String(delay));
-    });
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    // Major sections
-    jjTag('.welcome-section', 'fade-up', 0);
-    jjTag('.jana-values-section', 'fade-up', 0);
-    jjTag('.healing-pillars', 'fade-up', 0);
-    jjTag('.jj-journeys-head', 'fade-up', 0);
-    jjTag('.diary-section', 'fade-up', 0);
-    jjTag('.carousel-section', 'fade-up', 0);
-    jjTag('.freebies-section', 'fade-up', 0);
-
-    // Cards/grids (staggered)
-    jjStagger('.value-card', 0, 120);
-    jjStagger('.pillar-box', 0, 120);
-    jjStagger('.jj-journey', 0, 100);
-    jjStagger('.diary-card', 0, 120);
-    jjStagger('.freebie-card', 0, 120);
-
-    // Init AOS after tagging
-    AOS.init({
-      startEvent: 'DOMContentLoaded',
-      offset: 80,
-      duration: 700,
-      easing: 'ease-out',
-      delay: 0,
-      once: true,
-      mirror: false,
-      anchorPlacement: 'top-bottom'
-    });
-
-    // If late-loading images shift layout, refresh once everything is fully loaded
-    window.addEventListener('load', () => AOS.refreshHard());
-  });
-</script>
-
-<!-- GSAP + ScrollTrigger -->
-<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    gsap.registerPlugin(ScrollTrigger);
-
-    /* ---------- Blur-only reveal for DESKTOP hero ---------- */
-    const desktopHero = document.querySelector('.hero-parallax');
-    if (desktopHero) {
-      // visible immediately, but blurred
-      gsap.set(desktopHero, { filter: 'blur(18px)', opacity: 1, willChange: 'filter' });
-      gsap.to(desktopHero, {
-        filter: 'blur(0px)',
-        duration: 1.2,           // tweak speed here
-        ease: 'power2.out'
-      });
-    }
-
-    /* ---------- Blur + fade for MOBILE hero pieces ---------- */
-    const mobileBits = [
-      document.querySelector('.logo-mobile'),
-      document.querySelector('.text-mobile'),
-      document.querySelector('.tagline-mobile')
-    ].filter(Boolean);
-
-    if (mobileBits.length) {
-      gsap.set(mobileBits, { filter: 'blur(18px)', opacity: 0, willChange: 'filter,opacity' });
-      gsap.to(mobileBits, {
-        filter: 'blur(0px)',
-        opacity: 1,
-        duration: 1.2,
-        ease: 'power2.out',
-        stagger: 0.08
-      });
-    }
-
-    /* ---------- Subtle parallax on desktop hero ---------- */
-    const wrap = document.querySelector('.hero-wrap');
-    if (desktopHero && wrap) {
-      gsap.to(desktopHero, {
-        yPercent: 12,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: wrap,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: true
-        }
-      });
-    }
-
-    /* ---------- Optional: mobile hero container nudge on scroll ---------- */
-    const mobileHero = document.querySelector('.hero-mobile');
-    if (mobileHero) {
-      gsap.from(mobileHero, {
-        y: 16,
-        duration: 0.8,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: mobileHero,
-          start: 'top 85%',
-          toggleActions: 'play none none none',
-          once: true
-        }
-      });
-    }
-  });
-</script>
-
 
 
     <script>
