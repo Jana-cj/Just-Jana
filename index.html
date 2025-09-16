@@ -629,104 +629,120 @@
     </footer>
 
     <!-- AOS: tag elements FIRST, then init -->
-    <script>
-      function jjStagger(selector, baseDelay=0, step=120){
-        const nodes = document.querySelectorAll(selector);
-        nodes.forEach((el, i) => {
-          el.setAttribute('data-aos', el.getAttribute('data-aos') || 'fade-up');
-          el.setAttribute('data-aos-delay', String(baseDelay + i*step));
-        });
-      }
-      function jjTag(selector, aos='fade-up', delay=0){
-        document.querySelectorAll(selector).forEach(el=>{
-          el.setAttribute('data-aos', aos);
-          if(delay) el.setAttribute('data-aos-delay', String(delay));
-        });
-      }
+<script>
+  function jjStagger(selector, baseDelay=0, step=120){
+    const nodes = document.querySelectorAll(selector);
+    nodes.forEach((el, i) => {
+      el.setAttribute('data-aos', el.getAttribute('data-aos') || 'fade-up');
+      el.setAttribute('data-aos-delay', String(baseDelay + i*step));
+    });
+  }
+  function jjTag(selector, aos='fade-up', delay=0){
+    document.querySelectorAll(selector).forEach(el=>{
+      el.setAttribute('data-aos', aos);
+      if(delay) el.setAttribute('data-aos-delay', String(delay));
+    });
+  }
 
-      document.addEventListener('DOMContentLoaded', () => {
-        // Major sections
-        jjTag('.welcome-section', 'fade-up', 0);
-        jjTag('.jana-values-section', 'fade-up', 0);
-        jjTag('.healing-pillars', 'fade-up', 0);
-        jjTag('.jj-journeys-head', 'fade-up', 0);
-        jjTag('.diary-section', 'fade-up', 0);
-        jjTag('.carousel-section', 'fade-up', 0);
-        jjTag('.freebies-section', 'fade-up', 0);
+  document.addEventListener('DOMContentLoaded', () => {
+    // Major sections
+    jjTag('.welcome-section', 'fade-up', 0);
+    jjTag('.jana-values-section', 'fade-up', 0);
+    jjTag('.healing-pillars', 'fade-up', 0);
+    jjTag('.jj-journeys-head', 'fade-up', 0);
+    jjTag('.diary-section', 'fade-up', 0);
+    jjTag('.carousel-section', 'fade-up', 0);
+    jjTag('.freebies-section', 'fade-up', 0);
 
-        // Cards/grids (staggered)
-        jjStagger('.value-card', 0, 120);
-        jjStagger('.pillar-box', 0, 120);
-        jjStagger('.jj-journey', 0, 100);
-        jjStagger('.diary-card', 0, 120);
-        jjStagger('.freebie-card', 0, 120);
+    // Cards/grids (staggered)
+    jjStagger('.value-card', 0, 120);
+    jjStagger('.pillar-box', 0, 120);
+    jjStagger('.jj-journey', 0, 100);
+    jjStagger('.diary-card', 0, 120);
+    jjStagger('.freebie-card', 0, 120);
 
-        // Init AOS after tagging
-        AOS.init({
-          startEvent: 'DOMContentLoaded',
-          offset: 80,
-          duration: 700,
-          easing: 'ease-out',
-          delay: 0,
-          once: true,
-          mirror: false,
-          anchorPlacement: 'top-bottom'
-        });
+    // Init AOS after tagging
+    AOS.init({
+      startEvent: 'DOMContentLoaded',
+      offset: 80,
+      duration: 700,
+      easing: 'ease-out',
+      delay: 0,
+      once: true,
+      mirror: false,
+      anchorPlacement: 'top-bottom'
+    });
 
-        // If late-loading images shift layout, refresh once everything is fully loaded
-        window.addEventListener('load', () => AOS.refreshHard());
+    // If late-loading images shift layout, refresh once everything is fully loaded
+    window.addEventListener('load', () => AOS.refreshHard());
+  });
+</script>
+
+<!-- GSAP + ScrollTrigger -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    gsap.registerPlugin(ScrollTrigger);
+
+    /* ---------- Slow blur-in for hero (desktop + mobile pieces) ---------- */
+    const blurTargets = [
+      document.querySelector('.hero-parallax'), // desktop hero image
+      document.querySelector('.logo-mobile'),    // mobile hero parts
+      document.querySelector('.text-mobile'),
+      document.querySelector('.tagline-mobile')
+    ].filter(Boolean);
+
+    // Start blurred & transparent; then ease to sharp & visible
+    if (blurTargets.length){
+      gsap.set(blurTargets, { filter: 'blur(18px)', opacity: 0, willChange: 'filter,opacity' });
+      gsap.to(blurTargets, {
+        filter: 'blur(0px)',
+        opacity: 1,
+        duration: 2.4,       // ← slower reveal; tweak to taste (e.g., 2.8–3.2)
+        ease: 'power2.out',
+        stagger: 0.08
       });
-    </script>
+    }
 
-    <!-- GSAP + ScrollTrigger -->
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-        gsap.registerPlugin(ScrollTrigger);
+    /* ---------- Subtle parallax on desktop hero ---------- */
+    const hero = document.querySelector('.hero-parallax');
+    const wrap = document.querySelector('.hero-wrap');
 
-        const hero = document.querySelector('.hero-parallax');
-        const wrap = document.querySelector('.hero-wrap');
-
-        if (hero && wrap) {
-          gsap.to(hero, {
-            yPercent: 12,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: wrap,
-              start: 'top top',
-              end: 'bottom top',
-              scrub: true
-            }
-          });
-
-          gsap.from(hero, {
-            opacity: 0,
-            duration: 3,
-            ease: 'power2.out'
-          });
-        }
-
-        const mobileHero = document.querySelector('.hero-mobile');
-        if (mobileHero) {
-          gsap.from(mobileHero, {
-            opacity: 0,
-            y: 16,
-            duration: 0.7,
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: mobileHero,
-              start: 'top 85%',
-              toggleActions: 'play none none none',
-              once: true
-            }
-          });
+    if (hero && wrap) {
+      gsap.to(hero, {
+        yPercent: 12,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: wrap,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true
         }
       });
-    </script>
+    }
 
-    <!-- (All your existing JS below this line stays the same) -->
+    /* ---------- Optional: mobile hero entrance on scroll ---------- */
+    const mobileHero = document.querySelector('.hero-mobile');
+    if (mobileHero) {
+      gsap.from(mobileHero, {
+        // Keep this subtle; main “blur-in” above already handled opacity
+        y: 16,
+        duration: 0.9,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: mobileHero,
+          start: 'top 85%',
+          toggleActions: 'play none none none',
+          once: true
+        }
+      });
+    }
+  });
+</script>
+
+
     <script>
       /* ========================================================================== 
          Just Jana — NAVBAR (bulletproof mobile toggle)
