@@ -2711,6 +2711,15 @@ color: #7b7b7b;
 
 
 /* Mobile hero elements: keep fade-in if you like that flow */
+.mission-logo,
+.mission-text,
+.mission-maintitle,
+.curl-title,
+.music-title,
+.music-quote,
+.compositions-title,
+.heal-quote,
+.featherfall-quote,
 .title-img,
 .underheading,
 .name-img,
