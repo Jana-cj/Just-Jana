@@ -1565,6 +1565,20 @@ html{ -webkit-text-size-adjust: 100%; }
   margin: 0 calc(50% - 50vw); /* break out of any parent padding */
 }
 
+/* Hero parallax polish */
+.hero-wrap{ position:relative; overflow:hidden; }
+.hero-parallax{ will-change: transform; transform: translateZ(0); }
+
+/* AOS reduced motion */
+@media (prefers-reduced-motion: reduce){
+  [data-aos]{
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+
 
 /* Mobile hero background and layout */
 .hero-mobile {

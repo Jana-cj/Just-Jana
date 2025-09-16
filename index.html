@@ -19,7 +19,6 @@
     
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script>AOS.init();</script>
 
 
     <!-- Google Fonts -->
@@ -364,7 +363,12 @@
 
     <main>
 
-    <img src="img/Main banners/hero banner1.jpg" alt="Hero Image" class="full-width-image">
+<!--desktop hero image block-->
+<div class="hero-wrap">
+  <img src="img/Main banners/hero banner1.jpg"
+       alt="Hero Image"
+       class="full-width-image hero-parallax">
+</div>
 
     <!-- Mobile Hero Banner -->
 <div class="hero-mobile">
@@ -765,6 +769,111 @@
     © 2025 Just Jana. All rights reserved.
   </div>
   </footer>
+
+<!-- AOS init (near end of body) -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    AOS.init({
+      startEvent: 'DOMContentLoaded',
+      offset: 80,
+      duration: 700,
+      easing: 'ease-out',
+      delay: 0,
+      once: true,
+      mirror: false,
+      anchorPlacement: 'top-bottom'
+    });
+  });
+</script>
+
+<script>
+  // Utility: add AOS attributes with stagger
+  function jjStagger(selector, baseDelay=0, step=120){
+    const nodes = document.querySelectorAll(selector);
+    nodes.forEach((el, i) => {
+      el.setAttribute('data-aos', el.getAttribute('data-aos') || 'fade-up');
+      el.setAttribute('data-aos-delay', String(baseDelay + i*step));
+    });
+  }
+  function jjTag(selector, aos='fade-up', delay=0){
+    document.querySelectorAll(selector).forEach(el=>{
+      el.setAttribute('data-aos', aos);
+      if(delay) el.setAttribute('data-aos-delay', String(delay));
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Major sections
+    jjTag('.welcome-section', 'fade-up', 0);
+    jjTag('.jana-values-section', 'fade-up', 0);
+    jjTag('.healing-pillars', 'fade-up', 0);
+    jjTag('.jj-journeys-head', 'fade-up', 0);
+    jjTag('.diary-section', 'fade-up', 0);
+    jjTag('.carousel-section', 'fade-up', 0);
+    jjTag('.freebies-section', 'fade-up', 0);
+
+    // Cards/grids (staggered)
+    jjStagger('.value-card', 0, 120);
+    jjStagger('.pillar-box', 0, 120);
+    jjStagger('.jj-journey', 0, 100);
+    jjStagger('.diary-card', 0, 120);
+    jjStagger('.freebie-card', 0, 120);
+  });
+</script>
+
+<!-- GSAP + ScrollTrigger (near end of body) -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Subtle parallax on the desktop hero image
+    const hero = document.querySelector('.hero-parallax');
+    const wrap = document.querySelector('.hero-wrap');
+
+    if (hero && wrap) {
+      gsap.to(hero, {
+        yPercent: 12,          // gentle drift
+        ease: 'none',
+        scrollTrigger: {
+          trigger: wrap,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true          // ties motion to scroll
+        }
+      });
+
+      // Optional soft fade-in on load
+      gsap.from(hero, {
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power2.out'
+      });
+    }
+
+    // Optional: fade/slide the mobile hero in when it enters view
+    const mobileHero = document.querySelector('.hero-mobile');
+    if (mobileHero) {
+      gsap.from(mobileHero, {
+        opacity: 0,
+        y: 16,
+        duration: 0.7,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: mobileHero,
+          start: 'top 85%',
+          toggleActions: 'play none none none',
+          once: true
+        }
+      });
+    }
+  });
+</script>
+
   
 <script>
 /* ==========================================================================
