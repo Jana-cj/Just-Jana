@@ -1591,6 +1591,7 @@ html{ -webkit-text-size-adjust: 100%; }
 .tagline-mobile {
   width: 350px;
   height: auto;
+  margin-bottom: 4rem;
   
 }
 
