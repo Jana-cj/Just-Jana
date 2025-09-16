@@ -1,653 +1,3282 @@
-/* ============ Base ============ */
-*{margin:0;padding:0;box-sizing:border-box}
-html{ -webkit-text-size-adjust:100%; scroll-padding-top: var(--nav-h) }
-body{
-  font-family:'Lato',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-  font-size:18px; line-height:1.7; color:#111; background:#fffcff; text-align:center;
-  overflow-x:hidden;
-}
-h1,h2{font-family:'Playfair Display',Georgia,'Times New Roman',serif;color:#4b2e2e}
-h3,h4{font-family:'Lato',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
-header,.navbar,.site-footer{font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;font-size:15.5px}
-@media (max-width:780px){ .site-footer{font-size:15px} .footer-heading h3{font-size:20px} }
-@media (max-width:768px){ h1{font-size:36px} h2{font-size:28px} h3,h4{font-size:20px} p{font-size:16px} }
-.subheading,.underheading{font-family:'Amatic SC',cursive}
+/* Base reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  }
 
-/* ============ Tokens ============ */
+/* Base text */
+body {
+  font-family: 'Lato', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-size: 18px;
+  background: #fffcff;
+  color: #111;
+  line-height: 1.7;
+  text-align: center;
+}
+
+/* Headings */
+h1, h2 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  color: #4b2e2e;
+}
+h3, h4 {
+  font-family: 'Lato', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+/* UI / nav / footer locks Poppins */
+header, .navbar, .site-footer {
+  font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-size: 15.5px;
+}
+
+@media (max-width: 780px) {
+  .site-footer {
+    font-size: 15px;
+  }
+
+  .footer-heading h3 {
+    font-size: 20px;
+}
+  }
+
+
+/* Accent headings that use Amatic */
+.subheading,
+.underheading {
+  font-family: 'Amatic SC', cursive;
+}
+
+
+@media (max-width: 768px){
+  h1{font-size: 36px;}
+  h2{font-size: 28px;}
+  h3, h4{font-size:20px;}
+  p{font-size: 16px;}
+}
+
+html, body {
+  overflow-x: hidden;
+}
+
+
+/* Nav bar */
+
+/* =================== Brand tokens =================== */
 :root{
-  --jj-accent:#c6a0b1; --jj-ink:#1f1f1f; --jj-bg:#fff; --jj-soft:rgba(179,131,152,.1);
-  --nav-h:64px;             /* fixed mobile/overall nav height */
-  --search-h:36px; --search-pad-x:.65rem;
+  --jj-accent: #c6a0b1;         /* main brand */
+  --jj-ink:    #1f1f1f;
+  --jj-bg:     #ffffff;
+  --jj-soft:   rgba(179,131,152,.1);
+  --nav-h:     40px;
 }
 
-/* ============ Fixed Navbar Shell ============ */
+/* =================== Navbar shell =================== */
 #siteNav.navbar{
-  position:fixed; top:0; left:0; width:100%; z-index:999;
-  background:var(--jj-bg); box-shadow:0 2px 5px rgba(0,0,0,.05);
-  transform:translateY(0); transition:transform .35s ease, background-color .25s ease;
-  padding-top:0!important; padding-bottom:0!important;
+  position: fixed; top:0; left:0; width:100%;
+  z-index: 999; background: var(--jj-bg);
+  box-shadow: 0 2px 5px rgba(0,0,0,.05);
+  transform: translateY(0);
+  transition: transform .35s ease, background-color .25s ease;
 }
-#siteNav.nav-hidden{ transform:translateY(calc(-1 * var(--nav-h))) }
-header{ height:var(--nav-h) }   /* reserve space */
+#siteNav.nav-hidden{ transform: translateY(calc(-1 * var(--nav-h))); }
 
-/* Brand block */
-.navbar-brand{display:flex;align-items:center;height:var(--nav-h);margin-right:.5rem;padding:0}
-.navbar-brand img{display:block;height:calc(var(--nav-h) - 10px);width:auto}
-@media (max-width:575.98px){
-  .navbar-brand img,.navbar-brand .second-logo{height:calc(var(--nav-h) - 12px)!important;width:auto!important}
+/* Link micro-interactions */
+.navbar .nav-link{
+  position: relative; color: var(--jj-ink);
+  transition: color .2s ease;
 }
-
-/* Center titles on desktop, keep search at far right */
-@media (min-width:1200px){
-  #siteNav .container-fluid{display:grid;grid-template-columns:auto 1fr auto;align-items:center}
-  #siteNav .navbar-collapse{justify-content:center!important}
-  #siteNav .navbar-nav{flex:1 1 auto;margin-left:0!important;margin-right:auto!important;gap:.75rem}
-  .navbar-nav .jj-nav-search-item{margin-left:auto;margin-right:45px}
-}
-
-/* ============ Links (black text + pink underline) ============ */
-.navbar .nav-link{position:relative;color:var(--jj-ink)!important;transition:color .2s ease}
-.navbar .nav-link:hover,.navbar .nav-link:focus{color:var(--jj-ink)!important}
+.navbar .nav-link:hover,
+.navbar .nav-link:focus{ color: var(--jj-accent); }
 .navbar .nav-link::after{
-  content:""; position:absolute; left:.5rem; right:.5rem; bottom:.25rem; height:2px;
-  background:var(--jj-accent); border-radius:2px; transform:scaleX(0); transform-origin:left center;
-  transition:transform .2s ease;
+  content:""; position:absolute; left:.5rem; right:.5rem; bottom:.25rem;
+  height:2px; transform: scaleX(0); transform-origin:left center;
+  background: var(--jj-accent);
+  border-radius: 2px; transition: transform .2s ease;
 }
 .navbar .nav-link:hover::after,
 .navbar .nav-link:focus::after,
-.navbar .nav-item.show>.nav-link::after{ transform:scaleX(1) }
+.navbar .nav-item.show > .nav-link::after{ transform: scaleX(1); }
 
-/* Remove Bootstrap caret on top-level to avoid underline clash */
-.navbar .nav-item.dropdown > .nav-link.dropdown-toggle::after{ content:none !important }
-
-/* A11y focus */
-.navbar a:focus-visible,.navbar button:focus-visible,.navbar .dropdown-item:focus-visible{
-  outline:2px solid var(--jj-accent); outline-offset:2px; border-radius:10px;
+/* Toggler (hamburger → X) */
+.navbar { --bs-navbar-toggler-focus-width: 0; }
+.navbar-toggler .navbar-toggler-icon{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26' viewBox='0 0 16 16'%3E%3Cpath stroke='%231f1f1f' stroke-linecap='round' stroke-width='1.5' d='M2 4h12M2 8h12M2 12h12'/%3E%3C/svg%3E");
+}
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26' viewBox='0 0 16 16'%3E%3Cpath stroke='%231f1f1f' stroke-linecap='round' stroke-width='1.5' d='M3 3l10 10M13 3L3 13'/%3E%3C/svg%3E");
 }
 
-/* ============ Toggler (custom burger ↔ X) ============ */
-.navbar{ --bs-navbar-toggler-focus-width:0 }
-.navbar-toggler{
-  border:1px solid rgba(179,131,152,.45); background:#fff; border-radius:12px;
-  width:44px;height:44px; display:inline-flex;align-items:center;justify-content:center;
-  padding:.35rem .5rem; margin-right:12px;
+/* =================== Dropdown / Mega =================== */
+.dropdown-menu{
+  border:0; border-radius:14px; box-shadow:0 20px 40px rgba(0,0,0,.08);
+  background:#fff;
 }
-.navbar-toggler:active{ transform:scale(.98) }
-.jj-burger,.jj-burger::before,.jj-burger::after{ background:var(--jj-accent) }
-.jj-burger{position:relative;display:block;width:22px;height:2px;border-radius:2px;transition:background .25s ease,transform .25s ease}
-.jj-burger::before,.jj-burger::after{
-  content:"";position:absolute;left:0;right:0;height:2px;border-radius:2px;
-  transition:transform .28s cubic-bezier(.4,0,.2,1), top .28s cubic-bezier(.4,0,.2,1), opacity .18s ease
-}
-.jj-burger::before{top:-7px} .jj-burger::after{top:7px}
-.navbar-toggler[aria-expanded="true"] .jj-burger{background:transparent}
-.navbar-toggler[aria-expanded="true"] .jj-burger::before{top:0;transform:rotate(45deg)}
-.navbar-toggler[aria-expanded="true"] .jj-burger::after{top:0;transform:rotate(-45deg)}
+.dropdown-item{ color: var(--jj-ink); white-space: normal; }
 
-/* ============ Dropdowns (simple + mega) ============ */
-.dropdown-menu{border:0;border-radius:14px;box-shadow:0 20px 40px rgba(0,0,0,.08);background:#fff}
-.dropdown-item{color:var(--jj-ink);white-space:normal}
+/* Glassy surface for simple dropdowns */
 .dropdown-menu.jj-surface{
-  background:#fff; border:1px solid rgba(179,131,152,.15); border-radius:14px; padding:.5rem
+  border-radius:14px;
+  background: rgba(255,255,255,.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border:1px solid rgba(179,131,152,.15);
+  box-shadow:0 20px 40px rgba(0,0,0,.08);
+  padding:.5rem;
 }
-.dropdown-menu.jj-surface .dropdown-item{padding:.45rem .6rem;border-radius:8px;transition:background .2s ease}
+.dropdown-menu.jj-surface .dropdown-item{
+  color:var(--jj-ink);
+  padding:.45rem .6rem;
+  border-radius:8px;
+  transition: background .2s ease, color .2s ease;
+  white-space:normal;
+}
 .dropdown-menu.jj-surface .dropdown-item:hover,
-.dropdown-menu.jj-surface .dropdown-item:focus{background:rgba(179,131,152,.15)!important}
+.dropdown-menu.jj-surface .dropdown-item:focus{
+  background: rgba(179,131,152,.15) !important;
+  color: var(--jj-ink) !important;
+}
+.dropdown-menu.jj-surface .dropdown-item.active,
+.dropdown-menu.jj-surface .dropdown-item:active{
+  background: rgba(179,131,152,.22) !important;
+  color: var(--jj-ink) !important;
+}
+#dropdownAbout + .dropdown-menu.jj-surface{ min-width:14rem; }
+#dropdownDiaries + .dropdown-menu.jj-surface{ min-width:16rem; }
 
-.dropdown-mega .dropdown-item{padding:.35rem .5rem;border-radius:8px}
-.dropdown-mega .dropdown-item:hover,.dropdown-mega .dropdown-item:focus{
-  background:rgba(179,131,152,.15)!important;color:var(--jj-ink)!important
+/* ---------- Mega layout + stacking (fixed) ---------- */
+.body-grid{
+  display:grid;
+  grid-template-columns: repeat(2, minmax(260px,1fr));
+  gap:20px 32px;
 }
 
-/* Desktop: show mega on hover, submenus fly right */
-@media (hover:hover){
-  .dropdown:hover>.dropdown-menu.dropdown-mega{display:block}
+/* Base layers */
+.dropdown-menu.dropdown-mega{ position:relative; z-index:10; } /* whole mega */
+.mega-col{ position:relative; z-index:1; }                      /* each column */
+
+/* Lift the column that owns the open/hovered submenu above neighbors */
+@supports(selector(:has(*))){
+  .mega-col:hover,
+  .mega-col:has(.dropdown-submenu:hover),
+  .mega-col:has(.dropdown-submenu:focus-within),
+  .mega-col:has(.dropdown-menu:hover){
+    z-index:100;
+  }
 }
+/* Fallback for browsers without :has() */
+.mega-col:hover{ z-index:100; }
+
+/* Flyout submenu panel */
+.dropdown-submenu{ position: relative; display:inline-block; }
+.dropdown-submenu > .dropdown-menu{
+  position:static; display:none;
+    max-height: 320px;              /* tweak this */
+    overflow:auto;
+    -webkit-overflow-scrolling:touch;
+    border:0; box-shadow:none; background:transparent;
+  }
+  .dropdown-submenu > .dropdown-menu.show{ display:block; }
+
+
+
+/* Make only the "Mind" mega menu wider on desktop */
 @media (min-width:1200px){
-  .dropdown-menu.dropdown-mega{overflow:visible}
-  .dropdown-submenu{position:relative}
-  .dropdown-submenu>.dropdown-menu{
-    position:absolute!important; top:0; left:100%; margin-left:8px; display:none; min-width:220px; padding:.5rem;
-    background:#fff!important; border:1px solid rgba(179,131,152,.15); border-radius:12px; box-shadow:0 20px 40px rgba(0,0,0,.08); z-index:9999
+  /* widen the container */
+  .dropdown-menu[aria-labelledby="dropdownMind"]{
+    width: 650px;                     /* tweak this number */
+    max-width: calc(100vw - 32px);    /* keep it inside the viewport */
+  }}
+
+/* Stack to 1 column on small screens */
+@media (max-width:575.98px){ .body-grid{ grid-template-columns:1fr; } }
+
+.mega-col{
+  padding:.25rem .5rem .75rem; border-radius:12px;
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+}
+@media (hover:hover){
+  .mega-col:hover{
+    transform: translateY(-2px);
+    background: var(--jj-soft);
+    box-shadow: 0 10px 24px rgba(0,0,0,.06);
+    /* z-index handled above */
   }
-  .dropdown-submenu>.dropdown-menu.show{display:block}
 }
 
-/* ============ Mobile & Tablet (<1200px) ============ */
+/* also open when the trigger is focused via keyboard */
+.dropdown-submenu:focus-within > .dropdown-menu{ display:block; }
+
+/* Section headers */
+.dropdown-header{
+  margin:.25rem 0 .25rem; padding:0;
+  font-weight:800; letter-spacing:.2px; color: var(--jj-accent);
+}
+
+/* Hover feedback for items */
+.dropdown-mega .dropdown-item{ padding:.35rem .5rem; border-radius:8px; }
+.dropdown-mega .dropdown-item:hover,
+.dropdown-mega .dropdown-item:focus{
+  background: rgba(179,131,152,.15) !important; color: var(--jj-ink) !important;
+}
+
+/* Submenu chevron */
+.dropdown-submenu > a::after{
+  content:"▸"; display:inline-block; margin-left:6px; font-size:.8rem;
+  transition: transform .2s ease;
+}
+.dropdown-submenu > a[aria-expanded="true"]::after{ transform: rotate(90deg); }
+
+/* Show mega on hover for pointer devices */
+@media (hover:hover){ .dropdown:hover > .dropdown-menu.dropdown-mega{ display:block; } }
+
+/* Mobile: submenus become accordions */
 @media (max-width:1199.98px){
-  /* Keep bar slim and steady */
-  #siteNav.navbar{
-    height:var(--nav-h); box-shadow:0 6px 22px rgba(0,0,0,.08); border-bottom:1px solid rgba(179,131,152,.12)
+  .dropdown-mega{ min-width:100%; }
+  .dropdown-submenu > .dropdown-menu{
+    position:static; float:none; display:none; margin:.25rem 0 0 0;
+    border:0; box-shadow:none; background:transparent; padding-left:.75rem;
+    z-index:auto;
   }
-  .navbar-brand{height:var(--nav-h)!important;padding:0!important}
-  .navbar-brand img{height:calc(var(--nav-h) - 10px)!important;width:auto}
+  .dropdown-submenu > .dropdown-menu.show{ display:block; }
+}
 
-  /* Collapsed sheet */
+/* A11y: visible keyboard focus on links */
+.navbar a:focus-visible,
+.navbar button:focus-visible,
+.navbar .dropdown-item:focus-visible{
+  outline: 2px solid var(--jj-accent);
+  outline-offset: 2px;
+}
+
+/* Touch cleanups (no tap highlight) */
+@media (hover:none) and (pointer:coarse){
+  .navbar a, .navbar button, .navbar .dropdown-item{ -webkit-tap-highlight-color: transparent; }
+  .navbar .nav-link:focus, .navbar .dropdown-item:focus, .navbar .navbar-toggler:focus{
+    outline: none !important; box-shadow:none !important;
+  }
+}
+
+/* ===== NAV: mobile-friendly dropdown scrolling ===== */
+@media (max-width:1199.98px){
+  .navbar .dropdown-menu.dropdown-mega{
+    width:100%; min-width:100%;
+    max-height: calc(100vh - var(--nav-h) - 16px);
+    overflow:auto; -webkit-overflow-scrolling:touch;
+    margin:.25rem 0 0 0;
+    background: rgba(255,255,255,.96);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  .navbar .dropdown-menu:not(.dropdown-mega){
+    max-height: calc(100vh - var(--nav-h) - 16px);
+    overflow:auto; -webkit-overflow-scrolling:touch;
+  }
+  body.nav-open{
+    overflow: hidden;          /* lock body scroll while menu is open */
+    touch-action: none;
+  }
+}
+
+/* Optional: keep navbar visible while user interacts with it */
+#siteNav.navbar:hover{ transform: translateY(0); }
+
+.navbar .nav-link:focus,
+.navbar .nav-link:active,
+.navbar .nav-link:focus-visible{ outline: none !important; }
+
+/* Reserve space for the fixed navbar on every page */
+header{ height: var(--nav-h); }
+
+/* In-page anchors don’t hide under the fixed nav */
+:root{ scroll-padding-top: var(--nav-h); }
+
+/* Fallback if JS didn't set --nav-h yet */
+@supports not (height: var(--nav-h)){ header{ height: 80px; } }
+
+/* Brand */
+@media (max-width: 575.98px) {
+  .second-logo {
+    height: 5px;   /* smaller on mobile */
+    width: 20px;    /* keep aspect ratio */
+  }
+}
+.navbar-brand{
+  display:flex; align-items:center;
+  padding-top:0; padding-bottom:0;
+  height: var(--nav-h);
+  margin-right: .5rem;
+}
+.navbar-brand img{
+  display:block;
+  max-height: calc(var(--nav-h) - 10px);
+  width:auto;
+}
+
+.navbar-nav {
+  margin-left: 0 !important;   /* remove auto centering */
+  margin-right: auto !important; /* keep it aligned */
+  gap: 0.6rem; /* tighten spacing between titles */
+}
+
+.dropdown-submenu > .dropdown-menu {
+  background: #fff !important;  /* solid white */
+  backdrop-filter: none !important; 
+  -webkit-backdrop-filter: none !important;
+  z-index: 9999;  /* stay on top */
+}
+
+/* Center nav titles across the full bar on desktop (≥1200px) */
+@media (min-width:1200px){
+  #siteNav .container-fluid{
+    display: grid;
+    grid-template-columns: auto 1fr auto; /* [logo] [nav] [toggler/empty] */
+    align-items: center;
+  }
+
+  /* Logo stays left; trim the gap as you like */
+  #siteNav .navbar-brand{
+    margin-right: 240px !important; /* tweak to taste */
+  }
+
+  /* Put the collapsible area (that contains the <ul>) in the middle column */
+  #siteNav .navbar-collapse{
+    justify-content: center !important;  /* center its contents */
+  }
+
+  /* Make sure the list itself doesn’t fight the centering */
+  #siteNav .navbar-nav{
+    margin-left: 0 !important;
+    margin-right: auto !important;
+    gap: 0.75rem; /* adjust to taste */
+  }
+
+  /* Keep the toggler (if visible at xl in your setup) aligned right */
+  #siteNav .navbar-toggler{
+    grid-column: 3;
+    justify-self: end;
+  }
+}
+
+
+@media (max-width:1199.98px){
+  .dropdown-submenu > .dropdown-menu {
+    max-height: 300px;   /* default visible height */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* ===== Mobile nav overlay + scroll comfort ===== */
+#jjNavOverlay{
+  position: fixed; inset: var(--nav-h) 0 0 0;   /* sit below the fixed navbar */
+  background: rgba(0,0,0,.25);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  z-index: 998; /* just under the navbar (which is 999) */
+  display:none;
+}
+body.nav-open #jjNavOverlay{ display:block; }
+
+/* Make collapsed panel comfortably scrollable on small screens */
+@media (max-width:1199.98px){
   #navbarSupportedContent{
-    max-height:calc(100dvh - var(--nav-h))!important;
-    overflow:auto!important; -webkit-overflow-scrolling:touch!important;
-    overscroll-behavior:contain!important; touch-action:pan-y;
-    background:linear-gradient(180deg,#fff 0%,#fdfafc 40%,#f9f5f7 100%);
-    border:1px solid rgba(179,131,152,.15); border-radius:18px 18px 14px 14px;
-    margin-top:.35rem; padding:.35rem .5rem .75rem; box-shadow:0 22px 40px rgba(0,0,0,.10)
+    max-height: calc(100vh - var(--nav-h));
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  /* Larger tap targets on mobile */
+  .dropdown-item, .nav-link{ padding:.75rem 1rem; }
+}
+
+/* Ensure all dropdown panels are opaque on mobile (no see-through) */
+@media (max-width:1199.98px){
+  .dropdown-menu{
+    background: #fff !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+}
+
+/* Mobile: keep underline for active/open titles */
+@media (hover:none){
+  .navbar .nav-link::after{
+    display:block;                 /* don't hide on mobile */
+    transform: scaleX(0);
+  }
+  .nav-item.show > .nav-link::after,
+  .navbar .nav-link[aria-expanded="true"]::after,
+  .navbar .nav-link:focus-visible::after{
+    transform: scaleX(1);          /* pink line visible when open/focused */
+  }
+}
+
+/* Collapsed area: lock body & keep scroll inside the menu area */
+@media (max-width:1199.98px){
+  #navbarSupportedContent{
+    max-height: calc(100vh - var(--nav-h));
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;          /* keep scroll inside */
   }
 
-  /* Smooth close: remove gaps while collapsing */
+  /* All dropdowns get an internal scroll and a sane default height */
+  .navbar .dropdown-menu{
+    position: static !important;           /* flow inside collapsed panel */
+    max-height: 65vh;                      /* default visible height */
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: .25rem 0 .5rem 0;
+    background: #fff !important;           /* opaque; no show-through */
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  /* Mega menus full-width + own scroll */
+  .navbar .dropdown-menu.dropdown-mega{
+    width: 100%;
+    min-width: 100%;
+    max-height: 70vh;                      /* a touch taller for mega */
+  }
+
+  /* Submenus behave like accordions with their own scroll if long */
+  .dropdown-submenu > .dropdown-menu{
+    position: static;
+    display: none;
+    max-height: 40vh;                      /* fits within mega panel */
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 0; box-shadow: none; background: transparent;
+  }
+  .dropdown-submenu > .dropdown-menu.show{ display:block; }
+}
+
+/* While any mobile menu is open, prevent page scroll */
+body.nav-open{
+  overflow: hidden;
+  touch-action: none;
+}
+
+
+/* ================= Force submenus to fly out to the RIGHT ================= */
+@media (min-width:1200px){
+  .dropdown-menu.dropdown-mega{
+    overflow: visible; /* prevent clipping */
+  }
+
+  .dropdown-submenu { position: relative; }
+
+  .dropdown-submenu > .dropdown-menu{
+    position: absolute !important;
+    top: 0;                     /* align with trigger item */
+    left: 100%;                 /* fly out to the RIGHT */
+    margin-left: 8px;           /* small gap */
+    display: none;
+    min-width: 220px;
+    padding: .5rem;
+    background: #fff !important;
+    border: 1px solid rgba(179,131,152,.15);
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0,0,0,.08);
+    z-index: 9999;
+  }
+
+  .dropdown-submenu > .dropdown-menu.show{
+    display: block;
+  }
+
+  /* Remove/ignore submenu-end flip */
+  .dropdown-submenu.submenu-end > .dropdown-menu{
+    left: 100%;   /* force right anyway */
+    right: auto;
+  }
+}
+
+/* Mobile-only descriptor style (inline, no wrap) */
+.nav-desc{
+  font-size: .9rem;
+  opacity: .85;
+  margin-left: .25rem;
+  white-space: nowrap; /* keep it next to the title */
+  
+}
+
+/* ============================================================
+   Just Jana — Mobile Nav Vibe Pack
+   Paste this AT THE END of your current stylesheet
+   Affects only < 1200px (mobile/tablet)
+   ============================================================ */
+
+/* Brand tweaks / tokens you already use */
+:root{
+  --jj-accent: #c6a0b1;             /* main brand pink-lilac */
+  --jj-ink:    #1f1f1f;
+  --jj-bg:     #ffffff;
+  --jj-soft:   rgba(179,131,152,.10);
+  --jj-soft-2: rgba(179,131,152,.18);
+}
+
+/* Subtle drop-shadow to separate fixed nav from content */
+@media (max-width:1199.98px){
+  #siteNav.navbar{
+    background: var(--jj-bg);
+    box-shadow: 0 6px 22px rgba(0,0,0,.08);
+    border-bottom: 1px solid rgba(179,131,152,.12);
+  }
+}
+
+/* COLLAPSED PANEL: make it feel like a soft sheet */
+@media (max-width:1199.98px){
+  #navbarSupportedContent{
+    background:
+      linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(253,250,252,1) 40%, rgba(249,245,247,1) 100%);
+    border-radius: 18px 18px 14px 14px;
+    margin-top: .35rem;
+    padding: .35rem .5rem .75rem .5rem;
+    border: 1px solid rgba(179,131,152,.15);
+    box-shadow: 0 22px 40px rgba(0,0,0,.10);
+  }
+}
+
+/* NAV LINKS: bigger, calmer, easy to read */
+@media (max-width:1199.98px){
+  .navbar .nav-link{
+    font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    font-weight: 600;
+    letter-spacing: .15px;
+    font-size: 1.05rem;
+    line-height: 1.25;
+    padding: .9rem 1rem !important;
+    border-radius: 12px;
+  }
+
+  /* Gentle ink with on-tap feedback */
+  .navbar .nav-link:active{
+    background: var(--jj-soft);
+  }
+
+  /* Keep your underline cue, a bit lower for breathing room */
+  .navbar .nav-link::after{
+    bottom: .35rem;
+    height: 2px;
+    background: var(--jj-accent);
+    opacity: .9;
+  }
+
+  /* Slightly larger tappable area for dropdown toggles */
+  .nav-item.dropdown > .nav-link{
+    display: flex; align-items: center; gap: .45rem;
+  }
+}
+
+/* DESCRIPTORS: inline soft-pill next to title (mobile only) */
+@media (max-width:1199.98px){
+  .nav-desc{
+    display: inline-flex !important;
+    align-items: center;
+    font-size: .85rem;
+    font-weight: 500;
+    letter-spacing: .1px;
+    color: #9a6f82;
+    background: var(--jj-soft);
+    padding: .18rem .5rem;
+    border-radius: 999px;
+    margin-left: .15rem;
+    white-space: nowrap;
+    transform: translateY(-1px);
+  }
+}
+
+/* SIMPLE DROPDOWNS (About, Diaries): airy and readable */
+@media (max-width:1199.98px){
+  .dropdown-menu.jj-surface{
+    background: #fff !important;
+    border: 1px solid rgba(179,131,152,.15);
+    border-radius: 14px;
+    padding: .4rem;
+  }
+  .dropdown-menu.jj-surface .dropdown-item{
+    padding: .75rem .75rem;
+    border-radius: 10px;
+    font-size: .98rem;
+    line-height: 1.2;
+  }
+  .dropdown-menu.jj-surface .dropdown-item + .dropdown-item{
+    margin-top: .15rem;
+  }
+}
+
+/* MEGA PANELS: full width, internal scroll, gentle grouping */
+@media (max-width:1199.98px){
+  .dropdown-menu.dropdown-mega{
+    width: 100%;
+    min-width: 100%;
+    max-height: 70vh;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: .5rem;
+    border: 1px solid rgba(179,131,152,.14);
+    border-radius: 14px;
+    background: #fff !important;
+    box-shadow: 0 16px 28px rgba(0,0,0,.08);
+  }
+
+  /* Columns look like cards */
+  .mega-col{
+    background: linear-gradient(180deg, rgba(179,131,152,.06), rgba(179,131,152,.03));
+    border: 1px solid rgba(179,131,152,.10);
+    border-radius: 12px;
+    padding: .6rem .65rem .8rem;
+  }
+  .mega-col + .mega-col{ margin-top: .5rem; }
+
+  /* .dropdown-header{
+    font-family: "Playfair Display", Georgia, serif;
+    font-weight: 600;
+    color: #a56f86;
+    font-size: 1rem;
+    margin: .1rem 0 .35rem;
+  } */
+
+  .dropdown-mega .dropdown-item{
+    border-radius: 10px;
+    padding: .7rem .65rem;
+    font-size: .96rem;
+  }
+  .dropdown-mega .dropdown-item:hover,
+  .dropdown-mega .dropdown-item:active{
+    background: var(--jj-soft);
+  }
+}
+
+/* SUBMENUS (accordion-like on mobile) */
+@media (max-width:1199.98px){
+  .dropdown-submenu > .submenu-toggle{
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .dropdown-submenu > .submenu-toggle::after{
+    content: "▾";
+    font-size: .85rem;
+    opacity: .85;
+    transform: translateY(1px);
+  }
+  .dropdown-submenu > .submenu-toggle[aria-expanded="true"]::after{
+    transform: rotate(180deg) translateY(-1px);
+  }
+  .dropdown-submenu > .dropdown-menu{
+    background: transparent !important;
+    padding-left: .35rem;
+    margin-top: .35rem;
+    border-left: 2px dashed rgba(179,131,152,.25);
+    max-height: 38vh;
+  }
+  .dropdown-submenu > .dropdown-menu .dropdown-item{
+    padding-left: .55rem;
+  }
+}
+
+/* DIVIDERS between top-level items for visual rhythm */
+@media (max-width:1199.98px){
+  .navbar-nav > .nav-item + .nav-item{
+    margin-top: .15rem;
+  }
+  .navbar-nav > .nav-item{
+    position: relative;
+  }
+  .navbar-nav > .nav-item::after{
+    content:"";
+    display:block;
+    height:1px;
+    background: linear-gradient(90deg, transparent, rgba(179,131,152,.25), transparent);
+    margin: .1rem .25rem 0;
+  }
+  /* Remove divider after the last item inside the collapse */
+  .navbar-nav > .nav-item:last-child::after{ display:none; }
+}
+
+/* Bigger, cleaner toggler (hamburger ↔ X you already have) */
+@media (max-width:1199.98px){
+  .navbar-toggler{
+    border: 1px solid rgba(31,31,31,.15);
+    border-radius: 12px;
+    padding: .35rem .5rem;
+    background: #fff;
+  }
+  .navbar-toggler:active{ transform: scale(.98); }
+}
+
+/* Keep page from scrolling while menu is open (you already do; this ensures it) */
+@media (max-width:1199.98px){
+  body.nav-open{ overflow: hidden; touch-action: none; }
+  #jjNavOverlay{ backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); }
+}
+
+/* Accessibility: strong focus ring that matches brand */
+@media (max-width:1199.98px){
+  .navbar a:focus-visible,
+  .navbar button:focus-visible,
+  .navbar .dropdown-item:focus-visible{
+    outline: 2px solid var(--jj-accent);
+    outline-offset: 2px;
+    border-radius: 10px;
+  }
+}
+
+/* Just Jana — Blush Hamburger by default */
+@media (max-width:1199.98px){
+  .navbar-toggler{
+    border: 1px solid rgba(179,131,152,.45);   /* blush outline */
+    background: #fff;
+    border-radius: 12px;
+    width: 44px; height: 44px;
+    display: inline-flex; align-items: center; justify-content: center;
+    margin-right: 12px; /* tweak this number */
+  }
+
+  /* Burger lines — blush by default */
+  .jj-burger,
+  .jj-burger::before,
+  .jj-burger::after{
+    background: var(--jj-accent);   /* blush */
+  }
+
+  /* Middle line base */
+  .jj-burger{
+    position: relative; display:block;
+    width: 22px; height: 2px; border-radius: 2px;
+    transition: background .25s ease, transform .25s ease;
+  }
+  .jj-burger::before,
+  .jj-burger::after{
+    content:""; position:absolute; left:0; right:0;
+    height: 2px; border-radius: 2px;
+    transition: transform .28s cubic-bezier(.4, .0, .2, 1),
+                top .28s cubic-bezier(.4, .0, .2, 1),
+                opacity .18s ease, background .25s ease;
+  }
+  .jj-burger::before{ top: -7px; }
+  .jj-burger::after { top:  7px; }
+
+  /* Active/open (X state) */
+  .navbar-toggler[aria-expanded="true"] .jj-burger{
+    background: transparent;   /* hide middle bar */
+  }
+  .navbar-toggler[aria-expanded="true"] .jj-burger::before{
+    top: 0; transform: rotate(45deg);
+  }
+  .navbar-toggler[aria-expanded="true"] .jj-burger::after{
+    top: 0; transform: rotate(-45deg);
+  }
+
+  /* Optional: add soft shadow glow when open */
+  .navbar-toggler[aria-expanded="true"]{
+    box-shadow: 0 8px 22px rgba(179,131,152,.25);
+  }
+}
+
+/* ====== Home icon base ====== */
+.home-link .home-icon{
+  display:inline-block;
+  vertical-align:middle;
+  /* inherit nav link color (your hover/active styles already change it) */
+  color: #000;                /* fallback */
+  color: var(--jj-ink, #1f1f1f);
+  transition: color .25s ease, transform .25s ease, filter .25s ease;
+}
+
+/* subtle hover lift */
+.home-link:hover .home-icon,
+.home-link:focus .home-icon{
+  transform: translateY(-1px);
+  color: var(--jj-accent, #c6a0b1);
+}
+
+/* Heart inside the house — we’ll animate this on the home page only */
+.home-link .home-heart{
+  transition: transform .25s ease, stroke .25s ease, fill .25s ease;
+  transform-origin: 32px 46px;  /* center-ish of the heart in our viewBox */
+  fill: transparent;            /* outline-only by default off-home */
+}
+
+/* ====== ON the Home page: breathe, glow, brand color ====== */
+.is-home .home-link .home-icon{
+  color: var(--jj-accent, #c6a0b1);
+  filter: drop-shadow(0 0 6px rgba(198,160,177,.55));
+}
+
+.is-home .home-link .home-heart{
+  fill: color-mix(in srgb, var(--jj-accent, #c6a0b1) 22%, white);
+  animation: jj-heart-breathe 2.2s ease-in-out infinite;
+}
+
+/* Gentle heartbeat / breathe animation */
+@keyframes jj-heart-breathe{
+  0%   { transform: scale(1);   }
+  50%  { transform: scale(1.10);}
+  100% { transform: scale(1);   }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .is-home .home-link .home-heart{ animation: none; }
+  .home-link .home-icon,
+  .home-link .home-heart{ transition: none; }
+}
+
+/* micro-adjust the heart position if desired */
+.home-link .home-heart{ transform: translateY(-3px); } /* negative = up, positive = down */
+
+.home-link .home-icon {
+  transform: translateY(-4px); /* raise it up; adjust px to taste */
+}
+
+/* --- Lock navbar height on mobile to prevent "thickening" on scroll --- */
+@media (max-width:1199.98px){
+  :root{ --nav-h: 64px; }                 /* pick your exact height */
+
+  #siteNav.navbar{
+    height: var(--nav-h);
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    line-height: 1;                       /* avoid line-height growth */
+    border-bottom: 1px solid rgba(179,131,152,.12);
+  }
+
+  /* Brand area exactly matches the bar height */
+  .navbar-brand{
+    height: var(--nav-h) !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  .navbar-brand img{
+    height: calc(var(--nav-h) - 10px) !important; /* fixed, not max-height */
+    width: auto;
+  }
+
+  /* Toggler sized consistently and centered */
+  .navbar-toggler{
+    height: 44px !important;
+    width: 44px !important;
+    align-self: center;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding: .35rem .5rem !important;
+  }
+
+  /* Ensure the collapse starts below a fixed-height bar */
+  header{ height: var(--nav-h) !important; }
+}
+
+/* Remove Bootstrap's utility padding on the bar itself (py-1 on your <nav>) */
+#siteNav.navbar{ padding-top:0 !important; padding-bottom:0 !important; }
+
+/* Keep top-level title underline PINK on mobile, no matter what */
+@media (max-width:1199.98px){
+  /* Always use brand pink for the underline */
+  .navbar .nav-item.dropdown > .nav-link::after{
+    background: var(--jj-accent) !important;
+  }
+
+  /* Show + keep pink while open or interacting */
+  .navbar .nav-item.show > .nav-link::after,
+  .navbar .nav-item.dropdown > .nav-link[aria-expanded="true"]::after,
+  .navbar .nav-item.dropdown > .nav-link:active::after,
+  .navbar .nav-item.dropdown > .nav-link:focus::after,
+  .navbar .nav-item.dropdown > .nav-link:focus-visible::after{
+    transform: scaleX(1) !important;
+    background: var(--jj-accent) !important;
+  }
+
+  /* Optional: if any global rule flips link color to black on tap,
+     still keep the underline pink */
+  .navbar .nav-item.dropdown > .nav-link{
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* --- Fix: stop caret/underline collision & keep underline pink --- */
+
+/* Hide Bootstrap caret on top-level dropdown titles (all viewports or just mobile) */
+.navbar .nav-item.dropdown > .nav-link.dropdown-toggle::after{
+  content: none !important;
+}
+
+/* Use ::before for the underline so it never conflicts with the caret */
+.navbar .nav-item.dropdown > .nav-link{
+  position: relative;
+}
+.navbar .nav-item.dropdown > .nav-link::before{
+  content:"";
+  position:absolute;
+  left:.5rem; right:.5rem; bottom:.25rem;
+  height:2px; border-radius:2px;
+  background: var(--jj-accent) !important;   /* always pink */
+  transform: scaleX(0);
+  transform-origin:left center;
+  transition: transform .2s ease;
+}
+
+/* Show/keep the pink underline in all the interactive states */
+.navbar .nav-item.show > .nav-link::before,
+.navbar .nav-item.dropdown > .nav-link[aria-expanded="true"]::before,
+.navbar .nav-item.dropdown > .nav-link:focus::before,
+.navbar .nav-item.dropdown > .nav-link:active::before,
+.navbar .nav-item.dropdown > .nav-link:focus-visible::before{
+  transform: scaleX(1) !important;
+}
+
+/* Optional: if you only want to apply this behavior on mobile, wrap in media query */
+@media (max-width:1199.98px){
+  .navbar .nav-item.dropdown > .nav-link.dropdown-toggle::after{ content:none !important; }
+}
+
+/* === Nav bar titles: text stays black, underline stays pink === */
+.navbar .nav-link:hover,
+.navbar .nav-link:focus {
+  color: var(--jj-ink) !important;   /* force text to stay black */
+}
+
+.navbar .nav-link:hover::before,
+.navbar .nav-link:focus::before,
+.navbar .nav-item.show > .nav-link::before {
+  background: var(--jj-accent) !important;  /* keep underline pink */
+  transform: scaleX(1);                     /* show underline */
+}
+
+/* ===== Fix: allow full scrolling in mobile dropdowns (e.g., Brown Girl Diaries) ===== */
+@media (max-width:1199.98px){
+  /* Let the page be locked, but DO NOT kill touch panning for children */
+  body.nav-open{
+    overflow: hidden;             /* keep page behind locked */
+    touch-action: auto;           /* (was: none) allow vertical panning in children */
+  }
+
+  /* Collapsed panel uses dynamic viewport height to avoid browser chrome bugs */
+  #navbarSupportedContent{
+    max-height: calc(100dvh - var(--nav-h));
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    touch-action: pan-y;
+  }
+
+  /* All dropdown panels inside the collapsed area get their own scroll */
+  .navbar .dropdown-menu{
+    position: static !important;
+    max-height: calc(100dvh - var(--nav-h) - 20px - env(safe-area-inset-bottom));
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    touch-action: pan-y;
+    margin: .25rem 0 .5rem 0;
+    background: #fff !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  /* Make sure the simple glassy menus (About, Brown Girl Diaries) inherit it too */
+  .navbar .dropdown-menu.jj-surface{
+    max-height: calc(100dvh - var(--nav-h) - 20px - env(safe-area-inset-bottom));
+  }
+
+  /* Submenus keep their own smaller scroll, unchanged */
+  .dropdown-submenu > .dropdown-menu{
+    max-height: 40vh;
+  }
+}
+
+/* ==== Mobile: keep navbar short but let dropdowns scroll ==== */
+@media (max-width:1199.98px){
+  /* Keep the sheet height fixed; scroll inside it */
+  #navbarSupportedContent{
+    max-height: calc(100dvh - var(--nav-h));
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    touch-action: pan-y;
+  }
+
+  /* All simple dropdowns (About, Brown Girl Diaries, etc.) get their own scroll */
+  .navbar .dropdown-menu{
+    position: static !important;
+    max-height: calc(100dvh - var(--nav-h) - 20px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    touch-action: pan-y;
+    background: #fff !important;
+  }
+
+  /* (Optional but helpful) Explicitly target the Diaries menu */
+  #dropdownDiaries + .dropdown-menu{
+    max-height: calc(100dvh - var(--nav-h) - 20px);
+  }
+
+  /* While the menu is open, lock the page behind it—but allow vertical panning in the menu */
+  body.nav-open{
+    overflow: hidden;
+    touch-action: auto; /* not 'none' – lets the inner scrollers work */
+  }
+}
+
+/* Brown Girl Diaries: fixed height + internal scroll on mobile */
+@media (max-width:1199.98px){
+  /* Keep the collapsed sheet scrollable (needed by iOS) */
+  #navbarSupportedContent{
+    max-height: calc(100dvh - var(--nav-h)) !important;
+    overflow: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: contain !important;
+  }
+
+  /* Make Diaries panel a self-scrolling pane with a default height */
+  #dropdownDiaries + .dropdown-menu.menu-scroll{
+    position: static !important;
+    display: block;                    /* keep layout stable */
+    max-height: 48vh !important;       /* <— default visible size */
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: contain !important;
+    touch-action: pan-y !important;
+    background: #fff !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    margin: .25rem 0 .5rem 0 !important;
+    padding: .5rem !important;
+    border: 1px solid rgba(179,131,152,.15) !important;
+    border-radius: 14px !important;
+  }
+
+  /* Ensure each item is comfortably tappable */
+  #dropdownDiaries + .dropdown-menu.menu-scroll .dropdown-item{
+    padding: .75rem .85rem !important;
+    border-radius: 10px !important;
+    white-space: normal !important;
+  }
+
+  /* Lock the page behind, but DO allow panning inside menus */
+  body.nav-open{
+    overflow: hidden !important;
+    touch-action: auto !important;     /* not 'none' */
+  }
+}
+/* Brown Girl Diaries: closed by default; fixed-height + internal scroll when open */
+@media (max-width:1199.98px){
+  /* Collapsed sheet still scrolls internally */
+  #navbarSupportedContent{
+    max-height: calc(100dvh - var(--nav-h)) !important;
+    overflow: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: contain !important;
+  }
+
+  /* The Diaries menu pane */
+  #dropdownDiaries + .dropdown-menu.menu-scroll{
+    position: static !important;
+    max-height: 48vh !important;      /* default visible height when open */
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: contain !important;
+    touch-action: pan-y !important;
+    background: #fff !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    margin: .25rem 0 .5rem 0 !important;
+    padding: .5rem !important;
+    border: 1px solid rgba(179,131,152,.15) !important;
+    border-radius: 14px !important;
+  }
+
+  /* CLOSED by default */
+  #dropdownDiaries + .dropdown-menu.menu-scroll:not(.show){
+    display: none !important;
+  }
+
+  /* OPEN only when your JS/Bootstrap adds .show */
+  #dropdownDiaries + .dropdown-menu.menu-scroll.show{
+    display: block !important;
+  }
+
+  /* Touch targets */
+  #dropdownDiaries + .dropdown-menu.menu-scroll .dropdown-item{
+    padding: .75rem .85rem !important;
+    border-radius: 10px !important;
+    white-space: normal !important;
+  }
+
+  /* Lock page behind, but allow panning inside menus */
+  body.nav-open{
+    overflow: hidden !important;
+    touch-action: auto !important;
+  }
+}
+
+/* ===== Mobile: kill gaps while the navbar is closing so it snaps shut cleanly ===== */
+@media (max-width:1199.98px){
+  /* Bootstrap toggles these classes during the animation */
   #navbarSupportedContent.collapsing,
   #navbarSupportedContent.collapse:not(.show){
-    padding:0!important; margin:0!important; border-width:0!important; overflow:hidden!important;
+    /* no extra space while we animate height → 0 */
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-top: 0 !important;
+    border-width: 0 !important;
+    overflow: hidden !important;   /* hide any internal scrollbars during the tween */
   }
 
-  /* Link sizing + underline always pink when open */
-  .navbar .nav-link{
-    font-weight:600; letter-spacing:.15px; font-size:1.05rem; line-height:1.25;
-    padding:.9rem 1rem!important; border-radius:12px;
+  /* When fully open, restore your pretty “sheet” styling */
+  #navbarSupportedContent.collapse.show{
+    margin-top: .35rem !important;
+    padding: .35rem .5rem .75rem .5rem !important;
+    border: 1px solid rgba(179,131,152,.15) !important;
   }
-  .navbar .nav-item.dropdown > .nav-link::after{ background:var(--jj-accent)!important; bottom:.35rem }
 
-  /* Inside collapsed area, dropdowns get their own scroll */
-  .navbar .dropdown-menu{
-    position:static!important; max-height:65vh; overflow:auto; -webkit-overflow-scrolling:touch;
-    margin:.25rem 0 .5rem 0; background:#fff!important
+  /* Defensive: remove bottom gaps from children during close to avoid a lingering pixel */
+  #navbarSupportedContent.collapsing .dropdown-menu,
+  #navbarSupportedContent.collapse:not(.show) .dropdown-menu{
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
   }
-  .navbar .dropdown-menu.dropdown-mega{width:100%;min-width:100%;max-height:70vh;padding:.5rem}
-
-  /* Submenus behave like accordions */
-  .dropdown-submenu > .dropdown-menu{
-    position:static; display:none; max-height:40vh; overflow:auto; border:0; box-shadow:none; background:transparent; padding-left:.75rem
+  #navbarSupportedContent.collapsing .navbar-nav > .nav-item::after,
+  #navbarSupportedContent.collapse:not(.show) .navbar-nav > .nav-item::after{
+    display: none !important;
   }
-  .dropdown-submenu > .dropdown-menu.show{ display:block }
-
-  /* Dividers rhythm */
-  .navbar-nav>.nav-item+.nav-item{margin-top:.15rem}
-  .navbar-nav>.nav-item{position:relative}
-  .navbar-nav>.nav-item::after{
-    content:"";display:block;height:1px;margin:.1rem .25rem 0;
-    background:linear-gradient(90deg,transparent,rgba(179,131,152,.25),transparent)
-  }
-  .navbar-nav>.nav-item:last-child::after{display:none}
-
-  /* Body lock while open (but allow inner panning) */
-  body.nav-open{overflow:hidden; touch-action:auto}
 }
 
-/* ============ Inline Nav Search (desktop + mobile) ============ */
-.jj-nav-search-item{position:relative;display:flex;align-items:center;margin-block:.25rem}
-.jj-nav-search{display:grid;grid-template-columns:1fr auto;gap:.5rem}
-.jj-nav-search input[type="search"]{
-  font:600 .95rem/1.2 "Poppins",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
-  color:var(--jj-ink); background:#fff; border:1px solid rgba(179,131,152,.45); border-radius:12px;
-  height:var(--search-h); line-height:calc(var(--search-h) - 2px);
-  padding:0 var(--search-pad-x); outline:0; transition:border-color .2s ease, box-shadow .2s ease;
+/* Search bar */
+/* === Search button matches JJ vibe === */
+.jj-search-btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  width: 40px; height: 40px; border-radius: 12px;
+  border: 1px solid rgba(179,131,152,.45);
+  background:#fff; color: var(--jj-accent);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
 }
-.jj-nav-search input::placeholder{color:rgba(169,142,160,.55)}
-.jj-nav-search input:focus{border-color:var(--jj-accent); box-shadow:0 8px 20px rgba(179,131,152,.16)}
-.jj-nav-search-btn{
-  height:var(--search-h); padding:0 .75rem; font-size:.95rem; border-radius:12px;
-  border:1px solid rgba(179,131,152,.45); background:var(--jj-accent); color:#fff; font-weight:700; letter-spacing:.2px;
-  transition:transform .15s ease, box-shadow .2s ease;
+.jj-search-btn:hover, .jj-search-btn:focus-visible{
+  box-shadow: 0 8px 22px rgba(179,131,152,.22);
+  border-color: rgba(179,131,152,.75);
 }
-.jj-nav-search-btn:hover,.jj-nav-search-btn:focus-visible{ box-shadow:0 10px 22px rgba(179,131,152,.22) }
-.jj-nav-search-btn:active{ transform:translateY(1px) }
+.jj-search-btn:active{ transform: scale(.98); }
 
-/* Mobile search never crowds the toggler */
+/* === Slide-down search sheet (below fixed navbar) === */
+.jj-search-sheet{
+  position: fixed; left: 0; right: 0; top: var(--nav-h);
+  z-index: 1000; /* above overlay (998) + navbar (999) once opened */
+  background: linear-gradient(180deg, #fff, rgba(253,250,252,1) 45%, rgba(249,245,247,1));
+  border-bottom: 1px solid rgba(179,131,152,.18);
+  box-shadow: 0 24px 48px rgba(0,0,0,.12);
+  padding: .85rem .9rem 1rem;
+  transform: translateY(-12px);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform .28s cubic-bezier(.4,.0,.2,1), opacity .25s ease;
+}
+
+/* When JS "opens" it */
+.jj-search-sheet.is-open{
+  opacity: 1; transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Form styling */
+.jj-search-form{
+  display: grid; grid-template-columns: 1fr auto; gap: .6rem;
+  max-width: min(920px, calc(100vw - 24px));
+  margin: 0 auto;
+}
+.jj-search-form input[type="search"]{
+  font: 600 1.05rem/1.2 "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  color: var(--jj-ink);
+  background: #fff;
+  border: 1px solid rgba(179,131,152,.45);
+  border-radius: 14px;
+  padding: .85rem 1rem;
+  outline: none;
+  transition: box-shadow .2s ease, border-color .2s ease;
+}
+.jj-search-form input[type="search"]::placeholder{ color:#a98ea0; }
+.jj-search-form input[type="search"]:focus{
+  border-color: var(--jj-accent);
+  box-shadow: 0 10px 28px rgba(179,131,152,.18);
+}
+.jj-search-go{
+  padding: .85rem 1.05rem;
+  border-radius: 14px;
+  border: 1px solid rgba(179,131,152,.45);
+  background: var(--jj-accent);
+  color:#fff; font-weight:700; letter-spacing:.2px;
+  transition: transform .18s ease, box-shadow .2s ease, filter .2s ease;
+}
+.jj-search-go:hover, .jj-search-go:focus-visible{
+  box-shadow: 0 12px 26px rgba(179,131,152,.25);
+  filter: saturate(1.05);
+}
+.jj-search-go:active{ transform: translateY(1px); }
+
+.jj-search-hint{
+  text-align:center; margin:.4rem auto 0; color:#8a6b7b; font-size:.9rem;
+  max-width: min(820px, calc(100vw - 24px));
+}
+
+/* Respect mobile */
+@media (max-width: 575.98px){
+  .jj-search-form{ grid-template-columns: 1fr; }
+  .jj-search-go{ width:100%; }
+}
+
+/* Screen-reader helper */
+.visually-hidden{
+  position:absolute !important; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+}
+
+/* ====== On-site search results ====== */
+.jj-search-results{
+  max-width: min(920px, calc(100vw - 24px));
+  margin: .75rem auto 0; padding-bottom: .25rem;
+}
+.jj-search-results .res{
+  display:block; padding:.65rem .75rem; border-radius:12px;
+  border:1px solid rgba(179,131,152,.18);
+  background:#fff; text-decoration:none; color:var(--jj-ink);
+  box-shadow:0 8px 18px rgba(0,0,0,.06);
+  transition: transform .15s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.jj-search-results .res + .res{ margin-top:.5rem; }
+.jj-search-results .res:hover,
+.jj-search-results .res:focus-visible{
+  transform: translateY(-1px);
+  border-color: rgba(179,131,152,.35);
+  box-shadow: 0 12px 26px rgba(179,131,152,.18);
+}
+.jj-search-results .res h6{
+  margin:0 0 .2rem; font-weight:800; letter-spacing:.2px;
+}
+.jj-search-results .crumb{
+  display:inline-block; margin-right:.3rem; font-size:.82rem; color:#8a6b7b;
+}
+.jj-search-results .snip{
+  margin:.15rem 0 0; font-size:.95rem; color:#444;
+}
+.jj-search-results mark{
+  background: color-mix(in srgb, var(--jj-accent) 22%, white);
+  border-radius: 4px; padding: 0 .15rem;
+}
+.jj-search-empty{
+  text-align:center; color:#8a6b7b; padding:.5rem 0;
+}
 @media (max-width:1199.98px){
-  .jj-nav-search-item{flex:1 1 auto; max-width:90%!important; padding:.35rem .35rem .5rem}
-  .jj-nav-search{width:100%; grid-template-columns:minmax(0,1fr) auto}
-  .jj-nav-search input[type="search"]{font-size:.9rem; height:32px; padding:0 .55rem}
-  .jj-nav-search-btn{height:32px; font-size:.85rem; padding-inline:.6rem; white-space:nowrap}
+  .navbar-nav > .nav-item.search-divider{ margin-top:.35rem; }
 }
 
-/* WebKit clear (X) color */
-.jj-nav-search input[type="search"]::-webkit-search-cancel-button{
-  -webkit-appearance:none; height:20px; width:20px; background:var(--jj-accent);
-  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='white' d='M4.646 4.646a.5.5 0 01.708 0L8 7.293l2.646-2.647a.5.5 0 11.708.708L8.707 8l2.647 2.646a.5.5 0 01-.708.708L8 8.707l-2.646 2.647a.5.5 0 01-.708-.708L7.293 8 4.646 5.354a.5.5 0 010-.708z'/%3E%3C/svg%3E") no-repeat center; mask-size:cover; cursor:pointer
+/* === Inline nav search === */
+.jj-nav-search-item{ position:relative; display:flex; align-items:center; }
+.jj-nav-search{
+  display:grid; grid-template-columns: 1fr auto; gap:.5rem;
 }
-.jj-nav-search input[type="search"]::-webkit-search-cancel-button:hover{ background:#1f1f1f }
-
-/* iOS: prevent zoom on focus */
-@media (max-width:575.98px){
-  input[type="text"],input[type="search"],input[type="email"],input[type="tel"],input[type="number"],textarea{ font-size:16px!important; line-height:1.2 }
+.jj-nav-search input[type="search"]{
+  font: 600 1rem/1.2 "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  color: var(--jj-ink);
+  background:#fff;
+  border:1px solid rgba(179,131,152,.45);
+  border-radius:12px;
+  padding:.6rem .8rem;
+  outline:0;
+  transition:border-color .2s ease, box-shadow .2s ease;
 }
-
-/* ============ Home icon polish (optional) ============ */
-.home-link .home-icon{display:inline-block;vertical-align:middle;color:var(--jj-ink);transition:color .25s ease,transform .25s ease,filter .25s ease;transform:translateY(-4px)}
-.home-link:hover .home-icon,.home-link:focus .home-icon{transform:translateY(-1px);color:var(--jj-accent)}
-.home-link .home-heart{transform:translateY(-3px);fill:transparent;transition:transform .25s ease}
-.is-home .home-link .home-icon{color:var(--jj-accent);filter:drop-shadow(0 0 6px rgba(198,160,177,.55))}
-.is-home .home-link .home-heart{fill:color-mix(in srgb, var(--jj-accent) 22%, white);animation:jj-heart 2.2s ease-in-out infinite}
-@keyframes jj-heart{0%{transform:scale(1)}50%{transform:scale(1.1)}100%{transform:scale(1)}}
-@media (prefers-reduced-motion:reduce){.is-home .home-link .home-heart{animation:none}}
-
-
-
-/* =========================
-   index.html — hero & welcome
-   ========================= */
-.full-width-image{
-  width:100vw;max-width:100vw;height:auto;display:block;margin:0 calc(50% - 50vw);
+.jj-nav-search input::placeholder{ color:#a98ea0; }
+.jj-nav-search input:focus{
+  border-color: var(--jj-accent);
+  box-shadow: 0 8px 20px rgba(179,131,152,.16);
 }
-.hero-mobile{
-  display:none;flex-direction:column;align-items:center;justify-content:center;
-  padding:2rem 1rem;text-align:center;
-  background:linear-gradient(to right,#fff5af,#ffd0d3,#ffadf6);
+.jj-nav-search-btn{
+  padding:.6rem .8rem;
+  border-radius:12px;
+  border:1px solid rgba(179,131,152,.45);
+  background: var(--jj-accent);
+  color:#fff; font-weight:700; letter-spacing:.2px;
+  transition: transform .15s ease, box-shadow .2s ease;
 }
-.logo-mobile{max-width:80%;margin-bottom:2rem}
-.text-mobile{max-width:250px}
-.tagline-mobile{width:350px;height:auto;margin-bottom:4rem}
+.jj-nav-search-btn:hover,
+.jj-nav-search-btn:focus-visible{ box-shadow:0 10px 22px rgba(179,131,152,.22); }
+.jj-nav-search-btn:active{ transform: translateY(1px); }
 
-@media (max-width:768px){
-  .hero-mobile{display:flex}
-  .full-width-image{display:none}
+/* Width behavior */
+@media (min-width:1200px){
+  /* keep it compact so titles still fit */
+  .jj-nav-search{ width: clamp(220px, 24vw, 340px); }
 }
-
-/* Welcome */
-.welcome-section{padding:2rem;text-align:center}
-.header-image{max-width:500px;width:90%;margin:0 auto 1rem;display:block}
-.subheading{font-size:2rem;color:#000}
-.fourpillars{font-family:'Amatic SC',cursive;font-size:1.6rem;font-weight:500;color:#7b7b7b}
-.thepillars{width:75%;margin:0 auto;text-align:left}
-
-.content-container{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:1.5rem;margin-top:1.5rem;padding:2rem;flex-wrap:wrap;
-}
-.profile-section{display:flex;flex-direction:column;align-items:center;text-align:center;margin-bottom:1rem}
-.profile-image{width:180px;height:180px;object-fit:cover;border-radius:50%;margin-top:2rem}
-.signature{width:280px}
-
-/* Quote block */
-.quote-section{display:flex;justify-content:flex-start;padding-top:2rem;position:relative;z-index:1}
-.quote-text{
-  position:relative;color:#000;font-size:1rem;font-weight:500;line-height:1.8;
-  padding:1rem 3rem;max-width:800px;z-index:2;text-align:center;margin:0 auto;
-}
-.quote-text::before{
-  content:"";position:absolute;inset:0;background:#fdf4f1;transform:rotate(-2deg) skew(-2deg);
-  z-index:-2;border-radius:30px;box-shadow:4px 4px 30px rgba(0,0,0,.3);
-}
-.quote-text h2{font-size:1.3rem;font-weight:400;margin:1.5rem 0 20px}
-.quote-text span{color:#480363}
-.quote-text p,
-.quote-text p em,
-.quote-text p strong{margin-bottom:1rem;font-size:1rem;line-height:1.8;color:#333}
-.quote-text .welcome-home{font-size:1.2rem;font-weight:300;margin-top:20px}
-.quote-text .belong-text{font-size:1.1rem;font-weight:300;margin-top:20px}
-
-/* Buttons (shared) */
-.read-story-btn,
-.diary-btn,
-.carouseldownload-btn,
-.download-btn{
-  display:inline-block;color:#fff;text-decoration:none;font-weight:500;transition:background .3s ease;
-}
-.read-story-btn{background:#a86f75;padding:10px 18px;border-radius:6px}
-.read-story-btn:hover{background:#8e5c61}
-
-.diary-btn{background:#a86f75;padding:.5rem 1.2rem;border-radius:20px;font-size:.9rem}
-.diary-btn:hover{background:#8e5c61}
-
-.carouseldownload-btn,
-.download-btn{
-  padding:.7rem 1.5rem;border-radius:30px;background:linear-gradient(45deg,#ffc6d3,#a87ca0)
-}
-.carouseldownload-btn:hover,
-.download-btn:hover{background:linear-gradient(45deg,#cc5b90,#80397c)}
-
-/* Welcome responsiveness */
-@media (max-width:768px){
-  .subheading{font-size:25px;color:#000}
-  .quote-text{padding:1rem;max-width:100%;font-size:1.05rem;line-height:1.9}
-  .quote-text::before{border-radius:20px;left:-10px;right:-10px;width:calc(100% + 20px)}
-  .signature{margin-top:1.5rem}
-  .thepillars{width:100%;margin:0;padding:0 15px;text-align:left}
-}
-@media (min-width:800px){
-  .content-container{flex-direction:row;align-items:flex-start;justify-content:center;gap:2rem}
-  .profile-image{margin:3rem 0 1.5rem}
-  .quote-section{flex:2;padding:2rem}
-  .quote-text{padding:2rem 1rem;max-width:700px}
+@media (max-width:1199.98px){
+  .jj-nav-search-item{ width:100%; padding:.35rem .35rem .5rem; }
+  .jj-nav-search{ width:100%; }
 }
 
-/* =========================
-   Values / pillars
-   ========================= */
-.jana-values-section{padding:40px 20px;margin-bottom:5px}
-.value-card{
-  background:#fffdfd;border:1px solid #f0e1e1;border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,.05);
-  padding:24px 20px;font-family:'Poppins',sans-serif;max-width:520px;margin:15px auto;
-}
-.value-card h4{font-size:1.1rem;color:#4b2e2e;font-weight:600;margin-bottom:10px}
-.value-card p{font-size:.95rem;color:#5b5b70;margin:0}
-
-@media (max-width:768px){
-  .value-card{margin-bottom:20px;padding:28px 18px}
-  .jana-values-section{padding:50px 16px}
-}
-@media (max-width:576px){ .jana-values-heading{font-size:1.5rem} }
-
-/* Healing pillars grid */
-.healing-pillars{
-  display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;padding:0;margin:0 auto;width:100%;
-}
-.pillar-link{display:block;flex:1 1 22%;text-decoration:none;color:inherit}
-.pillar-box{
-  border-radius:12px;padding:20px;text-align:center;box-shadow:0 4px 8px rgba(0,0,0,.05);
-  transition:transform .3s ease;height:100%
-}
-.pillar-box:hover{transform:translateY(-5px)}
-.fitness-box{background:#fffdf0}.music-box{background:#fff7ee}.wellness-box{background:#ffedee}.mental-box{background:#ffecfb}
-.fitness-box:hover{background:#fff8d8}.music-box:hover{background:#ffedd8}.wellness-box:hover{background:#ffd5d8}.mental-box:hover{background:#ffd9f8}
-.pillar-box img{width:100%;max-width:250px;height:auto;object-fit:contain;margin-bottom:12px}
-.pillar-box h3{font-size:1.3rem;margin-bottom:10px}
-.pillar-box p{font-size:1rem;color:#333}
-
-@media (max-width:800px){
-  .healing-pillars{padding:0 1rem}
-  .pillar-box{flex:1 1 100%;max-width:90%;margin:2rem auto;padding:1.5rem;box-sizing:border-box;cursor:pointer}
-  .pillar-box img{max-width:270px;margin:0 auto 1rem}
-  .pillar-link{flex:1 1 100%;max-width:100%}
-}
-
-/* =========================
-   “Journeys” scroller
-   ========================= */
-:root{
-  --jj-muted:#5b5b5b; --jj-gap:16px; --jj-card-w:240px; --jj-radius:22px;
-  --jj-pink-wash: radial-gradient(60% 80% at 0% 0%, rgba(179,131,152,.18), transparent 60%), radial-gradient(40% 60% at 100% 100%, rgba(233,190,205,.22), transparent 60%);
-}
-.jj-journeys{position:relative;padding:clamp(20px,4vw,40px) 0 48px;background:#fff;overflow:hidden}
-.jj-journeys::before{content:"";position:absolute;inset:0 0 auto 0;height:100%;background:var(--jj-pink-wash);pointer-events:none}
-.jj-journeys-head{text-align:center;margin-bottom:12px;padding:0 12px}
-.jj-journeys-head p{font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--jj-muted);margin:0;font-size:clamp(13px,2.6vw,15px)}
-
-.jj-journeys-viewport{
-  position:relative;overflow:hidden;user-select:none;touch-action:pan-x;
-  -webkit-mask-image:linear-gradient(to right,transparent 0%,black 7%,black 93%,transparent 100%);
-  mask-image:linear-gradient(to right,transparent 0%,black 7%,black 93%,transparent 100%);
-}
-.jj-journeys-track{display:flex;align-items:stretch;gap:var(--jj-gap);padding:18px 10px;transform:translate3d(0,0,0);will-change:transform}
-
-.jj-journey{
-  flex:0 0 var(--jj-card-w);display:flex;align-items:center;gap:12px;background:#fff;
-  border:1px solid rgba(179,131,152,.18);border-radius:var(--jj-radius);padding:12px 14px;
-  text-decoration:none;color:var(--jj-ink);box-shadow:0 10px 24px rgba(0,0,0,.06);
-  transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
-}
-.jj-journey:hover{background:#c59ca0;color:var(--jj-ink);transform:translateY(-3px);border-color:rgba(179,131,152,.35);box-shadow:0 14px 30px rgba(0,0,0,.08)}
-.jj-avatar{width:86px;height:86px;flex:0 0 auto;box-shadow:0 6px 16px rgba(0,0,0,.1)}
-.jj-avatar img{width:100%;height:100%;object-fit:cover;display:block}
-.jj-title{font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-weight:600;font-size:16px;line-height:1.2;letter-spacing:.2px}
-
-.jj-arrow{
-  position:absolute;top:50%;translate:0 -50%;z-index:2;width:44px;height:44px;border-radius:999px;
-  border:1px solid rgba(179,131,152,.35);background:rgba(255,255,255,.9);box-shadow:0 6px 16px rgba(0,0,0,.1);
-  color:var(--jj-ink);font-size:28px;line-height:1;display:none;align-items:center;justify-content:center;cursor:pointer;
-  transition:transform .2s ease, box-shadow .2s ease, background-color .2s ease;
-}
-.jj-arrow:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.12)}
-.jj-arrow-left{left:6px}.jj-arrow-right{right:6px}
-@media (min-width:960px){ .jj-arrow{display:inline-flex} }
-
-@media (max-width:1040px){
-  :root{ --jj-card-w:220px; --jj-gap:14px }
-  .jj-avatar{width:80px;height:80px}
-}
-@media (max-width:640px){
-  :root{ --jj-card-w:200px; --jj-gap:12px }
-  .jj-avatar{width:74px;height:74px}
-  .jj-title{font-size:15px}
-  .jj-journeys-viewport{ -webkit-mask-image:none; mask-image:none }
-}
-@media (prefers-reduced-motion:reduce){
-  .jj-journeys-viewport{ -webkit-mask-image:none; mask-image:none }
-}
-
-/* =========================
-   Diary cards
-   ========================= */
-.diary-heading{font-size:2rem}
-.diary-scroll{display:flex;flex-wrap:wrap;gap:2rem;justify-content:space-between}
-.diary-card{
-  flex:1 1 calc(33.333% - 1.5rem);min-width:280px;max-width:100%;
-  border:1px solid #f0e1e1;border-radius:12px;padding:1.5rem;background:#fffdfd;
-  box-shadow:0 4px 12px rgba(0,0,0,.04);display:flex;flex-direction:column;justify-content:space-between;
-  transition:transform .2s ease;
-}
-.diary-card:hover{transform:translateY(-4px)}
-.card-title{font-size:1.2rem;font-weight:600;margin-bottom:.5rem}
-.card-date{font-size:.85rem;color:#b98f8f;margin-bottom:.75rem}
-.card-text{font-size:.95rem;color:#444;margin-bottom:1.25rem}
-
-@media (max-width:767px){
-  .diary-scroll{flex-wrap:nowrap;overflow-x:auto;padding:0 1rem;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
-  .diary-card{flex:0 0 80%;scroll-snap-align:start;margin-right:1rem}
-  .diary-card:last-child{margin-right:0}
-}
-
-/* =========================
-   Carousel section
-   ========================= */
-.carousel-section{padding:3rem 1rem;text-align:center}
-.carousel-heading,.freebies-heading{font-size:2rem;margin-bottom:2rem}
-.carousel-img{max-width:400px;margin:0 auto;border-radius:12px;box-shadow:0 5px 20px rgba(0,0,0,.15)}
-.carousel-indicators{margin:1rem 0 1.5rem}
-.carousel-indicators [data-bs-target]{background:#e07fa1;width:10px;height:10px;border-radius:50%}
-.download-wrapper{margin-top:1rem}
-.lockscreen-text{
-  background:#fff7f6;border-radius:12px;padding:15px 25px;max-width:500px;margin:20px auto;color:#8a5780;box-sizing:border-box;text-align:center
-}
-.lockscreen-text p{margin:2px 0;font-size:1rem;line-height:1.4}
-@media (max-width:768px){ .lockscreen-text{padding:12px 18px;font-size:.95rem} }
-@media (max-width:480px){ .lockscreen-text{padding:10px 15px;font-size:.9rem} }
-@media (min-width:769px){
-  .carousel .carousel-control-prev,.carousel .carousel-control-next{display:flex}
-}
-
-/* =========================
-   Freebies
-   ========================= */
-.filter-btns .btn{
-  background:#fff;color:#b38398;margin:0 6px;border:.7px solid #b38398;font-weight:500;transition:background .3s ease
-}
-.filter-btns .btn.active,.filter-btns .btn:hover{background:#b38398;color:#fff;border-color:#b38398}
-
-.freebies-scroll{scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
-.freebie-card{
-  flex:0 0 auto;width:250px;min-height:410px;background:linear-gradient(135deg,#fdf8f6,#fdf1f6);
-  border-radius:20px;box-shadow:0 6px 16px rgba(0,0,0,.1);padding:1.5rem;scroll-snap-align:start;
-  display:flex;flex-direction:column;justify-content:space-between;transition:transform .3s ease
-}
-.freebie-card:hover{transform:translateY(-5px)}
-.freebie-card img{width:100%;max-height:140px;object-fit:cover;border-radius:12px}
-.card-desc{font-size:.95rem;margin-top:10px;color:#333}
-
-/* =========================
-   janasstory.html
-   ========================= */
-.mobile-banner{display:none}
-.story-section{padding:4rem 1.5rem;background:#fff}
-.section-header{text-align:center;margin-bottom:3rem}
-.section-header h1{font-size:2.5rem}
-.underheading{color:#666;margin-top:.5rem}
-.story-block,.story{display:flex;align-items:center;justify-content:center;gap:2rem;margin-bottom:4rem;flex-wrap:wrap}
-.story{gap:4rem}
-.story-block:nth-child(even):not(.no-flip){flex-direction:row-reverse}
-.story.highlight.no-flip{flex-direction:column;align-items:center;text-align:center}
-.story-text{flex:1 1 500px;max-width:700px}
-.story-image{flex:1 1 300px;max-width:250px}
-.story-image img{width:100%;height:auto;border-radius:8px}
-.story-text h2{font-size:1.6rem;color:#000;margin-bottom:1rem}
-.story-text p{line-height:1.8;margin-bottom:1rem}
-.highlight{background:#faf6f9;padding:2rem;border-left:5px solid #c49c9c;border-radius:8px;max-width:800px}
-.highlight-logo{display:flex;justify-content:center;margin-bottom:1rem}
-.highlight .logoimg{max-width:60px;max-height:60px}
-.center-wrapper{display:flex;justify-content:center;padding:2rem 1rem}
-.closing-line{text-align:center;font-size:1.2rem;margin-top:2rem}
-.custom-link{color:inherit;text-decoration:none;transition:color .3s ease}
-.custom-link:hover{color:#544caf}
-.jana-title,.jana-title em{font-size:2rem;margin-bottom:2rem;color:#4b2e2e}
-
-@media (max-width:768px){
-  .mobile-banner{
-    display:flex;flex-direction:column;align-items:center;
-    background:linear-gradient(to right,#fff8d0,#ffe3e5,#ffcef9);padding:2rem 1rem;text-align:center
+/* Suggestions list (re-use your .jj-search-results look) */
+.jj-suggest{ display:none; }
+.jj-suggest.show{ display:block; }
+@media (min-width:1200px){
+  .jj-suggest{
+    position:absolute; top: calc(100% + 8px); left:0;
+    width: min(620px, 100vw - 24px);
+    z-index: 1000;
   }
-  .title-img{max-width:70%;margin:2rem 0 1rem}
-  .underheading{font-size:25px}
-  .profile-img{width:130px;height:130px;object-fit:cover;border-radius:50%;margin-bottom:1rem}
-  .name-img{width:200px;margin-bottom:2rem}
-  .quote-img{width:400px;height:auto}
-  .carousel-control-prev,.carousel-control-next{display:none}
-  .story-text,.story-text-block{padding:0 1.5rem}
-  .story-text p{line-height:1.7;margin-bottom:1rem}
+}
+@media (max-width:1199.98px){
+  .jj-suggest{ position: static; margin-top:.4rem; }
 }
 
-/* =========================
-   missionvalues.html
-   ========================= */
-.mission-title,.values-title{font-size:2rem;margin-bottom:2rem;color:#4b2e2e}
-.container-narrow{max-width:1000px;margin:0 auto;padding:4rem 2rem}
-h1{font-size:2.8rem;text-align:center;margin-bottom:2rem;color:#693e67}
+/* (You already have .jj-search-results, .res, .snip, etc. styles) */
 
-.values-section{padding:60px 20px;background:#fff;text-align:center}
-.values-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:25px;max-width:1200px;margin:0 auto}
-.value-card{border-radius:20px;padding:30px 20px;box-shadow:0 4px 10px rgba(0,0,0,.05);transition:transform .3s ease, box-shadow .3s ease}
-.value-card img{width:60px;height:auto;margin-bottom:15px}
-.value-card h3{font-family:'Poppins',sans-serif;font-size:1.4rem;color:#1f1f1f;margin-bottom:10px}
-.value-card p{font-family:'Lato',sans-serif;font-size:.95rem;color:#444;line-height:1.5}
-.value-card:hover{transform:translateY(-8px);box-shadow:0 8px 18px rgba(0,0,0,.1)}
-
-@media (max-width:768px){
-  .mission-logo{max-width:65px;max-height:65px;margin-bottom:.5rem}
-  .mission-text{max-width:70px;margin-bottom:2rem}
-  .mission-maintitle{max-width:90%;margin:2rem 0 3rem}
-  h1{font-size:2rem}
-  .section h2{font-size:1.5rem}
+/* Screen-reader helper */
+.visually-hidden{
+  position:absolute !important; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+}
+/* === Slimmer inline search + softer placeholder === */
+:root{
+  /* tweak these if you want it even slimmer/taller */
+  --jj-search-h: 36px;          /* control height */
+  --jj-search-pad-x: .65rem;    /* left/right padding */
 }
 
-/* =========================
-   fitness page
-   ========================= */
-.story-nb{max-width:350px}
-.story-nb img{max-width:100%;height:auto;border-radius:10px}
-.story-nb .carousel-inner img{border-radius:10px;max-height:300px;object-fit:cover}
-.fitnesswhy{font-size:2rem;margin-bottom:2rem;color:#4b2e2e}
-.fitnessmsg{font-size:1.4rem;color:#4b2e2e}
-@media (max-width:768px){ .story-nb{padding:.5rem} }
-
-/* =========================
-   music page bits
-   ========================= */
-@media (max-width:768px){
-  .music-quote{max-width:300px;height:auto}
-  .music-title{max-width:55%;margin:2rem 0 1rem}
+/* add vertical breathing room for the whole <li> */
+.jj-nav-search-item{
+  margin-block: .25rem; /* space above/below */
 }
 
-/* =========================
-   Healing Compositions
-   ========================= */
-:root{ --fg:#131316; --muted:#5b5b70; --card:#f4f4f4; --accent:#7b4ab8; --ring:rgba(0,0,0,.08) }
-.cta-card{background:var(--card);border:1px solid var(--ring);border-radius:20px;padding:22px 18px;margin-bottom:18px;text-align:center}
-.cta-card h2{font-family:'Playfair Display',serif;font-size:clamp(28px,4.6vw,40px);letter-spacing:.5px;margin:0 0 6px}
-.cta-card p{color:var(--muted);margin:0 0 8px;font-size:14px}
-.links{display:flex;flex-direction:column;gap:12px;margin-top:14px}
+.jj-nav-search input[type="search"],
+.jj-nav-search-btn{
+  height: var(--jj-search-h);
+  line-height: calc(var(--jj-search-h) - 2px); /* account for borders */
+  padding: 0 var(--jj-search-pad-x);
+  border-radius: 12px;
+}
+
+/* slightly smaller text to match slimmer height */
+.jj-nav-search input[type="search"]{
+  font-size: .95rem;
+}
+
+/* more transparent placeholder */
+.jj-nav-search input[type="search"]::placeholder{ color: rgba(169,142,160,.55); }
+/* (optional cross-browser fallbacks) */
+.jj-nav-search input[type="search"]::-webkit-input-placeholder{ color: rgba(169,142,160,.55); }
+.jj-nav-search input[type="search"]::-moz-placeholder{ color: rgba(169,142,160,.55); }
+.jj-nav-search input[type="search"]:-ms-input-placeholder{ color: rgba(169,142,160,.55); }
+.jj-nav-search input[type="search"]:-moz-placeholder{ color: rgba(169,142,160,.55); }
+
+/* keep button text balanced at the slimmer height */
+.jj-nav-search-btn{
+  font-size: .95rem;
+  padding-inline: .75rem; /* a touch narrower than before */
+}
+/* ===== Centered search results modal ===== */
+body.jj-modal-open{ overflow:hidden; }
+
+.jj-search-overlay{
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.38);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  z-index: 1200; /* higher than navbar & overlays */
+  opacity: 0; transition: opacity .15s ease;
+}
+.jj-search-overlay.show{ opacity: 1; }
+
+.jj-search-modal{
+  position: fixed; inset: 0; z-index: 1201;
+  display: grid; place-items: center;
+  padding: clamp(12px, 3vw, 32px);
+  opacity: 0; transform: translateY(6px);
+  transition: opacity .18s ease, transform .18s ease;
+}
+.jj-search-modal.show{ opacity: 1; transform: translateY(0); }
+
+.jj-search-modal-card{
+  width: min(900px, 92vw);
+  max-height: min(78vh, calc(100dvh - 48px));
+  background: #fff;
+  border: 1px solid rgba(179,131,152,.15);
+  border-radius: 16px;
+  box-shadow: 0 30px 80px rgba(0,0,0,.20);
+  padding: clamp(.75rem, 1.6vw, 1.1rem);
+  overflow: auto;
+}
+
+.jj-search-title{
+  margin: .1rem 0 .5rem;
+  font-weight: 800;
+  letter-spacing: .2px;
+  color: var(--jj-ink);
+}
+
+/* Close button */
+.jj-search-close{
+  position: sticky; top: 0; float: right;
+  width: 36px; height: 36px;
+  border-radius: 10px; border: 1px solid rgba(179,131,152,.35);
+  background: #fff; color: var(--jj-ink); font-size: 20px;
+  display:flex; align-items:center; justify-content:center;
+  margin-left: .5rem;
+}
+.jj-search-close:hover, .jj-search-close:focus-visible{
+  border-color: var(--jj-accent);
+  box-shadow: 0 8px 22px rgba(179,131,152,.18);
+}
+
+/* === Mobile: slimmer nav search so hamburger never cuts off === */
+@media (max-width: 1199.98px) {
+  /* Container spacing */
+  .jj-nav-search-item {
+    flex: 1 1 auto;        /* shrink within nav bar */
+    max-width: 75%;        /* keep some room for the toggler */
+    padding-right: .25rem; /* breathing space */
+  }
+
+  /* Input field */
+  .jj-nav-search input[type="search"] {
+    font-size: .9rem;
+    height: 32px;             /* shorter */
+    padding: 0 .55rem;        /* slimmer sides */
+  }
+
+  /* Search button */
+  .jj-nav-search-btn {
+    height: 32px;             /* match input */
+    font-size: .85rem;        /* slightly smaller text */
+    padding-inline: .6rem;    /* less wide */
+    white-space: nowrap;
+  }
+}
+
+/* === Mobile: slightly reduce search bar width === */
+@media (max-width: 1199.98px){
+  .jj-nav-search-item{
+    max-width: 90% !important;   /* was 100%, trims it down */
+  }
+  .jj-nav-search{
+    width: 100%;                 /* keeps the grid intact */
+    grid-template-columns: minmax(0, 1fr) auto; /* input shrinks, button fixed */
+  }
+  .jj-nav-search input[type="search"]{
+    width: 100%;   /* flexible */
+  }
+}
+
+/* Target the native clear (X) button in WebKit browsers (Chrome, Edge, Safari) */
+.jj-nav-search input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none; /* remove default */
+  height: 20px;
+  width: 20px;
+  background: var(--jj-accent);   /* your brand color */
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='white' d='M4.646 4.646a.5.5 0 01.708 0L8 7.293l2.646-2.647a.5.5 0 11.708.708L8.707 8l2.647 2.646a.5.5 0 01-.708.708L8 8.707l-2.646 2.647a.5.5 0 01-.708-.708L7.293 8 4.646 5.354a.5.5 0 010-.708z'/%3E%3C/svg%3E") no-repeat center;
+  mask-size: cover;
+  cursor: pointer;
+}
+
+/* Optional: change hover color of the X */
+.jj-nav-search input[type="search"]::-webkit-search-cancel-button:hover {
+  background: #1f1f1f; /* e.g. dark ink */
+}
+
+/* ===== Stop iOS zooming the page when focusing inputs (mobile only) ===== */
+@media (max-width: 575.98px){
+  /* Your inline nav search */
+  .jj-nav-search input[type="search"]{
+    font-size: 16px !important;   /* key: >= 16px prevents zoom */
+    line-height: 1.2;             /* keep it tidy */
+    height: 34px;                 /* bump a touch so it doesn't feel cramped */
+    padding: 0 .6rem;
+  }
+
+  /* If you use the big slide-down/search sheet too */
+  .jj-search-form input[type="search"],
+  .jj-search-form input[type="text"]{
+    font-size: 16px !important;
+    line-height: 1.2;
+    height: 38px;
+    padding: 0 .7rem;
+  }
+
+  /* (Optional) apply globally to avoid surprises elsewhere */
+  input[type="text"],
+  input[type="search"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="number"],
+  textarea{
+    font-size: 16px;  /* prevents zoom for all form fields */
+  }
+}
+
+/* Prevent Safari from “auto text-sizing” */
+html{ -webkit-text-size-adjust: 100%; }
+
+/* === Desktop: push nav search to right corner === */
+@media (min-width: 1200px){
+  /* let the nav list fill available space */
+  #siteNav .navbar-nav{
+    flex: 1 1 auto;
+  }
+
+  /* send the search li to the far right */
+  .navbar-nav .jj-nav-search-item{
+    margin-left: auto;   /* pushes it away from the titles */
+    margin-right: 45px;     /* flush with the edge */
+  }
+
+  /* keep the search form width under control */
+  .jj-nav-search{
+    width: clamp(200px, 22vw, 320px); /* adjust to taste */
+  }
+}
+
+/* Make the logo smaller on mobile */
+@media (max-width: 575.98px){
+  .navbar-brand img,
+  .navbar-brand .second-logo{
+    height: auto !important;   /* pick your size: 18–24px usually looks good */
+    width: auto !important;    /* keep aspect ratio */
+  }
+}
+
+/* (Optional) slightly smaller on tablets too */
+@media (min-width: 576px) and (max-width: 1199.98px){
+  .navbar-brand img,
+  .navbar-brand .second-logo{
+    height: auto !important;
+    width: auto !important;
+  }
+}
+
+
+
+
+
+/* index.html */
+
+/* Hero banner */
+
+.full-width-image{
+  width: 100vw;          /* fill viewport width */
+  max-width: 100vw;
+  height: auto;
+  display: block;
+  margin: 0 calc(50% - 50vw); /* break out of any parent padding */
+}
+
+
+/* Mobile hero background and layout */
+.hero-mobile {
+  display: none; 
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  text-align: center;
+  background: linear-gradient(to right, #fff5af, #ffd0d3, #ffadf6);
+}
+
+/* Images sizing */
+
+.logo-mobile {
+  max-width: 80%;
+  margin-bottom: 2rem;
+}
+
+.text-mobile {
+  max-width: 250px;
+}
+
+.tagline-mobile {
+  width: 350px;
+  height: auto;
+  margin-bottom: 4rem;
+  
+}
+
+/* Show only on mobile */
+@media (max-width: 768px) {
+  .hero-mobile {
+    display: flex;
+  }
+
+  .full-width-image {
+    display: none;
+  }
+}
+
+
+/* Welcome section */
+
+.welcome-section {
+  padding: 2rem;
+  text-align: center;
+}
+
+.header-image {
+  max-width: 500px;
+  width: 90%;
+  margin: 0 auto 1rem;
+  display: block;
+}
+
+.subheading {
+  font-size: 2rem;
+  color: #000000;
+}
+
+.fourpillars {
+font-family: 'Amatic SC', cursive;
+font-size: 1.6rem;
+font-weight: 50;
+color: #7b7b7b;
+}
+
+.thepillars{
+  width: 75%;           /* pick how wide you want the section */
+  margin: 0 auto;       /* centers the block horizontally */
+  text-align: left;     /* aligns the text inside to the left */
+}
+
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+  padding: 2rem 2rem;
+  flex-wrap: wrap;
+}
+
+.profile-section {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+
+.profile-image {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-top: 2rem;
+}
+
+
+.signature {
+  width: 280px;
+  
+  
+}
+
+
+.quote-section{ 
+  display:flex; 
+  justify-content:flex-start; 
+  padding-top:2rem; 
+  position:relative; 
+  z-index:1; }
+
+
+.quote-text {
+  position: relative;
+  color: rgb(0, 0, 0);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.8;
+  padding: 1rem 3rem;
+  max-width: 800px;
+  z-index: 2;
+  text-align: center;  
+  margin: 0 auto;   
+}
+
+.quote-text::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  background: #fdf4f1;
+  transform: rotate(-2deg) skew(-2deg);
+  z-index: -2;
+  border-radius: 30px;
+  box-shadow: 4px 4px 30px rgba(0, 0, 0, 0.3);
+}
+
+.quote-text h2 {
+  font-size: 1.3rem;
+  font-weight: 400;
+  margin-top: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.quote-text span {
+  color: #480363;
+  }
+
+.quote-text p {
+  margin-bottom: 1rem;
+  font-size: 1rem; 
+  line-height: 1.8;
+  color: #333;
+  }
+
+.quote-text p em {
+  margin-bottom: 1rem;
+  font-size: 1rem; 
+  line-height: 1.8;
+  color: #333;
+}
+
+.quote-text p strong {
+  margin-bottom: 1rem;
+  font-size: 1rem; 
+  line-height: 1.8;
+  color: #333;
+}
+
+.quote-text .welcome-home {
+  
+  font-size: 1.2rem;
+  font-weight: 300;
+  margin-top: 20px;
+}
+
+.quote-text .belong-text {
+  
+  font-size: 1.1rem;
+  font-weight: 300;
+  margin-top: 20px;
+}
+
+
+.read-story-btn {
+  color: #ffffff;
+  background-color: #a86f75;
+  padding: 10px 18px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-block;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.read-story-btn:hover {
+  background-color: #8e5c61;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  
+  .subheading {
+  font-size: 25px;
+  color: #000000;
+}
+
+ .quote-text {
+    padding: 1rem;         /* less side padding for more width */
+    max-width: 100%;       /* allow it to take full width */
+    font-size: 1.05rem;    /* slightly larger text for readability */
+    line-height: 1.9;      /* improve spacing */
+  }
+
+  .quote-text::before {
+    border-radius: 20px;   /* slightly smaller radius for mobile */
+    left: -10px;               /* stretch beyond padding */
+    right: -10px;
+    width: calc(100% + 20px);  /* fill edge to edge */
+  }
+
+  .signature {
+    margin-top: 1.5rem;
+  }
+}
+@media (min-width: 800px) {
+  .content-container {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 2rem;
+  }
+  
+  .profile-image {
+    width: 180px;   
+    height: 180px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 1.5rem;
+    margin-top: 3rem; 
+  }
+
+  .profile-section {
+    align-items: center;
+    text-align: center;
+  }
+
+
+  .quote-section {
+    flex: 2;
+    padding: 2rem;
+  }
+
+  .quote-text {
+    text-align: center;
+    padding: 0.5rem;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    max-width: 700px;
+  }
+}
+
+/* On small screens (mobile) */
+@media (max-width: 768px) {
+  .thepillars {
+    width: 100%;        /* take full width */
+    margin: 0;          /* no auto centering */
+    padding: 0 15px;    /* optional: add side padding */
+    text-align: left;   /* force left alignment */
+  }
+}
+
+/* What Just Jana stands for  */
+.jana-values-section {
+  padding: 40px 20px;
+  margin-bottom: 5px;
+  /* background-color: #000; */
+}
+
+
+.value-card {
+  background-color: #fffdfd;
+  border: 1px solid #f0e1e1;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  padding: 24px 20px;
+  font-family: 'Poppins', sans-serif;
+  max-width: 520px;
+  margin: 15px auto;
+}
+
+
+
+.value-card h4 {
+  font-size: 1.1rem;
+  color: #4b2e2e;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.value-card p {
+  font-size: 0.95rem;
+  color: #5b5b70;
+  margin: 0;
+}
+
+.read-more-btn {
+  color: #ffffff;
+  background-color: #a86f75;
+  padding: 10px 24px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+}
+
+.read-more-btn:hover {
+  background-color: #8e5c61;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .value-card {
+    margin-bottom: 20px;
+    padding: 28px 18px;
+  }
+
+  .jana-values-section {
+    padding: 50px 16px;
+  }
+}
+
+@media (max-width: 576px) {
+  .jana-values-heading {
+    font-size: 1.5rem;
+  }
+}
+
+
+/* Healing pillars section */
+
+
+  .healing-pillars {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 0;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  
+.pillar-box {
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease;
+  height: 100%; 
+}
+
+.pillar-box:hover {
+  transform: translateY(-5px);
+}
+
+.fitness-box {
+  background-color: #fffdf0; /* soft yellow */
+}
+
+.music-box {
+  background-color: #fff7ee; /* soft orange */
+}
+
+.wellness-box {
+  background-color: #ffedee; /* soft pink */
+}
+
+.mental-box {
+  background-color: #ffecfb; /* soft purple */
+}
+
+.fitness-box:hover {
+  background-color: #fff8d8;
+}
+
+.music-box:hover {
+  background-color: #ffedd8; 
+}
+
+.wellness-box:hover {
+  background-color: #ffd5d8;
+}
+
+.mental-box:hover {
+  background-color: #ffd9f8; 
+}
+
+.pillar-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;     
+  flex: 1 1 22%;      
+}  
+
+.pillar-link:hover,
+.pillar-link:visited,
+.pillar-link:active {
+  color: inherit;
+  text-decoration: none;
+}
+
+.pillar-link h3 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.pillar-link:hover h3 {
+  color: inherit;
+}
+
+.pillar-link p {
+  color: inherit;
+  text-decoration: none;
+}
+
+.pillar-box img {
+  width: 100%;
+  max-width: 250px; 
+  height: auto;
+  object-fit: contain;
+  margin-bottom: 12px;
+}
+
+  .pillar-box h3 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+  }
+
+  .pillar-box p {
+    font-size: 1rem;
+    color: #333;
+  }
+
+  
+ @media (max-width: 800px) {
+  .healing-pillars {
+    padding: 0 1rem;   
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .pillar-box {
+    flex: 1 1 100%;
+    max-width: 90%;        
+    margin: 2rem auto;     
+    padding: 1.5rem;       
+    box-sizing: border-box;
+    cursor: pointer;
+  }
+
+  .pillar-box img {
+    width: 100%;
+    max-width: 270px;
+    height: auto;
+    display: block;
+    margin: 0 auto 1rem;
+  }
+
+   .pillar-link {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+
+  .pillar-box h3,
+  .pillar-box p {
+    padding: 0;
+  }
+}
+
+/* ===================== Brand tokens ===================== */
+:root{
+  --jj-ink: #1f1f1f;
+  --jj-muted: #5b5b5b;
+  --jj-bg: #ffffff;
+  --jj-soft: rgba(179,131,152,.10);
+  --jj-accent: #b38398; /* dusty rose */
+  --jj-gap: 16px;
+  --jj-card-w: 240px;   /* desktop baseline */
+  --jj-radius: 22px;
+  --jj-pink-wash:
+    radial-gradient(60% 80% at 0% 0%, rgba(179,131,152,.18), transparent 60%),
+    radial-gradient(40% 60% at 100% 100%, rgba(233,190,205,.22), transparent 60%);
+}
+
+/* ===================== Section shell ===================== */
+.jj-journeys{
+  position: relative;
+  padding: clamp(20px,4vw,40px) 0 48px;
+  background: var(--jj-bg);
+  overflow: hidden;
+}
+.jj-journeys::before{
+  content:"";
+  position:absolute;
+  inset: 0 0 auto 0; /* cover from top; adjust height below */
+  height: 100%;       /* adjust to lengthen/shorten pink wash */
+  background: var(--jj-pink-wash);
+  pointer-events:none;
+}
+
+.jj-journeys-head{
+  text-align:center; margin-bottom: 12px; padding: 0 12px;
+}
+
+.jj-journeys-head p{
+  font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  color: var(--jj-muted); margin:0;
+  font-size: clamp(13px,2.6vw,15px);
+}
+
+/* ===================== Viewport & Track ===================== */
+.jj-journeys-viewport{
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  touch-action: pan-x;
+  mask-image: linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%);
+}
+.jj-journeys-track{
+  display:flex; align-items:stretch;
+  gap: var(--jj-gap);
+  padding: 18px 10px;
+  transform: translate3d(0,0,0);
+  will-change: transform;
+}
+
+/* ===================== Cards ===================== */
+.jj-journey{
+  flex: 0 0 var(--jj-card-w);
+  display:flex; align-items:center; gap:12px;
+  background: #ffffff;
+  border: 1px solid rgba(179,131,152,.18);
+  border-radius: var(--jj-radius);
+  padding: 12px 14px;
+  text-decoration:none;
+  color: var(--jj-ink);
+  box-shadow: 0 10px 24px rgba(0,0,0,.06);
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.jj-journey:hover{
+  background-color: #c59ca0;     /* dusty rose background */
+  color: var(--jj-ink);          /* keep text black */
+  transform: translateY(-3px);
+  border-color: rgba(179,131,152,.35);
+  box-shadow: 0 14px 30px rgba(0,0,0,.08);
+}
+
+.jj-journey:hover .jj-title {
+  color: var(--jj-ink); /* force text to stay black */
+}
+
+.jj-journey:focus{ outline:none; }
+.jj-journey:focus-visible{ box-shadow: 0 0 0 3px rgba(179,131,152,.35); }
+.jj-avatar{
+  width: 86px; height: 86px; flex: 0 0 auto;
+  box-shadow: 0 6px 16px rgba(0,0,0,.10);
+}
+.jj-avatar img{ width:100%; height:100%; object-fit:cover; display:block; }
+.jj-title{
+  font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  font-weight: 600; font-size: 16px; line-height: 1.2; letter-spacing: .2px;
+}
+
+/* ===================== Desktop-only arrows ===================== */
+.jj-arrow{
+  position: absolute;
+  top: 50%;
+  translate: 0 -50%;
+  z-index: 2;
+  width: 44px; height: 44px;
+  border-radius: 999px;
+  border: 1px solid rgba(179,131,152,.35);
+  background: rgba(255,255,255,.9);
+  box-shadow: 0 6px 16px rgba(0,0,0,.10);
+  color: var(--jj-ink);
+  font-size: 28px;
+  line-height: 1;
+  display: none; /* hidden by default, shown on desktop */
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease;
+}
+.jj-arrow:hover{ transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,.12); }
+.jj-arrow:focus{ outline: none; }
+.jj-arrow:focus-visible{ box-shadow: 0 0 0 3px rgba(179,131,152,.35); }
+.jj-arrow-left{ left: 6px; }
+.jj-arrow-right{ right: 6px; }
+
+/* show arrows on desktop only */
+@media (min-width: 960px){
+  .jj-arrow{ display: inline-flex; }
+}
+
+/* ===================== Responsive ===================== */
+@media (max-width: 1040px){
+  :root{ --jj-card-w: 220px; --jj-gap: 14px; }
+  .jj-avatar{ width: 80px; height: 80px; }
+}
+@media (max-width: 640px){
+  :root{ --jj-card-w: 200px; --jj-gap: 12px; }
+  .jj-avatar{ width: 74px; height: 74px; }
+  .jj-title{ font-size: 15px; }
+  /* turn off edge fade (heavy on some mobiles) */
+  .jj-journeys-viewport{
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}
+
+/* Accessibility: respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .jj-journeys-viewport{ -webkit-mask-image: none; mask-image: none; }
+}
+
+
+/* diary entry section */
+
+.diary-heading {
+  font-size: 2rem;
+}
+
+/* Scroll container */
+.diary-scroll {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: space-between;
+}
+
+/* Card base */
+.diary-card {
+  flex: 1 1 calc(33.333% - 1.5rem);
+  border: 1px solid #f0e1e1;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  background-color: #fffdfd;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease;
+  min-width: 280px;
+  max-width: 100%;
+}
+
+.diary-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Inside Card */
+.card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.card-date {
+  font-size: 0.85rem;
+  color: #b98f8f;
+  margin-bottom: 0.75rem;
+}
+
+.card-text {
+  font-size: 0.95rem;
+  color: #444;
+  margin-bottom: 1.25rem;
+}
+
+/* Read More Button */
+
+.diary-btn {
+  color: #ffffff;
+  background-color: #a86f75;
+  padding: 0.5rem 1.2rem;
+  border-radius: 20px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+}
+
+.diary-btn:hover {
+  background-color: #8e5c61;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+/* Swipe on mobile */
+@media (max-width: 767px) {
+  .diary-scroll {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .diary-card {
+    flex: 0 0 80%;
+    scroll-snap-align: start;
+    margin-right: 1rem;
+  }
+
+  .diary-card:last-child {
+    margin-right: 0;
+  }
+}
+
+
+/* Carousel section */
+
+.carousel-section {
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+.carousel-heading {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.carousel-img {
+  max-width: 400px;
+  margin: 0 auto;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+}
+
+.carousel-indicators {
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.carousel-indicators [data-bs-target] {
+  background-color: #e07fa1;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.download-wrapper {
+  margin-top: 1rem;
+}
+
+.lockscreen-text {
+  background-color: #fff7f6; 
+  border-radius: 12px; 
+  padding: 15px 25px; 
+  max-width: 500px; 
+  margin: 20px auto; 
+  text-align: center; 
+  color: #8a5780; 
+  box-sizing: border-box; 
+}
+
+.lockscreen-text p {
+  margin: 2px 0; 
+  font-size: 1rem; 
+  line-height: 1.4;
+}
+
+/* Tablet adjustments */
+@media (max-width: 768px) {
+  .lockscreen-text {
+    padding: 12px 18px;
+    font-size: 0.95rem;
+  }
+}
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+  .lockscreen-text {
+    padding: 10px 15px;
+    font-size: 0.9rem;
+  }
+}
+
+.download-text + .download-text {
+  margin-top: 0.3rem;
+}
+
+.carouseldownload-btn {
+  display: inline-block;
+  padding: 0.7rem 1.5rem;
+  background: linear-gradient(45deg, #ffc6d3, #a87ca0);
+  color: white;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.carouseldownload-btn:hover {
+  background: linear-gradient(45deg, #cc5b90, #80397c);
+  color: white;
+  text-decoration: none;
+}
+
+/* Safety: always show controls on screens wider than 768px */
+@media (min-width: 769px){
+  .carousel .carousel-control-prev,
+  .carousel .carousel-control-next {
+    display: flex;
+  }
+}
+
+
+
+/* Freebies Section */
+.freebies-heading {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.filter-btns .btn {
+  background-color: #ffffff;
+  color: #b38398;
+  margin: 0 6px;
+  border: 0.7px solid #b38398;
+  font-weight: 500;
+  transition: background 0.3s ease;
+}
+
+.filter-btns .btn.active,
+.filter-btns .btn:hover {
+  background: #b38398;
+  color: white;
+  border-color: #b38398;
+}
+
+/* Scroll Area */
+.freebies-scroll {
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+
+.freebie-card {
+  flex: 0 0 auto;
+  width: 250px;
+  min-height: 410px;
+  background: linear-gradient(135deg, #fdf8f6, #fdf1f6);
+  border-radius: 20px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.3s ease;
+}
+
+.freebie-card:hover {
+  transform: translateY(-5px);
+}
+
+.freebie-card img {
+  border-radius: 12px;
+  max-height: 140px;
+  object-fit: cover;
+  width: 100%;
+}
+
+.card-desc {
+  font-size: 0.95rem;
+  margin-top: 10px;
+  color: #333;
+}
+
+/* Download Button */
+.download-btn {
+  background: linear-gradient(45deg, #ffc6d3, #a87ca0);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-weight: 500;
+  transition: background 0.3s ease;
+}
+
+.download-btn:hover {
+  background: linear-gradient(45deg, #cc5b90, #80397c);
+  color: white;
+  text-decoration: none;
+}
+
+
+/* CSS for janasstory.html */
+
+/* Default: Hide on desktop */
+.mobile-banner {
+  display: none;
+}
+
+
+ .story-section {
+  padding: 4rem 1.5rem;
+  background-color: #fff;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section-header h1 {
+  font-size: 2.5rem;
+}
+
+.underheading {
+  color: #666;
+  margin-top: 0.5rem;
+}
+
+.story-block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 4rem;
+  flex-wrap: wrap;
+}
+
+.story {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4rem;
+  margin-bottom: 4rem;
+  flex-wrap: wrap;
+}
+
+
+.story-block:nth-child(even):not(.no-flip) {
+  flex-direction: row-reverse;
+}
+
+.story.highlight.no-flip {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+
+.story-text {
+  flex: 1 1 500px;
+  max-width: 700px;
+
+}
+
+.story-image {
+  flex: 1 1 300px;
+  max-width: 250px;
+}
+
+.story-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.story-text h2 {
+  font-size: 1.6rem;
+  color: #000000;
+  margin-bottom: 1rem;
+}
+
+
+.story-text p {
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+
+.highlight {
+  background-color: #faf6f9;
+  padding: 2rem;
+  border-left: 5px solid #c49c9c;
+  border-radius: 8px;
+  max-width: 800px;
+}
+
+.highlight-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.highlight .logoimg {
+  max-width: 60px;
+  max-height: 60px;
+}
+
+
+.center-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.closing-line {
+  text-align: center;
+  font-size: 1.2rem;
+  margin-top: 2rem;
+}
+
+ .custom-link {
+  color: inherit;          
+  text-decoration: none;   
+    transition: color 0.3s ease;
+}
+
+.custom-link:hover {
+  color: #544caf; 
+}
+
+
+.jana-title {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #4b2e2e;
+}
+
+.jana-title em {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #4b2e2e;
+}
+
+/* Show only on screens <=768px */
+@media (max-width: 768px) {
+  .mobile-banner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(to right, #fff8d0, #ffe3e5, #ffcef9);
+    padding: 2rem 1rem;
+    text-align: center;
+  }
+
+  .title-img {
+    max-width: 70%;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+  }
+
+  .underheading {
+    font-size: 25px;
+  }
+  
+  .profile-img {
+    width: 130px;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+  }
+
+  .name-img {
+    width: 200px;
+    margin-bottom: 2rem;
+  }
+
+  .quote-img {
+    width: 400px;
+    height: auto;
+  }
+
+  
+  .carousel-control-prev,
+  .carousel-control-next {
+    display: none;
+  }
+
+  .story-text,
+  .story-text-block {
+    padding: 0 1.5rem;
+  }
+
+  .story-text p {
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+  
+}
+
+
+
+
+/* CSS for missionvalues.html */
+
+.mission-title {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #4b2e2e;
+}
+
+.values-title {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #4b2e2e;
+}
+
+
+    .container-narrow {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #693e67;
+    }
+
+    .values-section {
+  padding: 60px 20px;
+  background: #fff;
+  text-align: center;
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.value-card {
+  border-radius: 20px;
+  padding: 30px 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.value-card img {
+  width: 60px;
+  height: auto;
+  margin-bottom: 15px;
+}
+
+.value-card h3 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.4rem;
+  color: #1f1f1f;
+  margin-bottom: 10px;
+}
+
+.value-card p {
+  font-family: 'Lato', sans-serif;
+  font-size: 0.95rem;
+  color: #444;
+  line-height: 1.5;
+}
+
+.value-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.1);
+}
+
+/* Show only on mobile */
+@media (max-width: 768px) {
+  
+  .mission-logo {
+    max-width: 65px;
+    max-height: 65px;
+    margin-bottom: 0.5rem;
+    
+  }
+
+  .mission-text {
+    max-width: 70px;
+    margin-bottom: 2rem;
+  }
+
+   .mission-maintitle {
+    max-width: 90%;
+    margin-bottom: 3rem;
+    margin-top: 2rem;
+  }
+  
+  h1 {
+    font-size: 2rem;
+  }
+  
+  .section h2 {
+    font-size: 1.5rem;
+  }
+}
+    
+
+/* CSS for fitness page    */
+
+ 
+.story-nb {
+  max-width: 350px;
+}
+
+.story-nb img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.story-nb .carousel-inner img {
+  border-radius: 10px;
+  max-height: 300px;
+  object-fit: cover;
+}
+
+
+
+.fitnesswhy {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #4b2e2e;
+}
+
+.fitnessmsg {
+  font-size: 1.4rem;
+  color: #4b2e2e;
+}
+
+
+/* Show only on mobile */
+@media (max-width: 768px) {
+
+  .story-nb {
+    padding: 0.5rem;
+  }
+
+}
+
+
+/* Music page */
+
+@media (max-width: 768px) {
+  .music-quote {
+    max-width: 300px;
+    height: auto;
+  }
+
+  .music-title {
+    max-width: 55%;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+  }
+  
+
+}
+
+/* Healing Compositions */
+
+/* Healing Compositions (scoped utilities for this page) */
+:root{
+  --fg:#131316;
+  --muted:#5b5b70;
+  --card:#f4f4f4;
+  --accent:#7b4ab8;
+  --ring:rgba(0,0,0,.08);
+}
+
+.cta-card{
+  background:var(--card);
+  border:1px solid var(--ring);
+  border-radius:20px;
+  padding:22px 18px;
+  margin-bottom:18px;
+  text-align:center;
+}
+.cta-card h2{
+  font-family:'Playfair Display', serif;
+  font-size:clamp(28px, 4.6vw, 40px);
+  letter-spacing:0.5px;
+  margin:0 0 6px;
+}
+.cta-card p{
+  color:var(--muted);
+  margin:0 0 8px;
+  font-size:14px;
+}
+
+.links{ 
+  display:flex; 
+  flex-direction:column; 
+  gap:12px; 
+  margin-top:14px; }
+
 .link-btn{
-  display:flex;align-items:center;gap:12px;width:100%;text-decoration:none;color:var(--fg);
-  padding:14px 16px;border-radius:14px;background:#fdf7f8;border:1px solid var(--ring);
-  transition:transform .08s ease, border-color .2s ease, background .2s ease;
+  display:flex; 
+  align-items:center; 
+  gap:12px;
+  width:100%; 
+  text-decoration:none; 
+  color:var(--fg);
+  padding:14px 16px; 
+  border-radius:14px; 
+  background:#fdf7f8;
+  border:1px solid var(--ring);
+  transition: transform .08s ease, border-color .2s ease, background .2s ease;
 }
-.link-btn:hover{transform:translateY(-2px);background:#fae6e7;color:var(--fg)}
-.icon{width:22px;height:22px;flex:0 0 22px}
-.label{font-weight:600;font-size:15px}
-.hint{margin-left:auto;color:var(--muted);font-size:12px}
-.embed{overflow:hidden;border-radius:16px;border:1px solid var(--ring);background:#000;aspect-ratio:16/9;margin-top:8px}
-.fineprint{color:var(--muted);font-size:12px;text-align:center;margin-top:28px}
-@media (prefers-color-scheme:light){
-  :root{ --fg:#131316; --muted:#5b5b70; --card:#f7f7fb; --ring:rgba(0,0,0,.08) }
-  .link-btn{background:#fff}
+.link-btn:hover{ 
+  transform: translateY(-2px); 
+  background:#fae6e7; 
+  color: var(--fg); /* Stops turning blue */
+  }
+
+.icon{ 
+  width:22px; 
+  height:22px; 
+  flex:0 0 22px; }
+
+.label{ 
+  font-weight:600; 
+  font-size:15px; }
+
+.hint{ 
+  margin-left:auto; 
+  color:var(--muted); 
+  font-size:12px; }
+
+.embed{
+  overflow:hidden; 
+  border-radius:16px; 
+  border:1px solid var(--ring);
+  background:#000; 
+  aspect-ratio:16/9; 
+  margin-top:8px;
 }
-@media (max-width:768px){
-  .compositions-title{max-width:90%;margin:2rem 0 4rem}
-  .heal-quote{max-width:200px;height:auto;margin-top:2rem}
+.fineprint{ 
+  color:var(--muted); 
+  font-size:12px; 
+  text-align:center; 
+  margin-top:28px; }
+
+@media (prefers-color-scheme: light){
+  :root{ --fg:#131316; 
+    --muted:#5b5b70; 
+    --card:#f7f7fb; 
+    --ring:rgba(0,0,0,.08); }
+
+  .link-btn{ background:#fff; }
 }
+
+@media (max-width: 768px) {
+  
+
+  .compositions-title {
+    max-width: 90%;
+    margin-bottom: 4rem;
+    margin-top: 2rem;
+  }
+
+  .heal-quote {
+    max-width: 200px;
+    height: auto;
+    margin-top: 2rem;
+  }
+
+
+}
+
 
 /* Behind the music */
-.video-container{position:relative;width:100%;aspect-ratio:16/9}
-.video-container iframe{position:absolute;inset:0;width:100%;height:100%}
-.pull-quote{font-style:italic;margin-top:1rem}
-@media (max-width:768px){ .featherfall-quote{max-width:300px;height:auto;margin-top:2rem} }
+.video-container { position: relative; width: 100%; aspect-ratio: 16/9; }
+.video-container iframe { position: absolute; inset: 0; width: 100%; height: 100%; }
+.pull-quote { font-style: italic; margin-top: 1rem; }
+
+@media (max-width: 768px){
+.featherfall-quote {
+    max-width: 300px;
+    height: auto;
+    margin-top: 2rem;
+  }
+}
 
 /* Curly hair */
-.story-intro p{text-align:center;max-width:800px;margin:0 auto}
-@media (max-width:768px){
-  .curl-title{max-width:80%;margin:2rem 0 1rem}
-  .story-intro{padding:0 1.5rem}
+
+.story-intro p {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
-/* =========================
-   Pastel group wrapper
-   ========================= */
-:root{ --group-bg:#fff; --group-ring:rgba(0,0,0,.06); --group-max:1200px }
-.pastel-group{
-  background:var(--group-bg);border:1px solid var(--group-ring);border-radius:32px;box-shadow:0 10px 32px rgba(0,0,0,.06);
-  max-width:var(--group-max);margin:36px auto;padding:clamp(24px,4vw,48px);overflow:hidden;
-}
-.pastel-group > h2:first-child{margin-top:0}
-.pastel-group h2{margin-bottom:1rem;text-align:center}
-.pastel-group > * + *{margin-top:clamp(16px,3vw,32px);padding-top:clamp(8px,2vw,16px);border-top:1px dashed rgba(0,0,0,.06)}
-.pastel-group > h2 + *{border-top:0;padding-top:0;margin-top:clamp(12px,2.4vw,24px)}
-.pastel-group .container,.pastel-group .container-fluid{
-  max-width:calc(var(--group-max) - 2 * clamp(16px,3vw,32px));margin-inline:auto
-}
-.pastel-group .carousel-img{max-width:560px}
-.pastel-group img{border-radius:12px}
-.pastel-group .read-more-btn,.pastel-group .diary-btn,.pastel-group .carouseldownload-btn,.pastel-group .download-btn{
-  box-shadow:0 6px 16px rgba(169,76,175,.12)
-}
-@media (max-width:768px){
-  .pastel-group{border-radius:20px;margin:24px 12px;padding:16px 12px 40px}
-  .pastel-group .carousel-img{max-width:100%}
-  .pastel-group .healing-pillars{padding-bottom:80px}
-}
-
-/* =========================
-   Footer
-   ========================= */
-.site-footer{
-  background:linear-gradient(to right,#fff9d9,#ffe3e5,#ffdcfb);color:#333;padding:2rem;text-align:center
-}
-.footer-heading h3{font-family:'Georgia',serif}
-.footer-container{display:flex;flex-wrap:wrap;justify-content:space-around;gap:2rem;margin-bottom:1rem}
-.footer-column{flex:1;min-width:200px}
-.footer-column h4{font-size:1.2rem;margin-bottom:.8rem;color:#000}
-.footer-column a{color:#333;text-decoration:none;display:block;align-items:center;margin:.3rem 0;transition:color .3s}
-.footer-column a:hover{color:#cc5b90}
-.footer-column i{margin-right:.5rem;color:#a94caf;font-size:1.1rem;width:1.5rem;text-align:center}
-.footer-column a:hover i{color:#e07fa1}
-.footer-credit{font-size:.9rem;margin-top:2rem;text-align:center;color:#888}
-
-.music-column{display:flex;flex-direction:column;align-items:center}
-.music-column h4{text-align:center;margin-bottom:.8rem}
-.music-links{display:flex;justify-content:center;gap:2rem;flex-wrap:nowrap;width:100%}
-.music-left a,.music-right a{display:inline-flex;align-items:center;gap:.5rem;min-width:0;white-space:nowrap}
-
-@media (max-width:768px){
-  .footer-container{flex-direction:column;gap:2rem}
-  .footer-column{padding:1rem 0;margin:1rem 0;gap:.75rem .9rem}
-  .footer-column.music-column{border-top:1px solid #ccc;border-bottom:1px solid #ccc;padding:3.5rem 0;margin:0}
-  .footer-column:last-child{border-bottom:none;margin-bottom:0}
-  .footer-column.horizontal-links a{display:inline-block;margin:.3rem 1rem .3rem 0;vertical-align:top}
-  .link-group a{margin:.3rem 1rem .3rem 0}
-  .horizontal-links .link-group{display:flex;justify-content:center;gap:2rem;flex-wrap:wrap}
-  .horizontal-links .link-group a{display:inline-flex;align-items:center;gap:.5rem;margin:0}
-  .music-links{display:flex;flex-wrap:wrap;justify-content:center;gap:2rem;width:100%}
-  .music-left,.music-right{display:flex;flex-direction:column;gap:.75rem}
-  /* Music as two equal columns */
-  .footer-column.music-column .music-links{
-    display:grid;grid-template-columns:1fr 1fr;column-gap:2rem;row-gap:.75rem;justify-items:start;align-items:start;width:100%
+@media (max-width: 768px){
+ .curl-title {
+    max-width: 80%;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
   }
-  .footer-column.music-column .music-left,
-  .footer-column.music-column .music-right{display:grid;gap:.75rem}
-  .footer-column.music-column .music-links a{display:inline-flex;align-items:center;gap:.5rem;margin:0;white-space:nowrap}
+
+  .story-intro {
+ padding: 0 1.5rem;}
+
 }
+
+:root{
+  /* tweak these to adjust the vibe */
+  --group-bg: #ffffff;                 /* light pastel */
+  --group-ring: rgba(0, 0, 0, 0.06);/* soft border/shadow tint */
+  --group-max: 1200px;                 /* max width on desktop */
+}
+
+.pastel-group{
+  background: var(--group-bg);
+  border: 1px solid var(--group-ring);
+  border-radius: 32px;
+  box-shadow: 0 10px 32px rgba(0,0,0,.06);
+  max-width: var(--group-max);
+  margin: 36px auto;
+  padding: clamp(24px, 4vw, 48px); /* ↑ more generous; applies to all sides */
+  overflow: hidden;
+}
+
+
+.pastel-group > h2:first-child { 
+  margin-top: 0; 
+}
+.pastel-group h2 { 
+  margin-bottom: 1rem; 
+  text-align: center; 
+}
+
+
+/* Give consistent spacing between the child sections inside the group */
+.pastel-group > * + *{
+  margin-top: clamp(16px, 3vw, 32px);
+  padding-top: clamp(8px, 2vw, 16px);
+  border-top: 1px dashed rgba(0,0,0,.06); /* faint divider; remove if you prefer */
+}
+
+/* add this override */
+.pastel-group > h2 + *{
+  border-top: 0;
+  padding-top: 0;
+  margin-top: clamp(12px, 2.4vw, 24px);
+}
+
+
+/* Make wide inner containers behave inside the curved card */
+.pastel-group .container,
+.pastel-group .container-fluid{
+  max-width: calc(var(--group-max) - 2 * clamp(16px, 3vw, 32px));
+  margin-inline: auto;
+}
+
+/* Make carousels and images respect the rounded shape */
+.pastel-group .carousel-img{
+  max-width: 560px;                  /* optional: a little larger in the card */
+}
+.pastel-group img{
+  border-radius: 12px;               /* softer image corners inside the card */
+}
+
+/* Buttons read nicely on pastel */
+.pastel-group .read-more-btn,
+.pastel-group .diary-btn,
+.pastel-group .carouseldownload-btn,
+.pastel-group .download-btn{
+  box-shadow: 0 6px 16px rgba(169, 76, 175, .12);
+}
+
+/* Mobile tweaks */
+@media (max-width: 768px){
+  .pastel-group{
+    border-radius: 20px;
+    margin: 24px 12px;               
+    padding: 16px 12px 40px;   
+  }
+  
+  .pastel-group .carousel-img{ 
+    max-width: 100%; 
+  }
+
+  .pastel-group .healing-pillars{ padding-bottom: 80px; } /* small buffer */
+
+  }
+
+  
+
+
+/* Footer */
+.site-footer {
+  background: linear-gradient(to right, #fff9d9, #ffe3e5, #ffdcfb);
+  color: #333;
+  padding: 2rem;
+  text-align: center;
+}
+
+.footer-heading h3 {
+font-family: 'Georgia', serif;
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 2rem;
+  margin-bottom: 1rem;
+  }
+
+.footer-column {
+  flex: 1;
+  min-width: 200px;
+}
+
+.footer-column h4 {
+  font-size: 1.2rem;
+  margin-bottom: 0.8rem;
+  color: #000000;
+}
+
+.footer-column a {
+  color: #333;
+  text-decoration: none;
+  display: block;
+  align-items: center;
+  margin: 0.3rem 0;
+  transition: color 0.3s;
+}
+
+.footer-column a:hover {
+  color: #cc5b90;
+}
+
+.footer-column i {
+  margin-right: 0.5rem;
+  color: #a94caf; 
+  font-size: 1.1rem;
+  width: 1.5rem; /* fixes icon width to match alignment */
+  text-align: center;
+}
+
+
+
+.footer-credit {
+  font-size: 0.9rem;
+  margin-top: 2rem;
+  text-align: center;
+  color: #888;
+}
+
+.footer-column a:hover i {
+  color: #e07fa1;
+}
+
+.music-column h4 {
+  text-align: center;
+  margin-bottom: 0.8rem;
+}
+
+.music-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.music-links {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: nowrap;
+  width: 100%;
+}
+
+.music-left a,
+.music-right a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;              /* allow shrinking */
+  white-space: nowrap;       /* optional: keep text on one line */
+}
+
+
+
+/* Responsive mobile adjustments */
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    gap: 2rem;
+    
+  }
+
+  .footer-column {
+    
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+    margin: 1rem 0;
+    gap: 0.75rem 0.9rem;
+
+  }
+
+  .footer-column.music-column {
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+    margin-top: 0rem;
+    margin-bottom: 0rem;
+  }
+
+  .footer-column:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+
+  .footer-column.horizontal-links a {
+    display: inline-block;
+    margin: 0.3rem 1rem 0.3rem 0;
+    vertical-align: top;
+  }
+
+  .link-group a {
+    margin:  0.3rem 1rem 0.3rem 0;
+  }
+
+   .horizontal-links .link-group {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .horizontal-links .link-group a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0;
+  }
+
+ /* Music: match the column gap style of Just Jana & Fitness & Wellness */
+.music-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem; /* horizontal gap between columns */
+  width: 100%;
+}
+
+.music-left,
+.music-right {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem; /* vertical space between links inside a column */
+}
+
+
+  }
+
+
+
+
+/* Mobile: show Music as two columns with an equal gap */
+@media (max-width: 768px) {
+  .footer-column.music-column .music-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* two equal columns */
+    column-gap: 2rem;               /* match the gap you like */
+    row-gap: 0.75rem;
+    justify-items: start;
+    align-items: start;
+    width: 100%;
+  }
+
+  .footer-column.music-column .music-left,
+  .footer-column.music-column .music-right {
+    display: grid;                  /* keep links stacked within each column */
+    gap: 0.75rem;
+  }
+
+  /* make sure icon + text stay aligned nicely */
+  .footer-column.music-column .music-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0;                      /* spacing comes from grid gaps */
+    white-space: nowrap;
+  }
+}
+
+
