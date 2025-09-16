@@ -13,17 +13,20 @@
     
   
     <!-- Font-->
-       <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Lato:wght@400;500;700&family=Poppins:wght@400;500;600&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Lato:wght@400;500;700&family=Poppins:wght@400;500;600&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="..." crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <!-- Title of document -->
     <title>About | Jana's Story</title>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="..." crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-
     <!-- Favicon icon -->
     <link rel="shortcut icon" type="image/png" href="img/Logos/favicon.png">
+
+     <!-- Preload desktop hero image -->
+    <link rel="preload" as="image" href="img/Main banners/jana story.jpg">
+
+
 
     <!-- Reference to CSS file -->
     <link rel="stylesheet" type="text/css" href="CSS/index stylesheet.css">
@@ -35,13 +38,13 @@
     <header>
       
       <!-- Navbar -->
-       <nav id="siteNav" class="navbar navbar-expand-xl navbar-light">
-  <div class="container-fluid pe-0">
+      <nav id="siteNav" class="navbar navbar-expand-xl navbar-light">
+        <div class="container-fluid pe-0">
           <!-- Left: Logo -->
-    <a class="navbar-brand me-3" href="index.html">
-      <img src="img/Logos/logohanddrawnbw.png" alt="Logo" width="50" height="45" 
-           class="d-inline-block align-text-top">
-    </a>
+          <a class="navbar-brand me-3" href="index.html">
+            <img src="img/Logos/logohanddrawnbw.png" alt="Just Jana wordmark" class="d-inline-block align-text-top ms-2">
+          </a>
+
           <!-- Toggler -->
 <button class="navbar-toggler" type="button"
         data-bs-toggle="collapse"
@@ -319,16 +322,32 @@
                   <li><a class="dropdown-item" href="#">Letters to My Sisters</a></li>
                 </ul>
               </li>
-              </div>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
+              <!-- Inline nav search (desktop & mobile) -->
+              <li class="nav-item jj-nav-search-item">
+                <form id="jjNavSearchForm" class="jj-nav-search" role="search" aria-label="Search Just Jana">
+                  <label for="jjNavSearchInput" class="visually-hidden">Search Just Jana</label>
+                  <input id="jjNavSearchInput" name="q" type="search" inputmode="search" autocomplete="off" placeholder="Search Just Jana…">
+                  <button class="jj-nav-search-btn" type="submit">Search</button>
+                </form>
+                <div id="jjNavSearchResults" class="jj-search-results jj-suggest" aria-live="polite"></div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
 
-              
-  </div>
-</nav>
-
-
-            
-          
-  </header>
+      <!-- Centered Search Results Modal -->
+      <div id="jjSearchOverlay" class="jj-search-overlay" hidden></div>
+      <div id="jjSearchModal" class="jj-search-modal" hidden role="dialog" aria-modal="true" aria-labelledby="jjSearchTitle">
+        <div class="jj-search-modal-card">
+          <button class="jj-search-close" type="button" aria-label="Close">×</button>
+          <h3 id="jjSearchTitle" class="jj-search-title">Search results</h3>
+          <div id="jjSearchModalResults" class="jj-search-results" aria-live="polite"></div>
+        </div>
+      </div>
+    </header>
+    <main>
     
   
     <img src="img/Main banners/jana story.jpg" alt="Hero Image" class="full-width-image">
@@ -484,6 +503,7 @@
     </div>
   </div>
 </section>
+</main>
 
     
       
