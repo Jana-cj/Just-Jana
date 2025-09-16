@@ -3,56 +3,56 @@
     "title": "Home",
     "url": "index.html",
     "section": "Home",
-    "tags": ["welcome", "intro"],
+    "tags": ["welcome", "intro", "home"],
     "content": "Welcome to Just Jana — a healing and empowerment space..."
   },
   {
     "title": "My Story",
     "url": "janasstory.html",
     "section": "About",
-    "tags": ["about", "journey"],
+    "tags": ["about", "journey","learned helplessness","vegan","femur fracture","featherfall","calisthenics"],
     "content": "I grew up being told to shrink... This is where I began reclaiming myself..."
   },
   {
     "title": "My Music Journey",
     "url": "musicstory.html",
     "section": "Soul",
-    "tags": ["music", "healing through music","journey"],
+    "tags": ["music", "healing through music","journey","featherfall"],
     "content": "Music became medicine — compositions, covers, how I record and produce..."
   },
   {
     "title": "My Fitness Journey",
     "url": "fitnessstory.html",
     "section": "Body",
-    "tags": ["fitness", "journey"],
+    "tags": ["fitness", "journey","netball","calisthenics","femur fracture"],
     "content": "I grew up skinny... This is how I overcame skinny to strong..."
   },
   {
     "title": "My Curly Hair Journey",
     "url": "hair.html",
     "section": "Heart",
-    "tags": ["curly hair", "journey"],
+    "tags": ["curly hair", "journey","curly girl method","diffuser"],
     "content": "Learning to embrace my natural curls..."
   },
   {
     "title": "My Tan Skin Journey",
     "url": "skin.html",
     "section": "Heart",
-    "tags": ["skin", "journey"],
+    "tags": ["skin", "journey","brown","colorism","colonise","golden"],
     "content": "Learning to embrace my tan complexion"
   },
   {
     "title": "Curly Hair Routine",
     "url": "hairroutine.html",
     "section": "Body",
-    "tags": ["curly hair", "self-care"],
+    "tags": ["curly hair", "self-care","diffuser"],
     "content": "Simple, gentle curly routine… wash days, refresh, protecting curls overnight…"
   },
   {
     "title": "Monthly Mantra",
     "url": "mantra.html",
     "section": "Mind",
-    "tags": ["affirmation", "mindfulness"],
+    "tags": ["affirmation", "mindfulness","quote","mantra","positive"],
     "content": "This month’s mantra is about softness and strength coexisting…"
   }
 ]
