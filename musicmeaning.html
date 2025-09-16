@@ -932,5 +932,73 @@
       })();
     </script>
 
+    <script>
+/* ===========================================================
+   Just Jana — Story stagger reveal (text → image → center)
+   =========================================================== */
+(function () {
+  const blocks = Array.from(document.querySelectorAll('.story-block'));
+  const centerWrap = document.querySelector('.center-wrapper');
+
+  if (!('IntersectionObserver' in window)) {
+    // Fallback: reveal everything if IO isn't supported
+    blocks.forEach(b => {
+      b.classList.add('already-seen');
+      b.querySelector('.story-text')?.classList.add('is-revealed');
+      b.querySelector('.story-image')?.classList.add('is-revealed');
+    });
+    centerWrap?.classList.add('is-revealed');
+    return;
+  }
+
+  // Reveal one block's children with a stagger
+  function revealBlock(block) {
+    const text = block.querySelector('.story-text');
+    const img  = block.querySelector('.story-image');
+
+    if (text && !text.classList.contains('is-revealed')) {
+      text.classList.add('is-revealed');
+    }
+    // image second (small delay for a clear stagger)
+    if (img && !img.classList.contains('is-revealed')) {
+      // If user scrolled super fast, we still stagger a touch
+      setTimeout(() => img.classList.add('is-revealed'), 200);
+    }
+  }
+
+  // Observer for story blocks
+  const blockObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const block = entry.target;
+      if (entry.isIntersecting) {
+        revealBlock(block);
+        // Mark as seen and stop observing to avoid re-trigger
+        block.classList.add('already-seen');
+        blockObserver.unobserve(block);
+      }
+    });
+  }, {
+    root: null,
+    threshold: 0.18   // triggers a bit before fully in view
+  });
+
+  blocks.forEach(b => blockObserver.observe(b));
+
+  // Observer for center wrapper (final reveal)
+  if (centerWrap) {
+    const centerObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          centerWrap.classList.add('is-revealed');
+          centerObserver.unobserve(centerWrap);
+        }
+      });
+    }, { threshold: 0.18 });
+    centerObserver.observe(centerWrap);
+  }
+})();
+</script>
+
+
   </body>
 </html>
