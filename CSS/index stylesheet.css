@@ -336,7 +336,7 @@ header{ height: var(--nav-h); }
 
   /* Logo stays left; trim the gap as you like */
   #siteNav .navbar-brand{
-    margin-right: 280px !important; /* tweak to taste */
+    margin-right: 240px !important; /* tweak to taste */
   }
 
   /* Put the collapsible area (that contains the <ul>) in the middle column */
