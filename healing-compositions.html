@@ -10,7 +10,9 @@
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-    
+    <!-- Bootstrap JS Bundle (includes Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+
     <!-- Font-->
     <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Lato:wght@400;500;700&family=Poppins:wght@400;500;600&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="..." crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -486,334 +488,514 @@
     <div class="footer-credit">© 2025 Just Jana. All rights reserved.</div>
   </footer>
 
-<!-- Bootstrap JS Bundle (includes Popper) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
-
-
+    <!-- AOS: tag elements FIRST, then init -->
 <script>
-/* ==========================================================================
-   Just Jana — NAVBAR (bulletproof mobile toggle)
-   - Mobile (<1200px): one open at a time; second tap closes
-   - Desktop (≥1200px): hover opens, mouseout closes (Bootstrap-driven)
-   - We disable Bootstrap's data-API on mobile to avoid double toggles,
-     and restore it on desktop.
-   ========================================================================== */
-(function () {
-  const XL = '(min-width: 1200px)';
-  const XL_UP = window.matchMedia(XL);
-  const HOVER_DEVICE = window.matchMedia('(hover:hover)');
-
-  const nav        = document.getElementById('siteNav');
-  const collapseEl = document.getElementById('navbarSupportedContent');
-
-  const $$  = (sel, root=document) => Array.from(root.querySelectorAll(sel));
-  const topItems   = $$('.nav-item.dropdown', nav);
-  const topToggles = $$('.nav-item.dropdown > a.dropdown-toggle', nav);
-
-  /* ---------- Overlay + body lock ---------- */
-  let overlay = document.getElementById('jjNavOverlay');
-  if(!overlay){
-    overlay = document.createElement('div');
-    overlay.id = 'jjNavOverlay';
-    document.body.appendChild(overlay);
+  function jjStagger(selector, baseDelay=0, step=120){
+    const nodes = document.querySelectorAll(selector);
+    nodes.forEach((el, i) => {
+      el.setAttribute('data-aos', el.getAttribute('data-aos') || 'fade-up');
+      el.setAttribute('data-aos-delay', String(baseDelay + i*step));
+    });
   }
-  function lockBody(){
-    document.body.classList.add('nav-open');
-    document.documentElement.style.overflow = 'hidden';
-    document.body.style.overflow = 'hidden';
-    overlay.style.display = 'block';
-  }
-  function unlockBody(){
-    document.body.classList.remove('nav-open');
-    document.documentElement.style.overflow = '';
-    document.body.style.overflow = '';
-    overlay.style.display = 'none';
-  }
-  overlay.addEventListener('click', () => {
-    if (collapseEl && collapseEl.classList.contains('show')) {
-      bootstrap.Collapse.getOrCreateInstance(collapseEl).hide();
-    }
-    closeAllDropdowns();
-    unlockBody();
-  }, {passive:true});
-
-  /* ---------- Minimal CSS injection for overlay/mobile scroll ---------- */
-  (function injectCSS(){
-    if (document.querySelector('style[data-jj-nav="mobile-safe"]')) return;
-    const tag = document.createElement('style');
-    tag.setAttribute('data-jj-nav','mobile-safe');
-    tag.textContent = `
-      #jjNavOverlay{position:fixed; inset: var(--nav-h) 0 0 0; background:rgba(0,0,0,.25);
-        backdrop-filter:blur(2px); -webkit-backdrop-filter:blur(2px); z-index:998; display:none;}
-      body.nav-open #jjNavOverlay{display:block;}
-      @media (max-width:1199.98px){
-        #navbarSupportedContent{max-height:calc(100vh - var(--nav-h)); overflow:auto; -webkit-overflow-scrolling:touch;}
-        .dropdown-menu{background:#fff !important; backdrop-filter:none !important; -webkit-backdrop-filter:none !important;}
-      }
-    `;
-    document.head.appendChild(tag);
-  })();
-
-  /* ---------- Helpers ---------- */
-  function isMobile(){ return !XL_UP.matches; }
-  function anyDropdownOpen(){ return !!nav.querySelector('.nav-item.dropdown.show'); }
-
-  function closeSubmenus(root){
-    (root ? root.querySelectorAll('.dropdown-submenu > .dropdown-menu.show')
-          : document.querySelectorAll('.dropdown-submenu > .dropdown-menu.show'))
-    .forEach(menu=>{
-      menu.classList.remove('show');
-      menu.previousElementSibling?.setAttribute('aria-expanded','false');
+  function jjTag(selector, aos='fade-up', delay=0){
+    document.querySelectorAll(selector).forEach(el=>{
+      el.setAttribute('data-aos', aos);
+      if(delay) el.setAttribute('data-aos-delay', String(delay));
     });
   }
 
-  function forceHideItem(li){
-    li.classList.remove('show');
-    const toggle = li.querySelector(':scope > a.dropdown-toggle');
-    const menu   = li.querySelector(':scope > .dropdown-menu');
-    if (toggle) toggle.setAttribute('aria-expanded','false');
-    if (menu)   menu.classList.remove('show');
-    closeSubmenus(li);
-  }
+  document.addEventListener('DOMContentLoaded', () => {
+    // Major sections
+    jjTag('.welcome-section', 'fade-up', 0);
+    jjTag('.jana-values-section', 'fade-up', 0);
+    jjTag('.healing-pillars', 'fade-up', 0);
+    jjTag('.jj-journeys-head', 'fade-up', 0);
+    jjTag('.diary-section', 'fade-up', 0);
+    jjTag('.carousel-section', 'fade-up', 0);
+    jjTag('.freebies-section', 'fade-up', 0);
 
-  function closeAllDropdowns(exceptLi=null){
-    topItems.forEach(li => { if (li !== exceptLi) forceHideItem(li); });
-  }
+    // Cards/grids (staggered)
+    jjStagger('.value-card', 0, 120);
+    jjStagger('.pillar-box', 0, 120);
+    jjStagger('.jj-journey', 0, 100);
+    jjStagger('.diary-card', 0, 120);
+    jjStagger('.freebie-card', 0, 120);
 
-  /* ---------- Desktop hover (Bootstrap keeps doing the work) ---------- */
-  if (HOVER_DEVICE.matches) {
-    topItems.forEach(li => {
-      li.addEventListener('mouseenter', () => {
-        if (!XL_UP.matches) return;
-        const t = li.querySelector(':scope > a.dropdown-toggle');
-        if (t) bootstrap.Dropdown.getOrCreateInstance(t, {autoClose:'outside'}).show();
+    // Init AOS after tagging
+    AOS.init({
+      startEvent: 'DOMContentLoaded',
+      offset: 80,
+      duration: 700,
+      easing: 'ease-out',
+      delay: 0,
+      once: true,
+      mirror: false,
+      anchorPlacement: 'top-bottom'
+    });
+
+    // If late-loading images shift layout, refresh once everything is fully loaded
+    window.addEventListener('load', () => AOS.refreshHard());
+  });
+</script>
+
+<!-- GSAP + ScrollTrigger -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    gsap.registerPlugin(ScrollTrigger);
+
+    /* ---------- Blur-only reveal for DESKTOP hero ---------- */
+    const desktopHero = document.querySelector('.hero-parallax');
+    if (desktopHero) {
+      // visible immediately, but blurred
+      gsap.set(desktopHero, { filter: 'blur(18px)', opacity: 1, willChange: 'filter' });
+      gsap.to(desktopHero, {
+        filter: 'blur(0px)',
+        duration: 1.2,           // tweak speed here
+        ease: 'power2.out'
       });
-      li.addEventListener('mouseleave', () => {
-        if (!XL_UP.matches) return;
-        const t = li.querySelector(':scope > a.dropdown-toggle');
-        if (t) bootstrap.Dropdown.getOrCreateInstance(t).hide();
-      });
-    });
-  }
-
-  /* ---------- MOBILE MODE: disable Bootstrap data-API + manual toggle ---- */
-  function disableBootstrapOnMobile(){
-    topToggles.forEach(t=>{
-      if (t.hasAttribute('data-bs-toggle')) {
-        t.dataset.jjOrigToggle = t.getAttribute('data-bs-toggle'); // save
-        t.removeAttribute('data-bs-toggle');                       // disable BS
-      }
-    });
-  }
-  function restoreBootstrapOnDesktop(){
-    topToggles.forEach(t=>{
-      if (t.dataset.jjOrigToggle){
-        t.setAttribute('data-bs-toggle', t.dataset.jjOrigToggle);
-        delete t.dataset.jjOrigToggle;
-      }
-    });
-  }
-
-  let currentOpenLi = null;
-
-  function openItem(li){
-    forceHideItem(li); // clear stale state first
-    li.classList.add('show');
-    const t = li.querySelector(':scope > a.dropdown-toggle');
-    const m = li.querySelector(':scope > .dropdown-menu');
-    if (t) t.setAttribute('aria-expanded','true');
-    if (m) m.classList.add('show');
-    currentOpenLi = li;
-    lockBody();
-  }
-  function hideItem(li){
-    forceHideItem(li);
-    if (currentOpenLi === li) currentOpenLi = null;
-    if (!anyDropdownOpen() && !(collapseEl && collapseEl.classList.contains('show'))) {
-      unlockBody();
     }
-  }
 
-  // Manual mobile tap handling (second tap closes; opening another closes current)
-  function bindMobileHandlers(){
-    topToggles.forEach(toggle=>{
-      toggle.addEventListener('click', function(e){
-        if (!isMobile()) return;          // only on mobile
-        e.preventDefault();
-        e.stopPropagation();
-        if (typeof e.stopImmediatePropagation === 'function') e.stopImmediatePropagation();
+    /* ---------- Blur + fade for MOBILE hero pieces ---------- */
+    const mobileBits = [
+      document.querySelector('.logo-mobile'),
+      document.querySelector('.text-mobile'),
+      document.querySelector('.tagline-mobile')
+    ].filter(Boolean);
 
-        const li = this.closest('.nav-item.dropdown');
-        const isOpen = li.classList.contains('show');
+    if (mobileBits.length) {
+      gsap.set(mobileBits, { filter: 'blur(18px)', opacity: 0, willChange: 'filter,opacity' });
+      gsap.to(mobileBits, {
+        filter: 'blur(0px)',
+        opacity: 1,
+        duration: 1.2,
+        ease: 'power2.out',
+        stagger: 0.08
+      });
+    }
 
-        // close others first (single-open)
-        closeAllDropdowns(li);
-
-        if (isOpen) {
-          hideItem(li);                   // second tap closes
-        } else {
-          openItem(li);                   // open tapped
+    /* ---------- Subtle parallax on desktop hero ---------- */
+    const wrap = document.querySelector('.hero-wrap');
+    if (desktopHero && wrap) {
+      gsap.to(desktopHero, {
+        yPercent: 12,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: wrap,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true
         }
-      }, true); // capture to beat any stray listeners
-    });
-  }
+      });
+    }
 
-  // Submenus: tap-to-toggle on mobile; hover niceties on desktop
-  function bindSubmenus(){
-    document.querySelectorAll('.dropdown-submenu').forEach(sub=>{
-      const trigger = sub.querySelector(':scope > .submenu-toggle');
-      const menu    = sub.querySelector(':scope > .dropdown-menu');
-      if (!trigger || !menu) return;
+    /* ---------- Optional: mobile hero container nudge on scroll ---------- */
+    const mobileHero = document.querySelector('.hero-mobile');
+    if (mobileHero) {
+      gsap.from(mobileHero, {
+        y: 16,
+        duration: 0.8,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: mobileHero,
+          start: 'top 85%',
+          toggleActions: 'play none none none',
+          once: true
+        }
+      });
+    }
+  });
+</script>
 
-      function closeSiblings(){
-        const parentMenu = sub.closest('.dropdown-menu');
-        parentMenu?.querySelectorAll('.dropdown-submenu > .dropdown-menu.show').forEach(m=>{
-          if (m !== menu){
-            m.classList.remove('show');
-            m.previousElementSibling?.setAttribute('aria-expanded','false');
+
+
+    <script>
+      /* ========================================================================== 
+         Just Jana — NAVBAR (bulletproof mobile toggle)
+         ========================================================================== */
+      (function () {
+        const XL = '(min-width: 1200px)';
+        const XL_UP = window.matchMedia(XL);
+        const HOVER_DEVICE = window.matchMedia('(hover:hover)');
+        const nav = document.getElementById('siteNav');
+        const collapseEl = document.getElementById('navbarSupportedContent');
+        const $$  = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+        const topItems   = $$('.nav-item.dropdown', nav);
+        const topToggles = $$('.nav-item.dropdown > a.dropdown-toggle', nav);
+        let overlay = document.getElementById('jjNavOverlay');
+        if(!overlay){
+          overlay = document.createElement('div');
+          overlay.id = 'jjNavOverlay';
+          document.body.appendChild(overlay);
+        }
+        function lockBody(){
+          document.body.classList.add('nav-open');
+          document.documentElement.style.overflow = 'hidden';
+          document.body.style.overflow = 'hidden';
+          overlay.style.display = 'block';
+        }
+        function unlockBody(){
+          document.body.classList.remove('nav-open');
+          document.documentElement.style.overflow = '';
+          document.body.style.overflow = '';
+          overlay.style.display = 'none';
+        }
+        overlay.addEventListener('click', () => {
+          if (collapseEl && collapseEl.classList.contains('show')) {
+            bootstrap.Collapse.getOrCreateInstance(collapseEl).hide();
           }
-        });
-      }
-
-      trigger.addEventListener('click', (e)=>{
-        e.preventDefault(); e.stopPropagation();
-        const isOpen = menu.classList.contains('show');
-        if (isOpen){
-          menu.classList.remove('show');
-          trigger.setAttribute('aria-expanded','false');
-        } else {
-          closeSiblings();
-          menu.classList.add('show');
-          trigger.setAttribute('aria-expanded','true');
+          closeAllDropdowns();
+          unlockBody();
+        }, {passive:true});
+        (function injectCSS(){
+          if (document.querySelector('style[data-jj-nav="mobile-safe"]')) return;
+          const tag = document.createElement('style');
+          tag.setAttribute('data-jj-nav','mobile-safe');
+          tag.textContent = `
+            #jjNavOverlay{position:fixed; inset: var(--nav-h) 0 0 0; background:rgba(0,0,0,.25);
+              backdrop-filter:blur(2px); -webkit-backdrop-filter:blur(2px); z-index:998; display:none;}
+            body.nav-open #jjNavOverlay{display:block;}
+            @media (max-width:1199.98px){
+              #navbarSupportedContent{max-height:calc(100vh - var(--nav-h)); overflow:auto; -webkit-overflow-scrolling:touch;}
+              .dropdown-menu{background:#fff !important; backdrop-filter:none !important; -webkit-backdrop-filter:none !important;}
+            }
+          `;
+          document.head.appendChild(tag);
+        })();
+        function isMobile(){ return !XL_UP.matches; }
+        function anyDropdownOpen(){ return !!nav.querySelector('.nav-item.dropdown.show'); }
+        function closeSubmenus(root){
+          (root ? root.querySelectorAll('.dropdown-submenu > .dropdown-menu.show')
+                : document.querySelectorAll('.dropdown-submenu > .dropdown-menu.show'))
+          .forEach(menu=>{
+            menu.classList.remove('show');
+            menu.previousElementSibling?.setAttribute('aria-expanded','false');
+          });
         }
+        function forceHideItem(li){
+          li.classList.remove('show');
+          const toggle = li.querySelector(':scope > a.dropdown-toggle');
+          const menu   = li.querySelector(':scope > .dropdown-menu');
+          if (toggle) toggle.setAttribute('aria-expanded','false');
+          if (menu)   menu.classList.remove('show');
+          closeSubmenus(li);
+        }
+        function closeAllDropdowns(exceptLi=null){
+          topItems.forEach(li => { if (li !== exceptLi) forceHideItem(li); });
+        }
+        if (HOVER_DEVICE.matches) {
+          topItems.forEach(li => {
+            li.addEventListener('mouseenter', () => {
+              if (!XL_UP.matches) return;
+              const t = li.querySelector(':scope > a.dropdown-toggle');
+              if (t) bootstrap.Dropdown.getOrCreateInstance(t, {autoClose:'outside'}).show();
+            });
+            li.addEventListener('mouseleave', () => {
+              if (!XL_UP.matches) return;
+              const t = li.querySelector(':scope > a.dropdown-toggle');
+              if (t) bootstrap.Dropdown.getOrCreateInstance(t).hide();
+            });
+          });
+        }
+        function disableBootstrapOnMobile(){
+          topToggles.forEach(t=>{
+            if (t.hasAttribute('data-bs-toggle')) {
+              t.dataset.jjOrigToggle = t.getAttribute('data-bs-toggle');
+              t.removeAttribute('data-bs-toggle');
+            }
+          });
+        }
+        function restoreBootstrapOnDesktop(){
+          topToggles.forEach(t=>{
+            if (t.dataset.jjOrigToggle){
+              t.setAttribute('data-bs-toggle', t.dataset.jjOrigToggle);
+              delete t.dataset.jjOrigToggle;
+            }
+          });
+        }
+        let currentOpenLi = null;
+        function openItem(li){
+          forceHideItem(li);
+          li.classList.add('show');
+          const t = li.querySelector(':scope > a.dropdown-toggle');
+          const m = li.querySelector(':scope > .dropdown-menu');
+          if (t) t.setAttribute('aria-expanded','true');
+          if (m) m.classList.add('show');
+          currentOpenLi = li; lockBody();
+        }
+        function hideItem(li){
+          forceHideItem(li);
+          if (currentOpenLi === li) currentOpenLi = null;
+          if (!anyDropdownOpen() && !(collapseEl && collapseEl.classList.contains('show'))) {
+            unlockBody();
+          }
+        }
+        function bindMobileHandlers(){
+          topToggles.forEach(toggle=>{
+            toggle.addEventListener('click', function(e){
+              if (!isMobile()) return;
+              e.preventDefault();
+              e.stopPropagation();
+              if (typeof e.stopImmediatePropagation === 'function') e.stopImmediatePropagation();
+              const li = this.closest('.nav-item.dropdown');
+              const isOpen = li.classList.contains('show');
+              closeAllDropdowns(li);
+              if (isOpen) { hideItem(li); } else { openItem(li); }
+            }, true);
+          });
+        }
+        function bindSubmenus(){
+          document.querySelectorAll('.dropdown-submenu').forEach(sub=>{
+            const trigger = sub.querySelector(':scope > .submenu-toggle');
+            const menu    = sub.querySelector(':scope > .dropdown-menu');
+            if (!trigger || !menu) return;
+            function closeSiblings(){
+              const parentMenu = sub.closest('.dropdown-menu');
+              parentMenu?.querySelectorAll('.dropdown-submenu > .dropdown-menu.show').forEach(m=>{
+                if (m !== menu){
+                  m.classList.remove('show');
+                  m.previousElementSibling?.setAttribute('aria-expanded','false');
+                }
+              });
+            }
+            trigger.addEventListener('click', (e)=>{
+              e.preventDefault(); e.stopPropagation();
+              const isOpen = menu.classList.contains('show');
+              if (isOpen){
+                menu.classList.remove('show');
+                trigger.setAttribute('aria-expanded','false');
+              } else {
+                closeSiblings();
+                menu.classList.add('show');
+                trigger.setAttribute('aria-expanded','true');
+              }
+            });
+            if (HOVER_DEVICE.matches){
+              let timer;
+              const open = ()=>{ clearTimeout(timer); closeSiblings(); menu.classList.add('show'); trigger.setAttribute('aria-expanded','true'); };
+              const close= ()=>{ clearTimeout(timer); timer=setTimeout(()=>{ menu.classList.remove('show'); trigger.setAttribute('aria-expanded','false'); },120); };
+              trigger.addEventListener('mouseenter', ()=>{ if (XL_UP.matches) open(); });
+              trigger.addEventListener('mouseleave', ()=>{ if (XL_UP.matches) close(); });
+              menu.addEventListener('mouseenter',    ()=>{ if (XL_UP.matches) open(); });
+              menu.addEventListener('mouseleave',    ()=>{ if (XL_UP.matches) close(); });
+            }
+          });
+        }
+        if (collapseEl){
+          collapseEl.addEventListener('shown.bs.collapse', ()=>{ lockBody(); });
+          collapseEl.addEventListener('hidden.bs.collapse', ()=>{
+            closeAllDropdowns(); currentOpenLi = null; unlockBody();
+          });
+        }
+        document.addEventListener('click', (e)=>{
+          const a = e.target.closest && e.target.closest('a[href]');
+          if (!a) return;
+          const isTopToggle   = a.matches('.nav-item.dropdown > a.dropdown-toggle,[data-bs-toggle="dropdown"]');
+          const isSubmenuTog  = a.matches('.submenu-toggle');
+          const insideDropdown= a.closest('.dropdown-menu') !== null;
+          if (collapseEl && collapseEl.classList.contains('show')){
+            if (isTopToggle || isSubmenuTog || insideDropdown) return;
+            bootstrap.Collapse.getOrCreateInstance(collapseEl).hide();
+            closeAllDropdowns(); unlockBody();
+          }
+        }, {capture:true});
+        const setH = () => {
+          if (XL_UP.matches) {
+            document.documentElement.style.setProperty('--nav-h', (nav?.offsetHeight || 80) + 'px');
+          }
+        };
+        setH(); addEventListener('resize', setH, {passive:true});
+        let lastY = window.scrollY;
+        addEventListener('scroll', ()=>{
+          if (XL_UP.matches) closeAllDropdowns();
+          const y = window.scrollY;
+          const mayHide = (y > lastY && y > (nav?.offsetHeight || 80)) &&
+                          !(collapseEl && collapseEl.classList.contains('show')) &&
+                          !anyDropdownOpen();
+          if (nav) nav.classList.toggle('nav-hidden', mayHide);
+          lastY = Math.max(0, y);
+        }, {passive:true});
+        function applyMode(){
+          if (!XL_UP.matches){
+            disableBootstrapOnMobile();
+          } else {
+            restoreBootstrapOnDesktop();
+            closeAllDropdowns();
+            unlockBody();
+          }
+        }
+        function bindAll(){ bindMobileHandlers(); bindSubmenus(); applyMode(); XL_UP.addEventListener('change', applyMode); }
+        bindAll();
+      })();
+    </script>
+
+    <script>
+      (function(){
+        var path = location.pathname.replace(/\/+$/, '');
+        var isHome = (path === '' || path.endsWith('/index.html') || path === '/');
+        if(isHome){
+          document.body.classList.add('is-home');
+          var homeLink = document.querySelector('.home-link');
+          if(homeLink) homeLink.setAttribute('aria-current','page');
+        }
+      })();
+    </script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        document.body.addEventListener('touchmove', function (e) {
+          if (!document.body.classList.contains('nav-open')) return;
+          const scroller = e.target.closest('#navbarSupportedContent, .dropdown-menu');
+          if (!scroller) { e.preventDefault(); }
+        }, { passive: false });
       });
+    </script>
 
-      if (HOVER_DEVICE.matches){
-        let timer;
-        const open = ()=>{ clearTimeout(timer); closeSiblings(); menu.classList.add('show'); trigger.setAttribute('aria-expanded','true'); };
-        const close= ()=>{ clearTimeout(timer); timer=setTimeout(()=>{ menu.classList.remove('show'); trigger.setAttribute('aria-expanded','false'); },120); };
-        trigger.addEventListener('mouseenter', ()=>{ if (XL_UP.matches) open(); });
-        trigger.addEventListener('mouseleave', ()=>{ if (XL_UP.matches) close(); });
-        menu.addEventListener('mouseenter',    ()=>{ if (XL_UP.matches) open(); });
-        menu.addEventListener('mouseleave',    ()=>{ if (XL_UP.matches) close(); });
-      }
-    });
-  }
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const allowInside = sel => e => {
+          if (!document.body.classList.contains('nav-open')) return;
+          const scroller = e.target.closest('#navbarSupportedContent, .dropdown-menu');
+          if (!scroller) { e.preventDefault(); return; }
+          if (e.type === 'wheel') {
+            const {scrollTop, scrollHeight, clientHeight} = scroller;
+            const delta = e.deltaY || 0;
+            const atTop    = scrollTop <= 0 && delta < 0;
+            const atBottom = scrollTop + clientHeight >= scrollHeight - 1 && delta > 0;
+            if (atTop || atBottom) e.preventDefault();
+          }
+        };
+        document.body.addEventListener('touchmove', allowInside(), {passive:false});
+        document.body.addEventListener('wheel', allowInside(), {passive:false});
+      });
+    </script>
 
-  /* ---------- Collapse events ---------- */
-  if (collapseEl){
-    collapseEl.addEventListener('shown.bs.collapse', ()=>{ lockBody(); });
-    collapseEl.addEventListener('hidden.bs.collapse', ()=>{
-      closeAllDropdowns();
-      currentOpenLi = null;
-      unlockBody();
-    });
-  }
+    <!-- Search bar -->
+    <script>
+      (function(){
+        const form       = document.getElementById('jjNavSearchForm');
+        const input      = document.getElementById('jjNavSearchInput');
+        const collapseEl = document.getElementById('navbarSupportedContent');
+        const overlay    = document.getElementById('jjSearchOverlay');
+        const modal      = document.getElementById('jjSearchModal');
+        const resultsEl  = document.getElementById('jjSearchModalResults');
+        const closeBtn   = modal?.querySelector('.jj-search-close');
 
-  /* ---------- Link navigation inside collapsed area ---------- */
-  document.addEventListener('click', (e)=>{
-    const a = e.target.closest && e.target.closest('a[href]');
-    if (!a) return;
+        const AUTO_NAV_THRESHOLD = null;
 
-    const isTopToggle   = a.matches('.nav-item.dropdown > a.dropdown-toggle,[data-bs-toggle="dropdown"]');
-    const isSubmenuTog  = a.matches('.submenu-toggle');
-    const insideDropdown= a.closest('.dropdown-menu') !== null;
+        let fuse = null, loaded = false;
+        async function loadIndex(){
+          if (loaded) return;
+          loaded = true;
+          try{
+            const res = await fetch('/search-index.json?v=1', {cache:'no-store'});
+            if(!res.ok) throw new Error('Index not found');
+            const data = await res.json();
+            fuse = new Fuse(data, {
+              includeScore:true, shouldSort:true, threshold:0.35, minMatchCharLength:2,
+              keys:[
+                {name:'title',   weight:0.5},
+                {name:'tags',    weight:0.2},
+                {name:'section', weight:0.15},
+                {name:'content', weight:0.15}
+              ]
+            });
+          }catch(err){
+            console.error('Search index load error:', err);
+            openModal('<div class="jj-search-empty">Search isn’t ready yet.</div>');
+          }
+        }
 
-    if (collapseEl && collapseEl.classList.contains('show')){
-      if (isTopToggle || isSubmenuTog || insideDropdown) return; // keep menu for interactions
-      bootstrap.Collapse.getOrCreateInstance(collapseEl).hide(); // real navigation: close
-      closeAllDropdowns();
-      unlockBody();
-    }
-  }, {capture:true});
+        let lastFocus = null;
+        function getFocusable(container){
+          return Array.from(container.querySelectorAll(`
+            a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])
+          `)).filter(el => !el.hasAttribute('hidden'));
+        }
+        function trapFocus(e){
+          if (e.key !== 'Tab') return;
+          const items = getFocusable(modal);
+          if (!items.length) return;
+          const first = items[0], last = items[items.length - 1];
+          if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+          else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+        }
+        function openModal(html){
+          if(!modal || !overlay) return;
+          if (collapseEl && collapseEl.classList.contains('show')){
+            bootstrap.Collapse.getOrCreateInstance(collapseEl).hide();
+          }
+          resultsEl.innerHTML = html || '';
+          lastFocus = document.activeElement;
+          document.body.classList.add('jj-modal-open');
+          overlay.hidden = false; modal.hidden = false;
+          requestAnimationFrame(()=>{ overlay.classList.add('show'); modal.classList.add('show'); });
+          setTimeout(()=>{ (resultsEl.querySelector('a.res') || closeBtn)?.focus?.({preventScroll:true}); }, 30);
+          document.addEventListener('keydown', trapFocus);
+        }
+        function closeModal(){
+          if(!modal || !overlay) return;
+          overlay.classList.remove('show'); modal.classList.remove('show');
+          setTimeout(()=>{ overlay.hidden = true; modal.hidden = true; }, 160);
+          document.body.classList.remove('jj-modal-open');
+          document.removeEventListener('keydown', trapFocus);
+          (lastFocus || input)?.focus?.({preventScroll:true});
+        }
+        overlay?.addEventListener('click', closeModal);
+        closeBtn?.addEventListener('click', (e)=>{ e.preventDefault(); closeModal(); });
+        document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && !modal.hidden) closeModal(); });
 
-/* ---------- Header height var + hide-on-scroll (desktop) ---------- */
-const setH = () => {
-  // Only recompute on DESKTOP (≥1200px). Mobile uses a fixed CSS value.
-  if (XL_UP.matches) {
-    document.documentElement.style
-      .setProperty('--nav-h', (nav?.offsetHeight || 80) + 'px');
-  }
-};
-setH();
-addEventListener('resize', setH, {passive:true});
-
-let lastY = window.scrollY;
-addEventListener('scroll', ()=>{
-  if (XL_UP.matches) closeAllDropdowns();
-  const y = window.scrollY;
-  const mayHide = (y > lastY && y > (nav?.offsetHeight || 80)) &&
-                  !(collapseEl && collapseEl.classList.contains('show')) &&
-                  !anyDropdownOpen();
-  if (nav) nav.classList.toggle('nav-hidden', mayHide);
-  lastY = Math.max(0, y);
-}, {passive:true});
-
-
-  /* ---------- Boot it up ---------- */
-  function applyMode(){
-    if (isMobile()){
-      disableBootstrapOnMobile(); // we take full control
-    } else {
-      restoreBootstrapOnDesktop();
-      closeAllDropdowns();
-      unlockBody();
-    }
-  }
-  bindMobileHandlers();
-  bindSubmenus();
-  applyMode();
-  XL_UP.addEventListener('change', applyMode);
-})();
-</script>
-
-<script>
-  (function(){
-    // consider "/" and "/index.html" as home; tweak if your hosting path differs
-    var path = location.pathname.replace(/\/+$/, ''); // trim trailing slash
-    var isHome = (path === '' || path.endsWith('/index.html') || path === '/');
-    if(isHome){
-      document.body.classList.add('is-home');
-      // Optional a11y: mark the home link as the current page
-      var homeLink = document.querySelector('.home-link');
-      if(homeLink) homeLink.setAttribute('aria-current','page');
-    }
-  })();
-</script>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  // Allow scroll inside the fixed sheet / menus only; block background
-  document.body.addEventListener('touchmove', function (e) {
-    if (!document.body.classList.contains('nav-open')) return;
-    const scroller = e.target.closest('#navbarSupportedContent, .dropdown-menu');
-    if (!scroller) { e.preventDefault(); }  // touch outside the sheet = no scroll
-  }, { passive: false });
-});
-</script>
-
-<script>
-/* Allow scroll only inside the collapsed panel or any dropdown while nav is open */
-document.addEventListener('DOMContentLoaded', () => {
-  const allowInside = sel => e => {
-    if (!document.body.classList.contains('nav-open')) return;
-    const scroller = e.target.closest('#navbarSupportedContent, .dropdown-menu');
-    if (!scroller) { e.preventDefault(); return; }
-    // for wheel events on desktop-sized touchpads
-    if (e.type === 'wheel') {
-      const {scrollTop, scrollHeight, clientHeight} = scroller;
-      const delta = e.deltaY || 0;
-      const atTop    = scrollTop <= 0 && delta < 0;
-      const atBottom = scrollTop + clientHeight >= scrollHeight - 1 && delta > 0;
-      if (atTop || atBottom) e.preventDefault();
-    }
-  };
-  // Touch scroll
-  document.body.addEventListener('touchmove', allowInside(), {passive:false});
-  // Wheel scroll (some Android/iPad keyboards/trackpads)
-  document.body.addEventListener('wheel', allowInside(), {passive:false});
-});
-</script>
+        const escHtml = s => (s||'').replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
+        function highlight(text, terms){
+          if(!text) return '';
+          let out = escHtml(text);
+          terms.forEach(t=>{
+            if(!t) return;
+            const re = new RegExp('('+t.replace(/[.*+?^${}()|[\\]\\\\]/g,'\\\\$&')+')','ig');
+            out = out.replace(re,'<mark>$1</mark>');
+          });
+          return out;
+        }
+        async function renderResults(q){
+          await loadIndex();
+          if(!fuse || !q){
+            return openModal('<div class="jj-search-empty">Type something to search.</div>');
+          }
+          const hits = fuse.search(q).slice(0, 30);
+          if(!hits.length){
+            return openModal('<div class="jj-search-empty">No matches. Try different words.</div>');
+          }
+          const terms = q.split(/\s+/).filter(Boolean).slice(0,5);
+          const html = hits.map(({item})=>{
+            const title = escHtml(item.title || item.url);
+            const crumb = item.section ? `<span class="crumb">${escHtml(item.section)}</span>` : '';
+            const snippetRaw = item.content ? item.content.slice(0, 160) + (item.content.length>160?'…':'') : '';
+            const snip = highlight(snippetRaw, terms);
+            return `<a class="res" href="${item.url}"><h6>${title}</h6>${crumb}<div class="snip">${snip}</div></a>`;
+          }).join('');
+          openModal(html);
+        }
+        form?.addEventListener('submit', async (e)=>{
+          e.preventDefault();
+          const q = (input?.value || '').trim();
+          if(!q){ input?.focus(); return; }
+          await loadIndex();
+          if (AUTO_NAV_THRESHOLD !== null && fuse){
+            const r = fuse.search(q);
+            const score = r?.[0]?.score ?? 1;
+            const url   = r?.[0]?.item?.url;
+            if (url && score < AUTO_NAV_THRESHOLD){
+              window.location.href = url;
+              return;
+            }
+          }
+          renderResults(q);
+        });
+        input?.addEventListener('focus', ()=>{ if(!loaded) loadIndex(); });
+      })();
+    </script>
 
   </body>
 </html>
