@@ -81,6 +81,13 @@ html, body {
 }
 #siteNav.nav-hidden{ transform: translateY(calc(-1 * var(--nav-h))); }
 
+/* Kill any accidental margins that can stack with the spacer */
+header, .hero-wrap { margin-top: 0 !important; }
+
+/* The spacer sits below the fixed nav and takes its height */
+#navSpacer { height: var(--nav-h, 72px); }
+
+
 /* Link micro-interactions */
 .navbar .nav-link{
   position: relative; color: var(--jj-ink);

@@ -274,6 +274,8 @@
           </div>
         </div>
       </nav>
+      <div id="navSpacer" aria-hidden="true"></div>
+
 
       <!-- Centered Search Results Modal -->
       <div id="jjSearchOverlay" class="jj-search-overlay" hidden></div>
@@ -1131,6 +1133,50 @@
         input?.addEventListener('focus', ()=>{ if(!loaded) loadIndex(); });
       })();
     </script>
+
+    <!-- Get rid of extra space above hero image -->
+     <script>
+(function () {
+  const nav = document.getElementById('siteNav');
+  const spacer = document.getElementById('navSpacer');
+  if (!nav || !spacer) return;
+
+  let rafId = null;
+  function setNavHeight() {
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(() => {
+      const h = Math.max(0, nav.offsetHeight || 0);
+      // Update CSS var (used by overlay, etc.)
+      document.documentElement.style.setProperty('--nav-h', h + 'px');
+      // Update the physical spacer so content sits correctly
+      spacer.style.height = h + 'px';
+    });
+  }
+
+  // Run on load
+  setNavHeight();
+
+  // Recalculate on resize / orientation
+  window.addEventListener('resize', setNavHeight, { passive: true });
+
+  // Recalculate when Bootstrap components change nav height
+  ['shown.bs.collapse','hidden.bs.collapse','shown.bs.dropdown','hidden.bs.dropdown']
+    .forEach(ev => document.addEventListener(ev, setNavHeight));
+
+  // Fonts/images can change line-height/size → recalc after load
+  window.addEventListener('load', setNavHeight);
+
+  // Safety: recalc after a tick when page is restored from bfcache
+  window.addEventListener('pageshow', setNavHeight);
+
+  // If you programmatically add/remove classes (e.g., nav-hidden), observe size changes
+  if ('ResizeObserver' in window) {
+    const ro = new ResizeObserver(setNavHeight);
+    ro.observe(nav);
+  }
+})();
+</script>
+
 
     <script>
       /* ========================================================================== 
