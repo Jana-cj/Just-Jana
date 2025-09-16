@@ -10,10 +10,9 @@
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-    
     <!-- Bootstrap JS Bundle (includes Popper) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
-
+  
     <!-- Font-->
     <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Lato:wght@400;500;700&family=Poppins:wght@400;500;600&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="..." crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -351,20 +350,23 @@
     </header>
     <main>
 
-      <!-- Desktop hero image block -->
-      <div class="hero-wrap">
-        <img src="img/Main banners/jana story.jpg" alt="Hero Image" class="full-width-image hero-parallax">
-      </div>
-
-      <!-- Mobile Hero Banner -->
-      <div class="mobile-banner">
-        <img src="img/Titles/janastory.png" alt="Jana's Story title" class="title-img">
-        <p class="underheading">A journey of finally coming<br>home to myself</p>
-        <img src="img/Me/me.png" alt="Founder's image" class="profile-img">
-        <img src="img/Me/name.png" alt="Janani Jayalath" class="name-img">
-        <img src="img/Quotes/life-quote.png" alt="The pen is in your hand..." class="quote-img">
-      </div>   
+      
+    
   
+    <img src="img/Main banners/jana story.jpg" alt="Hero Image" class="full-width-image">
+
+    
+<!-- MOBILE-ONLY VERSION -->
+<div class="mobile-banner">
+  <img src="img/Titles/janastory.png" alt="Jana's Story title" class="title-img">
+
+  <p class="underheading">A journey of finally coming<br>home to myself</p>
+
+  <img src="img/Me/me.png" alt="Founder's image" class="profile-img">
+  <img src="img/Me/name.png" alt="Janani Jayalath" class="name-img">
+
+  <img src="img/Quotes/life-quote.png" alt="The pen is in your hand..." class="quote-img">
+</div>
 
 <br>
 
@@ -561,136 +563,6 @@
   </div>
 
  </footer>
-
- <!-- AOS: tag elements FIRST, then init -->
-<script>
-  function jjStagger(selector, baseDelay = 0, step = 120){
-    const nodes = document.querySelectorAll(selector);
-    nodes.forEach((el, i) => {
-      el.setAttribute('data-aos', el.getAttribute('data-aos') || 'fade-up');
-      el.setAttribute('data-aos-delay', String(baseDelay + i * step));
-    });
-  }
-  function jjTag(selector, aos='fade-up', delay=0){
-    document.querySelectorAll(selector).forEach(el => {
-      el.setAttribute('data-aos', aos);
-      if (delay) el.setAttribute('data-aos-delay', String(delay));
-    });
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    /* ---- Story blocks: text first, then image ---- */
-    const STORY_TEXT_DELAY   = 0;    // tweak if you want a global offset
-    const STORY_IMAGE_DELAY  = 180;  // appears after text
-    document.querySelectorAll('.story-block').forEach((block, i) => {
-      const text  = block.querySelector('.story-text');
-      const image = block.querySelector('.story-image');
-
-      if (text) {
-        text.setAttribute('data-aos', 'fade-up');
-        text.setAttribute('data-aos-delay', String(STORY_TEXT_DELAY));
-      }
-      if (image) {
-        image.setAttribute('data-aos', 'fade-up');
-        image.setAttribute('data-aos-delay', String(STORY_IMAGE_DELAY));
-      }
-    });
-
-    /* ---- Center wrapper shows after the stories naturally on scroll ---- */
-    jjTag('.center-wrapper', 'fade-up', 0);
-    jjTag('.highlight', 'fade-up', 0);
-
-    /* ---- Footer header gentle entrance ---- */
-    jjTag('.site-footer .footer-heading', 'fade-up', 0);
-
-    /* ---- Init AOS ---- */
-    AOS.init({
-      startEvent: 'DOMContentLoaded',
-      offset: 100,
-      duration: 700,
-      easing: 'ease-out',
-      delay: 0,
-      once: true,
-      mirror: false,
-      anchorPlacement: 'top-bottom'
-    });
-
-    window.addEventListener('load', () => AOS.refreshHard());
-  });
-</script>
-
-<!-- GSAP + ScrollTrigger -->
-<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    gsap.registerPlugin(ScrollTrigger);
-
-    /* ---------- Desktop hero: blur-only reveal (prevents white flash) ---------- */
-    const desktopHero = document.querySelector('.hero-parallax');
-    if (desktopHero) {
-      gsap.set(desktopHero, { filter: 'blur(18px)', opacity: 1, willChange: 'filter' });
-      gsap.to(desktopHero, {
-        filter: 'blur(0px)',
-        duration: 1.2,
-        ease: 'power2.out'
-      });
-    }
-
-    /* ---------- Mobile hero (uses this page's class names) ---------- */
-    const mobileBits = [
-      '.title-img',
-      '.underheading',
-      '.profile-img',
-      '.name-img',
-      '.quote-img'
-    ].map(s => document.querySelector(s)).filter(Boolean);
-
-    if (mobileBits.length) {
-      gsap.set(mobileBits, { filter: 'blur(18px)', opacity: 0, willChange: 'filter,opacity' });
-      gsap.to(mobileBits, {
-        filter: 'blur(0px)',
-        opacity: 1,
-        duration: 1.2,
-        ease: 'power2.out',
-        stagger: 0.08
-      });
-    }
-
-    /* ---------- Subtle parallax on desktop hero ---------- */
-    const wrap = document.querySelector('.hero-wrap');
-    if (desktopHero && wrap) {
-      gsap.to(desktopHero, {
-        yPercent: 12,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: wrap,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: true
-        }
-      });
-    }
-
-    /* ---------- Optional: slight entrance nudge for the mobile banner container ---------- */
-    const mobileBanner = document.querySelector('.mobile-banner');
-    if (mobileBanner) {
-      gsap.from(mobileBanner, {
-        y: 16,
-        duration: 0.8,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: mobileBanner,
-          start: 'top 85%',
-          toggleActions: 'play none none none',
-          once: true
-        }
-      });
-    }
-  });
-</script>
-
 
 
 

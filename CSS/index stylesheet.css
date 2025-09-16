@@ -2710,7 +2710,7 @@ color: #7b7b7b;
 }
 
 
-/* Mobile hero elements: keep fade-in if you like that flow */
+/* Mobile hero elements: keep fade-in if you like that flow
 .mission-logo,
 .mission-text,
 .mission-maintitle,
@@ -2728,7 +2728,7 @@ color: #7b7b7b;
   filter: blur(18px);
   opacity: 0;
   will-change: filter, opacity;
-}
+} */
 
 /* CSS for missionvalues.html */
 
