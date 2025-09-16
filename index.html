@@ -10,374 +10,299 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="..." crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
-    
     <!-- Bootstrap JS Bundle (includes Popper) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
+    <!-- AOS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
     <!-- Google Fonts -->
-        <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Lato:wght@400;500;700&family=Poppins:wght@400;500;600&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Lato:wght@400;500;700&family=Poppins:wght@400;500;600&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
 
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/png" href="img/Logos/favicon.png">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="CSS/index stylesheet.css">
+
+    <!-- Minimal in-page CSS for hero + reduced motion -->
+    <style>
+      .hero-wrap{ position:relative; overflow:hidden; }
+      .hero-parallax{ will-change: transform; transform: translateZ(0); display:block; }
+      @media (prefers-reduced-motion: reduce){
+        [data-aos]{ opacity:1 !important; transform:none !important; transition:none !important; }
+      }
+    </style>
   </head>
 
   <body>
     <header>
       <!-- Navbar -->
-       <nav id="siteNav" class="navbar navbar-expand-xl navbar-light">
-  <div class="container-fluid pe-0">
-          <!-- Left: Logo (both images share the same link) -->
-<a class="navbar-brand me-3" href="index.html">
- 
-  <img src="img/Logos/logohanddrawnbw.png"
-       alt="Just Jana wordmark"
-       class="d-inline-block align-text-top ms-2">
-</a>
+      <nav id="siteNav" class="navbar navbar-expand-xl navbar-light">
+        <div class="container-fluid pe-0">
+          <!-- Left: Logo -->
+          <a class="navbar-brand me-3" href="index.html">
+            <img src="img/Logos/logohanddrawnbw.png" alt="Just Jana wordmark" class="d-inline-block align-text-top ms-2">
+          </a>
 
           <!-- Toggler -->
-<button class="navbar-toggler" type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation">
-  <span class="jj-burger" aria-hidden="true"></span>
-</button>
-    
-              <!-- Dropdowns -->
+          <button class="navbar-toggler" type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#navbarSupportedContent"
+                  aria-controls="navbarSupportedContent"
+                  aria-expanded="false"
+                  aria-label="Toggle navigation">
+            <span class="jj-burger" aria-hidden="true"></span>
+          </button>
 
-              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <!-- Dropdowns -->
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-              
-
-<li class="nav-item">
-  <a class="nav-link home-link" href="index.html" aria-label="Home">
-    <svg class="home-icon" viewBox="0 0 64 64" width="30" height="28" role="img" aria-hidden="true">
-      <g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <!-- Roof -->
-        <path d="M8 28 L32 10 L56 28" />
-        <!-- Walls (no bottom stroke) -->
-        <path d="M14 26 V54 A4 4 0 0 0 18 58 H46 A4 4 0 0 0 50 54 V26" />
-        <!-- Heart (moved up ~4px so it sits in the visual center) -->
-        <path class="home-heart" d="M32 36
-                 c-4 -5 -12 -3 -12 3
-                 c0 6 8 10 12 14
-                 c4 -4 12 -8 12 -14
-                 c0 -6 -8 -8 -12 -3z" />
-      </g>
-    </svg>
-  </a>
-</li>
-              <li class="nav-item dropdown" data-bs-auto-close="outside">
-                <a class="nav-link dropdown-toggle" href="#about" id="dropdownAbout" 
-                role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  About
+              <li class="nav-item">
+                <a class="nav-link home-link" href="index.html" aria-label="Home">
+                  <svg class="home-icon" viewBox="0 0 64 64" width="30" height="28" role="img" aria-hidden="true">
+                    <g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M8 28 L32 10 L56 28" />
+                      <path d="M14 26 V54 A4 4 0 0 0 18 58 H46 A4 4 0 0 0 50 54 V26" />
+                      <path class="home-heart" d="M32 36 c-4 -5 -12 -3 -12 3 c0 6 8 10 12 14 c4 -4 12 -8 12 -14 c0 -6 -8 -8 -12 -3z" />
+                    </g>
+                  </svg>
                 </a>
-                
+              </li>
+
+              <!-- About -->
+              <li class="nav-item dropdown" data-bs-auto-close="outside">
+                <a class="nav-link dropdown-toggle" href="#about" id="dropdownAbout" role="button" data-bs-toggle="dropdown" aria-expanded="false">About</a>
                 <ul class="dropdown-menu jj-surface p-3" aria-labelledby="dropdownAbout">
-                    <li><a class="dropdown-item" href="janasstory.html">My Story</a></li> 
+                  <li><a class="dropdown-item" href="janasstory.html">My Story</a></li>
                   <li><a class="dropdown-item" href="missionvalues.html">Our Mission & Values</a></li>
                 </ul>
               </li>
-              
+
+              <!-- Body -->
               <li class="nav-item dropdown" data-bs-auto-close="outside">
-  <a class="nav-link dropdown-toggle" href="#body" id="dropdownBody"
-   role="button" data-bs-toggle="dropdown" aria-expanded="false"
-   aria-label="Body – Health & Strength">
-  Body <span class="nav-desc d-inline d-xl-none">– Health &amp; Strength</span>
-</a>
+                <a class="nav-link dropdown-toggle" href="#body" id="dropdownBody" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Body – Health & Strength">
+                  Body <span class="nav-desc d-inline d-xl-none">– Health &amp; Strength</span>
+                </a>
+                <ul class="dropdown-menu dropdown-mega jj-surface p-3" aria-labelledby="dropdownBody">
+                  <li>
+                    <div class="mega-wrap body-grid">
+                      <div class="mega-col">
+                        <h6 class="dropdown-header">Move to heal</h6>
+                        <a class="dropdown-item" href="#">Importance of Movement</a>
+                        <a class="dropdown-item" href="fitnessstory.html">My Fitness Journey</a>
+                        <a class="dropdown-item" href="#">Fitness Programs</a>
+                        <a class="dropdown-item" href="#">Balancing Strength, Cardio & Flexibility</a>
+                        <a class="dropdown-item" href="#">Understand Your Body</a>
+                      </div>
+                      <div class="mega-col">
+                        <h6 class="dropdown-header">Nourish & Restore</h6>
+                        <a class="dropdown-item" href="#">Nutrition</a>
+                        <a class="dropdown-item" href="#">My Journey With Food</a>
+                        <a class="dropdown-item" href="#">Recovery & Rest</a>
+                        <a class="dropdown-item" href="#">Environment & Health</a>
+                      </div>
+                      <div class="mega-col">
+                        <h6 class="dropdown-header">Gentle Self-Care</h6>
+                        <div class="dropdown-submenu submenu-wide submenu-end">
+                          <a class="dropdown-item submenu-toggle" href="#" aria-expanded="false">Curly Hair Care</a>
+                          <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Curly Hair Routine</a></li>
+                            <li><a class="dropdown-item" href="#">Maintaining Healthy Hair</a></li>
+                          </ul>
+                        </div>
+                        <a class="dropdown-item" href="#">Skin Care</a>
+                        <a class="dropdown-item" href="#">Daily Body Rituals</a>
+                      </div>
+                      <div class="mega-col">
+                        <h6 class="dropdown-header">Conscious Choices</h6>
+                        <a class="dropdown-item" href="#">Plant-based Eating</a>
+                        <a class="dropdown-item" href="#">Barefoot vs Conventional Footwear</a>
+                        <a class="dropdown-item" href="#">Toxin-free Living</a>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </li>
 
-  <ul class="dropdown-menu dropdown-mega jj-surface p-3" aria-labelledby="dropdownBody">
-    <li>
-      <div class="mega-wrap body-grid">
-
-        <!-- MOVE -->
-        <div class="mega-col">
-          <h6 class="dropdown-header">Move to heal</h6>
-          <a class="dropdown-item" href="#">Importance of Movement</a>
-          <a class="dropdown-item" href="fitnessstory.html">My Fitness Journey</a>
-          <a class="dropdown-item" href="#">Fitness Programs</a>
-          <a class="dropdown-item" href="#">Balancing Strength, Cardio & Flexibility</a>
-          <a class="dropdown-item" href="#">Understand Your Body</a>
-        </div>
-
-        <!-- NOURISH -->
-        <div class="mega-col">
-          <h6 class="dropdown-header">Nourish & Restore</h6>
-          <a class="dropdown-item" href="#">Nutrition</a>
-          <a class="dropdown-item" href="#">My Journey With Food</a>
-          <a class="dropdown-item" href="#">Recovery & Rest</a>
-          <a class="dropdown-item" href="#">Environment & Health</a>
-        </div>
-
-       
-        <!-- SELF-CARE -->
-        <div class="mega-col">
-          <h6 class="dropdown-header">Gentle Self-Care</h6>
-          <div class="dropdown-submenu submenu-wide submenu-end">
-            <a class="dropdown-item submenu-toggle" href="#" aria-expanded="false">Curly Hair Care</a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Curly Hair Routine</a></li>
-              <li><a class="dropdown-item" href="#">Maintaining Healthy Hair</a></li>
-            </ul>
-          </div>
-          <a class="dropdown-item" href="#">Skin Care</a>
-          <a class="dropdown-item" href="#">Daily Body Rituals</a>
-        </div>
-
-         <!-- CONSCIOUS -->
-        <div class="mega-col">
-          <h6 class="dropdown-header">Conscious Choices</h6>
-          <a class="dropdown-item" href="#">Plant-based Eating</a>       
-          <a class="dropdown-item" href="#">Barefoot vs Conventional Footwear</a>
-          <a class="dropdown-item" href="#">Toxin-free Living</a>
-        </div>
-
-      </div>
-    </li>
-  </ul>
-</li>
-
-
-<li class="nav-item dropdown" data-bs-auto-close="outside">
-  <a class="nav-link dropdown-toggle" href="#mind" id="dropdownMind"
-   role="button" data-bs-toggle="dropdown" aria-expanded="false"
-   aria-label="Mind – Growth & Clarity">
-  Mind <span class="nav-desc d-inline d-xl-none">– Growth &amp; Clarity</span>
-</a>
-
-  <ul class="dropdown-menu dropdown-mega jj-surface p-3" aria-labelledby="dropdownMind">
-    <li>
-      <div class="mega-wrap body-grid">
-
-        <!-- MENTAL WELLBEING -->
-        <div class="mega-col">
-          <h6 class="dropdown-header">Mental Wellbeing</h6>
-          <a class="dropdown-item" href="#">Why Mental Health Matters</a>      
-          <a class="dropdown-item" href="#">Navigating Toxic Relationships</a>
-          <a class="dropdown-item" href="#">Breaking the Silence: Taboos & Stigma in Culture</a>
-          <a class="dropdown-item" href="#">Mental Health in Sport & Performance</a>
-        </div>
-
-        <!-- MINDFUL PRACTICES -->
-        <div class="mega-col">
-          <h6 class="dropdown-header">Mindful Presence</h6>
-          <a class="dropdown-item" href="#">Mindfulness Explained</a>
-          <a class="dropdown-item" href="#">Meditation Basics</a>
-          <a class="dropdown-item" href="#">Journaling for Clarity</a>
-          <a class="dropdown-item" href="#">Focus & Productivity</a>
-        </div>
-
-        <!-- SELF WORTH -->
-        <div class="mega-col">
-          <h6 class="dropdown-header">Affirming Self-Worth</h6>
-          <a class="dropdown-item" href="#">Monthly Mantra, Affirmation & Quote </a>
-          <a class="dropdown-item" href="#">Rewiring Negative Self Talk</a>
-          <a class="dropdown-item" href="#">Embrace Your Roots</a>
-        </div>
-
-        <!-- CONSCIOUS -->
-        <div class="mega-col">
-          <h6 class="dropdown-header">Conscious Reframing</h6>
-          <a class="dropdown-item" href="#">Questioning Convention & Limiting Beliefs</a>
-          <a class="dropdown-item" href="#">Living With Curiosity</a>
-          <a class="dropdown-item" href="#">Practicing Gratitude</a>
-        </div>
-
-        
-
-      </div>
-    </li>
-  </ul>
-</li>
-            
-<li class="nav-item dropdown" data-bs-auto-close="outside">
-  <a class="nav-link dropdown-toggle" href="#heart" id="dropdownHeart"
-   role="button" data-bs-toggle="dropdown" aria-expanded="false"
-   aria-label="Heart – Love & Connection">
-  Heart <span class="nav-desc d-inline d-xl-none">– Love &amp; Connection</span>
-</a>
-
-  <ul class="dropdown-menu dropdown-mega jj-surface p-3" aria-labelledby="dropdownHeart">
-    <li>
-      <div class="mega-wrap body-grid">
-
-        <!-- CONNECTION -->
-        <div class="mega-col">
-          <h6 class="dropdown-header">Connection</h6>
-          <a class="dropdown-item" href="#">Importance of Community & Belonging</a>
-          <a class="dropdown-item" href="#">Boundaries</a>
-          <a class="dropdown-item" href="#">Communication With Compassion & Clarity</a>
-        </div>
-
-           <!-- LOVE IN ACTION -->
-        <div class="mega-col">
-          <h6 class="dropdown-header">Practicing Love</h6>
-          <a class="dropdown-item" href="#">Joy Practices</a>
-          <a class="dropdown-item" href="#">Acts of Service & Kindness</a>
-          <a class="dropdown-item" href="#">Love Languages</a>
-        </div>
-
-        <!-- EMBRACING UNIQUENESS -->
-        <div class="mega-col">
-          <h6 class="dropdown-header">Embracing Uniqueness</h6>
-          <a class="dropdown-item" href="hair.html">My Curly Hair Journey</a>
-          <a class="dropdown-item" href="skin.html">My Tan Skin Journey</a>
-          <a class="dropdown-item" href="#">Honouring Uniqueness As Beauty</a>
-          <a class="dropdown-item" href="#">Courage in Authenticity</a>
-        </div>
-
-        <!-- CONSCIOUS COMPASSION -->
-        <div class="mega-col">
-          <h6 class="dropdown-header">Conscious Compassion</h6>
-          <a class="dropdown-item" href="#">Living Compassionately</a>
-          <a class="dropdown-item" href="#">Relationships: Quality Over Quantity</a>
-          <a class="dropdown-item" href="#">Soothing Ourselves Through The 5 Senses</a>
-        </div>
-        </div>
-    </li>
-  </ul>
-</li>
-             
-<li class="nav-item dropdown" data-bs-auto-close="outside">
-  <a class="nav-link dropdown-toggle" href="#soul" id="dropdownSoul"
-   role="button" data-bs-toggle="dropdown" aria-expanded="false"
-   aria-label="Soul – Purpose & Freedom">
-  Soul <span class="nav-desc d-inline d-xl-none">– Purpose &amp; Freedom</span>
-</a>
-
-  <ul class="dropdown-menu dropdown-mega jj-surface p-3" aria-labelledby="dropdownSoul">
-    <li>
-      <div class="mega-wrap body-grid">
-
-        <!-- CREATIVE EXPRESSION-->
-        <div class="mega-col">
-          <h6 class="dropdown-header">Creative Expression</h6>
-          <a class="dropdown-item" href="#">Reconnecting With Childhood Joys</a>
-          <a class="dropdown-item" href="#">Creativity as Healing</a>
-          <div class="dropdown-submenu submenu-wide submenu-end">
-            <a class="dropdown-item submenu-toggle" href="#" aria-expanded="false">Healing Through Music</a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Music as Medicine for the Soul</a></li>
-              <li><a class="dropdown-item" href="healing-compositions.html">Healing Compositions</a></li>
-              <li><a class="dropdown-item" href="musicmeaning.html">Behind the Music</a></li>
-            </ul>
-          </div>
-          <a class="dropdown-item" href="musicstory.html">My Music Journey</a>
-        </div>
-
-                <!-- CONNECTION -->
-        <div class="mega-col">
-          <h6 class="dropdown-header">Living With Purpose</h6>
-          <a class="dropdown-item" href="#">Living With Intention</a>
-          <a class="dropdown-item" href="#">Exploring Purpose Beyond Roles & Titles</a>
-          <a class="dropdown-item" href="#">What's Your Legacy?</a>
-        </div>
-
-         
-          <!-- EMBRACING ACCEPTANCE -->
-        <div class="mega-col">
-          <h6 class="dropdown-header">Embracing Acceptance</h6>
-          <a class="dropdown-item" href="#">Letting Go of Others' Expectations</a>
-          <a class="dropdown-item" href="#">Surrender & Trust Intuition</a>
-          <a class="dropdown-item" href="#">The Climb Towards Wholeness</a>
-        </div>
-               
-        <!-- CONSCIOUS LIVING -->
-        <div class="mega-col">
-          <h6 class="dropdown-header">Conscious Living</h6>
-          <a class="dropdown-item" href="#">Compassion & Karma</a>
-          <a class="dropdown-item" href="#">Breaking Conditioned Cycles</a>
-        </div>
-
-      
-      </div>
-    </li>
-  </ul>
-</li>
-
-              
-
-                                         
+              <!-- Mind -->
               <li class="nav-item dropdown" data-bs-auto-close="outside">
-                <a class="nav-link dropdown-toggle" href="#diaries" id="dropdownDiaries"
-                role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Brown Girl Diaries
-              </a>
-              
-              <ul class="dropdown-menu jj-surface menu-scroll p-3" aria-labelledby="dropdownDiaries">
-                  <li><a class="dropdown-item" href="#">Unlearn and Reclaim</a></li> 
+                <a class="nav-link dropdown-toggle" href="#mind" id="dropdownMind" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Mind – Growth & Clarity">
+                  Mind <span class="nav-desc d-inline d-xl-none">– Growth &amp; Clarity</span>
+                </a>
+                <ul class="dropdown-menu dropdown-mega jj-surface p-3" aria-labelledby="dropdownMind">
+                  <li>
+                    <div class="mega-wrap body-grid">
+                      <div class="mega-col">
+                        <h6 class="dropdown-header">Mental Wellbeing</h6>
+                        <a class="dropdown-item" href="#">Why Mental Health Matters</a>
+                        <a class="dropdown-item" href="#">Navigating Toxic Relationships</a>
+                        <a class="dropdown-item" href="#">Breaking the Silence: Taboos & Stigma in Culture</a>
+                        <a class="dropdown-item" href="#">Mental Health in Sport & Performance</a>
+                      </div>
+                      <div class="mega-col">
+                        <h6 class="dropdown-header">Mindful Presence</h6>
+                        <a class="dropdown-item" href="#">Mindfulness Explained</a>
+                        <a class="dropdown-item" href="#">Meditation Basics</a>
+                        <a class="dropdown-item" href="#">Journaling for Clarity</a>
+                        <a class="dropdown-item" href="#">Focus & Productivity</a>
+                      </div>
+                      <div class="mega-col">
+                        <h6 class="dropdown-header">Affirming Self-Worth</h6>
+                        <a class="dropdown-item" href="#">Monthly Mantra, Affirmation & Quote </a>
+                        <a class="dropdown-item" href="#">Rewiring Negative Self Talk</a>
+                        <a class="dropdown-item" href="#">Embrace Your Roots</a>
+                      </div>
+                      <div class="mega-col">
+                        <h6 class="dropdown-header">Conscious Reframing</h6>
+                        <a class="dropdown-item" href="#">Questioning Convention & Limiting Beliefs</a>
+                        <a class="dropdown-item" href="#">Living With Curiosity</a>
+                        <a class="dropdown-item" href="#">Practicing Gratitude</a>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+
+              <!-- Heart -->
+              <li class="nav-item dropdown" data-bs-auto-close="outside">
+                <a class="nav-link dropdown-toggle" href="#heart" id="dropdownHeart" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Heart – Love & Connection">
+                  Heart <span class="nav-desc d-inline d-xl-none">– Love &amp; Connection</span>
+                </a>
+                <ul class="dropdown-menu dropdown-mega jj-surface p-3" aria-labelledby="dropdownHeart">
+                  <li>
+                    <div class="mega-wrap body-grid">
+                      <div class="mega-col">
+                        <h6 class="dropdown-header">Connection</h6>
+                        <a class="dropdown-item" href="#">Importance of Community & Belonging</a>
+                        <a class="dropdown-item" href="#">Boundaries</a>
+                        <a class="dropdown-item" href="#">Communication With Compassion & Clarity</a>
+                      </div>
+                      <div class="mega-col">
+                        <h6 class="dropdown-header">Practicing Love</h6>
+                        <a class="dropdown-item" href="#">Joy Practices</a>
+                        <a class="dropdown-item" href="#">Acts of Service & Kindness</a>
+                        <a class="dropdown-item" href="#">Love Languages</a>
+                      </div>
+                      <div class="mega-col">
+                        <h6 class="dropdown-header">Embracing Uniqueness</h6>
+                        <a class="dropdown-item" href="hair.html">My Curly Hair Journey</a>
+                        <a class="dropdown-item" href="skin.html">My Tan Skin Journey</a>
+                        <a class="dropdown-item" href="#">Honouring Uniqueness As Beauty</a>
+                        <a class="dropdown-item" href="#">Courage in Authenticity</a>
+                      </div>
+                      <div class="mega-col">
+                        <h6 class="dropdown-header">Conscious Compassion</h6>
+                        <a class="dropdown-item" href="#">Living Compassionately</a>
+                        <a class="dropdown-item" href="#">Relationships: Quality Over Quantity</a>
+                        <a class="dropdown-item" href="#">Soothing Ourselves Through The 5 Senses</a>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+
+              <!-- Soul -->
+              <li class="nav-item dropdown" data-bs-auto-close="outside">
+                <a class="nav-link dropdown-toggle" href="#soul" id="dropdownSoul" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Soul – Purpose & Freedom">
+                  Soul <span class="nav-desc d-inline d-xl-none">– Purpose &amp; Freedom</span>
+                </a>
+                <ul class="dropdown-menu dropdown-mega jj-surface p-3" aria-labelledby="dropdownSoul">
+                  <li>
+                    <div class="mega-wrap body-grid">
+                      <div class="mega-col">
+                        <h6 class="dropdown-header">Creative Expression</h6>
+                        <a class="dropdown-item" href="#">Reconnecting With Childhood Joys</a>
+                        <a class="dropdown-item" href="#">Creativity as Healing</a>
+                        <div class="dropdown-submenu submenu-wide submenu-end">
+                          <a class="dropdown-item submenu-toggle" href="#" aria-expanded="false">Healing Through Music</a>
+                          <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Music as Medicine for the Soul</a></li>
+                            <li><a class="dropdown-item" href="healing-compositions.html">Healing Compositions</a></li>
+                            <li><a class="dropdown-item" href="musicmeaning.html">Behind the Music</a></li>
+                          </ul>
+                        </div>
+                        <a class="dropdown-item" href="musicstory.html">My Music Journey</a>
+                      </div>
+                      <div class="mega-col">
+                        <h6 class="dropdown-header">Living With Purpose</h6>
+                        <a class="dropdown-item" href="#">Living With Intention</a>
+                        <a class="dropdown-item" href="#">Exploring Purpose Beyond Roles & Titles</a>
+                        <a class="dropdown-item" href="#">What's Your Legacy?</a>
+                      </div>
+                      <div class="mega-col">
+                        <h6 class="dropdown-header">Embracing Acceptance</h6>
+                        <a class="dropdown-item" href="#">Letting Go of Others' Expectations</a>
+                        <a class="dropdown-item" href="#">Surrender & Trust Intuition</a>
+                        <a class="dropdown-item" href="#">The Climb Towards Wholeness</a>
+                      </div>
+                      <div class="mega-col">
+                        <h6 class="dropdown-header">Conscious Living</h6>
+                        <a class="dropdown-item" href="#">Compassion & Karma</a>
+                        <a class="dropdown-item" href="#">Breaking Conditioned Cycles</a>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+
+              <!-- Diaries -->
+              <li class="nav-item dropdown" data-bs-auto-close="outside">
+                <a class="nav-link dropdown-toggle" href="#diaries" id="dropdownDiaries" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Brown Girl Diaries
+                </a>
+                <ul class="dropdown-menu jj-surface menu-scroll p-3" aria-labelledby="dropdownDiaries">
+                  <li><a class="dropdown-item" href="#">Unlearn and Reclaim</a></li>
                   <li><a class="dropdown-item" href="#">Healing the Inner Child</a></li>
                   <li><a class="dropdown-item" href="#">Mindful Strength</a></li>
                   <li><a class="dropdown-item" href="#">From Surviving to Thriving</a></li>
                   <li><a class="dropdown-item" href="#">Letters to My Sisters</a></li>
                 </ul>
               </li>
-              
 
-              
-    <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
-<!-- Inline nav search (desktop & mobile) -->
-<li class="nav-item jj-nav-search-item">
-  <form id="jjNavSearchForm" class="jj-nav-search" role="search" aria-label="Search Just Jana">
-    <label for="jjNavSearchInput" class="visually-hidden">Search Just Jana</label>
-    <input id="jjNavSearchInput" name="q" type="search" inputmode="search" autocomplete="off"
-           placeholder="Search Just Jana…">
-    <button class="jj-nav-search-btn" type="submit">Search</button>
-  </form>
+              <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
+              <!-- Inline nav search (desktop & mobile) -->
+              <li class="nav-item jj-nav-search-item">
+                <form id="jjNavSearchForm" class="jj-nav-search" role="search" aria-label="Search Just Jana">
+                  <label for="jjNavSearchInput" class="visually-hidden">Search Just Jana</label>
+                  <input id="jjNavSearchInput" name="q" type="search" inputmode="search" autocomplete="off" placeholder="Search Just Jana…">
+                  <button class="jj-nav-search-btn" type="submit">Search</button>
+                </form>
+                <div id="jjNavSearchResults" class="jj-search-results jj-suggest" aria-live="polite"></div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
 
-  <!-- live suggestions (type-ahead) -->
-  <div id="jjNavSearchResults" class="jj-search-results jj-suggest" aria-live="polite"></div>
-</li>
-
-  </div>
-  </div>
-</nav>
-
-<!-- Centered Search Results Modal -->
-<div id="jjSearchOverlay" class="jj-search-overlay" hidden></div>
-
-<div id="jjSearchModal" class="jj-search-modal" hidden role="dialog" aria-modal="true" aria-labelledby="jjSearchTitle">
-  <div class="jj-search-modal-card">
-    <button class="jj-search-close" type="button" aria-label="Close">×</button>
-    <h3 id="jjSearchTitle" class="jj-search-title">Search results</h3>
-    <div id="jjSearchModalResults" class="jj-search-results" aria-live="polite"></div>
-  </div>
-</div>
-
-
-            
+      <!-- Centered Search Results Modal -->
+      <div id="jjSearchOverlay" class="jj-search-overlay" hidden></div>
+      <div id="jjSearchModal" class="jj-search-modal" hidden role="dialog" aria-modal="true" aria-labelledby="jjSearchTitle">
+        <div class="jj-search-modal-card">
+          <button class="jj-search-close" type="button" aria-label="Close">×</button>
+          <h3 id="jjSearchTitle" class="jj-search-title">Search results</h3>
+          <div id="jjSearchModalResults" class="jj-search-results" aria-live="polite"></div>
+        </div>
+      </div>
     </header>
 
     <main>
+      <!-- Desktop hero image block -->
+      <div class="hero-wrap">
+        <img src="img/Main banners/hero banner1.jpg" alt="Hero Image" class="full-width-image hero-parallax">
+      </div>
 
-<!--desktop hero image block-->
-<div class="hero-wrap">
-  <img src="img/Main banners/hero banner1.jpg"
-       alt="Hero Image"
-       class="full-width-image hero-parallax">
-</div>
+      <!-- Mobile Hero Banner -->
+      <div class="hero-mobile">
+        <img src="img/Logos/logohanddrawnbw.png" alt="Just Jana Logo" class="logo-mobile">
+        <img src="img/Logos/justjana.png" alt="Just Jana Text" class="text-mobile">
+        <img src="img/Logos/tagline.png" alt="Heal. Rise. Be unapologetically you" class="tagline-mobile">
+      </div>
 
-    <!-- Mobile Hero Banner -->
-<div class="hero-mobile">
-  <img src="img/Logos/logohanddrawnbw.png" alt="Just Jana Logo" class="logo-mobile">
-  <img src="img/Logos/justjana.png" alt="Just Jana Text" class="text-mobile">
-  <img src="img/Logos/tagline.png" alt="Heal. Rise. Be unapologetically you" class="tagline-mobile">
-</div>
-
-    
       <br>
       <!-- Welcome section -->
       <section class="welcome-section">
@@ -387,1137 +312,966 @@
 
         <div class="content-container">
           <div class="profile-section">
-              <img src="img/Me/me.png" alt="Founder's image" class="profile-image">
-              <img src="img/Me/name.png" alt="Janani Jayalath" class="signature">
-            </div>
-          
+            <img src="img/Me/me.png" alt="Founder's image" class="profile-image">
+            <img src="img/Me/name.png" alt="Janani Jayalath" class="signature">
+          </div>
+
           <div class="quote-section">
             <div class="quote-text">
               <h2>Hey there, I’m <span>Jana</span> 🤗 </h2>
               <p>I created <em>Just Jana</em> as a safe and empowering space for girls like myself - <br> who once dimmed their light to fit in and lost touch with who they truly are - <br> to rise again, reclaim their voice, their power, and their true selves.</p>
               <p> Here, healing isn’t about one piece of you - it’s a wholeistic journey that honours every part of who you are:</p>
               <div class="thepillars">
-              <P><strong>Body</strong> - Honour your body with movement, nourishment, and care.<br>
-                 <strong>Mind</strong> - Find clarity and resilience through mindfulness and self-worth. <br>
-                 <strong>Heart</strong> - Heal with love, connection, and authenticity. <br>
-                 <strong>Soul</strong> - Awaken your soul with purpose, creativity, and self-acceptance.</p>
+                <p><strong>Body</strong> - Honour your body with movement, nourishment, and care.<br>
+                <strong>Mind</strong> - Find clarity and resilience through mindfulness and self-worth. <br>
+                <strong>Heart</strong> - Heal with love, connection, and authenticity. <br>
+                <strong>Soul</strong> - Awaken your soul with purpose, creativity, and self-acceptance.</p>
               </div>
               <p>Together, these pillars guide you back to wholeness - body, mind, heart, and soul in harmony.</p>
               <p>If you've ever longed for a space to heal, grow, and rise into your fullest self... you've found it.</p>
-                <h2 class="welcome-home">Welcome home ♡</h2>
-                <h2 class="belong-text"> You belong here - just as you are!</h2>
-                  <a href="janasstory.html" class="read-story-btn">Read my story >></a>
-                </p>
+              <h2 class="welcome-home">Welcome home ♡</h2>
+              <h2 class="belong-text"> You belong here - just as you are!</h2>
+              <a href="janasstory.html" class="read-story-btn">Read my story >></a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <br>
+      <div class="pastel-group">
+        <!-- Just Jana stands for  -->
+        <section class="jana-values-section">
+          <div class="container text-center">
+            <h2>What Just Jana Stands For</h2>
+            <div class="row justify-content-center">
+              <div class="col-md-6 col-sm-12 value-card">
+                <h4>🌸 You Deserve to Be Seen</h4>
+                <p>Your softness, your fire, your story - it all belongs here.</p>
+                <p>You don’t need to shrink to be loved. You get to take up space.</p>
+              </div>
+              <div class="col-md-6 col-sm-12 value-card">
+                <h4>🧘 Healing Is Personal - there's no one right way</h4>
+                <p>This space is yours to explore and discover what healing looks like for <em>you</em></p>
+              </div>
+              <div class="col-md-6 col-sm-12 value-card">
+                <h4>💛 You Are Not Broken</h4>
+                <p>Letting go of shame is the first step toward becoming.</p>
+                <p>You are not behind. You are becoming - at your own pace.</p>
+              </div>
+              <div class="col-md-6 col-sm-12 value-card">
+                <h4>🫂 A Conscious Sisterhood</h4>
+                <p>We grow together. We unlearn together. We rise together.</p>
+                <p>Just Jana is your space to begin - and to belong.</p>
+              </div>
+              <br><br>
+            </div>
+            <a href="missionvalues.html" class="read-more-btn">Read our mission & values</a>
+          </div>
+        </section>
+      </div>
+
+      <br>
+      <div class="pastel-group">
+        <h2>The Healing Pillars</h2>
+        <div class="healing-pillars">
+          <!-- Pillar cards -->
+          <a href="body.html" class="pillar-link">
+            <div class="pillar-box fitness-box">
+              <img src="img/Fitness/fitness.png" alt="Fitness Icon">
+              <h3>Body</h3>
+              <p>Move freely with programs for every level, understand your body through composition and energy needs, nourish and recover well, and choose habits that support gentle self-care for hair, skin, and health.</p>
+            </div>
+          </a>
+
+          <a href="mind.html" class="pillar-link">
+            <div class="pillar-box music-box">
+              <img src="img/Me/mental health.png" alt="Music Icon">
+              <h3>Mind</h3>
+              <p>Cultivate calm and clarity through mindfulness, journaling, and tools for focus & productivity, while using affirmations, reframes, and compassionate tools to navigate mental health in relationships, sport, and daily life.</p>
+            </div>
+          </a>
+
+          <a href="heart.html" class="pillar-link">
+            <div class="pillar-box wellness-box">
+              <img src="img/Me/heart.png" alt="Wellness Icon">
+              <h3>Heart</h3>
+              <p>Strengthen connection by practicing boundaries and compassionate communication, release shame and generational patterns, and embrace authenticity by honouring your unique beauty and capacity for love.</p>
+            </div>
+          </a>
+
+          <a href="soul.html" class="pillar-link">
+            <div class="pillar-box mental-box">
+              <img src="img/Me/journaling.png" alt="Mental Health Icon">
+              <h3>Soul</h3>
+              <p>Return to your true self by clarifying purpose, rekindling creativity, and living in alignment with your values, while deepening acceptance, surrender, joy, gratitude, and spiritual connection.</p>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <br>
+
+      <!-- ===================== My Journeys (Auto-Scroll) ===================== -->
+      <div class="pastel-group">
+        <section class="jj-journeys" aria-label="My Journeys">
+          <div class="jj-journeys-head">
+            <h2>My Journeys</h2>
+            <p>Personal stories behind Just Jana that shaped Body • Mind • Heart • Soul</p>
+          </div>
+
+          <div class="jj-journeys-viewport" id="jjViewport">
+            <!-- Desktop-only arrows -->
+            <button class="jj-arrow jj-arrow-left" type="button" aria-label="Scroll left" id="jjArrowLeft"><span aria-hidden="true">‹</span></button>
+            <button class="jj-arrow jj-arrow-right" type="button" aria-label="Scroll right" id="jjArrowRight"><span aria-hidden="true">›</span></button>
+
+            <div class="jj-journeys-track" id="jjTrack">
+              <a class="jj-journey" href="fitnessstory.html" aria-label="Read Fitness Journey">
+                <span class="jj-avatar"><img src="img/Fitness/fitnessdp.png" alt="Fitness Journey" width="172" height="172" loading="lazy" decoding="async"></span>
+                <span class="jj-title">Fitness Journey</span>
+              </a>
+              <a class="jj-journey" href="foodjourney.html" aria-label="Read Food Journey">
+                <span class="jj-avatar"><img src="img/Food/food.jpg" alt="Food Journey" width="172" height="172" loading="lazy" decoding="async"></span>
+                <span class="jj-title">Food Journey</span>
+              </a>
+              <a class="jj-journey" href="hair.html" aria-label="Read Curly Hair Journey">
+                <span class="jj-avatar"><img src="img/Me/curls.png" alt="Curly Hair Journey" width="172" height="172" loading="lazy" decoding="async"></span>
+                <span class="jj-title">Curly Hair Journey</span>
+              </a>
+              <a class="jj-journey" href="skin.html" aria-label="Read Tan Skin Journey">
+                <span class="jj-avatar"><img src="img/Me/tan skin.png" alt="Tan Skin Journey" width="172" height="172" loading="lazy" decoding="async"></span>
+                <span class="jj-title">Tan Skin Journey</span>
+              </a>
+              <a class="jj-journey" href="musicstory.html" aria-label="Read Music Journey">
+                <span class="jj-avatar"><img src="img/Music/group2.png" alt="Music Journey" width="172" height="172" loading="lazy" decoding="async"></span>
+                <span class="jj-title">Music Journey</span>
+              </a>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="pastel-group">
+        <section class="diary-section py-5">
+          <div class="container">
+            <h2>Latest Diary Entries</h2>
+            <div class="diary-scroll">
+              <div class="card diary-card">
+                <div class="card-body d-flex flex-column">
+                  <h5 class="card-title">Choosing Strong Over Skinny</h5>
+                  <p class="card-date">July 12, 2025</p>
+                  <p class="card-text">I used to think being small made me worthy - until I realised strength meant so much more than size or shape...</p>
+                  <div class="mt-auto"><a href="diary-fitness.html" class="diary-btn">Read More</a></div>
+                </div>
+              </div>
+
+              <div class="card diary-card">
+                <div class="card-body d-flex flex-column">
+                  <h5 class="card-title">Loving My Curls</h5>
+                  <p class="card-date">July 17, 2025</p>
+                  <p class="card-text">There was a time I tried to rip my curls out - now I wear them like a crown. This is the story of how I unlearned shame and embraced softness...</p>
+                  <div class="mt-auto"><a href="diary-curls.html" class="diary-btn">Read More</a></div>
+                </div>
+              </div>
+
+              <div class="card diary-card">
+                <div class="card-body d-flex flex-column">
+                  <h5 class="card-title">Why I Quit My Job</h5>
+                  <p class="card-date">July 22, 2025</p>
+                  <p class="card-text">Leaving wasn’t weakness - it was survival. Here’s what I learned from working under a narcissistic manager...</p>
+                  <div class="mt-auto"><a href="diary-toxicjob.html" class="diary-btn">Read More</a></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <br>
+      <div class="pastel-group">
+        <!-- Monthly mantra, affirmation & quote -->
+        <section class="carousel-section">
+          <h2>This Month's Mantra, Affirmation & Quote</h2>
+
+          <div id="monthlyCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="10000" data-wrap="false" data-bs-touch="false">
+            <div class="carousel-indicators">
+              <button type="button" data-bs-target="#monthlyCarousel" data-bs-slide-to="0" class="active" aria-label="Mantra"></button>
+              <button type="button" data-bs-target="#monthlyCarousel" data-bs-slide-to="1" aria-label="Affirmation"></button>
+              <button type="button" data-bs-target="#monthlyCarousel" data-bs-slide-to="2" aria-label="Quote"></button>
+            </div>
+
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="img/Monthly positivity/mantra1.png" class="d-block w-100 carousel-img" alt="Mantra">
+              </div>
+              <div class="carousel-item">
+                <img src="img/Monthly positivity/Self-affirmation1.png" class="d-block w-100 carousel-img" alt="Self Affirmation">
+              </div>
+              <div class="carousel-item">
+                <img src="img/Monthly positivity/Quote1.png" class="d-block w-100 carousel-img" alt="Inspirational Quote">
+              </div>
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#monthlyCarousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#monthlyCarousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon"></span>
+            </button>
+          </div>
+
+          <div class="download-wrapper">
+            <a id="downloadBtn" href="img/Monthly positivity/mantra.png" download class="carouseldownload-btn">Download Mantra</a>
+          </div>
+
+          <div class="lockscreen-text">
+            <p>Designed for lock screens –</p>
+            <p>Let your reminder for healing and growth live right on your screen ♡</p>
+          </div>
+        </section>
+      </div>
+
+      <br>
+
+      <div class="pastel-group">
+        <!-- Freebies -->
+        <section class="freebies-section py-5">
+          <div class="container-fluid">
+            <h2>Freebies to Nourish Your Mind & Body</h2>
+            <div class="text-center mb-4">
+              <div class="btn-group filter-btns" role="group">
+                <button type="button" class="btn filter-btn active" data-filter="all">All</button>
+                <button type="button" class="btn filter-btn" data-filter="body">Body</button>
+                <button type="button" class="btn filter-btn" data-filter="mind">Mind</button>
+                <button type="button" class="btn filter-btn" data-filter="heart">Heart</button>
+                <button type="button" class="btn filter-btn" data-filter="soul">Soul</button>
+              </div>
+            </div>
+
+            <div class="freebies-scroll d-flex overflow-auto px-3 pb-3 flex-nowrap justify-content-lg-center">
+              <div class="freebie-card text-center mx-2" data-category="body">
+                <img src="img/fitness/homeworkout.jpg" alt="Home workout" class="img-fluid">
+                <h5 class="mt-3">Home Workout Plan</h5>
+                <p class="card-desc">A beginner-friendly strength and mobility workout schedule.</p>
+                <div class="mt-auto"><a href="downloads/workout-plan.pdf" download class="btn download-btn">Download</a></div>
+              </div>
+
+              <div class="freebie-card text-center mx-2" data-category="body">
+                <img src="img/freebie-vegan.png" alt="Vegan Starter" class="img-fluid">
+                <h5 class="mt-3">Vegan Starter Bundle</h5>
+                <p class="card-desc">A simple guide to help you go plant-based with ease.</p>
+                <div class="mt-auto"><a href="downloads/vegan-starter.pdf" download class="btn download-btn">Download</a></div>
+              </div>
+
+              <div class="freebie-card text-center mx-2" data-category="heart">
+                <img src="img/freebie-gratitude.png" alt="Gratitude Journal" class="img-fluid">
+                <h5 class="mt-3">Gratitude Journal</h5>
+                <p class="card-desc">Reflect and ground yourself with this daily gratitude template.</p>
+                <div class="mt-auto"><a href="downloads/gratitude-journal.pdf" download class="btn download-btn">Download</a></div>
+              </div>
+
+              <div class="freebie-card text-center mx-2" data-category="body">
+                <img src="img/freebie-curlyhair.png" alt="Curly Hair Routine" class="img-fluid">
+                <h5 class="mt-3">Curly Hair Routine</h5>
+                <p class="card-desc">A guide to embracing and caring for your natural curls.</p>
+                <div class="mt-auto"><a href="downloads/curly-hair-routine.pdf" download class="btn download-btn">Download</a></div>
               </div>
             </div>
           </div>
-      </div>
-    </section>
-    <br>
-
-    <div class="pastel-group">
-    <!-- Just Jana stands for  -->
-     <section class="jana-values-section">
-  <div class="container text-center">
-    <h2>What Just Jana Stands For</h2>
-    <div class="row justify-content-center">
-      
-<div class="col-md-6 col-sm-12 value-card">
-  <h4>🌸 You Deserve to Be Seen</h4>
-        <p>Your softness, your fire, your story - it all belongs here.</p>
-        <p>You don’t need to shrink to be loved. You get to take up space.</p>
-      </div>
-
-<div class="col-md-6 col-sm-12 value-card">
-        <h4>🧘 Healing Is Personal - there's no one right way</h4>
-        <p>This space is yours to explore and discover what healing looks like for <em>you</em></p> 
-      </div>
-
-<div class="col-md-6 col-sm-12 value-card">
-        <h4>💛 You Are Not Broken</h4>
-        <p>Letting go of shame is the first step toward becoming.</p>
-        <p>You are not behind. You are becoming - at your own pace.</p>
-      </div>
-
-<div class="col-md-6 col-sm-12 value-card">
-        <h4>🫂 A Conscious Sisterhood</h4>
-        <p>We grow together. We unlearn together. We rise together.</p>
-        <p>Just Jana is your space to begin - and to belong.</p>
-      </div>
-<br><br>
-    </div>
-    <a href="missionvalues.html" class="read-more-btn">Read our mission & values</a>
-  </div>
-</section>
-</div>
-
-      <br>
-          <div class="pastel-group">
-      <h2>The Healing Pillars</h2>
-      <div class="healing-pillars">
-        <!-- Pillar cards -->
-         <a href="body.html" class="pillar-link">
-  <div class="pillar-box fitness-box">
-    <img src="img/Fitness/fitness.png" alt="Fitness Icon">
-    <h3>Body</h3>
-<p>Move freely with programs for every level, understand your body through composition and energy needs, nourish and recover well, and choose habits that support gentle self-care for hair, skin, and health.</p>  </div>
-</a>
-
-  <a href="mind.html" class="pillar-link">
-  <div class="pillar-box music-box">
-    <img src="img/Me/mental health.png" alt="Music Icon">
-    <h3>Mind</h3>
-<p>Cultivate calm and clarity through mindfulness, journaling, and tools for focus & productivity, while using affirmations, reframes, and compassionate tools to navigate mental health in relationships, sport, and daily life.</p>      </div>
-    </a>
-
-  <a href="heart.html" class="pillar-link">
-  <div class="pillar-box wellness-box">
-     <img src="img/Me/heart.png" alt="Wellness Icon">
-      <h3>Heart</h3>
-<p>Strengthen connection by practicing boundaries and compassionate communication, release shame and generational patterns, and embrace authenticity by honouring your unique beauty and capacity for love.</p>      </div>
-    </a>
-
-  <a href="soul.html" class="pillar-link">
-  <div class="pillar-box mental-box">
-     <img src="img/Me/journaling.png" alt="Mental Health Icon">
-      <h3>Soul</h3>
-<p>Return to your true self by clarifying purpose, rekindling creativity, and living in alignment with your values, while deepening acceptance, surrender, joy, gratitude, and spiritual connection.</p>      </div>
-    </a>
-
-  </div>
-</div>
-  <br>
-
-  <!-- ===================== My Journeys (Auto-Scroll) ===================== -->
-   <div class="pastel-group">
-<section class="jj-journeys" aria-label="My Journeys">
-  <div class="jj-journeys-head">
-    <h2>My Journeys</h2>
-    <p>Personal stories behind Just Jana that shaped Body • Mind • Heart • Soul</p>
-  </div>
-
-  <div class="jj-journeys-viewport" id="jjViewport">
-    <!-- Desktop-only arrows -->
-    <button class="jj-arrow jj-arrow-left" type="button" aria-label="Scroll left" id="jjArrowLeft">
-      <span aria-hidden="true">‹</span>
-    </button>
-    <button class="jj-arrow jj-arrow-right" type="button" aria-label="Scroll right" id="jjArrowRight">
-      <span aria-hidden="true">›</span>
-    </button>
-
-    <div class="jj-journeys-track" id="jjTrack">
-      <!-- 1) Fitness -->
-      <a class="jj-journey" href="fitnessstory.html" aria-label="Read Fitness Journey">
-        <span class="jj-avatar">
-          <img src="img/Fitness/fitnessdp.png" alt="Fitness Journey" width="172" height="172" loading="lazy" decoding="async">
-        </span>
-        <span class="jj-title">Fitness Journey</span>
-      </a>
-      <!-- 2) Food -->
-      <a class="jj-journey" href="foodjourney.html" aria-label="Read Food Journey">
-        <span class="jj-avatar">
-          <img src="img/Food/food.jpg" alt="Food Journey" width="172" height="172" loading="lazy" decoding="async">
-        </span>
-        <span class="jj-title">Food Journey</span>
-      </a>
-      
-      <!-- 3) Curly Hair -->
-      <a class="jj-journey" href="hair.html" aria-label="Read Curly Hair Journey">
-        <span class="jj-avatar">
-          <img src="img/Me/curls.png" alt="Curly Hair Journey" width="172" height="172" loading="lazy" decoding="async">
-        </span>
-        <span class="jj-title">Curly Hair Journey</span>
-      </a>
-      <!-- 4) Tan Skin -->
-      <a class="jj-journey" href="skin.html" aria-label="Read Tan Skin Journey">
-        <span class="jj-avatar">
-          <img src="img/Me/tan skin.png" alt="Tan Skin Journey" width="172" height="172" loading="lazy" decoding="async">
-        </span>
-        <span class="jj-title">Tan Skin Journey</span>
-      </a>
-      <!-- 5) Music -->
-      <a class="jj-journey" href="musicstory.html" aria-label="Read Music Journey">
-        <span class="jj-avatar">
-          <img src="img/Music/group2.png" alt="Music Journey" width="172" height="172" loading="lazy" decoding="async">
-        </span>
-        <span class="jj-title">Music Journey</span>
-      </a>
-    </div>
-  </div>
-</section>
-   </div>
-
-
-
-    <div class="pastel-group">
-<section class="diary-section py-5">
-  <div class="container">
-    <h2>Latest Diary Entries</h2>
-
-    <!-- Scrollable container -->
-    <div class="diary-scroll">
-      
-      <!-- Fitness Diary Entry -->
-      <div class="card diary-card">
-        <div class="card-body d-flex flex-column">
-          <h5 class="card-title">Choosing Strong Over Skinny</h5>
-          <p class="card-date">July 12, 2025</p>
-          <p class="card-text">I used to think being small made me worthy - until I realised strength meant so much more than size or shape...</p>
-          <div class="mt-auto">
-            <a href="diary-fitness.html" class="diary-btn">Read More</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Health & Wellness Diary Entry -->
-      <div class="card diary-card">
-        <div class="card-body d-flex flex-column">
-          <h5 class="card-title">Loving My Curls</h5>
-          <p class="card-date">July 17, 2025</p>
-          <p class="card-text">There was a time I tried to rip my curls out - now I wear them like a crown. This is the story of how I unlearned shame and embraced softness...</p>
-          <div class="mt-auto">
-            <a href="diary-curls.html" class="diary-btn">Read More</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Mental Health Diary Entry -->
-      <div class="card diary-card">
-        <div class="card-body d-flex flex-column">
-          <h5 class="card-title">Why I Quit My Job</h5>
-          <p class="card-date">July 22, 2025</p>
-          <p class="card-text">Leaving wasn’t weakness - it was survival. Here’s what I learned from working under a narcissistic manager...</p>
-          <div class="mt-auto">
-            <a href="diary-toxicjob.html" class="diary-btn">Read More</a>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-</div>
-
-<br>
-    <div class="pastel-group">
-<!-- Monthly mantra, affirmation & quote -->
-      <section class="carousel-section">
-        <h2>This Month's Mantra, Affirmation & Quote</h2>
-
-
-        <div id="monthlyCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="10000" data-wrap="false" data-bs-touch="false">
-          <div class="carousel-indicators">
-            <button type="button" data-bs-target="#monthlyCarousel" data-bs-slide-to="0" class="active" aria-label="Mantra"></button>
-            <button type="button" data-bs-target="#monthlyCarousel" data-bs-slide-to="1" aria-label="Affirmation"></button>
-            <button type="button" data-bs-target="#monthlyCarousel" data-bs-slide-to="2" aria-label="Quote"></button>
-          </div>
-
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              <img src="img/Monthly positivity/mantra1.png" class="d-block w-100 carousel-img" alt="Mantra">
-            </div>
-            <div class="carousel-item">
-              <img src="img/Monthly positivity/Self-affirmation1.png" class="d-block w-100 carousel-img" alt="Self Affirmation">
-            </div>
-            <div class="carousel-item">
-              <img src="img/Monthly positivity/Quote1.png" class="d-block w-100 carousel-img" alt="Inspirational Quote">
-            </div>
-          </div>
-
-          <button class="carousel-control-prev" type="button" data-bs-target="#monthlyCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon"></span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#monthlyCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon"></span>
-          </button>
-        </div>
-
-        <div class="download-wrapper">
-          <a id="downloadBtn" href="img/Monthly positivity/mantra.png" download class="carouseldownload-btn">Download Mantra</a>
-        </div>
-
-         <div class="lockscreen-text">
-  <p>Designed for lock screens –</p>
-  <p>Let your reminder for healing and growth live right on your screen ♡</p>
-</div>
         </section>
+      </div>
+    </main>
+
+    <br><br><br>
+
+    <footer class="site-footer">
+      <div class="footer-heading">
+        <h3>Let’s stay connected ♡</h3>
+        <p>Follow for music, movement, and healing energy</p>
+      </div>
+      <br><br>
+      <div class="footer-container">
+        <div class="footer-column horizontal-links">
+          <h4>Just Jana</h4>
+          <div class="link-group">
+            <a href="https://instagram.com/justjanaofficial" target="_blank"><i class="fab fa-instagram"></i>justjanaofficial</a>
+            <a href="https://tiktok.com/@justjanaofficial" target="_blank"><i class="fab fa-tiktok"></i>justjanaofficial</a>
+            <a href="https://www.youtube.com/channel/UCpNtzAW6sQEF9KWeoBb6XHA" target="_blank"><i class="fab fa-youtube"></i>JustJanaOfficial</a>
+          </div>
         </div>
 
+        <div class="footer-column music-column">
+          <h4>Music</h4>
+          <div class="music-links">
+            <div class="music-left">
+              <a href="https://instagram.com/jananijayalathjj" target="_blank"><i class="fab fa-instagram"></i>jananijayalathjj</a>
+              <a href="https://tiktok.com/@jananijayalathjj" target="_blank"><i class="fab fa-tiktok"></i>jananijayalathjj</a>
+              <a href="https://facebook.com/jananijayalath" target="_blank"><i class="fab fa-facebook"></i>Janani Jayalath</a>
+            </div>
+            <div class="music-right">
+              <a href="https://youtube.com/@jananijayalath" target="_blank"><i class="fab fa-youtube"></i>Janani Jayalath</a>
+              <a href="https://open.spotify.com/artist/5kfFyhjJ5s80fhrQhpFbAc" target="_blank"><i class="fab fa-spotify"></i>Janani Jayalath</a>
+              <a href="https://music.apple.com/us/artist/janani-jayalath/1819698659" target="_blank"><i class="fab fa-apple"></i>Janani Jayalath</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-column horizontal-links">
+          <h4>Fitness & Wellness</h4>
+          <div class="link-group">
+            <a href="https://instagram.com/jana.cj" target="_blank"><i class="fab fa-instagram"></i> jana.cj</a>
+            <a href="https://tiktok.com/@jj_gains" target="_blank"><i class="fab fa-tiktok"></i> jj_gains</a>
+          </div>
+        </div>
+      </div>
       <br>
+      <div class="footer-credit">© 2025 Just Jana. All rights reserved.</div>
+    </footer>
 
-    <div class="pastel-group">
-      <!-- Freebies -->
-<section class="freebies-section py-5">
-  <div class="container-fluid">
-    <h2>Freebies to Nourish Your Mind & Body</h2>
-    <!-- Filter Buttons -->
-    <div class="text-center mb-4">
-      <div class="btn-group filter-btns" role="group">
-        <button type="button" class="btn filter-btn active" data-filter="all">All</button>
-        <button type="button" class="btn filter-btn" data-filter="body">Body</button>
-        <button type="button" class="btn filter-btn" data-filter="mind">Mind</button>
-        <button type="button" class="btn filter-btn" data-filter="heart">Heart</button>
-        <button type="button" class="btn filter-btn" data-filter="soul">Soul</button>
-
-      </div>
-    </div>
-
-    <!-- Scrollable Freebies -->
-     <div class="freebies-scroll d-flex overflow-auto px-3 pb-3 flex-nowrap justify-content-lg-center">
-
-      <!-- Freebie Card 1 - Fitness -->
-      <div class="freebie-card text-center mx-2" data-category="body">
-        <img src="img/fitness/homeworkout.jpg" alt="Home workout" class="img-fluid">
-        <h5 class="mt-3">Home Workout Plan</h5>
-        <p class="card-desc">A beginner-friendly strength and mobility workout schedule.</p>
-        <div class="mt-auto">
-          <a href="downloads/workout-plan.pdf" download class="btn download-btn">Download</a>
-        </div>
-      </div>
-
-      <!-- Freebie Card 2 - Health & Wellness (Vegan) -->
-      <div class="freebie-card text-center mx-2" data-category="body">
-        <img src="img/freebie-vegan.png" alt="Vegan Starter" class="img-fluid">
-        <h5 class="mt-3">Vegan Starter Bundle</h5>
-        <p class="card-desc">A simple guide to help you go plant-based with ease.</p>
-        <div class="mt-auto">
-          <a href="downloads/vegan-starter.pdf" download class="btn download-btn">Download</a>
-        </div>
-      </div>
-
-      <!-- Freebie Card 3 - Mental Health -->
-      <div class="freebie-card text-center mx-2" data-category="heart">
-        <img src="img/freebie-gratitude.png" alt="Gratitude Journal" class="img-fluid">
-        <h5 class="mt-3">Gratitude Journal</h5>
-        <p class="card-desc">Reflect and ground yourself with this daily gratitude template.</p>
-        <div class="mt-auto">
-          <a href="downloads/gratitude-journal.pdf" download class="btn download-btn">Download</a>
-        </div>
-      </div>
-
-      <!-- Freebie Card 4 - Health & Wellness -->
-      <div class="freebie-card text-center mx-2" data-category="body">
-        <img src="img/freebie-curlyhair.png" alt="Curly Hair Routine" class="img-fluid">
-        <h5 class="mt-3">Curly Hair Routine</h5>
-        <p class="card-desc">A guide to embracing and caring for your natural curls.</p>
-        <div class="mt-auto">
-          <a href="downloads/curly-hair-routine.pdf" download class="btn download-btn">Download</a>
-        </div>
-      </div>
-
-
-    
-    </div>
-  </div>
-</section>
-</div>
-
-</main>
-
-
-     
- <br><br><br>
-
-      <footer class="site-footer">
-  <div class="footer-heading">
-    <h3>Let’s stay connected ♡</h3>
-    <p>Follow for music, movement, and healing energy</p>
-  </div>
-  <br><br>
-  <div class="footer-container">
-    <!-- Just Jana -->
-    <div class="footer-column horizontal-links">
-      <h4>Just Jana</h4>
-      <div class="link-group">
-      <a href="https://instagram.com/justjanaofficial" target="_blank"><i class="fab fa-instagram"></i>justjanaofficial</a>
-      <a href="https://tiktok.com/@justjanaofficial" target="_blank"><i class="fab fa-tiktok"></i>justjanaofficial</a>
-      <a href="https://www.youtube.com/channel/UCpNtzAW6sQEF9KWeoBb6XHA" target="_blank"><i class="fab fa-youtube"></i>JustJanaOfficial</a>
-
-    </div>
-    </div>
-
-    <!-- Music -->
-    <div class="footer-column music-column">
-      <h4>Music</h4>
-      <div class="music-links">
-        <div class="music-left">
-          <a href="https://instagram.com/jananijayalathjj" target="_blank"><i class="fab fa-instagram"></i>jananijayalathjj</a>
-          <a href="https://tiktok.com/@jananijayalathjj" target="_blank"><i class="fab fa-tiktok"></i>jananijayalathjj</a>
-          <a href="https://facebook.com/jananijayalath" target="_blank"><i class="fab fa-facebook"></i>Janani Jayalath</a>
-        </div>
-        <div class="music-right">
-          <a href="https://youtube.com/@jananijayalath" target="_blank"><i class="fab fa-youtube"></i>Janani Jayalath</a>
-          <a href="https://open.spotify.com/artist/5kfFyhjJ5s80fhrQhpFbAc" target="_blank"><i class="fab fa-spotify"></i>Janani Jayalath</a>
-          <a href="https://music.apple.com/us/artist/janani-jayalath/1819698659" target="_blank"><i class="fab fa-apple"></i>Janani Jayalath</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Fitness & Wellness -->
-    <div class="footer-column horizontal-links">
-      <h4>Fitness & Wellness</h4>
-      <div class="link-group">
-      <a href="https://instagram.com/jana.cj" target="_blank"><i class="fab fa-instagram"></i> jana.cj</a>
-      <a href="https://tiktok.com/@jj_gains" target="_blank"><i class="fab fa-tiktok"></i> jj_gains</a>
-    </div>
-    </div>
-
-    
-  </div><br>
-<!-- Copyright -->
-  <div class="footer-credit">
-    © 2025 Just Jana. All rights reserved.
-  </div>
-  </footer>
-
-<script>
-  // Utility: add AOS attributes with stagger
-  function jjStagger(selector, baseDelay=0, step=120){
-    const nodes = document.querySelectorAll(selector);
-    nodes.forEach((el, i) => {
-      el.setAttribute('data-aos', el.getAttribute('data-aos') || 'fade-up');
-      el.setAttribute('data-aos-delay', String(baseDelay + i*step));
-    });
-  }
-  function jjTag(selector, aos='fade-up', delay=0){
-    document.querySelectorAll(selector).forEach(el=>{
-      el.setAttribute('data-aos', aos);
-      if(delay) el.setAttribute('data-aos-delay', String(delay));
-    });
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    // 1) Tag elements FIRST
-    jjTag('.welcome-section', 'fade-up', 0);
-    jjTag('.jana-values-section', 'fade-up', 0);
-    jjTag('.healing-pillars', 'fade-up', 0);
-    jjTag('.jj-journeys-head', 'fade-up', 0);
-    jjTag('.diary-section', 'fade-up', 0);
-    jjTag('.carousel-section', 'fade-up', 0);
-    jjTag('.freebies-section', 'fade-up', 0);
-
-    jjStagger('.value-card', 0, 120);
-    jjStagger('.pillar-box', 0, 120);
-    jjStagger('.jj-journey', 0, 100);
-    jjStagger('.diary-card', 0, 120);
-    jjStagger('.freebie-card', 0, 120);
-
-    // 2) THEN init AOS
-    AOS.init({
-      startEvent: 'DOMContentLoaded',
-      offset: 80,
-      duration: 700,
-      easing: 'ease-out',
-      delay: 0,
-      once: true,
-      mirror: false,
-      anchorPlacement: 'top-bottom'
-    });
-
-    // 3) If images shift layout, refresh after everything loads
-    window.addEventListener('load', () => AOS.refreshHard());
-  });
-</script>
-
-
-<!-- GSAP + ScrollTrigger (near end of body) -->
-<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
-
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    gsap.registerPlugin(ScrollTrigger);
-
-    // Subtle parallax on the desktop hero image
-    const hero = document.querySelector('.hero-parallax');
-    const wrap = document.querySelector('.hero-wrap');
-
-    if (hero && wrap) {
-      gsap.to(hero, {
-        yPercent: 12,          // gentle drift
-        ease: 'none',
-        scrollTrigger: {
-          trigger: wrap,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: true          // ties motion to scroll
-        }
-      });
-
-      // Optional soft fade-in on load
-      gsap.from(hero, {
-        opacity: 0,
-        duration: 0.8,
-        ease: 'power2.out'
-      });
-    }
-
-    // Optional: fade/slide the mobile hero in when it enters view
-    const mobileHero = document.querySelector('.hero-mobile');
-    if (mobileHero) {
-      gsap.from(mobileHero, {
-        opacity: 0,
-        y: 16,
-        duration: 0.7,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: mobileHero,
-          start: 'top 85%',
-          toggleActions: 'play none none none',
-          once: true
-        }
-      });
-    }
-  });
-</script>
-
-  
-<script>
-/* ==========================================================================
-   Just Jana — NAVBAR (bulletproof mobile toggle)
-   - Mobile (<1200px): one open at a time; second tap closes
-   - Desktop (≥1200px): hover opens, mouseout closes (Bootstrap-driven)
-   - We disable Bootstrap's data-API on mobile to avoid double toggles,
-     and restore it on desktop.
-   ========================================================================== */
-(function () {
-  const XL = '(min-width: 1200px)';
-  const XL_UP = window.matchMedia(XL);
-  const HOVER_DEVICE = window.matchMedia('(hover:hover)');
-
-  const nav        = document.getElementById('siteNav');
-  const collapseEl = document.getElementById('navbarSupportedContent');
-
-  const $$  = (sel, root=document) => Array.from(root.querySelectorAll(sel));
-  const topItems   = $$('.nav-item.dropdown', nav);
-  const topToggles = $$('.nav-item.dropdown > a.dropdown-toggle', nav);
-
-  /* ---------- Overlay + body lock ---------- */
-  let overlay = document.getElementById('jjNavOverlay');
-  if(!overlay){
-    overlay = document.createElement('div');
-    overlay.id = 'jjNavOverlay';
-    document.body.appendChild(overlay);
-  }
-  function lockBody(){
-    document.body.classList.add('nav-open');
-    document.documentElement.style.overflow = 'hidden';
-    document.body.style.overflow = 'hidden';
-    overlay.style.display = 'block';
-  }
-  function unlockBody(){
-    document.body.classList.remove('nav-open');
-    document.documentElement.style.overflow = '';
-    document.body.style.overflow = '';
-    overlay.style.display = 'none';
-  }
-  overlay.addEventListener('click', () => {
-    if (collapseEl && collapseEl.classList.contains('show')) {
-      bootstrap.Collapse.getOrCreateInstance(collapseEl).hide();
-    }
-    closeAllDropdowns();
-    unlockBody();
-  }, {passive:true});
-
-  /* ---------- Minimal CSS injection for overlay/mobile scroll ---------- */
-  (function injectCSS(){
-    if (document.querySelector('style[data-jj-nav="mobile-safe"]')) return;
-    const tag = document.createElement('style');
-    tag.setAttribute('data-jj-nav','mobile-safe');
-    tag.textContent = `
-      #jjNavOverlay{position:fixed; inset: var(--nav-h) 0 0 0; background:rgba(0,0,0,.25);
-        backdrop-filter:blur(2px); -webkit-backdrop-filter:blur(2px); z-index:998; display:none;}
-      body.nav-open #jjNavOverlay{display:block;}
-      @media (max-width:1199.98px){
-        #navbarSupportedContent{max-height:calc(100vh - var(--nav-h)); overflow:auto; -webkit-overflow-scrolling:touch;}
-        .dropdown-menu{background:#fff !important; backdrop-filter:none !important; -webkit-backdrop-filter:none !important;}
+    <!-- AOS: tag elements FIRST, then init -->
+    <script>
+      function jjStagger(selector, baseDelay=0, step=120){
+        const nodes = document.querySelectorAll(selector);
+        nodes.forEach((el, i) => {
+          el.setAttribute('data-aos', el.getAttribute('data-aos') || 'fade-up');
+          el.setAttribute('data-aos-delay', String(baseDelay + i*step));
+        });
       }
-    `;
-    document.head.appendChild(tag);
-  })();
-
-  /* ---------- Helpers ---------- */
-  function isMobile(){ return !XL_UP.matches; }
-  function anyDropdownOpen(){ return !!nav.querySelector('.nav-item.dropdown.show'); }
-
-  function closeSubmenus(root){
-    (root ? root.querySelectorAll('.dropdown-submenu > .dropdown-menu.show')
-          : document.querySelectorAll('.dropdown-submenu > .dropdown-menu.show'))
-    .forEach(menu=>{
-      menu.classList.remove('show');
-      menu.previousElementSibling?.setAttribute('aria-expanded','false');
-    });
-  }
-
-  function forceHideItem(li){
-    li.classList.remove('show');
-    const toggle = li.querySelector(':scope > a.dropdown-toggle');
-    const menu   = li.querySelector(':scope > .dropdown-menu');
-    if (toggle) toggle.setAttribute('aria-expanded','false');
-    if (menu)   menu.classList.remove('show');
-    closeSubmenus(li);
-  }
-
-  function closeAllDropdowns(exceptLi=null){
-    topItems.forEach(li => { if (li !== exceptLi) forceHideItem(li); });
-  }
-
-  /* ---------- Desktop hover (Bootstrap keeps doing the work) ---------- */
-  if (HOVER_DEVICE.matches) {
-    topItems.forEach(li => {
-      li.addEventListener('mouseenter', () => {
-        if (!XL_UP.matches) return;
-        const t = li.querySelector(':scope > a.dropdown-toggle');
-        if (t) bootstrap.Dropdown.getOrCreateInstance(t, {autoClose:'outside'}).show();
-      });
-      li.addEventListener('mouseleave', () => {
-        if (!XL_UP.matches) return;
-        const t = li.querySelector(':scope > a.dropdown-toggle');
-        if (t) bootstrap.Dropdown.getOrCreateInstance(t).hide();
-      });
-    });
-  }
-
-  /* ---------- MOBILE MODE: disable Bootstrap data-API + manual toggle ---- */
-  function disableBootstrapOnMobile(){
-    topToggles.forEach(t=>{
-      if (t.hasAttribute('data-bs-toggle')) {
-        t.dataset.jjOrigToggle = t.getAttribute('data-bs-toggle'); // save
-        t.removeAttribute('data-bs-toggle');                       // disable BS
-      }
-    });
-  }
-  function restoreBootstrapOnDesktop(){
-    topToggles.forEach(t=>{
-      if (t.dataset.jjOrigToggle){
-        t.setAttribute('data-bs-toggle', t.dataset.jjOrigToggle);
-        delete t.dataset.jjOrigToggle;
-      }
-    });
-  }
-
-  let currentOpenLi = null;
-
-  function openItem(li){
-    forceHideItem(li); // clear stale state first
-    li.classList.add('show');
-    const t = li.querySelector(':scope > a.dropdown-toggle');
-    const m = li.querySelector(':scope > .dropdown-menu');
-    if (t) t.setAttribute('aria-expanded','true');
-    if (m) m.classList.add('show');
-    currentOpenLi = li;
-    lockBody();
-  }
-  function hideItem(li){
-    forceHideItem(li);
-    if (currentOpenLi === li) currentOpenLi = null;
-    if (!anyDropdownOpen() && !(collapseEl && collapseEl.classList.contains('show'))) {
-      unlockBody();
-    }
-  }
-
-  // Manual mobile tap handling (second tap closes; opening another closes current)
-  function bindMobileHandlers(){
-    topToggles.forEach(toggle=>{
-      toggle.addEventListener('click', function(e){
-        if (!isMobile()) return;          // only on mobile
-        e.preventDefault();
-        e.stopPropagation();
-        if (typeof e.stopImmediatePropagation === 'function') e.stopImmediatePropagation();
-
-        const li = this.closest('.nav-item.dropdown');
-        const isOpen = li.classList.contains('show');
-
-        // close others first (single-open)
-        closeAllDropdowns(li);
-
-        if (isOpen) {
-          hideItem(li);                   // second tap closes
-        } else {
-          openItem(li);                   // open tapped
-        }
-      }, true); // capture to beat any stray listeners
-    });
-  }
-
-  // Submenus: tap-to-toggle on mobile; hover niceties on desktop
-  function bindSubmenus(){
-    document.querySelectorAll('.dropdown-submenu').forEach(sub=>{
-      const trigger = sub.querySelector(':scope > .submenu-toggle');
-      const menu    = sub.querySelector(':scope > .dropdown-menu');
-      if (!trigger || !menu) return;
-
-      function closeSiblings(){
-        const parentMenu = sub.closest('.dropdown-menu');
-        parentMenu?.querySelectorAll('.dropdown-submenu > .dropdown-menu.show').forEach(m=>{
-          if (m !== menu){
-            m.classList.remove('show');
-            m.previousElementSibling?.setAttribute('aria-expanded','false');
-          }
+      function jjTag(selector, aos='fade-up', delay=0){
+        document.querySelectorAll(selector).forEach(el=>{
+          el.setAttribute('data-aos', aos);
+          if(delay) el.setAttribute('data-aos-delay', String(delay));
         });
       }
 
-      trigger.addEventListener('click', (e)=>{
-        e.preventDefault(); e.stopPropagation();
-        const isOpen = menu.classList.contains('show');
-        if (isOpen){
-          menu.classList.remove('show');
-          trigger.setAttribute('aria-expanded','false');
-        } else {
-          closeSiblings();
-          menu.classList.add('show');
-          trigger.setAttribute('aria-expanded','true');
+      document.addEventListener('DOMContentLoaded', () => {
+        // Major sections
+        jjTag('.welcome-section', 'fade-up', 0);
+        jjTag('.jana-values-section', 'fade-up', 0);
+        jjTag('.healing-pillars', 'fade-up', 0);
+        jjTag('.jj-journeys-head', 'fade-up', 0);
+        jjTag('.diary-section', 'fade-up', 0);
+        jjTag('.carousel-section', 'fade-up', 0);
+        jjTag('.freebies-section', 'fade-up', 0);
+
+        // Cards/grids (staggered)
+        jjStagger('.value-card', 0, 120);
+        jjStagger('.pillar-box', 0, 120);
+        jjStagger('.jj-journey', 0, 100);
+        jjStagger('.diary-card', 0, 120);
+        jjStagger('.freebie-card', 0, 120);
+
+        // Init AOS after tagging
+        AOS.init({
+          startEvent: 'DOMContentLoaded',
+          offset: 80,
+          duration: 700,
+          easing: 'ease-out',
+          delay: 0,
+          once: true,
+          mirror: false,
+          anchorPlacement: 'top-bottom'
+        });
+
+        // If late-loading images shift layout, refresh once everything is fully loaded
+        window.addEventListener('load', () => AOS.refreshHard());
+      });
+    </script>
+
+    <!-- GSAP + ScrollTrigger -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        gsap.registerPlugin(ScrollTrigger);
+
+        const hero = document.querySelector('.hero-parallax');
+        const wrap = document.querySelector('.hero-wrap');
+
+        if (hero && wrap) {
+          gsap.to(hero, {
+            yPercent: 12,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: wrap,
+              start: 'top top',
+              end: 'bottom top',
+              scrub: true
+            }
+          });
+
+          gsap.from(hero, {
+            opacity: 0,
+            duration: 0.8,
+            ease: 'power2.out'
+          });
+        }
+
+        const mobileHero = document.querySelector('.hero-mobile');
+        if (mobileHero) {
+          gsap.from(mobileHero, {
+            opacity: 0,
+            y: 16,
+            duration: 0.7,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: mobileHero,
+              start: 'top 85%',
+              toggleActions: 'play none none none',
+              once: true
+            }
+          });
         }
       });
+    </script>
 
-      if (HOVER_DEVICE.matches){
-        let timer;
-        const open = ()=>{ clearTimeout(timer); closeSiblings(); menu.classList.add('show'); trigger.setAttribute('aria-expanded','true'); };
-        const close= ()=>{ clearTimeout(timer); timer=setTimeout(()=>{ menu.classList.remove('show'); trigger.setAttribute('aria-expanded','false'); },120); };
-        trigger.addEventListener('mouseenter', ()=>{ if (XL_UP.matches) open(); });
-        trigger.addEventListener('mouseleave', ()=>{ if (XL_UP.matches) close(); });
-        menu.addEventListener('mouseenter',    ()=>{ if (XL_UP.matches) open(); });
-        menu.addEventListener('mouseleave',    ()=>{ if (XL_UP.matches) close(); });
-      }
-    });
-  }
+    <!-- (All your existing JS below this line stays the same) -->
+    <script>
+      /* ========================================================================== 
+         Just Jana — NAVBAR (bulletproof mobile toggle)
+         ========================================================================== */
+      (function () {
+        const XL = '(min-width: 1200px)';
+        const XL_UP = window.matchMedia(XL);
+        const HOVER_DEVICE = window.matchMedia('(hover:hover)');
+        const nav = document.getElementById('siteNav');
+        const collapseEl = document.getElementById('navbarSupportedContent');
+        const $$  = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+        const topItems   = $$('.nav-item.dropdown', nav);
+        const topToggles = $$('.nav-item.dropdown > a.dropdown-toggle', nav);
+        let overlay = document.getElementById('jjNavOverlay');
+        if(!overlay){
+          overlay = document.createElement('div');
+          overlay.id = 'jjNavOverlay';
+          document.body.appendChild(overlay);
+        }
+        function lockBody(){
+          document.body.classList.add('nav-open');
+          document.documentElement.style.overflow = 'hidden';
+          document.body.style.overflow = 'hidden';
+          overlay.style.display = 'block';
+        }
+        function unlockBody(){
+          document.body.classList.remove('nav-open');
+          document.documentElement.style.overflow = '';
+          document.body.style.overflow = '';
+          overlay.style.display = 'none';
+        }
+        overlay.addEventListener('click', () => {
+          if (collapseEl && collapseEl.classList.contains('show')) {
+            bootstrap.Collapse.getOrCreateInstance(collapseEl).hide();
+          }
+          closeAllDropdowns();
+          unlockBody();
+        }, {passive:true});
+        (function injectCSS(){
+          if (document.querySelector('style[data-jj-nav="mobile-safe"]')) return;
+          const tag = document.createElement('style');
+          tag.setAttribute('data-jj-nav','mobile-safe');
+          tag.textContent = `
+            #jjNavOverlay{position:fixed; inset: var(--nav-h) 0 0 0; background:rgba(0,0,0,.25);
+              backdrop-filter:blur(2px); -webkit-backdrop-filter:blur(2px); z-index:998; display:none;}
+            body.nav-open #jjNavOverlay{display:block;}
+            @media (max-width:1199.98px){
+              #navbarSupportedContent{max-height:calc(100vh - var(--nav-h)); overflow:auto; -webkit-overflow-scrolling:touch;}
+              .dropdown-menu{background:#fff !important; backdrop-filter:none !important; -webkit-backdrop-filter:none !important;}
+            }
+          `;
+          document.head.appendChild(tag);
+        })();
+        function isMobile(){ return !XL_UP.matches; }
+        function anyDropdownOpen(){ return !!nav.querySelector('.nav-item.dropdown.show'); }
+        function closeSubmenus(root){
+          (root ? root.querySelectorAll('.dropdown-submenu > .dropdown-menu.show')
+                : document.querySelectorAll('.dropdown-submenu > .dropdown-menu.show'))
+          .forEach(menu=>{
+            menu.classList.remove('show');
+            menu.previousElementSibling?.setAttribute('aria-expanded','false');
+          });
+        }
+        function forceHideItem(li){
+          li.classList.remove('show');
+          const toggle = li.querySelector(':scope > a.dropdown-toggle');
+          const menu   = li.querySelector(':scope > .dropdown-menu');
+          if (toggle) toggle.setAttribute('aria-expanded','false');
+          if (menu)   menu.classList.remove('show');
+          closeSubmenus(li);
+        }
+        function closeAllDropdowns(exceptLi=null){
+          topItems.forEach(li => { if (li !== exceptLi) forceHideItem(li); });
+        }
+        if (HOVER_DEVICE.matches) {
+          topItems.forEach(li => {
+            li.addEventListener('mouseenter', () => {
+              if (!XL_UP.matches) return;
+              const t = li.querySelector(':scope > a.dropdown-toggle');
+              if (t) bootstrap.Dropdown.getOrCreateInstance(t, {autoClose:'outside'}).show();
+            });
+            li.addEventListener('mouseleave', () => {
+              if (!XL_UP.matches) return;
+              const t = li.querySelector(':scope > a.dropdown-toggle');
+              if (t) bootstrap.Dropdown.getOrCreateInstance(t).hide();
+            });
+          });
+        }
+        function disableBootstrapOnMobile(){
+          topToggles.forEach(t=>{
+            if (t.hasAttribute('data-bs-toggle')) {
+              t.dataset.jjOrigToggle = t.getAttribute('data-bs-toggle');
+              t.removeAttribute('data-bs-toggle');
+            }
+          });
+        }
+        function restoreBootstrapOnDesktop(){
+          topToggles.forEach(t=>{
+            if (t.dataset.jjOrigToggle){
+              t.setAttribute('data-bs-toggle', t.dataset.jjOrigToggle);
+              delete t.dataset.jjOrigToggle;
+            }
+          });
+        }
+        let currentOpenLi = null;
+        function openItem(li){
+          forceHideItem(li);
+          li.classList.add('show');
+          const t = li.querySelector(':scope > a.dropdown-toggle');
+          const m = li.querySelector(':scope > .dropdown-menu');
+          if (t) t.setAttribute('aria-expanded','true');
+          if (m) m.classList.add('show');
+          currentOpenLi = li; lockBody();
+        }
+        function hideItem(li){
+          forceHideItem(li);
+          if (currentOpenLi === li) currentOpenLi = null;
+          if (!anyDropdownOpen() && !(collapseEl && collapseEl.classList.contains('show'))) {
+            unlockBody();
+          }
+        }
+        function bindMobileHandlers(){
+          topToggles.forEach(toggle=>{
+            toggle.addEventListener('click', function(e){
+              if (!isMobile()) return;
+              e.preventDefault();
+              e.stopPropagation();
+              if (typeof e.stopImmediatePropagation === 'function') e.stopImmediatePropagation();
+              const li = this.closest('.nav-item.dropdown');
+              const isOpen = li.classList.contains('show');
+              closeAllDropdowns(li);
+              if (isOpen) { hideItem(li); } else { openItem(li); }
+            }, true);
+          });
+        }
+        function bindSubmenus(){
+          document.querySelectorAll('.dropdown-submenu').forEach(sub=>{
+            const trigger = sub.querySelector(':scope > .submenu-toggle');
+            const menu    = sub.querySelector(':scope > .dropdown-menu');
+            if (!trigger || !menu) return;
+            function closeSiblings(){
+              const parentMenu = sub.closest('.dropdown-menu');
+              parentMenu?.querySelectorAll('.dropdown-submenu > .dropdown-menu.show').forEach(m=>{
+                if (m !== menu){
+                  m.classList.remove('show');
+                  m.previousElementSibling?.setAttribute('aria-expanded','false');
+                }
+              });
+            }
+            trigger.addEventListener('click', (e)=>{
+              e.preventDefault(); e.stopPropagation();
+              const isOpen = menu.classList.contains('show');
+              if (isOpen){
+                menu.classList.remove('show');
+                trigger.setAttribute('aria-expanded','false');
+              } else {
+                closeSiblings();
+                menu.classList.add('show');
+                trigger.setAttribute('aria-expanded','true');
+              }
+            });
+            if (HOVER_DEVICE.matches){
+              let timer;
+              const open = ()=>{ clearTimeout(timer); closeSiblings(); menu.classList.add('show'); trigger.setAttribute('aria-expanded','true'); };
+              const close= ()=>{ clearTimeout(timer); timer=setTimeout(()=>{ menu.classList.remove('show'); trigger.setAttribute('aria-expanded','false'); },120); };
+              trigger.addEventListener('mouseenter', ()=>{ if (XL_UP.matches) open(); });
+              trigger.addEventListener('mouseleave', ()=>{ if (XL_UP.matches) close(); });
+              menu.addEventListener('mouseenter',    ()=>{ if (XL_UP.matches) open(); });
+              menu.addEventListener('mouseleave',    ()=>{ if (XL_UP.matches) close(); });
+            }
+          });
+        }
+        if (collapseEl){
+          collapseEl.addEventListener('shown.bs.collapse', ()=>{ lockBody(); });
+          collapseEl.addEventListener('hidden.bs.collapse', ()=>{
+            closeAllDropdowns(); currentOpenLi = null; unlockBody();
+          });
+        }
+        document.addEventListener('click', (e)=>{
+          const a = e.target.closest && e.target.closest('a[href]');
+          if (!a) return;
+          const isTopToggle   = a.matches('.nav-item.dropdown > a.dropdown-toggle,[data-bs-toggle="dropdown"]');
+          const isSubmenuTog  = a.matches('.submenu-toggle');
+          const insideDropdown= a.closest('.dropdown-menu') !== null;
+          if (collapseEl && collapseEl.classList.contains('show')){
+            if (isTopToggle || isSubmenuTog || insideDropdown) return;
+            bootstrap.Collapse.getOrCreateInstance(collapseEl).hide();
+            closeAllDropdowns(); unlockBody();
+          }
+        }, {capture:true});
+        const setH = () => {
+          if (XL_UP.matches) {
+            document.documentElement.style.setProperty('--nav-h', (nav?.offsetHeight || 80) + 'px');
+          }
+        };
+        setH(); addEventListener('resize', setH, {passive:true});
+        let lastY = window.scrollY;
+        addEventListener('scroll', ()=>{
+          if (XL_UP.matches) closeAllDropdowns();
+          const y = window.scrollY;
+          const mayHide = (y > lastY && y > (nav?.offsetHeight || 80)) &&
+                          !(collapseEl && collapseEl.classList.contains('show')) &&
+                          !anyDropdownOpen();
+          if (nav) nav.classList.toggle('nav-hidden', mayHide);
+          lastY = Math.max(0, y);
+        }, {passive:true});
+        function applyMode(){
+          if (!XL_UP.matches){
+            disableBootstrapOnMobile();
+          } else {
+            restoreBootstrapOnDesktop();
+            closeAllDropdowns();
+            unlockBody();
+          }
+        }
+        function bindAll(){ bindMobileHandlers(); bindSubmenus(); applyMode(); XL_UP.addEventListener('change', applyMode); }
+        bindAll();
+      })();
+    </script>
 
-  /* ---------- Collapse events ---------- */
-  if (collapseEl){
-    collapseEl.addEventListener('shown.bs.collapse', ()=>{ lockBody(); });
-    collapseEl.addEventListener('hidden.bs.collapse', ()=>{
-      closeAllDropdowns();
-      currentOpenLi = null;
-      unlockBody();
-    });
-  }
+    <script>
+      (function(){
+        var path = location.pathname.replace(/\/+$/, '');
+        var isHome = (path === '' || path.endsWith('/index.html') || path === '/');
+        if(isHome){
+          document.body.classList.add('is-home');
+          var homeLink = document.querySelector('.home-link');
+          if(homeLink) homeLink.setAttribute('aria-current','page');
+        }
+      })();
+    </script>
 
-  /* ---------- Link navigation inside collapsed area ---------- */
-  document.addEventListener('click', (e)=>{
-    const a = e.target.closest && e.target.closest('a[href]');
-    if (!a) return;
-
-    const isTopToggle   = a.matches('.nav-item.dropdown > a.dropdown-toggle,[data-bs-toggle="dropdown"]');
-    const isSubmenuTog  = a.matches('.submenu-toggle');
-    const insideDropdown= a.closest('.dropdown-menu') !== null;
-
-    if (collapseEl && collapseEl.classList.contains('show')){
-      if (isTopToggle || isSubmenuTog || insideDropdown) return; // keep menu for interactions
-      bootstrap.Collapse.getOrCreateInstance(collapseEl).hide(); // real navigation: close
-      closeAllDropdowns();
-      unlockBody();
-    }
-  }, {capture:true});
-
-/* ---------- Header height var + hide-on-scroll (desktop) ---------- */
-const setH = () => {
-  // Only recompute on DESKTOP (≥1200px). Mobile uses a fixed CSS value.
-  if (XL_UP.matches) {
-    document.documentElement.style
-      .setProperty('--nav-h', (nav?.offsetHeight || 80) + 'px');
-  }
-};
-setH();
-addEventListener('resize', setH, {passive:true});
-
-let lastY = window.scrollY;
-addEventListener('scroll', ()=>{
-  if (XL_UP.matches) closeAllDropdowns();
-  const y = window.scrollY;
-  const mayHide = (y > lastY && y > (nav?.offsetHeight || 80)) &&
-                  !(collapseEl && collapseEl.classList.contains('show')) &&
-                  !anyDropdownOpen();
-  if (nav) nav.classList.toggle('nav-hidden', mayHide);
-  lastY = Math.max(0, y);
-}, {passive:true});
-
-
-  /* ---------- Boot it up ---------- */
-  function applyMode(){
-    if (isMobile()){
-      disableBootstrapOnMobile(); // we take full control
-    } else {
-      restoreBootstrapOnDesktop();
-      closeAllDropdowns();
-      unlockBody();
-    }
-  }
-  bindMobileHandlers();
-  bindSubmenus();
-  applyMode();
-  XL_UP.addEventListener('change', applyMode);
-})();
-</script>
-
-<script>
-  (function(){
-    // consider "/" and "/index.html" as home; tweak if your hosting path differs
-    var path = location.pathname.replace(/\/+$/, ''); // trim trailing slash
-    var isHome = (path === '' || path.endsWith('/index.html') || path === '/');
-    if(isHome){
-      document.body.classList.add('is-home');
-      // Optional a11y: mark the home link as the current page
-      var homeLink = document.querySelector('.home-link');
-      if(homeLink) homeLink.setAttribute('aria-current','page');
-    }
-  })();
-</script>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  // Allow scroll inside the fixed sheet / menus only; block background
-  document.body.addEventListener('touchmove', function (e) {
-    if (!document.body.classList.contains('nav-open')) return;
-    const scroller = e.target.closest('#navbarSupportedContent, .dropdown-menu');
-    if (!scroller) { e.preventDefault(); }  // touch outside the sheet = no scroll
-  }, { passive: false });
-});
-</script>
-
-<script>
-/* Allow scroll only inside the collapsed panel or any dropdown while nav is open */
-document.addEventListener('DOMContentLoaded', () => {
-  const allowInside = sel => e => {
-    if (!document.body.classList.contains('nav-open')) return;
-    const scroller = e.target.closest('#navbarSupportedContent, .dropdown-menu');
-    if (!scroller) { e.preventDefault(); return; }
-    // for wheel events on desktop-sized touchpads
-    if (e.type === 'wheel') {
-      const {scrollTop, scrollHeight, clientHeight} = scroller;
-      const delta = e.deltaY || 0;
-      const atTop    = scrollTop <= 0 && delta < 0;
-      const atBottom = scrollTop + clientHeight >= scrollHeight - 1 && delta > 0;
-      if (atTop || atBottom) e.preventDefault();
-    }
-  };
-  // Touch scroll
-  document.body.addEventListener('touchmove', allowInside(), {passive:false});
-  // Wheel scroll (some Android/iPad keyboards/trackpads)
-  document.body.addEventListener('wheel', allowInside(), {passive:false});
-});
-</script>
-
-<!-- Search bar -->
-
-<script>
-(function(){
-  const form       = document.getElementById('jjNavSearchForm');
-  const input      = document.getElementById('jjNavSearchInput');
-  const collapseEl = document.getElementById('navbarSupportedContent');
-
-  const overlay    = document.getElementById('jjSearchOverlay');
-  const modal      = document.getElementById('jjSearchModal');
-  const resultsEl  = document.getElementById('jjSearchModalResults');
-  const closeBtn   = modal?.querySelector('.jj-search-close');
-
-  /* ===== Config =====
-     Set to a number (e.g. 0.12) to auto-navigate to the best match on submit.
-     Keep as null to ALWAYS show the modal after submit. */
-  const AUTO_NAV_THRESHOLD = null;
-
-  /* ===== Fuse index ===== */
-  let fuse = null, loaded = false;
-  async function loadIndex(){
-    if (loaded) return;
-    loaded = true;
-    try{
-      // CHANGE PATH if your file is at /search-index.json instead:
-      // const res = await fetch('/search-index.json?v=1', {cache:'no-store'});
-      const res = await fetch('/search-index.json?v=1', {cache:'no-store'});
-      if(!res.ok) throw new Error('Index not found');
-      const data = await res.json();
-      fuse = new Fuse(data, {
-        includeScore:true, shouldSort:true, threshold:0.35, minMatchCharLength:2,
-        keys:[
-          {name:'title',   weight:0.5},
-          {name:'tags',    weight:0.2},
-          {name:'section', weight:0.15},
-          {name:'content', weight:0.15}
-        ]
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        document.body.addEventListener('touchmove', function (e) {
+          if (!document.body.classList.contains('nav-open')) return;
+          const scroller = e.target.closest('#navbarSupportedContent, .dropdown-menu');
+          if (!scroller) { e.preventDefault(); }
+        }, { passive: false });
       });
-    }catch(err){
-      console.error('Search index load error:', err);
-      openModal('<div class="jj-search-empty">Search isn’t ready yet.</div>');
-    }
-  }
+    </script>
 
-  /* ===== Modal helpers ===== */
-  let lastFocus = null;
-
-  function getFocusable(container){
-    return Array.from(container.querySelectorAll(`
-      a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])
-    `)).filter(el => !el.hasAttribute('hidden'));
-  }
-
-  function trapFocus(e){
-    if (e.key !== 'Tab') return;
-    const items = getFocusable(modal);
-    if (!items.length) return;
-    const first = items[0], last = items[items.length - 1];
-    if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
-    else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
-  }
-
-  function openModal(html){
-    if(!modal || !overlay) return;
-    // Close hamburger so nothing clips behind
-    if (collapseEl && collapseEl.classList.contains('show')){
-      bootstrap.Collapse.getOrCreateInstance(collapseEl).hide();
-    }
-    resultsEl.innerHTML = html || '';
-    lastFocus = document.activeElement;
-    document.body.classList.add('jj-modal-open');
-    overlay.hidden = false; modal.hidden = false;
-    requestAnimationFrame(()=>{
-      overlay.classList.add('show'); modal.classList.add('show');
-    });
-    // focus first result or close button
-    setTimeout(()=>{
-      (resultsEl.querySelector('a.res') || closeBtn)?.focus?.({preventScroll:true});
-    }, 30);
-    document.addEventListener('keydown', trapFocus);
-  }
-
-  function closeModal(){
-    if(!modal || !overlay) return;
-    overlay.classList.remove('show'); modal.classList.remove('show');
-    setTimeout(()=>{ overlay.hidden = true; modal.hidden = true; }, 160);
-    document.body.classList.remove('jj-modal-open');
-    document.removeEventListener('keydown', trapFocus);
-    (lastFocus || input)?.focus?.({preventScroll:true});
-  }
-
-  overlay?.addEventListener('click', closeModal);
-  closeBtn?.addEventListener('click', (e)=>{ e.preventDefault(); closeModal(); });
-  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && !modal.hidden) closeModal(); });
-
-  /* ===== Rendering ===== */
-  const escHtml = s => (s||'').replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
-  function highlight(text, terms){
-    if(!text) return '';
-    let out = escHtml(text);
-    terms.forEach(t=>{
-      if(!t) return;
-      const re = new RegExp('('+t.replace(/[.*+?^${}()|[\\]\\\\]/g,'\\\\$&')+')','ig');
-      out = out.replace(re,'<mark>$1</mark>');
-    });
-    return out;
-  }
-
-  async function renderResults(q){
-    await loadIndex();
-    if(!fuse || !q){
-      return openModal('<div class="jj-search-empty">Type something to search.</div>');
-    }
-    const hits = fuse.search(q).slice(0, 30);
-    if(!hits.length){
-      return openModal('<div class="jj-search-empty">No matches. Try different words.</div>');
-    }
-    const terms = q.split(/\s+/).filter(Boolean).slice(0,5);
-    const html = hits.map(({item})=>{
-      const title = escHtml(item.title || item.url);
-      const crumb = item.section ? `<span class="crumb">${escHtml(item.section)}</span>` : '';
-      const snippetRaw = item.content ? item.content.slice(0, 160) + (item.content.length>160?'…':'') : '';
-      const snip = highlight(snippetRaw, terms);
-      return `<a class="res" href="${item.url}">
-                <h6>${title}</h6>${crumb}
-                <div class="snip">${snip}</div>
-              </a>`;
-    }).join('');
-    openModal(html);
-  }
-
-  /* ===== Behavior (submit-only) ===== */
-  form?.addEventListener('submit', async (e)=>{
-    e.preventDefault();
-    const q = (input?.value || '').trim();
-    if(!q){ input?.focus(); return; }
-    await loadIndex();
-
-    if (AUTO_NAV_THRESHOLD !== null && fuse){
-      const r = fuse.search(q);
-      const score = r?.[0]?.score ?? 1;
-      const url   = r?.[0]?.item?.url;
-      if (url && score < AUTO_NAV_THRESHOLD){
-        window.location.href = url;
-        return;
-      }
-    }
-    renderResults(q);
-  });
-
-  // Preload index on first focus for snappier submit (does NOT show results)
-  input?.addEventListener('focus', ()=>{ if(!loaded) loadIndex(); });
-})();
-</script>
-
-
-
-
-<script>
-/* ==========================================================================
-   Just Jana — Journeys Rail (smooth auto-scroll + drag/swipe + arrows)
-   ========================================================================== */
-(function(){
-  const viewport  = document.getElementById('jjViewport');
-  const track     = document.getElementById('jjTrack');
-  const leftBtn   = document.getElementById('jjArrowLeft');
-  const rightBtn  = document.getElementById('jjArrowRight');
-  if(!viewport || !track) return;
-
-  const PX_PER_SEC   = 40, RESUME_DELAY = 1800, NUDGE_FACTOR = 0.6, TWEEN_MS = 700, DRAG_THRESHOLD = 12;
-  const prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const autoSpeed = prefersReduced ? 0 : PX_PER_SEC;
-
-  const originals = Array.from(track.children);
-  function widthOf(nodes){ const gap=parseFloat(getComputedStyle(track).gap||0); return nodes.reduce((s,n)=>s+n.getBoundingClientRect().width,0)+Math.max(0,nodes.length-1)*gap; }
-  function fillLoop(){
-    const seen = new Set();
-    [...track.children].forEach(el=>{
-      const key=(el.getAttribute('href')||'')+'|'+(el.querySelector('.jj-title')?.textContent||'');
-      if(seen.has(key)) el.remove(); else seen.add(key);
-    });
-    const vpw = viewport.clientWidth;
-    let total = track.scrollWidth;
-    while(total < vpw*2.5){ originals.forEach(n=>track.appendChild(n.cloneNode(true))); total = track.scrollWidth; }
-  }
-  fillLoop();
-  let setWidth = widthOf(originals);
-
-  let last=performance.now(), pausedUntil=0, interacting=false, tweening=false, x=0;
-  function render(){ if(x>=setWidth) x-=setWidth; else if(x<0) x+=setWidth; track.style.transform=`translate3d(${-x}px,0,0)`; }
-  function frame(now){ const dt=(now-last)/1000; last=now; if(autoSpeed>0 && now>pausedUntil && !interacting && !tweening){ x+=autoSpeed*dt; render(); } requestAnimationFrame(frame); }
-  track.style.willChange='transform'; requestAnimationFrame(frame);
-  const pause=(ms=RESUME_DELAY)=>{ pausedUntil=performance.now()+ms; };
-  const begin=()=>{ interacting=true; pause(); };
-  const end=()=>{ interacting=false; pause(); };
-
-  viewport.addEventListener('mouseenter', ()=>pause(999999), {passive:true});
-  viewport.addEventListener('mouseleave', ()=>pause(), {passive:true});
-  track.addEventListener('focusin', ()=>pause(999999));
-  track.addEventListener('focusout', ()=>pause());
-
-  let down=false, startX=0, x0=0, pid=null, drag=0, downA=null;
-  viewport.addEventListener('pointerdown', e=>{
-    down=true; pid=e.pointerId; viewport.setPointerCapture(pid);
-    begin(); startX=e.clientX; x0=x; drag=0; downA=e.target.closest&&e.target.closest('a.jj-journey');
-  }, {passive:true});
-  viewport.addEventListener('pointermove', e=>{ if(!down) return; const dx=e.clientX-startX; drag=Math.max(drag,Math.abs(dx)); x=x0-dx; render(); }, {passive:true});
-  function endPtr(){ if(!down) return; down=false; try{viewport.releasePointerCapture(pid);}catch(_){}
-    if(drag<DRAG_THRESHOLD && downA && downA.href){ window.location.href = downA.href; }
-    end(); drag=0; downA=null;
-  }
-  viewport.addEventListener('pointerup', endPtr, {passive:true});
-  viewport.addEventListener('pointercancel', endPtr, {passive:true});
-  viewport.addEventListener('pointerleave', endPtr, {passive:true});
-
-  function easeOutCubic(t){ return 1-Math.pow(1-t,3); }
-  function tweenTo(target, ms=TWEEN_MS){
-    let start=x, delta=target-start; if(delta>setWidth/2) delta-=setWidth; if(delta<-setWidth/2) delta+=setWidth;
-    const t0=performance.now(); tweening=true; begin();
-    (function step(t){ const p=Math.min(1,(t-t0)/ms), e=easeOutCubic(p); x=start+delta*e; render(); if(p<1) requestAnimationFrame(step); else {tweening=false; end();} })(t0);
-  }
-  function nudge(dir){ const d=viewport.clientWidth*NUDGE_FACTOR; tweenTo(x+(dir>0?d:-d)); }
-  if(leftBtn && rightBtn){
-    leftBtn.addEventListener('click', ()=>nudge(-1));
-    rightBtn.addEventListener('click', ()=>nudge(+1));
-    let holdT=null, holdI=null;
-    function startHold(dir){ nudge(dir); holdT=setTimeout(()=>{ holdI=setInterval(()=>nudge(dir),260); },450); }
-    function stopHold(){ clearTimeout(holdT); clearInterval(holdI); holdT=holdI=null; }
-    ['mousedown','touchstart'].forEach(ev=>{
-      leftBtn.addEventListener(ev, e=>{ e.preventDefault(); startHold(-1); }, {passive:false});
-      rightBtn.addEventListener(ev, e=>{ e.preventDefault(); startHold(+1); }, {passive:false});
-    });
-    ['mouseup','mouseleave','touchend','touchcancel'].forEach(ev=>{
-      leftBtn.addEventListener(ev, stopHold, {passive:true});
-      rightBtn.addEventListener(ev, stopHold, {passive:true});
-    });
-  }
-
-  let rTimer; addEventListener('resize', ()=>{ clearTimeout(rTimer); rTimer=setTimeout(()=>{ fillLoop(); setWidth=widthOf(originals); x=0; render(); },200); });
-})();
-</script>
-
-<script>
-/* ==========================================================================
-   Monthly Carousel — download button sync + swipe
-   ========================================================================== */
-document.addEventListener('DOMContentLoaded', () => {
-  const el = document.getElementById('monthlyCarousel');
-  const btn = document.getElementById('downloadBtn');
-  if (!el || !btn) return;
-
-  const items  = el.querySelectorAll('.carousel-item');
-  const prevBtn= el.querySelector('.carousel-control-prev');
-  const nextBtn= el.querySelector('.carousel-control-next');
-
-  const slides = [
-    { href: "img/Monthly positivity/mantra.png",           label: "Download Mantra" },
-    { href: "img/Monthly positivity/Self-affirmation.png", label: "Download Affirmation" },
-    { href: "img/Monthly positivity/Quote.png",            label: "Download Quote" }
-  ];
-  const clamp = i => Math.max(0, Math.min(i, items.length-1));
-
-  function updateArrows(){
-    const idx = [...items].findIndex(i=>i.classList.contains('active'));
-    if (prevBtn) prevBtn.style.display = idx <= 0 ? 'none' : 'flex';
-    if (nextBtn) nextBtn.style.display = idx >= items.length-1 ? 'none' : 'flex';
-  }
-
-  const inst = bootstrap.Carousel.getOrCreateInstance
-    ? bootstrap.Carousel.getOrCreateInstance(el)
-    : (bootstrap.Carousel.getInstance(el) || new bootstrap.Carousel(el));
-
-  let startX=0;
-  el.addEventListener('touchstart', e=>{ startX=e.changedTouches[0].screenX; }, {passive:true});
-  el.addEventListener('touchend',   e=>{
-    const dx = e.changedTouches[0].screenX - startX;
-    const th = 50, idx = [...items].findIndex(i=>i.classList.contains('active'));
-    if (dx < -th && idx < items.length-1) inst.next();
-    if (dx >  th && idx > 0)               inst.prev();
-  }, {passive:true});
-
-  el.addEventListener('slid.bs.carousel', e=>{
-    const i = clamp(e.to ?? [...items].findIndex(x => x.classList.contains('active')));
-    const s = slides[i] || slides[0];
-    if (s){ btn.href=s.href; btn.download=s.href.split('/').pop(); btn.textContent=s.label; }
-    updateArrows();
-  });
-
-  updateArrows();
-  const start = clamp([...items].findIndex(x=>x.classList.contains('active')) || 0);
-  const s0 = slides[start] || slides[0];
-  if (s0){ btn.href=s0.href; btn.download=s0.href.split('/').pop(); btn.textContent=s0.label; }
-});
-</script>
-
-<script>
-/* ==========================================================================
-   Freebies filter
-   ========================================================================== */
-document.addEventListener('DOMContentLoaded', () => {
-  const buttons = document.querySelectorAll('.filter-btn');
-  const cards   = document.querySelectorAll('.freebie-card');
-  if (!buttons.length || !cards.length) return;
-
-  buttons.forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      buttons.forEach(b=>b.classList.remove('active'));
-      btn.classList.add('active');
-      const filter = btn.getAttribute('data-filter');
-      cards.forEach(card=>{
-        const cat = card.getAttribute('data-category');
-        card.style.display = (filter === 'all' || cat === filter) ? 'flex' : 'none';
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const allowInside = sel => e => {
+          if (!document.body.classList.contains('nav-open')) return;
+          const scroller = e.target.closest('#navbarSupportedContent, .dropdown-menu');
+          if (!scroller) { e.preventDefault(); return; }
+          if (e.type === 'wheel') {
+            const {scrollTop, scrollHeight, clientHeight} = scroller;
+            const delta = e.deltaY || 0;
+            const atTop    = scrollTop <= 0 && delta < 0;
+            const atBottom = scrollTop + clientHeight >= scrollHeight - 1 && delta > 0;
+            if (atTop || atBottom) e.preventDefault();
+          }
+        };
+        document.body.addEventListener('touchmove', allowInside(), {passive:false});
+        document.body.addEventListener('wheel', allowInside(), {passive:false});
       });
-    });
-  });
-});
-</script>
+    </script>
 
+    <!-- Search bar -->
+    <script>
+      (function(){
+        const form       = document.getElementById('jjNavSearchForm');
+        const input      = document.getElementById('jjNavSearchInput');
+        const collapseEl = document.getElementById('navbarSupportedContent');
+        const overlay    = document.getElementById('jjSearchOverlay');
+        const modal      = document.getElementById('jjSearchModal');
+        const resultsEl  = document.getElementById('jjSearchModalResults');
+        const closeBtn   = modal?.querySelector('.jj-search-close');
 
+        const AUTO_NAV_THRESHOLD = null;
+
+        let fuse = null, loaded = false;
+        async function loadIndex(){
+          if (loaded) return;
+          loaded = true;
+          try{
+            const res = await fetch('/search-index.json?v=1', {cache:'no-store'});
+            if(!res.ok) throw new Error('Index not found');
+            const data = await res.json();
+            fuse = new Fuse(data, {
+              includeScore:true, shouldSort:true, threshold:0.35, minMatchCharLength:2,
+              keys:[
+                {name:'title',   weight:0.5},
+                {name:'tags',    weight:0.2},
+                {name:'section', weight:0.15},
+                {name:'content', weight:0.15}
+              ]
+            });
+          }catch(err){
+            console.error('Search index load error:', err);
+            openModal('<div class="jj-search-empty">Search isn’t ready yet.</div>');
+          }
+        }
+
+        let lastFocus = null;
+        function getFocusable(container){
+          return Array.from(container.querySelectorAll(`
+            a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])
+          `)).filter(el => !el.hasAttribute('hidden'));
+        }
+        function trapFocus(e){
+          if (e.key !== 'Tab') return;
+          const items = getFocusable(modal);
+          if (!items.length) return;
+          const first = items[0], last = items[items.length - 1];
+          if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+          else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+        }
+        function openModal(html){
+          if(!modal || !overlay) return;
+          if (collapseEl && collapseEl.classList.contains('show')){
+            bootstrap.Collapse.getOrCreateInstance(collapseEl).hide();
+          }
+          resultsEl.innerHTML = html || '';
+          lastFocus = document.activeElement;
+          document.body.classList.add('jj-modal-open');
+          overlay.hidden = false; modal.hidden = false;
+          requestAnimationFrame(()=>{ overlay.classList.add('show'); modal.classList.add('show'); });
+          setTimeout(()=>{ (resultsEl.querySelector('a.res') || closeBtn)?.focus?.({preventScroll:true}); }, 30);
+          document.addEventListener('keydown', trapFocus);
+        }
+        function closeModal(){
+          if(!modal || !overlay) return;
+          overlay.classList.remove('show'); modal.classList.remove('show');
+          setTimeout(()=>{ overlay.hidden = true; modal.hidden = true; }, 160);
+          document.body.classList.remove('jj-modal-open');
+          document.removeEventListener('keydown', trapFocus);
+          (lastFocus || input)?.focus?.({preventScroll:true});
+        }
+        overlay?.addEventListener('click', closeModal);
+        closeBtn?.addEventListener('click', (e)=>{ e.preventDefault(); closeModal(); });
+        document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && !modal.hidden) closeModal(); });
+
+        const escHtml = s => (s||'').replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
+        function highlight(text, terms){
+          if(!text) return '';
+          let out = escHtml(text);
+          terms.forEach(t=>{
+            if(!t) return;
+            const re = new RegExp('('+t.replace(/[.*+?^${}()|[\\]\\\\]/g,'\\\\$&')+')','ig');
+            out = out.replace(re,'<mark>$1</mark>');
+          });
+          return out;
+        }
+        async function renderResults(q){
+          await loadIndex();
+          if(!fuse || !q){
+            return openModal('<div class="jj-search-empty">Type something to search.</div>');
+          }
+          const hits = fuse.search(q).slice(0, 30);
+          if(!hits.length){
+            return openModal('<div class="jj-search-empty">No matches. Try different words.</div>');
+          }
+          const terms = q.split(/\s+/).filter(Boolean).slice(0,5);
+          const html = hits.map(({item})=>{
+            const title = escHtml(item.title || item.url);
+            const crumb = item.section ? `<span class="crumb">${escHtml(item.section)}</span>` : '';
+            const snippetRaw = item.content ? item.content.slice(0, 160) + (item.content.length>160?'…':'') : '';
+            const snip = highlight(snippetRaw, terms);
+            return `<a class="res" href="${item.url}"><h6>${title}</h6>${crumb}<div class="snip">${snip}</div></a>`;
+          }).join('');
+          openModal(html);
+        }
+        form?.addEventListener('submit', async (e)=>{
+          e.preventDefault();
+          const q = (input?.value || '').trim();
+          if(!q){ input?.focus(); return; }
+          await loadIndex();
+          if (AUTO_NAV_THRESHOLD !== null && fuse){
+            const r = fuse.search(q);
+            const score = r?.[0]?.score ?? 1;
+            const url   = r?.[0]?.item?.url;
+            if (url && score < AUTO_NAV_THRESHOLD){
+              window.location.href = url;
+              return;
+            }
+          }
+          renderResults(q);
+        });
+        input?.addEventListener('focus', ()=>{ if(!loaded) loadIndex(); });
+      })();
+    </script>
+
+    <script>
+      /* ========================================================================== 
+         Just Jana — Journeys Rail
+         ========================================================================== */
+      (function(){
+        const viewport  = document.getElementById('jjViewport');
+        const track     = document.getElementById('jjTrack');
+        const leftBtn   = document.getElementById('jjArrowLeft');
+        const rightBtn  = document.getElementById('jjArrowRight');
+        if(!viewport || !track) return;
+
+        const PX_PER_SEC = 40, RESUME_DELAY = 1800, NUDGE_FACTOR = 0.6, TWEEN_MS = 700, DRAG_THRESHOLD = 12;
+        const prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const autoSpeed = prefersReduced ? 0 : PX_PER_SEC;
+
+        const originals = Array.from(track.children);
+        function widthOf(nodes){ const gap=parseFloat(getComputedStyle(track).gap||0); return nodes.reduce((s,n)=>s+n.getBoundingClientRect().width,0)+Math.max(0,nodes.length-1)*gap; }
+        function fillLoop(){
+          const seen = new Set();
+          [...track.children].forEach(el=>{
+            const key=(el.getAttribute('href')||'')+'|'+(el.querySelector('.jj-title')?.textContent||'');
+            if(seen.has(key)) el.remove(); else seen.add(key);
+          });
+          const vpw = viewport.clientWidth;
+          let total = track.scrollWidth;
+          while(total < vpw*2.5){ originals.forEach(n=>track.appendChild(n.cloneNode(true))); total = track.scrollWidth; }
+        }
+        fillLoop();
+        let setWidth = widthOf(originals);
+
+        let last=performance.now(), pausedUntil=0, interacting=false, tweening=false, x=0;
+        function render(){ if(x>=setWidth) x-=setWidth; else if(x<0) x+=setWidth; track.style.transform=`translate3d(${-x}px,0,0)`; }
+        function frame(now){ const dt=(now-last)/1000; last=now; if(autoSpeed>0 && now>pausedUntil && !interacting && !tweening){ x+=autoSpeed*dt; render(); } requestAnimationFrame(frame); }
+        track.style.willChange='transform'; requestAnimationFrame(frame);
+        const pause=(ms=RESUME_DELAY)=>{ pausedUntil=performance.now()+ms; };
+        const begin=()=>{ interacting=true; pause(); };
+        const end=()=>{ interacting=false; pause(); };
+
+        viewport.addEventListener('mouseenter', ()=>pause(999999), {passive:true});
+        viewport.addEventListener('mouseleave', ()=>pause(), {passive:true});
+        track.addEventListener('focusin', ()=>pause(999999));
+        track.addEventListener('focusout', ()=>pause());
+
+        let down=false, startX=0, x0=0, pid=null, drag=0, downA=null;
+        viewport.addEventListener('pointerdown', e=>{
+          down=true; pid=e.pointerId; viewport.setPointerCapture(pid);
+          begin(); startX=e.clientX; x0=x; drag=0; downA=e.target.closest&&e.target.closest('a.jj-journey');
+        }, {passive:true});
+        viewport.addEventListener('pointermove', e=>{ if(!down) return; const dx=e.clientX-startX; drag=Math.max(drag,Math.abs(dx)); x=x0-dx; render(); }, {passive:true});
+        function endPtr(){ if(!down) return; down=false; try{viewport.releasePointerCapture(pid);}catch(_){}
+          if(drag<DRAG_THRESHOLD && downA && downA.href){ window.location.href = downA.href; }
+          end(); drag=0; downA=null;
+        }
+        viewport.addEventListener('pointerup', endPtr, {passive:true});
+        viewport.addEventListener('pointercancel', endPtr, {passive:true});
+        viewport.addEventListener('pointerleave', endPtr, {passive:true});
+
+        function easeOutCubic(t){ return 1-Math.pow(1-t,3); }
+        function tweenTo(target, ms=TWEEN_MS){
+          let start=x, delta=target-start; if(delta>setWidth/2) delta-=setWidth; if(delta<-setWidth/2) delta+=setWidth;
+          const t0=performance.now(); tweening=true; begin();
+          (function step(t){ const p=Math.min(1,(t-t0)/ms), e=easeOutCubic(p); x=start+delta*e; render(); if(p<1) requestAnimationFrame(step); else {tweening=false; end();} })(t0);
+        }
+        function nudge(dir){ const d=viewport.clientWidth*NUDGE_FACTOR; tweenTo(x+(dir>0?d:-d)); }
+        if(leftBtn && rightBtn){
+          leftBtn.addEventListener('click', ()=>nudge(-1));
+          rightBtn.addEventListener('click', ()=>nudge(+1));
+          let holdT=null, holdI=null;
+          function startHold(dir){ nudge(dir); holdT=setTimeout(()=>{ holdI=setInterval(()=>nudge(dir),260); },450); }
+          function stopHold(){ clearTimeout(holdT); clearInterval(holdI); holdT=holdI=null; }
+          ['mousedown','touchstart'].forEach(ev=>{
+            leftBtn.addEventListener(ev, e=>{ e.preventDefault(); startHold(-1); }, {passive:false});
+            rightBtn.addEventListener(ev, e=>{ e.preventDefault(); startHold(+1); }, {passive:false});
+          });
+          ['mouseup','mouseleave','touchend','touchcancel'].forEach(ev=>{
+            leftBtn.addEventListener(ev, stopHold, {passive:true});
+            rightBtn.addEventListener(ev, stopHold, {passive:true});
+          });
+        }
+
+        let rTimer; addEventListener('resize', ()=>{ clearTimeout(rTimer); rTimer=setTimeout(()=>{ fillLoop(); setWidth=widthOf(originals); x=0; render(); },200); });
+      })();
+    </script>
+
+    <script>
+      /* ========================================================================== 
+         Monthly Carousel — download button sync + swipe
+         ========================================================================== */
+      document.addEventListener('DOMContentLoaded', () => {
+        const el = document.getElementById('monthlyCarousel');
+        const btn = document.getElementById('downloadBtn');
+        if (!el || !btn) return;
+
+        const items  = el.querySelectorAll('.carousel-item');
+        const prevBtn= el.querySelector('.carousel-control-prev');
+        const nextBtn= el.querySelector('.carousel-control-next');
+
+        const slides = [
+          { href: "img/Monthly positivity/mantra.png",           label: "Download Mantra" },
+          { href: "img/Monthly positivity/Self-affirmation.png", label: "Download Affirmation" },
+          { href: "img/Monthly positivity/Quote.png",            label: "Download Quote" }
+        ];
+        const clamp = i => Math.max(0, Math.min(i, items.length-1));
+
+        function updateArrows(){
+          const idx = [...items].findIndex(i=>i.classList.contains('active'));
+          if (prevBtn) prevBtn.style.display = idx <= 0 ? 'none' : 'flex';
+          if (nextBtn) nextBtn.style.display = idx >= items.length-1 ? 'none' : 'flex';
+        }
+
+        const inst = bootstrap.Carousel.getOrCreateInstance
+          ? bootstrap.Carousel.getOrCreateInstance(el)
+          : (bootstrap.Carousel.getInstance(el) || new bootstrap.Carousel(el));
+
+        let startX=0;
+        el.addEventListener('touchstart', e=>{ startX=e.changedTouches[0].screenX; }, {passive:true});
+        el.addEventListener('touchend',   e=>{
+          const dx = e.changedTouches[0].screenX - startX;
+          const th = 50, idx = [...items].findIndex(i=>i.classList.contains('active'));
+          if (dx < -th && idx < items.length-1) inst.next();
+          if (dx >  th && idx > 0)               inst.prev();
+        }, {passive:true});
+
+        el.addEventListener('slid.bs.carousel', e=>{
+          const i = clamp(e.to ?? [...items].findIndex(x => x.classList.contains('active')));
+          const s = slides[i] || slides[0];
+          if (s){ btn.href=s.href; btn.download=s.href.split('/').pop(); btn.textContent=s.label; }
+          updateArrows();
+        });
+
+        updateArrows();
+        const start = clamp([...items].findIndex(x=>x.classList.contains('active')) || 0);
+        const s0 = slides[start] || slides[0];
+        if (s0){ btn.href=s0.href; btn.download=s0.href.split('/').pop(); btn.textContent=s0.label; }
+      });
+    </script>
+
+    <script>
+      /* ========================================================================== 
+         Freebies filter
+         ========================================================================== */
+      document.addEventListener('DOMContentLoaded', () => {
+        const buttons = document.querySelectorAll('.filter-btn');
+        const cards   = document.querySelectorAll('.freebie-card');
+        if (!buttons.length || !cards.length) return;
+
+        buttons.forEach(btn=>{
+          btn.addEventListener('click', ()=>{
+            buttons.forEach(b=>b.classList.remove('active'));
+            btn.classList.add('active');
+            const filter = btn.getAttribute('data-filter');
+            cards.forEach(card=>{
+              const cat = card.getAttribute('data-category');
+              card.style.display = (filter === 'all' || cat === filter) ? 'flex' : 'none';
+            });
+          });
+        });
+      });
+    </script>
 
   </body>
 </html>
