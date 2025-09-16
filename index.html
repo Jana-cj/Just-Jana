@@ -770,22 +770,6 @@
   </div>
   </footer>
 
-<!-- AOS init (near end of body) -->
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    AOS.init({
-      startEvent: 'DOMContentLoaded',
-      offset: 80,
-      duration: 700,
-      easing: 'ease-out',
-      delay: 0,
-      once: true,
-      mirror: false,
-      anchorPlacement: 'top-bottom'
-    });
-  });
-</script>
-
 <script>
   // Utility: add AOS attributes with stagger
   function jjStagger(selector, baseDelay=0, step=120){
@@ -803,7 +787,7 @@
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    // Major sections
+    // 1) Tag elements FIRST
     jjTag('.welcome-section', 'fade-up', 0);
     jjTag('.jana-values-section', 'fade-up', 0);
     jjTag('.healing-pillars', 'fade-up', 0);
@@ -812,14 +796,29 @@
     jjTag('.carousel-section', 'fade-up', 0);
     jjTag('.freebies-section', 'fade-up', 0);
 
-    // Cards/grids (staggered)
     jjStagger('.value-card', 0, 120);
     jjStagger('.pillar-box', 0, 120);
     jjStagger('.jj-journey', 0, 100);
     jjStagger('.diary-card', 0, 120);
     jjStagger('.freebie-card', 0, 120);
+
+    // 2) THEN init AOS
+    AOS.init({
+      startEvent: 'DOMContentLoaded',
+      offset: 80,
+      duration: 700,
+      easing: 'ease-out',
+      delay: 0,
+      once: true,
+      mirror: false,
+      anchorPlacement: 'top-bottom'
+    });
+
+    // 3) If images shift layout, refresh after everything loads
+    window.addEventListener('load', () => AOS.refreshHard());
   });
 </script>
+
 
 <!-- GSAP + ScrollTrigger (near end of body) -->
 <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
