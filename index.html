@@ -26,6 +26,10 @@
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/png" href="img/Logos/favicon.png">
 
+    <!-- Preload desktop hero image -->
+    <link rel="preload" as="image" href="img/Main banners/hero banner1.jpg">
+
+
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="CSS/index stylesheet.css">
 
@@ -686,33 +690,40 @@
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     gsap.registerPlugin(ScrollTrigger);
 
-    /* ---------- Slow blur-in for hero (desktop + mobile pieces) ---------- */
-    const blurTargets = [
-      document.querySelector('.hero-parallax'), // desktop hero image
-      document.querySelector('.logo-mobile'),    // mobile hero parts
+    /* ---------- Blur-only reveal for DESKTOP hero ---------- */
+    const desktopHero = document.querySelector('.hero-parallax');
+    if (desktopHero) {
+      // visible immediately, but blurred
+      gsap.set(desktopHero, { filter: 'blur(18px)', opacity: 1, willChange: 'filter' });
+      gsap.to(desktopHero, {
+        filter: 'blur(0px)',
+        duration: 1.2,           // tweak speed here
+        ease: 'power2.out'
+      });
+    }
+
+    /* ---------- Blur + fade for MOBILE hero pieces ---------- */
+    const mobileBits = [
+      document.querySelector('.logo-mobile'),
       document.querySelector('.text-mobile'),
       document.querySelector('.tagline-mobile')
     ].filter(Boolean);
 
-    // Start blurred & transparent; then ease to sharp & visible
-    if (blurTargets.length){
-      gsap.set(blurTargets, { filter: 'blur(18px)', opacity: 0, willChange: 'filter,opacity' });
-      gsap.to(blurTargets, {
-  filter: 'blur(0px)',
-  opacity: 1,
-  duration: 1.5,   // adjust speed here
-  ease: 'power2.out',
-  stagger: 0.08
-});
-
+    if (mobileBits.length) {
+      gsap.set(mobileBits, { filter: 'blur(18px)', opacity: 0, willChange: 'filter,opacity' });
+      gsap.to(mobileBits, {
+        filter: 'blur(0px)',
+        opacity: 1,
+        duration: 1.2,
+        ease: 'power2.out',
+        stagger: 0.08
+      });
     }
 
     /* ---------- Subtle parallax on desktop hero ---------- */
-    const hero = document.querySelector('.hero-parallax');
     const wrap = document.querySelector('.hero-wrap');
-
-    if (hero && wrap) {
-      gsap.to(hero, {
+    if (desktopHero && wrap) {
+      gsap.to(desktopHero, {
         yPercent: 12,
         ease: 'none',
         scrollTrigger: {
@@ -724,13 +735,12 @@
       });
     }
 
-    /* ---------- Optional: mobile hero entrance on scroll ---------- */
+    /* ---------- Optional: mobile hero container nudge on scroll ---------- */
     const mobileHero = document.querySelector('.hero-mobile');
     if (mobileHero) {
       gsap.from(mobileHero, {
-        // Keep this subtle; main “blur-in” above already handled opacity
         y: 16,
-        duration: 0.9,
+        duration: 0.8,
         ease: 'power2.out',
         scrollTrigger: {
           trigger: mobileHero,
@@ -742,6 +752,7 @@
     }
   });
 </script>
+
 
 
     <script>

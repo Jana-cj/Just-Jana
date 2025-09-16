@@ -1616,14 +1616,22 @@ html{ -webkit-text-size-adjust: 100%; }
    .hero-wrap { display: none !important; }  
 }
 
-.hero-parallax,
+/* Desktop hero: visible but blurred on first paint */
+.hero-parallax{
+  filter: blur(18px);
+  opacity: 1;               /* <- key change */
+  will-change: filter;      /* only filter needs anim on desktop */
+}
+
+/* Mobile hero elements: keep fade-in if you like that flow */
 .logo-mobile,
 .text-mobile,
-.tagline-mobile {
+.tagline-mobile{
   filter: blur(18px);
   opacity: 0;
   will-change: filter, opacity;
 }
+
 
 
 /* Welcome section */
