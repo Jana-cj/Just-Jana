@@ -1531,6 +1531,23 @@ html{ -webkit-text-size-adjust: 100%; }
   }
 }
 
+/* Make the logo smaller on mobile */
+@media (max-width: 575.98px){
+  .navbar-brand img,
+  .navbar-brand .second-logo{
+    height: 20px !important;   /* pick your size: 18–24px usually looks good */
+    width: auto !important;    /* keep aspect ratio */
+  }
+}
+
+/* (Optional) slightly smaller on tablets too */
+@media (min-width: 576px) and (max-width: 1199.98px){
+  .navbar-brand img,
+  .navbar-brand .second-logo{
+    height: 22px !important;
+    width: auto !important;
+  }
+}
 
 
 
