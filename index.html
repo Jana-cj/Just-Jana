@@ -363,7 +363,7 @@
               </div>
               <br><br>
             </div>
-            <a href="missionvalues.html" class="read-more-btn" data-aos="fade-up" data-aos-delay="100">Read our mission & values</a>
+            <a href="missionvalues.html" class="read-more-btn" data-aos="fade-up" data-aos-delay="50">Read our mission & values</a>
           </div>
         </section>
       </div>
@@ -1134,8 +1134,9 @@
       })();
     </script>
 
-    <!-- Get rid of extra space above hero image -->
-     <script>
+    <!-- extra space above hero image -->
+
+<script>
 (function () {
   const nav = document.getElementById('siteNav');
   const spacer = document.getElementById('navSpacer');
@@ -1145,37 +1146,32 @@
   function setNavHeight() {
     if (rafId) cancelAnimationFrame(rafId);
     rafId = requestAnimationFrame(() => {
+      const hidden = nav.classList.contains('nav-hidden');
       const h = Math.max(0, nav.offsetHeight || 0);
-      // Update CSS var (used by overlay, etc.)
       document.documentElement.style.setProperty('--nav-h', h + 'px');
-      // Update the physical spacer so content sits correctly
-      spacer.style.height = h + 'px';
+      spacer.style.height = (hidden ? 0 : h) + 'px';
     });
   }
 
-  // Run on load
+  // run & re-run on important events
   setNavHeight();
-
-  // Recalculate on resize / orientation
-  window.addEventListener('resize', setNavHeight, { passive: true });
-
-  // Recalculate when Bootstrap components change nav height
+  addEventListener('resize', setNavHeight, { passive: true });
   ['shown.bs.collapse','hidden.bs.collapse','shown.bs.dropdown','hidden.bs.dropdown']
     .forEach(ev => document.addEventListener(ev, setNavHeight));
+  addEventListener('load', setNavHeight);
+  addEventListener('pageshow', setNavHeight);
 
-  // Fonts/images can change line-height/size → recalc after load
-  window.addEventListener('load', setNavHeight);
-
-  // Safety: recalc after a tick when page is restored from bfcache
-  window.addEventListener('pageshow', setNavHeight);
-
-  // If you programmatically add/remove classes (e.g., nav-hidden), observe size changes
-  if ('ResizeObserver' in window) {
-    const ro = new ResizeObserver(setNavHeight);
-    ro.observe(nav);
+  // watch size AND class changes
+  if ('ResizeObserver' in window) new ResizeObserver(setNavHeight).observe(nav);
+  if ('MutationObserver' in window) {
+    new MutationObserver(setNavHeight).observe(nav, { attributes: true, attributeFilter: ['class'] });
   }
+
+  // also call during scroll since you toggle .nav-hidden there
+  addEventListener('scroll', setNavHeight, { passive: true });
 })();
 </script>
+
 
 
     <script>

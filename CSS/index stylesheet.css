@@ -1556,6 +1556,8 @@ html{ -webkit-text-size-adjust: 100%; }
   }
 }
 
+/* when the nav is slid up, kill the spacer height */
+#siteNav.nav-hidden + #navSpacer { height: 0 !important; }
 
 
 
