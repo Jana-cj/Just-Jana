@@ -1613,6 +1613,7 @@ html{ -webkit-text-size-adjust: 100%; }
 @media (max-width:768px){
   .hero-mobile{ display:flex; }
   .full-width-image{ display:none; }
+   .hero-wrap { display: none !important; }  
 }
 
 
