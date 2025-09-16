@@ -1616,6 +1616,15 @@ html{ -webkit-text-size-adjust: 100%; }
    .hero-wrap { display: none !important; }  
 }
 
+.hero-parallax,
+.logo-mobile,
+.text-mobile,
+.tagline-mobile {
+  filter: blur(18px);
+  opacity: 0;
+  will-change: filter, opacity;
+}
+
 
 /* Welcome section */
 

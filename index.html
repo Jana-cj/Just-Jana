@@ -698,12 +698,13 @@
     if (blurTargets.length){
       gsap.set(blurTargets, { filter: 'blur(18px)', opacity: 0, willChange: 'filter,opacity' });
       gsap.to(blurTargets, {
-        filter: 'blur(0px)',
-        opacity: 1,
-        duration: 1.4,       
-        ease: 'power2.out',
-        stagger: 0.08
-      });
+  filter: 'blur(0px)',
+  opacity: 1,
+  duration: 1.5,   // adjust speed here
+  ease: 'power2.out',
+  stagger: 0.08
+});
+
     }
 
     /* ---------- Subtle parallax on desktop hero ---------- */
