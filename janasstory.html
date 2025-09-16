@@ -561,6 +561,64 @@
   </div>
 
  </footer>
+
+ <!-- AOS: tag elements FIRST, then init -->
+<script>
+  function jjStagger(selector, baseDelay = 0, step = 120){
+    const nodes = document.querySelectorAll(selector);
+    nodes.forEach((el, i) => {
+      el.setAttribute('data-aos', el.getAttribute('data-aos') || 'fade-up');
+      el.setAttribute('data-aos-delay', String(baseDelay + i * step));
+    });
+  }
+  function jjTag(selector, aos='fade-up', delay=0){
+    document.querySelectorAll(selector).forEach(el => {
+      el.setAttribute('data-aos', aos);
+      if (delay) el.setAttribute('data-aos-delay', String(delay));
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    /* ---- Story blocks: text first, then image ---- */
+    const STORY_TEXT_DELAY   = 0;    // tweak if you want a global offset
+    const STORY_IMAGE_DELAY  = 180;  // appears after text
+    document.querySelectorAll('.story-block').forEach((block, i) => {
+      const text  = block.querySelector('.story-text');
+      const image = block.querySelector('.story-image');
+
+      if (text) {
+        text.setAttribute('data-aos', 'fade-up');
+        text.setAttribute('data-aos-delay', String(STORY_TEXT_DELAY));
+      }
+      if (image) {
+        image.setAttribute('data-aos', 'fade-up');
+        image.setAttribute('data-aos-delay', String(STORY_IMAGE_DELAY));
+      }
+    });
+
+    /* ---- Center wrapper shows after the stories naturally on scroll ---- */
+    jjTag('.center-wrapper', 'fade-up', 0);
+    jjTag('.highlight', 'fade-up', 0);
+
+    /* ---- Footer header gentle entrance ---- */
+    jjTag('.site-footer .footer-heading', 'fade-up', 0);
+
+    /* ---- Init AOS ---- */
+    AOS.init({
+      startEvent: 'DOMContentLoaded',
+      offset: 100,
+      duration: 700,
+      easing: 'ease-out',
+      delay: 0,
+      once: true,
+      mirror: false,
+      anchorPlacement: 'top-bottom'
+    });
+
+    window.addEventListener('load', () => AOS.refreshHard());
+  });
+</script>
+
 <!-- GSAP + ScrollTrigger -->
 <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
