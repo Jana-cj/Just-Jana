@@ -1293,79 +1293,86 @@
     </script>
     <script>
 /* =========================================================
-   Just Jana — Healing Pillars one-at-a-time reveal
+   Just Jana — Healing Pillars one-at-a-time (stagger tuned)
    ========================================================= */
 document.addEventListener('DOMContentLoaded', () => {
   const links = Array.from(document.querySelectorAll('.healing-pillars .pillar-link'));
   const boxes = links.map(a => a.querySelector('.pillar-box')).filter(Boolean);
   if (!boxes.length) return;
 
-  // Respect reduced motion
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduceMotion) return; // show everything immediately (CSS handles it)
+  if (reduceMotion) return;
+
+  // ---------- timing you can tune ----------
+  const FIRST_DELAY_MS   = 70;   // first pillar: faster pop
+  const STEP_GAP_MS      = 180;  // extra wait added for each next pillar
+  const ADDITIONAL_EASE  = 40;   // tiny extra bump as we go down
+  // Example actual delays by index: 0→70ms, 1→(70+180+40)=290ms, 2→(70+360+80)=510ms, ...
+
+  // On desktop, wait until the card is deeper in view before triggering
+  const isDesktop = window.matchMedia('(min-width: 992px)').matches;
+  const threshold = isDesktop ? 0.55 : 0.35;           // how much of the card must be visible
+  const rootMargin = isDesktop ? '0px 0px -35% 0px'    // delay trigger a bit on desktop
+                               : '0px 0px -20% 0px';
 
   // Initial state: hide all
   boxes.forEach(b => b.classList.add('is-hidden'));
 
-  // We reveal strictly in DOM order
   let nextIndexToReveal = 0;
 
-  // Helper: reveal exactly one box (if it exists)
+  function computedDelay(i){
+    // progressive spacing between reveals
+    return FIRST_DELAY_MS + (i * STEP_GAP_MS) + (i * ADDITIONAL_EASE);
+  }
+
   function revealNext() {
-    const b = boxes[nextIndexToReveal];
+    const idx = nextIndexToReveal;
+    const b = boxes[idx];
     if (!b) return;
-    b.classList.remove('is-hidden');
+
+    const delay = computedDelay(idx);
+    setTimeout(() => { b.classList.remove('is-hidden'); }, delay);
+
     nextIndexToReveal += 1;
   }
 
-  // If first card is already on screen at load, reveal it
   function maybeRevealOnLoad() {
     const b = boxes[nextIndexToReveal];
     if (!b) return;
     const rect = b.getBoundingClientRect();
     const vh = window.innerHeight || document.documentElement.clientHeight;
-    // 65% into viewport threshold feels natural
-    if (rect.top < vh * 0.65) revealNext();
+    // if first is already well within view, go ahead
+    if (rect.top < vh * (isDesktop ? 0.7 : 0.8)) revealNext();
   }
 
-  // Observer watches the *next* unrevealed box only
   let io = null;
   function watchNext() {
     if (io) { io.disconnect(); io = null; }
     const b = boxes[nextIndexToReveal];
-    if (!b) return; // all done
+    if (!b) return; // done
 
     io = new IntersectionObserver((entries) => {
       for (const e of entries) {
         if (e.isIntersecting) {
-          // Reveal exactly one, then start watching the following one
           revealNext();
-          watchNext();
+          watchNext();  // move observer to the following card
           break;
         }
       }
-    }, {
-      root: null,
-      // Root margin nudges “when” we consider it visible
-      // Positive bottom margin means we trigger a little earlier
-      rootMargin: '0px 0px -25% 0px',
-      threshold: 0.35
-    });
+    }, { root: null, rootMargin, threshold });
 
     io.observe(b);
   }
 
-  // Kick off
+  // kick off
   maybeRevealOnLoad();
   watchNext();
 
-  // If the user resizes/orientation changes, re-check the first not-yet-revealed
+  // minor responsiveness guard
   let rTimer;
   window.addEventListener('resize', () => {
     clearTimeout(rTimer);
-    rTimer = setTimeout(() => {
-      maybeRevealOnLoad();
-    }, 120);
+    rTimer = setTimeout(() => { maybeRevealOnLoad(); }, 120);
   }, { passive: true });
 });
 </script>
