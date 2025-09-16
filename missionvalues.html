@@ -356,7 +356,7 @@
     
 
     <!-- Desktop hero image block -->
-     <img src="img/Main banners/jana story.jpg" alt="Hero Image" class="full-width-image">
+     <img src="img/Main banners/mission.jpg" alt="Hero Image" class="full-width-image">
 
     <!-- Mobile-Only Mission Section -->
 <div class="mobile-banner">
@@ -880,6 +880,103 @@
         input?.addEventListener('focus', ()=>{ if(!loaded) loadIndex(); });
       })();
     </script>
+
+    <script>
+/* ===========================================================
+   Just Jana — Mission & Values reveal
+   - Mission: heading then paragraphs (staggered)
+   - Values: reveal cards row-by-row (entire row at once)
+   =========================================================== */
+(function () {
+  const missionSection = document.querySelector('.container-narrow .section');
+  const valuesGrid     = document.querySelector('.values-grid');
+
+  const PARA_STEP      = 120; // ms gap between mission paragraphs
+  const ROW_STEP       = 260; // ms gap between each row of cards
+
+  // Helper: add reveal class without editing HTML
+  function markReveal(els) { els.forEach(el => el && el.classList.add('jj-reveal')); }
+
+  // -------- Mission (title -> paragraphs) --------
+  if (missionSection) {
+    const title = missionSection.querySelector('.mission-title');
+    const paras = Array.from(missionSection.querySelectorAll('p'));
+    markReveal([title, ...paras]);
+
+    const missionObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+
+        if (title) title.classList.add('jj-revealed');
+        paras.forEach((p, i) => {
+          p.style.transitionDelay = (i * PARA_STEP) + 'ms';
+          // ensure style is applied before class toggle
+          requestAnimationFrame(() => p.classList.add('jj-revealed'));
+        });
+
+        missionObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.18 });
+
+    missionObserver.observe(missionSection);
+  }
+
+  // -------- Values (row-by-row, entire card together) --------
+  if (valuesGrid) {
+    const cards = Array.from(valuesGrid.querySelectorAll('.value-card'));
+    markReveal(cards);
+
+    // Group cards by visual row using their top positions
+    function groupCardsByRow(cardList) {
+      const rows = [];
+      const TOL = 10; // px tolerance for row grouping
+      // Use document position (not relative) to be robust
+      const rects = cardList.map(c => ({ c, r: c.getBoundingClientRect() }))
+                            .sort((a,b) => a.r.top - b.r.top || a.r.left - b.r.left);
+
+      rects.forEach(({c, r}) => {
+        let row = rows.find(row => Math.abs(row.top - r.top) <= TOL);
+        if (!row) { row = { top: r.top, items: [] }; rows.push(row); }
+        row.items.push(c);
+      });
+
+      // Sort rows top-to-bottom; inside each row keep left-to-right order
+      rows.sort((a,b) => a.top - b.top);
+      return rows;
+    }
+
+    const gridObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+
+        // Compute rows at reveal time (handles responsive wraps)
+        const rows = groupCardsByRow(cards);
+
+        rows.forEach((row, rowIdx) => {
+          const delay = rowIdx * ROW_STEP;
+          row.items.forEach(card => {
+            card.style.transitionDelay = delay + 'ms';
+            requestAnimationFrame(() => card.classList.add('jj-revealed'));
+          });
+        });
+
+        gridObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.18 });
+
+    gridObserver.observe(valuesGrid);
+  }
+
+  // -------- Fallback for very old browsers --------
+  if (!('IntersectionObserver' in window)) {
+    if (missionSection) missionSection.querySelectorAll('.mission-title, p')
+      .forEach(el => el.classList.add('jj-revealed'));
+    if (valuesGrid) valuesGrid.querySelectorAll('.value-card')
+      .forEach(el => el.classList.add('jj-revealed'));
+  }
+})();
+</script>
+
 
   </body>
 </html>

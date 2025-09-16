@@ -2876,6 +2876,29 @@ color: #7b7b7b;
   }
 }
     
+/* ---------- Scroll reveal base ---------- */
+.jj-reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity .6s ease, transform .6s ease;
+  will-change: opacity, transform;
+}
+.jj-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+/* Optional mission micro-tuning (JS handles delays) */
+.section .mission-title.jj-reveal { transition-delay: 0ms; }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .jj-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
 
 /* CSS for fitness page    */
 
