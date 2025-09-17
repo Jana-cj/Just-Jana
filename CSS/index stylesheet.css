@@ -3327,6 +3327,63 @@ color: #7b7b7b;
 
 }
 
+/* ====== Music page: mobile hero staged entry ====== */
+@media (max-width: 768px){
+  /* hide desktop hero on mobile */
+  .full-width-image{ display:none; }
+
+  .mobile-banner{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    padding:2rem 1rem;
+    overflow:hidden;
+  }
+
+  /* start hidden */
+  .mobile-banner .music-title,
+  .mobile-banner .underheading,
+  .mobile-banner .profile-img,
+  .mobile-banner .music-quote{
+    opacity:0;
+    transform: translateY(8px);
+    will-change: opacity, transform;
+  }
+
+  /* sequence plays once JS adds .is-in */
+  .mobile-banner.is-in .music-title{
+    animation: mv-fade-up .55s ease-out .10s forwards; /* 1 */
+  }
+  .mobile-banner.is-in .underheading{
+    animation: mv-fade-up .55s ease-out .30s forwards; /* 2 */
+  }
+  .mobile-banner.is-in .profile-img{
+    animation: mv-fade-up .55s ease-out .50s forwards; /* 3 */
+  }
+  .mobile-banner.is-in .music-quote{
+    animation: mv-fade-up .55s ease-out .70s forwards; /* 4 */
+  }
+
+  @keyframes mv-fade-up{
+    from{ opacity:0; transform: translateY(10px); }
+    to  { opacity:1; transform: translateY(0); }
+  }
+}
+
+/* accessibility: respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .mobile-banner .music-title,
+  .mobile-banner .underheading,
+  .mobile-banner .profile-img,
+  .mobile-banner .music-quote{
+    animation:none !important;
+    opacity:1 !important;
+    transform:none !important;
+  }
+}
+
+
 /* Healing Compositions */
 
 /* Healing Compositions (scoped utilities for this page) */
