@@ -3529,6 +3529,63 @@ color: #7b7b7b;
   }
 }
 
+/* skin */
+/* ====== Skin page: mobile hero staged entry ====== */
+@media (max-width: 768px){
+  /* hide desktop hero on mobile */
+  .full-width-image{ display:none; }
+
+  .mobile-banner{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    padding:2rem 1rem;
+    overflow:hidden;
+  }
+
+  /* start hidden */
+  .mobile-banner .curl-title,
+  .mobile-banner .underheading,
+  .mobile-banner .profile-img,
+  .mobile-banner .quote-img{
+    opacity:0;
+    transform: translateY(8px);
+    will-change: opacity, transform;
+  }
+
+  /* play sequence once JS adds .is-in */
+  .mobile-banner.is-in .curl-title{
+    animation: mv-fade-up .55s ease-out .10s forwards; /* 1 */
+  }
+  .mobile-banner.is-in .underheading{
+    animation: mv-fade-up .55s ease-out .30s forwards; /* 2 */
+  }
+  .mobile-banner.is-in .profile-img{
+    animation: mv-fade-up .55s ease-out .50s forwards; /* 3 */
+  }
+  .mobile-banner.is-in .quote-img{
+    animation: mv-fade-up .55s ease-out .70s forwards; /* 4 */
+  }
+
+  @keyframes mv-fade-up{
+    from{ opacity:0; transform: translateY(10px); }
+    to  { opacity:1; transform: translateY(0); }
+  }
+}
+
+/* accessibility: respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .mobile-banner .curl-title,
+  .mobile-banner .underheading,
+  .mobile-banner .profile-img,
+  .mobile-banner .quote-img{
+    animation:none !important;
+    opacity:1 !important;
+    transform:none !important;
+  }
+}
+
 
 :root{
   /* tweak these to adjust the vibe */
