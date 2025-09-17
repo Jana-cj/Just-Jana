@@ -1770,7 +1770,7 @@ html{ -webkit-text-size-adjust: 100%; }
 
 /* Size the hero video like the old lotus */
 .hero-video{
-  width: clamp(260px, 28vw, 520px);
+  width: clamp(360px, 40vw, 720px);
   height: auto;
   display:block;
   border: none;
