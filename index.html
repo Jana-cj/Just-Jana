@@ -289,7 +289,19 @@
       <!-- Desktop gradient hero (hidden on mobile) -->
 <section class="hero-desktop" aria-label="Just Jana hero">
   <div class="hero-inner">
-    <img src="img/Logos/logohanddrawnbw.png"       alt="Just Jana lotus"         class="hero-piece hero-lotus">
+    <!-- Lotus bloom video (no CSS animations applied) -->
+<video
+  class="hero-piece hero-video"
+  src="img/Logos/lotus bloom.mp4"
+  autoplay
+  muted
+  playsinline
+  preload="auto"
+  poster="img/Logos/logohanddrawnbw.png"
+  id="heroLotusVideo"
+></video>
+
+
     <img src="img/Logos/justjana.png"    alt="JUST JANA wordmark"      class="hero-piece hero-title">
     <img src="img/Logos/tagline.png"     alt="Heal. Rise. Be unapologetically you." class="hero-piece hero-quote">
   </div>
@@ -1401,6 +1413,23 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { passive: true });
 });
 </script>
+
+<script>
+  // Freeze on last frame (no looping)
+  document.addEventListener('DOMContentLoaded', () => {
+    const v = document.getElementById('heroLotusVideo');
+    if (!v) return;
+    v.loop = false;
+    v.addEventListener('ended', () => {
+      try {
+        // Nudge to just-before-end to keep the final frame visible
+        v.currentTime = Math.max(0, v.duration - 0.05);
+        v.pause();
+      } catch(_) {}
+    });
+  });
+</script>
+
 
 
   </body>
