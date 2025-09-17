@@ -1292,112 +1292,120 @@
     </script>
     <script>
 /* =========================================================
-   Just Jana — Healing Pillars one-at-a-time (early trigger)
+   Just Jana — Healing Pillars one-at-a-time (mobile-safe)
+   Ensures strict sequencing: Body, then Mind, then Heart, then Soul
    ========================================================= */
 document.addEventListener('DOMContentLoaded', () => {
-  // Collect the pillar boxes in DOM order (works for desktop grid and mobile stack)
   const links = Array.from(document.querySelectorAll('.healing-pillars .pillar-link'));
   const boxes = links.map(a => a.querySelector('.pillar-box')).filter(Boolean);
   if (!boxes.length) return;
 
-  // Respect reduced motion users: show everything immediately
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduceMotion) return;
+  // Respect reduced motion
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    boxes.forEach(b => b.classList.remove('is-hidden'));
+    return;
+  }
 
-  // ---------- timing you can tune ----------
-  const FIRST_DELAY_MS   = 70;   // first pillar: quick pop
-  const STEP_GAP_MS      = 200;  // additional wait added for each *subsequent* pillar
-  const ADDITIONAL_EASE  = 60;   // gentle extra spacing as index grows (compounds the gap)
-  // Example delays by index: 
-  // 0 → 70ms
-  // 1 → 70 + 200 + 60  = 330ms
-  // 2 → 70 + 400 + 120 = 590ms
-  // 3 → 70 + 600 + 180 = 850ms
+  // ---------- timings you can tune ----------
+  const FIRST_DELAY_MS  = 80;     // initial pop for the first pillar
+  const STEP_GAP_MS     = 220;    // added per subsequent pillar
+  const ANIM_MS         = 550;    // must match CSS transition duration
+  const COOLDOWN_MS     = 120;    // small buffer so they never overlap
 
-  // Trigger a bit *before* cards reach the viewport
+  // Reveal delay per index
+  const delayFor = i => FIRST_DELAY_MS + (i * STEP_GAP_MS);
+
+  // Mobile-vs-desktop trigger sensitivity
   const isDesktop  = window.matchMedia('(min-width: 992px)').matches;
-  const threshold  = isDesktop ? 0.15 : 0.12;                      // small intersection counts
-  const rootMargin = isDesktop ? '0px 0px 35% 0px' : '0px 0px 45% 0px'; // expand viewport downward
+  const threshold  = isDesktop ? 0.15 : 0.12;
+  const rootMargin = isDesktop ? '0px 0px 35% 0px' : '0px 0px 45% 0px';
 
-  // Initial hidden state
+  // Start hidden
   boxes.forEach(b => b.classList.add('is-hidden'));
 
-  let nextIndexToReveal = 0;
+  let nextIndex = 0;
   let io = null;
+  let readyAt = 0; // timestamp when we're allowed to schedule the next reveal
 
-  function computedDelay(i){
-    return FIRST_DELAY_MS + (i * STEP_GAP_MS) + (i * ADDITIONAL_EASE);
-  }
-
-  function revealNext() {
-    const idx = nextIndexToReveal;
-    const b = boxes[idx];
+  function reveal(i){
+    const b = boxes[i];
     if (!b) return;
-    const delay = computedDelay(idx);
-    setTimeout(() => { b.classList.remove('is-hidden'); }, delay);
-    nextIndexToReveal += 1;
+    const d = delayFor(i);
+    setTimeout(() => { b.classList.remove('is-hidden'); }, d);
+    // Block observing the next one until this one finishes animating
+    readyAt = performance.now() + d + ANIM_MS + COOLDOWN_MS;
   }
 
-  // If the first unrevealed box is already fairly in view, kick it
-  function maybeRevealOnLoad() {
-    const b = boxes[nextIndexToReveal];
+  function watchNextAfterReady(){
+    // Wait until the current one finishes before observing the next
+    const wait = Math.max(0, readyAt - performance.now());
+    setTimeout(() => {
+      if (io) { io.disconnect(); io = null; }
+      const b = boxes[nextIndex];
+      if (!b) return;
+
+      io = new IntersectionObserver((entries) => {
+        const e = entries[0];
+        if (e && e.isIntersecting) {
+          reveal(nextIndex);
+          nextIndex += 1;
+          watchNextAfterReady(); // chain to the following one (after this one is done)
+        }
+      }, { root: null, rootMargin, threshold });
+
+      io.observe(b);
+    }, wait);
+  }
+
+  // Kick off: reveal the first when the section approaches
+  (function prewarm(){
+    const section = document.querySelector('.healing-pillars');
+    if (!section) return;
+    const pre = new IntersectionObserver((entries) => {
+      if (entries[0]?.isIntersecting) {
+        // First pillar only
+        reveal(nextIndex);
+        nextIndex += 1;
+        pre.disconnect();
+        // Now strictly sequence the rest
+        watchNextAfterReady();
+      }
+    }, { root: null, rootMargin: '0px 0px 40% 0px', threshold: 0.01 });
+    pre.observe(section);
+  })();
+
+  // If the first pillar is already near the viewport on load (e.g., refresh mid-page)
+  (function maybeKickOnLoad(){
+    const b = boxes[0];
     if (!b) return;
     const rect = b.getBoundingClientRect();
     const vh = window.innerHeight || document.documentElement.clientHeight;
-    // Be generous so it starts early on load if near
-    const loadThreshold = isDesktop ? 0.8 : 0.85;
-    if (rect.top < vh * loadThreshold) revealNext();
-  }
-
-  // Watch only the next unrevealed card
-  function watchNext() {
-    if (io) { io.disconnect(); io = null; }
-    const b = boxes[nextIndexToReveal];
-    if (!b) return; // all done
-
-    io = new IntersectionObserver((entries) => {
-      for (const e of entries) {
-        if (e.isIntersecting) {
-          revealNext();
-          watchNext(); // move the observer to the following card
-          break;
-        }
-      }
-    }, { root: null, rootMargin, threshold });
-
-    io.observe(b);
-  }
-
-  // Pre-warm the first reveal when the whole section comes near the viewport
-  (function setupPrewarm(){
-    const section = document.querySelector('.healing-pillars');
-    if (!section) return;
-    const prewarm = new IntersectionObserver((entries) => {
-      const e = entries[0];
-      if (e && e.isIntersecting) {
-        if (nextIndexToReveal === 0) revealNext();
-        prewarm.disconnect();
-      }
-    }, {
-      root: null,
-      // Start pre-warming when the section is still below the viewport
-      rootMargin: '0px 0px 40% 0px',
-      threshold: 0.01
-    });
-    prewarm.observe(section);
+    const near = isDesktop ? 0.8 : 0.85;
+    if (rect.top < vh * near && nextIndex === 0) {
+      reveal(nextIndex);
+      nextIndex += 1;
+      watchNextAfterReady();
+    }
   })();
 
-  // Kick off
-  maybeRevealOnLoad();
-  watchNext();
-
-  // Guard: if layout changes, we might need to nudge the first not-yet-revealed
   let rTimer;
   window.addEventListener('resize', () => {
     clearTimeout(rTimer);
     rTimer = setTimeout(() => {
-      maybeRevealOnLoad();
-    }, 120);
+      // If nothing revealed yet, try to pre-kick again after layout changes
+      if (nextIndex === 0) {
+        const b = boxes[0];
+        if (!b) return;
+        const rect = b.getBoundingClientRect();
+        const vh = window.innerHeight || document.documentElement.clientHeight;
+        const near = isDesktop ? 0.8 : 0.85;
+        if (rect.top < vh * near) {
+          reveal(nextIndex);
+          nextIndex += 1;
+          watchNextAfterReady();
+        }
+      }
+    }, 140);
   }, { passive: true });
 });
 </script>
