@@ -356,7 +356,7 @@
     <main>
 
 <!-- Desktop hero image block -->
- <img src="img/Main banners/fitness banner.jpg" alt="Hero Image" class="full-width-image">
+ <img src="img/Main banners/fitness banner.jpg" alt="Hero Image" class="full-width-image" fetchpriority="high">
      
 
     <!-- MOBILE-ONLY: Jana’s Fitness Journey -->
@@ -1208,45 +1208,79 @@
   })();
 </script>
 <script>
-/* Just Jana — Desktop hero: fade-in + gentle parallax */
+/* Desktop hero: ensure first-load animation after image decode */
 (function () {
   const hero = document.querySelector('.full-width-image');
   if (!hero) return;
 
-  const isDesktop    = window.matchMedia('(min-width: 769px)');
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  let onScrollBound = null;
+  const isDesktop    = matchMedia('(min-width: 769px)');
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  let onScrollBound = null, armed = false;
 
   function applyParallax() {
-    const maxShift = 24; // px — keep it classy
-    const shift = Math.max(-maxShift, Math.min(maxShift, window.scrollY * 0.06 - 12));
+    const maxShift = 24;
+    const shift = Math.max(-maxShift, Math.min(maxShift, scrollY * 0.06 - 12));
     hero.style.setProperty('--hero-shift', shift.toFixed(1) + 'px');
   }
 
-  function bind() {
-    if (!isDesktop.matches) return;
-    requestAnimationFrame(() => hero.classList.add('is-in'));
-    if (!reduceMotion.matches) {
-      onScrollBound = () => requestAnimationFrame(applyParallax);
-      window.addEventListener('scroll', onScrollBound, { passive: true });
-      applyParallax();
-    }
-  }
+  // Force the browser to see the initial state before adding .is-in
+  function startAnimation() {
+    if (armed) return; armed = true;
 
-  function unbind() {
-    if (onScrollBound) {
-      window.removeEventListener('scroll', onScrollBound);
-      onScrollBound = null;
-    }
-    hero.style.removeProperty('--hero-shift');
+    // reset in case we’re re-entering desktop mode
     hero.classList.remove('is-in');
+    hero.style.removeProperty('--hero-shift');
+
+    // Force a reflow so the initial styles take effect
+    // (this guarantees the transition runs even on first paint)
+    void hero.offsetWidth;
+
+    requestAnimationFrame(() => {
+      hero.classList.add('is-in');
+      if (!reduceMotion.matches) {
+        onScrollBound = () => requestAnimationFrame(applyParallax);
+        addEventListener('scroll', onScrollBound, { passive: true });
+        applyParallax();
+      }
+    });
   }
 
-  if (isDesktop.matches) bind();
-  isDesktop.addEventListener('change', e => e.matches ? bind() : unbind());
-  reduceMotion.addEventListener?.('change', () => { unbind(); bind(); });
+  function cleanup() {
+    if (onScrollBound) removeEventListener('scroll', onScrollBound);
+    onScrollBound = null; armed = false;
+    hero.classList.remove('is-in');
+    hero.style.removeProperty('--hero-shift');
+  }
+
+  async function waitForDecodeOrLoad(img) {
+    // Prefer decode() (no flash), fall back to load event / timeout
+    try {
+      if (img.decode) { await img.decode(); return; }
+      if (img.complete && img.naturalWidth) return;
+      await new Promise((res) => img.addEventListener('load', res, { once:true }));
+    } catch {
+      // Some browsers reject decode() if the image is not yet in memory
+    }
+    // Safety net in case neither fires
+    await new Promise(res => setTimeout(res, 50));
+  }
+
+  async function armDesktop() {
+    if (!isDesktop.matches) return;
+    // If the image is slow, this ensures the animation still plays once it’s ready
+    await waitForDecodeOrLoad(hero);
+    startAnimation();
+  }
+
+  // Initial
+  armDesktop();
+
+  // React to mode changes / reduced motion
+  isDesktop.addEventListener('change', () => { cleanup(); armDesktop(); });
+  reduceMotion.addEventListener?.('change', () => { cleanup(); armDesktop(); });
 })();
 </script>
+
 
 
   </body>
