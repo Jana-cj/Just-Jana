@@ -2684,7 +2684,7 @@ color: #7b7b7b;
 
 .subtitleimg{
   font-family:'Amatic SC', cursive;
-  font-size: 50px;
+  font-size: 30px;
   color: #666;
 }
 
@@ -2693,7 +2693,7 @@ color: #7b7b7b;
 .hero-quote{
   display:block;
   margin: 56px auto 0 auto;
-  width: min(980px, 92%);
+  width: 400px;
   height: auto;
 }
 
