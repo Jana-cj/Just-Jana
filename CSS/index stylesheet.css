@@ -1649,7 +1649,7 @@ html{ -webkit-text-size-adjust: 100%; }
 /* Images sizing */
 
 .logo-mobile {
-  max-width: 80%;
+  max-width: 90%;
   margin-bottom: 2rem;
 }
 
