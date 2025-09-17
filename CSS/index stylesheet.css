@@ -2883,25 +2883,80 @@ color: #7b7b7b;
 }
 
 
-/* Mobile hero elements: keep fade-in if you like that flow
-.mission-logo,
-.mission-text,
-.mission-maintitle,
-.curl-title,
-.music-title,
-.music-quote,
-.compositions-title,
-.heal-quote,
-.featherfall-quote,
-.title-img,
-.underheading,
-.name-img,
-.quote-img,
-.profile-img{
-  filter: blur(18px);
-  opacity: 0;
-  will-change: filter, opacity;
-} */
+/* ====== Jana's Story: mobile hero staged entry ====== */
+@media (max-width: 768px){
+  .mobile-banner{
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* children start hidden */
+  .mobile-banner .title-img,
+  .mobile-banner .underheading,
+  .mobile-banner .profile-img,
+  .mobile-banner .name-img,
+  .mobile-banner .quote-img{
+    opacity: 0;
+    transform: translateY(8px);
+    will-change: opacity, transform;
+    position: relative;      /* ensures they sit above ::before */
+    z-index: 1;
+  }
+
+  /* background "appears first" via an overlay that fades in */
+  .mobile-banner::before{
+    content:"";
+    position:absolute; inset:0;
+    background: linear-gradient(to right, #fff8d0, #ffe3e5, #ffcef9);
+    opacity: 0;                 /* start invisible */
+    z-index: 0;                 /* behind content */
+    pointer-events:none;
+  }
+
+  /* when JS adds .is-in, run the sequence */
+  .mobile-banner.is-in::before{
+    animation: mb-bg-in .55s ease-out forwards;
+  }
+  .mobile-banner.is-in .title-img{
+    animation: mb-fade-up .55s ease-out .35s forwards;
+  }
+  .mobile-banner.is-in .underheading{
+    animation: mb-fade-up .55s ease-out .55s forwards;
+  }
+  .mobile-banner.is-in .profile-img{
+    animation: mb-fade-up .55s ease-out .75s forwards;
+  }
+  .mobile-banner.is-in .name-img{
+    animation: mb-fade-up .55s ease-out .95s forwards;
+  }
+  .mobile-banner.is-in .quote-img{
+    animation: mb-fade-up .55s ease-out 1.15s forwards;
+  }
+
+  /* keyframes */
+  @keyframes mb-bg-in{
+    from{ opacity: 0; }
+    to  { opacity: 1; }
+  }
+  @keyframes mb-fade-up{
+    from{ opacity:0; transform: translateY(10px); }
+    to  { opacity:1; transform: translateY(0); }
+  }
+}
+
+/* accessibility: honor reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .mobile-banner::before,
+  .mobile-banner .title-img,
+  .mobile-banner .underheading,
+  .mobile-banner .profile-img,
+  .mobile-banner .name-img,
+  .mobile-banner .quote-img{
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
 
 
 /* ---------- Scroll reveal base ---------- */
