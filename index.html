@@ -715,20 +715,149 @@
       });
     }
 
-    /* ---------- Subtle parallax on desktop hero ---------- */
-    const wrap = document.querySelector('.hero-wrap');
-    if (desktopHero && wrap) {
-      gsap.to(desktopHero, {
-        yPercent: 12,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: wrap,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: true
-        }
+document.addEventListener('DOMContentLoaded', () => {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
+
+  // 1) Background IN first
+  tl.to('.hero-desktop', { opacity: 1, duration: 0.7 });
+
+  // 2) Lotus bloom (scale + deblur + fade) then a gentle glow pulse
+  tl.to('.hero-lotus', {
+    opacity: 1,
+    scale: 1,
+    filter: 'blur(0px)',
+    duration: 1.0
+  }, '>-0.1');
+
+  tl.to('.hero-lotus', {
+    // soft pulse glow
+    // drop-shadow keeps edges crisp compared to box-shadow on PNG with alpha
+    filter: 'drop-shadow(0 0 18px rgba(255,173,246,.55))',
+    scale: 1.02,
+    duration: 0.7,
+    yoyo: true,
+    repeat: 1,
+    ease: 'sine.inOut'
+  }, '>-0.2');
+
+  // ---- Word-by-word reveal using your existing PNGs via masked slices ----
+  const titleImg = document.querySelector('.hero-title');
+  const quoteImg = document.querySelector('.hero-quote');
+  const heroInner = document.querySelector('.hero-inner');
+
+  if (!titleImg || !quoteImg || !heroInner) {
+    // If images aren’t found, just fade whatever is there
+    tl.to('.hero-piece', { opacity: 1, duration: 0.6 }, '>-0.3');
+    return;
+  }
+
+  // Build slice overlays
+  // Title: two words -> 2 slices
+  // Tagline: 6 chunks -> tune clips below to align with words in your PNG
+  const slicesHost = document.createElement('div');
+  slicesHost.className = 'hero-slices';
+  const makeWrap = (underImg) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'hero-slice-wrap';
+    // size the wrap like the underlying IMG
+    const r = underImg.getBoundingClientRect();
+    wrap.style.width = underImg.width + 'px';
+    wrap.style.height = 'auto';
+    slicesHost.appendChild(wrap);
+    return wrap;
+  };
+
+  // Helper: create slices from same image URL + a set of clip-paths
+  const createSlices = (underImg, clips) => {
+    const wrap = makeWrap(underImg);
+    const url = `url(${underImg.getAttribute('src')})`;
+    clips.forEach(cp => {
+      const d = document.createElement('div');
+      d.className = 'hero-slice';
+      d.style.setProperty('--img', url);
+      d.style.setProperty('--clip', cp);
+      wrap.appendChild(d);
+    });
+    return wrap;
+  };
+
+  // Insert slices just before the real images so they stack nicely
+  heroInner.insertBefore(slicesHost, titleImg);
+
+  /* =========================
+     CLIP MAPS (tweak here)
+     - clip-path: inset(TOP RIGHT BOTTOM LEFT)
+     - use percentages; adjust so each slice covers its word on the PNG
+     ========================= */
+
+  // Title "Just Jana": left half ≈ "Just", right half ≈ "Jana"
+  const titleClips = [
+    'inset(0 52% 0 0)',   // left part
+    'inset(0 0 0 48%)'    // right part
+  ];
+  // Tagline "Heal. Rise. Be unapologetically you."
+  // Start with rough sixths; nudge percentages to match your artwork spacing
+  const quoteClips = [
+    'inset(0 84% 0 0)',   // "Heal."
+    'inset(0 68% 0 16%)', // "Rise."
+    'inset(0 56% 0 32%)', // "Be"
+    'inset(0 24% 0 44%)', // "unapologetically"
+    'inset(0 10% 0 76%)', // "you."
+    'inset(0 0 0 90%)'    // tiny trailing punctuation if any (or remove)
+  ];
+
+  const titleWrap = createSlices(titleImg, titleClips);
+  const quoteWrap = createSlices(quoteImg, quoteClips);
+
+  // Hide real images until the slice animation finishes
+  gsap.set([titleImg, quoteImg], { opacity: 0 });
+
+  // 3) Animate "Just Jana" word-by-word (stagger slices)
+  const titleSlices = titleWrap.querySelectorAll('.hero-slice');
+  tl.to(titleSlices, {
+    opacity: 1,
+    filter: 'blur(0px)',
+    transform: 'translateY(0)',
+    duration: 0.6,
+    stagger: 0.14
+  }, '>-0.35');
+
+  // 4) Then animate the tagline word-by-word
+  const quoteSlices = quoteWrap.querySelectorAll('.hero-slice');
+  tl.to(quoteSlices, {
+    opacity: 1,
+    filter: 'blur(0px)',
+    transform: 'translateY(0)',
+    duration: 0.55,
+    stagger: 0.10
+  }, '>-0.1');
+
+  // 5) After the reveal, crossfade from slices to your crisp full PNGs
+  tl.to([titleImg, quoteImg], { opacity: 1, duration: 0.5 }, '+=0.15')
+    .to([titleWrap, quoteWrap], { opacity: 0, duration: 0.35, onComplete: () => {
+      slicesHost.remove();
+    }}, '<');
+
+  // Optional: tiny upward nudge to give a "rising" feel once everything is in
+  tl.to(['.hero-lotus', '.hero-title', '.hero-quote'], {
+    y: -6,
+    duration: 0.6,
+    ease: 'sine.out'
+  }, '>-0.2');
+
+  // If images load late and sizes shift, re-size wraps once
+  window.addEventListener('load', () => {
+    try {
+      // Recompute sizes of wraps to match final image widths (in case responsive)
+      [titleImg, quoteImg].forEach((img, i) => {
+        const wrap = i === 0 ? titleWrap : quoteWrap;
+        if (wrap && img) wrap.style.width = img.width + 'px';
       });
-    }
+    } catch(_){}
+  });
+});
 
     /* ---------- Optional: mobile hero container nudge on scroll ---------- */
     const mobileHero = document.querySelector('.hero-mobile');

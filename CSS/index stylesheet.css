@@ -1593,7 +1593,7 @@ html{ -webkit-text-size-adjust: 100%; }
 .hero-lotus{ 
   width: clamp(320px, 34vw, 640px);
   height:auto;
-  margin-top: -30px;
+  margin-top: -35px;
 }
 .hero-title{
   width: clamp(220px, 22vw, 420px);
@@ -1681,6 +1681,53 @@ html{ -webkit-text-size-adjust: 100%; }
   will-change: filter, opacity;
 }
 
+/* ---------- Hero entrance ---------- */
+.hero-desktop{
+  opacity: 0; /* we’ll fade the background in first */
+}
+
+/* Hide the base pieces at first (we will bring them back after the word-by-word) */
+.hero-piece{ opacity: 0; }
+
+/* Lotus: start softly smaller and blurred for the bloom effect */
+.hero-lotus{
+  transform: scale(.86);
+  filter: blur(10px);
+  will-change: transform, filter, opacity;
+}
+
+/* Temporary “slice” overlays used for word-by-word reveals */
+.hero-slices{
+  position: relative;
+  width: 100%;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+.hero-slice-wrap{
+  position: relative;
+  display: inline-block;
+}
+.hero-slice{
+  position: absolute;
+  inset: 0;
+  background-image: var(--img);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  clip-path: var(--clip, inset(0 0 0 0));
+  opacity: 0;
+  filter: blur(10px);
+  transform: translateY(8px);
+  will-change: transform, filter, opacity, clip-path;
+}
+
+/* Accessible fallback for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .hero-desktop{ opacity: 1 !important; }
+  .hero-piece{ opacity: 1 !important; transform: none !important; filter: none !important; }
+  .hero-slice{ display: none !important; }
+}
 
 
 /* Welcome section */
