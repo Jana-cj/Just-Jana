@@ -1292,52 +1292,110 @@
     </script>
     <script>
 /* =========================================================
-   Just Jana — Healing Pillars one-at-a-time (mobile-safe)
-   Ensures strict sequencing: Body, then Mind, then Heart, then Soul
+   Just Jana — Healing Pillars
+   Desktop: original stagger (fast)
+   Mobile (<992px): strict one-at-a-time (Body → Mind → Heart → Soul)
    ========================================================= */
 document.addEventListener('DOMContentLoaded', () => {
   const links = Array.from(document.querySelectorAll('.healing-pillars .pillar-link'));
   const boxes = links.map(a => a.querySelector('.pillar-box')).filter(Boolean);
   if (!boxes.length) return;
 
-  // Respect reduced motion
+  // Reduced motion: show everything
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     boxes.forEach(b => b.classList.remove('is-hidden'));
     return;
   }
 
-  // ---------- timings you can tune ----------
-  const FIRST_DELAY_MS  = 80;     // initial pop for the first pillar
-  const STEP_GAP_MS     = 220;    // added per subsequent pillar
-  const ANIM_MS         = 550;    // must match CSS transition duration
-  const COOLDOWN_MS     = 120;    // small buffer so they never overlap
+  // Breakpoint (match Bootstrap lg)
+  const isDesktop = window.matchMedia('(min-width: 992px)').matches;
 
-  // Reveal delay per index
+  // Shared timings (you can tweak)
+  const FIRST_DELAY_MS  = 80;
+  const STEP_GAP_MS     = 220;  // added per subsequent pillar
+  const ANIM_MS         = 550;  // keep in sync with CSS transition
+  const COOLDOWN_MS     = 120;  // safety buffer (mobile only)
   const delayFor = i => FIRST_DELAY_MS + (i * STEP_GAP_MS);
 
-  // Mobile-vs-desktop trigger sensitivity
-  const isDesktop  = window.matchMedia('(min-width: 992px)').matches;
+  // Visibility trigger sensitivity
   const threshold  = isDesktop ? 0.15 : 0.12;
   const rootMargin = isDesktop ? '0px 0px 35% 0px' : '0px 0px 45% 0px';
 
   // Start hidden
   boxes.forEach(b => b.classList.add('is-hidden'));
 
-  let nextIndex = 0;
-  let io = null;
-  let readyAt = 0; // timestamp when we're allowed to schedule the next reveal
+  // ---------------------------
+  // DESKTOP: original behavior
+  // ---------------------------
+  if (isDesktop) {
+    let nextIndex = 0;
+    let io = null;
 
-  function reveal(i){
+    function revealNext() {
+      const i = nextIndex;
+      const b = boxes[i];
+      if (!b) return;
+      setTimeout(() => { b.classList.remove('is-hidden'); }, delayFor(i));
+      nextIndex += 1;
+    }
+
+    function watchNext() {
+      if (io) { io.disconnect(); io = null; }
+      const b = boxes[nextIndex];
+      if (!b) return;
+      io = new IntersectionObserver((entries) => {
+        if (entries[0]?.isIntersecting) {
+          revealNext();
+          watchNext();
+        }
+      }, { root: null, rootMargin, threshold });
+      io.observe(b);
+    }
+
+    // Pre-warm when the section nears the viewport
+    (function prewarm(){
+      const section = document.querySelector('.healing-pillars');
+      if (!section) return;
+      const pre = new IntersectionObserver((entries) => {
+        if (entries[0]?.isIntersecting) {
+          if (nextIndex === 0) revealNext();
+          pre.disconnect();
+          watchNext();
+        }
+      }, { root: null, rootMargin: '0px 0px 40% 0px', threshold: 0.01 });
+      pre.observe(section);
+    })();
+
+    // If the first card is already near on load (e.g. refresh)
+    (function maybeKickOnLoad(){
+      const b = boxes[0];
+      if (!b) return;
+      const rect = b.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      if (rect.top < vh * 0.8 && nextIndex === 0) {
+        revealNext();
+        watchNext();
+      }
+    })();
+
+    return; // done for desktop
+  }
+
+  // ---------------------------
+  // MOBILE: strict sequencing
+  // ---------------------------
+  let nextIndex = 0, io = null, readyAt = 0;
+
+  function revealStrict(i){
     const b = boxes[i];
     if (!b) return;
     const d = delayFor(i);
     setTimeout(() => { b.classList.remove('is-hidden'); }, d);
-    // Block observing the next one until this one finishes animating
+    // Block observing the next until this one finishes
     readyAt = performance.now() + d + ANIM_MS + COOLDOWN_MS;
   }
 
   function watchNextAfterReady(){
-    // Wait until the current one finishes before observing the next
     const wait = Math.max(0, readyAt - performance.now());
     setTimeout(() => {
       if (io) { io.disconnect(); io = null; }
@@ -1345,11 +1403,10 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!b) return;
 
       io = new IntersectionObserver((entries) => {
-        const e = entries[0];
-        if (e && e.isIntersecting) {
-          reveal(nextIndex);
+        if (entries[0]?.isIntersecting) {
+          revealStrict(nextIndex);
           nextIndex += 1;
-          watchNextAfterReady(); // chain to the following one (after this one is done)
+          watchNextAfterReady(); // chain
         }
       }, { root: null, rootMargin, threshold });
 
@@ -1357,56 +1414,33 @@ document.addEventListener('DOMContentLoaded', () => {
     }, wait);
   }
 
-  // Kick off: reveal the first when the section approaches
-  (function prewarm(){
+  // Kick off when the section approaches
+  (function prewarmMobile(){
     const section = document.querySelector('.healing-pillars');
     if (!section) return;
     const pre = new IntersectionObserver((entries) => {
       if (entries[0]?.isIntersecting) {
-        // First pillar only
-        reveal(nextIndex);
+        revealStrict(nextIndex);   // Body first
         nextIndex += 1;
         pre.disconnect();
-        // Now strictly sequence the rest
-        watchNextAfterReady();
+        watchNextAfterReady();     // then Mind, etc., strictly sequenced
       }
     }, { root: null, rootMargin: '0px 0px 40% 0px', threshold: 0.01 });
     pre.observe(section);
   })();
 
-  // If the first pillar is already near the viewport on load (e.g., refresh mid-page)
-  (function maybeKickOnLoad(){
+  // Safety: if first card is already near on load
+  (function maybeKickOnLoadMobile(){
     const b = boxes[0];
     if (!b) return;
     const rect = b.getBoundingClientRect();
     const vh = window.innerHeight || document.documentElement.clientHeight;
-    const near = isDesktop ? 0.8 : 0.85;
-    if (rect.top < vh * near && nextIndex === 0) {
-      reveal(nextIndex);
+    if (rect.top < vh * 0.85 && nextIndex === 0) {
+      revealStrict(nextIndex);
       nextIndex += 1;
       watchNextAfterReady();
     }
   })();
-
-  let rTimer;
-  window.addEventListener('resize', () => {
-    clearTimeout(rTimer);
-    rTimer = setTimeout(() => {
-      // If nothing revealed yet, try to pre-kick again after layout changes
-      if (nextIndex === 0) {
-        const b = boxes[0];
-        if (!b) return;
-        const rect = b.getBoundingClientRect();
-        const vh = window.innerHeight || document.documentElement.clientHeight;
-        const near = isDesktop ? 0.8 : 0.85;
-        if (rect.top < vh * near) {
-          reveal(nextIndex);
-          nextIndex += 1;
-          watchNextAfterReady();
-        }
-      }
-    }, 140);
-  }, { passive: true });
 });
 </script>
 
