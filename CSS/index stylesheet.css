@@ -2682,11 +2682,12 @@ color: #7b7b7b;
   margin: 0 0 18px 0;
 }
 
-.hero-subtitle{
-  width: min(680px, 88%);
-  height: auto;
-  display:block;
+.subtitleimg{
+  font-family:'Amatic SC', cursive;
+  font-size: 50px;
+  color: #666;
 }
+
 
 /* Quote sits below, centered */
 .hero-quote{
