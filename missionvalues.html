@@ -977,6 +977,35 @@
 })();
 </script>
 
+<script>
+  // Trigger the mobile mission sequence only on small screens,
+  // and only when the banner hits the viewport.
+  (function(){
+    const mq = window.matchMedia('(max-width: 768px)');
+    const banner = document.querySelector('.mobile-banner');
+    if (!banner) return;
+
+    function armObserver(){
+      if (!mq.matches) return; // desktop: do nothing
+      if (!('IntersectionObserver' in window)){
+        banner.classList.add('is-in'); // simple fallback
+        return;
+      }
+      const io = new IntersectionObserver((entries)=>{
+        const e = entries[0];
+        if (e && e.isIntersecting){
+          banner.classList.add('is-in');
+          io.disconnect();
+        }
+      }, { root:null, threshold:0.15 });
+      io.observe(banner);
+    }
+
+    armObserver();
+    mq.addEventListener?.('change', armObserver);
+  })();
+</script>
+
 
   </body>
 </html>

@@ -3128,6 +3128,88 @@ color: #7b7b7b;
   }
 }
 
+/* ====== Mission & Values: mobile hero staged entry ====== */
+@media (max-width: 768px){
+  /* hide desktop hero on mobile */
+  .full-width-image{ display:none; }
+
+  /* mobile banner container */
+  .mobile-banner{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align:center;
+    padding: 2rem 1rem;
+    overflow: hidden;
+  }
+
+  /* background (appears first) */
+  .mobile-banner::before{
+    content:"";
+    position:absolute; inset:0;
+    background: linear-gradient(to right, #fff8d0, #ffe3e5, #ffcef9);
+    opacity: 0;                 /* start invisible */
+    z-index: 0;
+    pointer-events:none;
+  }
+
+  /* children start hidden (stack above background) */
+  .mobile-banner .mission-logo,
+  .mobile-banner .mission-text,
+  .mobile-banner .mission-maintitle,
+  .mobile-banner .quote-img{
+    opacity: 0;
+    transform: translateY(8px);
+    will-change: opacity, transform;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* when JS adds .is-in, run the sequence */
+  .mobile-banner.is-in::before{
+    animation: mv-bg-in .55s ease-out forwards;                 /* background first */
+  }
+  .mobile-banner.is-in .mission-logo{
+    animation: mv-fade-up .55s ease-out .35s forwards;          /* 1 */
+  }
+  .mobile-banner.is-in .mission-text{
+    animation: mv-fade-up .55s ease-out .55s forwards;          /* 2 */
+  }
+  .mobile-banner.is-in .mission-maintitle{
+    animation: mv-fade-up .55s ease-out .75s forwards;          /* 3 */
+  }
+  .mobile-banner.is-in .quote-img{
+    animation: mv-fade-up .55s ease-out .95s forwards;          /* 4 */
+  }
+
+  /* keyframes */
+  @keyframes mv-bg-in{ from{opacity:0} to{opacity:1} }
+  @keyframes mv-fade-up{
+    from{ opacity:0; transform: translateY(10px); }
+    to  { opacity:1; transform: translateY(0); }
+  }
+
+  /* sizing you already had, kept here for clarity (tweak as you like) */
+  .mission-logo{ max-width:65px; max-height:65px; margin-bottom:.5rem; }
+  .mission-text{ max-width:70px; margin-bottom:2rem; }
+  .mission-maintitle{ max-width:90%; margin:2rem 0 3rem; }
+}
+
+/* accessibility: honor reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .mobile-banner::before,
+  .mobile-banner .mission-logo,
+  .mobile-banner .mission-text,
+  .mobile-banner .mission-maintitle,
+  .mobile-banner .quote-img{
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+
 /* CSS for fitness page    */
 
  
