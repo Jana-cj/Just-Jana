@@ -715,6 +715,40 @@
       });
     }
 
+    /* ---------- Subtle parallax on desktop hero ---------- */
+    const wrap = document.querySelector('.hero-wrap');
+    if (desktopHero && wrap) {
+      gsap.to(desktopHero, {
+        yPercent: 12,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: wrap,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true
+        }
+      });
+    }
+
+    /* ---------- Optional: mobile hero container nudge on scroll ---------- */
+    const mobileHero = document.querySelector('.hero-mobile');
+    if (mobileHero) {
+      gsap.from(mobileHero, {
+        y: 16,
+        duration: 0.8,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: mobileHero,
+          start: 'top 85%',
+          toggleActions: 'play none none none',
+          once: true
+        }
+      });
+    }
+  });
+</script>
+
+<script>
 document.addEventListener('DOMContentLoaded', () => {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
@@ -858,25 +892,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch(_){}
   });
 });
-
-    /* ---------- Optional: mobile hero container nudge on scroll ---------- */
-    const mobileHero = document.querySelector('.hero-mobile');
-    if (mobileHero) {
-      gsap.from(mobileHero, {
-        y: 16,
-        duration: 0.8,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: mobileHero,
-          start: 'top 85%',
-          toggleActions: 'play none none none',
-          once: true
-        }
-      });
-    }
-  });
 </script>
-
 
 
     <script>
