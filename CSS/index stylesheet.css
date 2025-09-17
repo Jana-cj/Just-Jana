@@ -3565,6 +3565,58 @@ color: #7b7b7b;
   }
 }
 
+/* ====== Behind the Music: mobile hero staged entry ====== */
+@media (max-width: 768px){
+  /* hide desktop hero on small screens */
+  .full-width-image{ display:none; }
+
+  .mobile-banner{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    padding:2rem 1rem;
+    overflow:hidden;
+  }
+
+  /* start hidden */
+  .mobile-banner .compositions-title, /* title image */
+  .mobile-banner .profile-img,        /* cover art */
+  .mobile-banner .featherfall-quote{  /* quote image */
+    opacity:0;
+    transform: translateY(8px);
+    will-change: opacity, transform;
+  }
+
+  /* play once when JS adds .is-in */
+  .mobile-banner.is-in .compositions-title{
+    animation: btm-fade-up .55s ease-out .10s forwards; /* 1 */
+  }
+  .mobile-banner.is-in .profile-img{
+    animation: btm-fade-up .55s ease-out .30s forwards; /* 2 */
+  }
+  .mobile-banner.is-in .featherfall-quote{
+    animation: btm-fade-up .55s ease-out .50s forwards; /* 3 */
+  }
+
+  @keyframes btm-fade-up{
+    from{ opacity:0; transform: translateY(10px); }
+    to  { opacity:1; transform: translateY(0); }
+  }
+}
+
+/* accessibility: respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .mobile-banner .compositions-title,
+  .mobile-banner .profile-img,
+  .mobile-banner .featherfall-quote{
+    animation:none !important;
+    opacity:1 !important;
+    transform:none !important;
+  }
+}
+
+
 /* Curly hair */
 
 .story-intro p {
