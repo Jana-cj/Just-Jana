@@ -677,45 +677,7 @@
   });
 </script>
 
-<!-- GSAP + ScrollTrigger -->
-<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    gsap.registerPlugin(ScrollTrigger);
 
-    /* ---------- Blur-only reveal for DESKTOP hero ---------- */
-    const desktopHero = document.querySelector('.hero-parallax');
-    if (desktopHero) {
-      // visible immediately, but blurred
-      gsap.set(desktopHero, { filter: 'blur(18px)', opacity: 1, willChange: 'filter' });
-      gsap.to(desktopHero, {
-        filter: 'blur(0px)',
-        duration: 1.2,           // tweak speed here
-        ease: 'power2.out'
-      });
-    }
-
-    /* ---------- Blur + fade for MOBILE hero pieces ---------- */
-    const mobileBits = [
-      document.querySelector('.logo-mobile'),
-      document.querySelector('.text-mobile'),
-      document.querySelector('.tagline-mobile')
-    ].filter(Boolean);
-
-    if (mobileBits.length) {
-      gsap.set(mobileBits, { filter: 'blur(18px)', opacity: 0, willChange: 'filter,opacity' });
-      gsap.to(mobileBits, {
-        filter: 'blur(0px)',
-        opacity: 1,
-        duration: 1.2,
-        ease: 'power2.out',
-        stagger: 0.08
-      });
-    }
-  });
-</script>
 
 
 
