@@ -1729,6 +1729,60 @@ html{ -webkit-text-size-adjust: 100%; }
   .hero-slice{ display: none !important; }
 }
 
+/* ---------- Lotus bud → bloom mask ---------- */
+.lotus-bloom{
+  display:inline-block;
+  position:relative;
+  /* Mask variables (animated via GSAP) */
+  --maskX: 18%;      /* horizontal radius of bud ellipse */
+  --maskY: 68%;      /* vertical radius of bud ellipse */
+  --maskCY: 72%;     /* center Y (bud sits a touch lower) */
+
+  /* Show only the ellipse area at start (bud) */
+  -webkit-mask-image: radial-gradient(ellipse var(--maskX) var(--maskY) at 50% var(--maskCY), rgba(0,0,0,1) 60%, rgba(0,0,0,0) 61%);
+          mask-image: radial-gradient(ellipse var(--maskX) var(--maskY) at 50% var(--maskCY), rgba(0,0,0,1) 60%, rgba(0,0,0,0) 61%);
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+          mask-position: center;
+  -webkit-mask-size: contain;
+          mask-size: contain;
+
+  /* keeps GPU happy while animating variables */
+  will-change: -webkit-mask-image, mask-image, transform, filter;
+}
+
+/* Starting look of the lotus image (small, soft, bud-like) */
+.hero-lotus{
+  transform: scale(.86,.90);          /* slightly squished */
+  filter: blur(10px);
+  opacity: 0;                          /* we fade it in as bud arrives */
+  will-change: transform, filter, opacity;
+}
+
+/* Optional: tiny “sepals” hint using a soft shadow at the base */
+.lotus-bloom::after{
+  content:"";
+  position:absolute;
+  left:50%; transform:translateX(-50%);
+  bottom: 4%;
+  width: 52%;
+  height: 10%;
+  border-radius: 50%;
+  filter: blur(12px);
+  background: rgba(0,0,0,.08); /* soft grounding shadow */
+  pointer-events:none;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .lotus-bloom{
+    -webkit-mask-image: none !important;
+            mask-image: none !important;
+  }
+  .hero-lotus{ opacity:1 !important; transform:none !important; filter:none !important; }
+}
+
 
 /* Welcome section */
 
