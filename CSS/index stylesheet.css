@@ -1566,17 +1566,64 @@ html{ -webkit-text-size-adjust: 100%; }
 
 /* Hero banner */
 
-.full-width-image{
-  width: 100vw;          /* fill viewport width */
-  max-width: 100vw;
-  height: auto;
-  display: block;
-  margin: 0 calc(50% - 50vw); /* break out of any parent padding */
+/* ================= Desktop Gradient Hero ================= */
+.hero-desktop{
+  display:block;
+  position:relative;
+  overflow:hidden;
+  /* soft yellow -> blush pink -> purple */
+  background: linear-gradient(90deg, #fff5af 0%, #ffd0d3 50%, #ffadf6 100%);
+  /* spacing tuned for big screens */
+  padding: clamp(72px, 14vh, 160px) 0 clamp(48px, 10vh, 120px);
+  min-height: clamp(520px, 70vh, 760px);
 }
 
-/* Hero parallax polish */
-.hero-wrap{ position:relative; overflow:hidden; }
-.hero-parallax{ will-change: transform; transform: translateZ(0); display:block; }
+.hero-inner{
+  max-width: min(1100px, 88vw);
+  margin: 0 auto;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap: clamp(16px, 3vh, 28px);
+  text-align:center;
+}
+
+/* Piece sizing (adjust if your source PNGs have different aspect) */
+.hero-lotus{ 
+  width: clamp(260px, 28vw, 520px);
+  height:auto;
+}
+.hero-title{
+  width: clamp(220px, 22vw, 420px);
+  height:auto;
+  margin-top: clamp(4px, 0.5vh, 8px);
+}
+.hero-quote{
+  width: clamp(340px, 46vw, 820px);
+  height:auto;
+  margin-top: clamp(8px, 1.5vh, 16px);
+  opacity: .95;
+}
+
+/* Keep the mobile hero taking over under 768px */
+@media (max-width: 768px){
+  .hero-desktop{ display:none; }
+}
+
+/* (Optional) subtle grain for extra warmth */
+.hero-desktop::after{
+  content:"";
+  position:absolute; inset:0;
+  pointer-events:none;
+  background-image: radial-gradient(rgba(255,255,255,.08) 1px, transparent 1px);
+  background-size: 2px 2px;
+  mix-blend-mode: soft-light;
+  opacity:.35;
+}
+
+
+
 
 /* AOS reduced motion */
 @media (prefers-reduced-motion: reduce){
@@ -1621,16 +1668,8 @@ html{ -webkit-text-size-adjust: 100%; }
 /* Show only on mobile */
 @media (max-width:768px){
   .hero-mobile{ display:flex; }
-  .full-width-image{ display:none; }
-   .hero-wrap { display: none !important; }  
 }
 
-/* Desktop hero: visible but blurred on first paint */
-.hero-parallax{
-  filter: blur(18px);
-  opacity: 1;               /* <- key change */
-  will-change: filter;      /* only filter needs anim on desktop */
-}
 
 /* Mobile hero elements: keep fade-in if you like that flow */
 .logo-mobile,
