@@ -2660,8 +2660,8 @@ color: #7b7b7b;
 }
 
 .hero-profile{
-  width: 260px;          /* tune to match your mock */
-  height: 260px;
+  width: 200px;          /* tune to match your mock */
+  height: 200px;
   object-fit: cover;
   border-radius: 50%;
   display: block;
@@ -2676,7 +2676,7 @@ color: #7b7b7b;
 
 /* Right: title + subtitle */
 .hero-title{
-  width: min(740px, 90%);
+  max-width: 70%;
   height: auto;
   display:block;
   margin: 0 0 18px 0;
