@@ -2654,7 +2654,7 @@ color: #7b7b7b;
 .hero-text-stack{
   display: flex;
   flex-direction: column;
-  align-items: flex-start;   /* use center if you want both centered */
+  align-items: center;   /* use center if you want both centered */
   gap: 10px;                 /* space between title and subtitle */
 }
 
