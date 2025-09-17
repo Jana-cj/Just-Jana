@@ -1094,6 +1094,46 @@
     mq.addEventListener?.('change', arm);
   })();
 </script>
+<script>
+/* Just Jana — Desktop hero: fade-in + gentle parallax */
+(function () {
+  const hero = document.querySelector('.full-width-image');
+  if (!hero) return;
+
+  const isDesktop    = window.matchMedia('(min-width: 769px)');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let onScrollBound = null;
+
+  function applyParallax() {
+    const maxShift = 24; // px cap for subtlety
+    const shift = Math.max(-maxShift, Math.min(maxShift, window.scrollY * 0.06 - 12));
+    hero.style.setProperty('--hero-shift', shift.toFixed(1) + 'px');
+  }
+
+  function bind() {
+    if (!isDesktop.matches) return;
+    requestAnimationFrame(() => hero.classList.add('is-in'));
+    if (!reduceMotion.matches) {
+      onScrollBound = () => requestAnimationFrame(applyParallax);
+      window.addEventListener('scroll', onScrollBound, { passive: true });
+      applyParallax();
+    }
+  }
+
+  function unbind() {
+    if (onScrollBound) {
+      window.removeEventListener('scroll', onScrollBound);
+      onScrollBound = null;
+    }
+    hero.style.removeProperty('--hero-shift');
+    hero.classList.remove('is-in');
+  }
+
+  if (isDesktop.matches) bind();
+  isDesktop.addEventListener('change', e => e.matches ? bind() : unbind());
+  reduceMotion.addEventListener?.('change', () => { unbind(); bind(); });
+})();
+</script>
 
 
   </body>
