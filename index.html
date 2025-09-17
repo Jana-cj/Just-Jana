@@ -677,6 +677,29 @@
   });
 </script>
 
+<script>
+  // Kick off hero animations once the page is visually ready.
+  // We wait for fonts/images enough to avoid a flash, but still feel snappy.
+  (function(){
+    function play(){
+      // Desktop hero (hidden on mobile <768px)
+      var heroDesk = document.querySelector('.hero-desktop');
+      // Mobile hero (shown <768px)
+      var heroMob  = document.querySelector('.hero-mobile');
+
+      // Guard if a section doesn't exist
+      if (heroDesk) heroDesk.classList.add('is-playing');
+      if (heroMob)  heroMob.classList.add('is-playing');
+    }
+
+    // Prefer 'DOMContentLoaded' + a micro task to ensure CSS is parsed
+    if (document.readyState === 'loading'){
+      document.addEventListener('DOMContentLoaded', () => setTimeout(play, 30));
+    } else {
+      setTimeout(play, 30);
+    }
+  })();
+</script>
 
 
 

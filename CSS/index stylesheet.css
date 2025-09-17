@@ -1670,6 +1670,102 @@ html{ -webkit-text-size-adjust: 100%; }
 
 }
 
+/* ===========================
+   HERO: staged entry sequence
+   =========================== */
+
+/* Shared initial state (desktop & mobile hero pieces) */
+.hero-desktop .hero-piece,
+.hero-mobile .logo-mobile,
+.hero-mobile .text-mobile,
+.hero-mobile .tagline-mobile{
+  opacity: 0;
+  transform: translateY(8px);
+  will-change: opacity, transform, filter;
+}
+
+/* A subtle background fade so it "appears first" */
+.hero-desktop::before,
+.hero-mobile::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  opacity: 0;
+  pointer-events:none;
+  /* Mirror your pastel gradient so it can fade in */
+  background: linear-gradient(90deg, #fff5af 0%, #ffd0d3 50%, #ffadf6 100%);
+  z-index: 0; /* sits under the images */
+}
+.hero-desktop{ position: relative; }
+.hero-mobile { position: relative; }
+
+/* When JS toggles the 'is-playing' class, run the sequence */
+.hero-desktop.is-playing::before,
+.hero-mobile.is-playing::before{
+  animation: jj-bg-in .8s ease-out forwards;
+}
+
+/* Lotus "bloom" (scale + soft overshoot + glow) */
+.hero-desktop.is-playing .hero-lotus,
+.hero-mobile.is-playing .logo-mobile{
+  animation:
+    jj-bloom 900ms cubic-bezier(.22,.9,.18,1.08) 0.35s forwards,
+    jj-float  6s ease-in-out 1.4s infinite alternate; /* optional gentle float */
+}
+
+/* Title fades in and rises */
+.hero-desktop.is-playing .hero-title,
+.hero-mobile.is-playing .text-mobile{
+  animation: jj-fade-up .7s ease-out .95s forwards;
+}
+
+/* Tagline follows last */
+.hero-desktop.is-playing .hero-quote,
+.hero-mobile.is-playing .tagline-mobile{
+  animation: jj-fade-up .7s ease-out 1.25s forwards;
+}
+
+/* Keyframes */
+@keyframes jj-bg-in{
+  from{ opacity: 0; }
+  to  { opacity: 1; }
+}
+@keyframes jj-bloom{
+  0%   { opacity:0; transform: translateY(8px) scale(.72) rotate(-0.6deg); filter: blur(1px) saturate(1); }
+  55%  { opacity:1; transform: translateY(0)   scale(1.065) rotate(0deg);  filter: blur(0) drop-shadow(0 6px 16px rgba(0,0,0,.12)) saturate(1.08); }
+  100% { opacity:1; transform: translateY(0)   scale(1.0)   rotate(0deg);  filter: drop-shadow(0 8px 22px rgba(0,0,0,.10)); }
+}
+@keyframes jj-fade-up{
+  from{ opacity:0; transform: translateY(10px); }
+  to  { opacity:1; transform: translateY(0); }
+}
+/* Optional gentle float after the bloom completes */
+@keyframes jj-float{
+  from{ transform: translateY(0)   scale(1); }
+  to  { transform: translateY(-4px) scale(1.005); }
+}
+
+/* Layering: images above the background fade */
+.hero-desktop .hero-inner,
+.hero-mobile{
+  position: relative;
+  z-index: 1;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .hero-desktop::before,
+  .hero-mobile::before,
+  .hero-desktop .hero-piece,
+  .hero-mobile .logo-mobile,
+  .hero-mobile .text-mobile,
+  .hero-mobile .tagline-mobile{
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}
 
 
 
