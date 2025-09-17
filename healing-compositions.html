@@ -875,5 +875,34 @@
       })();
     </script>
 
+    <script>
+  // Healing Compositions (mobile) — trigger hero sequence on first view
+  (function(){
+    const mq = window.matchMedia('(max-width: 768px)');
+    const banner = document.querySelector('.mobile-banner');
+    if (!banner) return;
+
+    function arm(){
+      if (!mq.matches) return; // desktop: do nothing
+      if (!('IntersectionObserver' in window)){
+        banner.classList.add('is-in'); // fallback
+        return;
+      }
+      const io = new IntersectionObserver(entries=>{
+        const e = entries[0];
+        if (e && e.isIntersecting){
+          banner.classList.add('is-in');
+          io.disconnect();
+        }
+      }, {threshold:0.15});
+      io.observe(banner);
+    }
+
+    arm();
+    mq.addEventListener?.('change', arm);
+  })();
+</script>
+
+
   </body>
 </html>
