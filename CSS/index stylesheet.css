@@ -1846,6 +1846,95 @@ html{ -webkit-text-size-adjust: 100%; }
   animation: none !important;
 }
 
+/* Mobile hero layout stays the same */
+.hero-mobile {
+  display: none;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  text-align: center;
+  background: linear-gradient(to right, #fff5af, #ffd0d3, #ffadf6);
+}
+
+@media (max-width:768px){
+  .hero-mobile{ display:flex; }
+}
+
+/* Mobile lotus + pieces sizing to mirror desktop vibe */
+.hero-mobile .hero-lotus{
+  width: clamp(240px, 78vw, 520px);
+  height: auto;
+  margin-top: -18px;
+}
+
+.hero-mobile .hero-anim{
+  /* make the animated lotus just a hair bigger on mobile too */
+  width: clamp(260px, 82vw, 560px);
+}
+
+.hero-mobile .hero-static{
+  width: clamp(240px, 78vw, 520px);
+  margin-top: -26px;
+  margin-bottom: 6px;
+}
+
+.hero-mobile .hero-title{
+  width: clamp(200px, 58vw, 360px);
+  margin-top: clamp(2px, 0.6vh, 10px);
+}
+
+.hero-mobile .hero-quote{
+  width: clamp(300px, 86vw, 700px);
+  margin-top: clamp(6px, 1.2vh, 14px);
+  opacity: .95;
+}
+
+/* Intro-only nudges for mobile (affect animation phase only) */
+.hero-mobile.is-playing:not(.intro-done) .hero-anim{
+  position: relative;
+  left: 6px;           /* tiny nudge to the right */
+  margin-top: -10px;   /* tiny lift */
+}
+.hero-mobile.is-playing:not(.intro-done) .hero-title{
+  margin-top: calc(clamp(2px, 0.6vh, 10px) - 8px); /* slight lift */
+}
+
+/* Reuse your staged entry sequence for mobile with the same classes */
+.hero-mobile .hero-piece{
+  opacity: 0;
+  transform: translateY(8px);
+  will-change: opacity, transform, filter;
+}
+
+/* Fade-in of background */
+.hero-mobile::before{
+  content:"";
+  position:absolute; inset:0;
+  opacity:0; pointer-events:none;
+  background: linear-gradient(90deg, #fff5af 0%, #ffd0d3 50%, #ffadf6 100%);
+  z-index:0;
+}
+.hero-mobile.is-playing::before{
+  animation: jj-bg-in .8s ease-out forwards;
+}
+
+/* Mobile sequence: lotus bloom then float, then title, then tagline */
+.hero-mobile.is-playing .hero-lotus{
+  animation:
+    jj-bloom 900ms cubic-bezier(.22,.9,.18,1.08) 0.35s forwards,
+    jj-float  6s ease-in-out 1.4s infinite alternate;
+}
+.hero-mobile.is-playing .hero-title{
+  animation: jj-fade-up .7s ease-out .95s forwards;
+}
+.hero-mobile.is-playing .hero-quote{
+  animation: jj-fade-up .7s ease-out 1.25s forwards;
+}
+
+/* (Uses your existing @keyframes: jj-bg-in, jj-bloom, jj-fade-up, jj-float) */
+
 
 
 

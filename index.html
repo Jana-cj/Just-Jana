@@ -313,12 +313,30 @@
 
 
 
-      <!-- Mobile Hero Banner -->
-      <div class="hero-mobile">
-        <img src="img/Logos/logohanddrawnbw.png" alt="Just Jana Logo" class="logo-mobile">
-        <img src="img/Logos/justjana.png" alt="Just Jana Text" class="text-mobile">
-        <img src="img/Logos/tagline.png" alt="Heal. Rise. Be unapologetically you" class="tagline-mobile">
-      </div>
+      <!-- Mobile Hero Banner (animated ➜ static, then title + tagline) -->
+<div class="hero-mobile" aria-label="Just Jana hero (mobile)">
+  <!-- Animated lotus first -->
+  <img src="img/Logos/lotus bloom.webp"
+       alt="Lotus Bloom Animation"
+       class="hero-lotus hero-anim"
+       id="lotusAnimM">
+
+  <!-- Static lotus (hidden until anim ends) -->
+  <img src="img/Logos/logohanddrawnbw.png"
+       alt="Lotus Bloom Static"
+       class="hero-lotus hero-static"
+       id="lotusStaticM"
+       style="display:none;">
+
+  <!-- Title + tagline -->
+  <img src="img/Logos/justjana.png"
+       alt="JUST JANA wordmark"
+       class="hero-piece hero-title">
+  <img src="img/Logos/tagline.png"
+       alt="Heal. Rise. Be unapologetically you"
+       class="hero-piece hero-quote">
+</div>
+
 
       <br>
       <!-- Welcome section -->
@@ -1436,26 +1454,30 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
 <!-- lotus animation -->
-<!-- lotus animation -->
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    const lotusAnim   = document.getElementById("lotusAnim");
-    const lotusStatic = document.getElementById("lotusStatic");
-    const heroDesk    = document.querySelector(".hero-desktop");
+    const animationLength = 4000; // ms
 
-    // WebP animation length (ms) — adjust if you trim it shorter
-    const animationLength = 4000;
+    const pairs = [
+      { anim: "#lotusAnim",  stat: "#lotusStatic",  root: ".hero-desktop" },
+      { anim: "#lotusAnimM", stat: "#lotusStaticM", root: ".hero-mobile"  }
+    ];
 
-    setTimeout(() => {
-      // swap animated → static lotus
-      lotusAnim.style.display = "none";
-      lotusStatic.style.display = "block";
+    pairs.forEach(({anim, stat, root}) => {
+      const a = document.querySelector(anim);
+      const s = document.querySelector(stat);
+      const r = document.querySelector(root);
+      if (!a || !s || !r) return;
 
-      // mark intro finished so the offsets no longer apply
-      heroDesk?.classList.add("intro-done");
-    }, animationLength);
+      setTimeout(() => {
+        a.style.display = "none";
+        s.style.display = "block";
+        r.classList.add("intro-done"); // stops intro-only nudges
+      }, animationLength);
+    });
   });
 </script>
+
 
 
 
