@@ -1580,6 +1580,26 @@ html{ -webkit-text-size-adjust: 100%; }
   min-height: clamp(520px, 70vh, 760px);
 }
 
+/* One place to control lotus size */
+.lotus-box{
+  width: clamp(360px, 42vw, 780px); /* adjust bigger/smaller here */
+  aspect-ratio: 1 / 1;              /* pick a ratio; 1:1 looks nice for a lotus */
+  position: relative;
+  margin-top: -30px;                /* preserve your previous offset */
+}
+
+/* Both images fill the exact same box */
+.lotus-frame{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;              /* no cropping; keeps proportions */
+  display: block;
+  z-index: 1;
+}
+
+
 .hero-inner{
   max-width: min(1100px, 88vw);
   margin: 0 auto;
@@ -1591,12 +1611,6 @@ html{ -webkit-text-size-adjust: 100%; }
   text-align:center;
 }
 
-/* Piece sizing (adjust if your source PNGs have different aspect) */
-.hero-lotus{ 
-  margin-top: -30px;
-  width: clamp(300px, 34vw, 600px);
-  height:auto;
-}
 
 /* Keep animation/static lotus aligned */
 .hero-anim, .hero-static {
