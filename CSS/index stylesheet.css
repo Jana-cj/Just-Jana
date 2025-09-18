@@ -1935,12 +1935,20 @@ html{ -webkit-text-size-adjust: 100%; }
 
 /* (Uses your existing @keyframes: jj-bg-in, jj-bloom, jj-fade-up, jj-float) */
 
-/* hide the animated lotus until we explicitly show it */
-#lotusAnimM { visibility: hidden; opacity: 0; transition: opacity .3s ease; }
+/* Animated: sits ON TOP of the static, no layout space */
+#lotusAnimM {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0;
+  z-index: 2;
+  opacity: 0;                 /* we’ll fade it in */
+  visibility: hidden;
+  transition: opacity .35s ease;
+}
 
-/* optional: crossfade instead of hard swap */
-#lotusStaticM { opacity: 0; transition: opacity .3s ease; }
-#lotusAnimM.is-on { visibility: visible; opacity: 1; }
+/* Crossfade helpers */
+#lotusAnimM.is-on { opacity: 1; visibility: visible; }
 #lotusAnimM.is-off { opacity: 0; }
 #lotusStaticM.is-on { opacity: 1; }
 
