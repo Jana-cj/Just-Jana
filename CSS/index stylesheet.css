@@ -1641,7 +1641,7 @@ html{ -webkit-text-size-adjust: 100%; }
 .hero-desktop.is-playing:not(.intro-done) .hero-anim{
   /* move the *animated* lotus slightly DOWN (less negative than -30px) */
   margin-top: -30px; /* was effectively -30px; adjust to taste */
-  left: 12px; 
+  left: 9px; 
 }
 
 /* move the title slightly UP for the intro only */
