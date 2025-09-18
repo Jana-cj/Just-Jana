@@ -325,8 +325,7 @@
   <img src="img/Logos/logohanddrawnbw.png"
        alt="Lotus Bloom Static"
        class="hero-lotus hero-static"
-       id="lotusStaticM"
-       style="display:none;">
+       id="lotusStaticM">
 
   <!-- Title + tagline -->
   <img src="img/Logos/justjana.png"
@@ -1455,28 +1454,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <!-- lotus animation -->
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const animationLength = 2800; // ms
+document.addEventListener("DOMContentLoaded", async () => {
+  const ANIM_MS = 2800; // matches your art
+  const anim = document.querySelector('#lotusAnim');
+  const stat = document.querySelector('#lotusStatic');
+  const root = document.querySelector('.hero-desktop');
+  if (!anim || !stat || !root) return;
 
-    const pairs = [
-      { anim: "#lotusAnim",  stat: "#lotusStatic",  root: ".hero-desktop" },
-    ];
+  // Pre-decode to avoid flashes
+  const decode = img => (img && img.decode ? img.decode().catch(()=>{}) : Promise.resolve());
+  await Promise.all([decode(anim), decode(stat)]);
 
-    pairs.forEach(({anim, stat, root}) => {
-      const a = document.querySelector(anim);
-      const s = document.querySelector(stat);
-      const r = document.querySelector(root);
-      if (!a || !s || !r) return;
+  // Force animated WebP to start at frame 0 (browser quirk)
+  const src = anim.currentSrc || anim.src;
+  anim.src = '';
+  void anim.offsetHeight;
+  anim.src = src;
 
-      setTimeout(() => {
-        a.style.display = "none";
-        s.style.display = "block";
-        r.classList.add("intro-done"); // stops intro-only nudges
-      }, animationLength);
-    });
-  });
+  // Swap to static after the animation time
+  setTimeout(() => {
+    anim.style.display = 'none';
+    stat.style.display = 'block';
+    root.classList.add('intro-done'); // stops intro-only nudges
+  }, ANIM_MS);
+});
 </script>
 
+<!-- mobile lotus animation -->
 <script>
 // lotus animation (MOBILE ONLY)
 document.addEventListener('DOMContentLoaded', async () => {
@@ -1485,14 +1489,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   const root = document.querySelector('.hero-mobile');
   if (!anim || !stat || !root) return;
 
-  // Ensure static is present to hold space (opacity handles visibility)
-  stat.style.display = 'block';
+  // (No need to set stat.style.display = 'block' if you removed inline display:none)
 
   // Decode first to avoid flashes
   const decode = img => (img.decode ? img.decode().catch(()=>{}) : Promise.resolve());
   await Promise.all([decode(anim), decode(stat)]);
 
-  // Force animated WebP to start at frame 0 (reload quirk)
+  // Reset animated WebP to frame 0
   const src = anim.currentSrc || anim.src;
   anim.src = '';
   void anim.offsetHeight;
@@ -1501,16 +1504,17 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Reveal animation on top
   anim.classList.add('is-on');
 
-  // Cut to static after your chosen time (counts from now)
-  const CUT_MS_MOBILE = 2100; // adjust 2000–2400 to taste
+  // Crossfade to static after your chosen time
+  const CUT_MS_MOBILE = 2100; // tune 2000–2400ms to taste
   setTimeout(() => {
     anim.classList.remove('is-on');
-    anim.classList.add('is-off');   // fades out, stays stacked
-    stat.classList.add('is-on');    // fade in static in the same spot
+    anim.classList.add('is-off');
+    stat.classList.add('is-on');
     root.classList.add('intro-done');
   }, CUT_MS_MOBILE);
 });
 </script>
+
 
 
 
