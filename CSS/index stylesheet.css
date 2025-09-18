@@ -1596,7 +1596,7 @@ html{ -webkit-text-size-adjust: 100%; }
 /* Piece sizing (adjust if your source PNGs have different aspect) */
 .hero-lotus{ 
   margin-top: -30px;
-  width: clamp(300px, 34vw, 600px);
+  width: clamp(320px, 34vw, 640px);
   height:auto;
 }
 
