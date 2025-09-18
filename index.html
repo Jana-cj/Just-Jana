@@ -289,18 +289,21 @@
 <!-- Desktop gradient hero (hidden on mobile) -->
 <section class="hero-desktop" aria-label="Just Jana hero">
   <div class="hero-inner">
-    <!-- Animated lotus first -->
-    <img src="img/Logos/lotus bloom.webp" 
-         alt="Lotus Bloom Animation" 
-         class="hero-lotus hero-anim"
-         id="lotusAnim">
+    
+    <!-- Lotus stack (static defines size; animation overlays) -->
+    <div class="lotus-stack">
+      <!-- Static lotus (acts as the sizer) -->
+      <img src="img/Logos/logohanddrawnbw.png"
+           alt="Lotus Bloom Static"
+           id="lotusStatic"
+           class="lotus-img static">
 
-    <!-- Static lotus (hidden until anim ends) -->
-    <img src="img/Logos/logohanddrawnbw.png" 
-         alt="Lotus Bloom Static" 
-         class="hero-lotus hero-static"
-         id="lotusStatic" 
-         style="display:none;">
+      <!-- Animated lotus (perfectly overlaid) -->
+      <img src="img/Logos/lotus bloom.webp"
+           alt="Lotus Bloom Animation"
+           id="lotusAnim"
+           class="lotus-img anim">
+    </div>
 
     <img src="img/Logos/justjana.png" 
          alt="JUST JANA wordmark" 
@@ -310,6 +313,7 @@
          class="hero-piece hero-quote">
   </div>
 </section>
+
 
 
 
@@ -1435,22 +1439,32 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 </script>
 
-<!-- lotus animation -->
+<!-- lotus animation cross-fade -->
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    const lotusAnim = document.getElementById("lotusAnim");
+    const lotusAnim   = document.getElementById("lotusAnim");
     const lotusStatic = document.getElementById("lotusStatic");
 
-    // WebP animations don't expose duration directly,
-    // so you set a timeout for the known animation length (seconds * 1000).
-    const animationLength = 4000; // e.g. 4 seconds, adjust to your file
+    if (!lotusAnim || !lotusStatic) return;
 
+    // Duration of your lotus WebP animation in ms
+    const animationLength = 4000; // adjust to your actual file length
+    const fadeDuration    = 600;  // how long the cross-fade lasts
+
+    // Ensure both are visible in the same spot, but anim starts on top
+    lotusAnim.style.opacity   = "1";
+    lotusStatic.style.opacity = "0";
+    lotusAnim.style.transition =
+    lotusStatic.style.transition = `opacity ${fadeDuration}ms ease`;
+
+    // After the animation plays, fade out anim → fade in static
     setTimeout(() => {
-      lotusAnim.style.display = "none";
-      lotusStatic.style.display = "block";
+      lotusAnim.style.opacity   = "0";
+      lotusStatic.style.opacity = "1";
     }, animationLength);
   });
 </script>
+
 
 
   </body>
