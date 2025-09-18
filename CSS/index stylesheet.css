@@ -1761,6 +1761,7 @@ html{ -webkit-text-size-adjust: 100%; }
     --lotus-anim-min: 500px;           /* bigger minimum */
     --lotus-anim-vw: 100vw;             /* bigger relative width */
     --lotus-anim-max: 900px;           /* bigger ceiling */
+    --anim-lift: 100px;
   }
 }
 
