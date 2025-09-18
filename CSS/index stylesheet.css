@@ -1754,7 +1754,13 @@ html{ -webkit-text-size-adjust: 100%; }
   background:linear-gradient(to right,#fff5af,#ffd0d3,#ffadf6);
 }
 @media (max-width:768px){
-  .hero-mobile{ display:flex; }
+  .hero-mobile{ display:flex;
+  
+    --lotus-y: 34px;                   /* how far to push the lotus DOWN */
+    --lotus-anim-min: 360px;           /* bigger minimum */
+    --lotus-anim-vw: 96vw;             /* bigger relative width */
+    --lotus-anim-max: 760px;           /* bigger ceiling */
+  }
 }
 
 /* Shared sizing */
@@ -1776,6 +1782,7 @@ html{ -webkit-text-size-adjust: 100%; }
   opacity:0;                         /* hidden initially */
   visibility:hidden;
   transition:opacity .35s ease;
+   margin-top: var(--lotus-y);
 }
 #lotusStaticM.is-on{
   opacity:1;
@@ -1786,10 +1793,10 @@ html{ -webkit-text-size-adjust: 100%; }
 #lotusAnimM{
   position:absolute;
   left:50%;
-  top:0;
+  top:var(--lotus-y);  
   transform:translateX(-50%) !important; /* override any global transform */
   z-index:2;
-  width:clamp(300px,92vw,640px);         /* ~10–15% bigger than static */
+  width:clamp(var(--lotus-anim-min), var(--lotus-anim-vw), var(--lotus-anim-max));        /* ~10–15% bigger than static */
   height:auto;
   opacity:0;                             /* hidden until JS toggles */
   visibility:hidden;
