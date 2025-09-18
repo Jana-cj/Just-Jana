@@ -1626,8 +1626,9 @@ html{ -webkit-text-size-adjust: 100%; }
 .hero-title{
   width: clamp(220px, 22vw, 420px);
   height:auto;
-  margin-top: clamp(16px, 2vh, 32px);
+  margin-top: clamp(4px, 0.5vh, 12px);
   transform: translateY(-6px); 
+  
 }
 .hero-quote{
   width: clamp(340px, 46vw, 820px);
