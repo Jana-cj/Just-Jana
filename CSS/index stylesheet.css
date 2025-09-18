@@ -1763,10 +1763,22 @@ html{ -webkit-text-size-adjust: 100%; }
     --lotus-anim-vw: 100vw;             /* bigger relative width */
     --lotus-anim-max: 900px;           /* bigger ceiling */
     --lotus-static-lift: 200px; 
-    --lotus-anim-lift: 500px; 
-
-    
+    --lotus-anim-lift: 200px; 
   }
+ .hero-mobile #lotusAnimM{
+    top: calc(var(--lotus-y) - var(--lotus-anim-lift)) !important;
+    margin-top: 0 !important;
+  }
+  .hero-mobile.is-playing #lotusAnimM{
+    top: calc(var(--lotus-y) - var(--lotus-anim-lift)) !important;
+  }
+
+  /* Keep static aligned to the same reference */
+  .hero-mobile #lotusStaticM{
+    margin-top: calc(var(--lotus-y) - var(--lotus-static-lift)) !important;
+  }
+    
+  
 }
 
 /* Shared sizing */
@@ -1824,7 +1836,14 @@ html{ -webkit-text-size-adjust: 100%; }
 .hero-mobile.is-playing .hero-title{ animation: jj-fade-up .7s ease-out .95s forwards; }
 .hero-mobile.is-playing .hero-quote{ animation: jj-fade-up .7s ease-out 1.25s forwards; }
 
-
+@keyframes jj-bloom {
+  from { transform: translateX(-50%) scale(.94); }
+  to   { transform: translateX(-50%) scale(1); }
+}
+@keyframes jj-float {
+  from { transform: translateX(-50%) translateY(0); }
+  to   { transform: translateX(-50%) translateY(-6px); }
+}
 
 /* Welcome section */
 
