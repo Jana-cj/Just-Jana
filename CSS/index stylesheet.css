@@ -1613,6 +1613,9 @@ html{ -webkit-text-size-adjust: 100%; }
   width: clamp(300px, 34vw, 600px);
   margin-bottom: 7px;
   margin-top: -40px;
+  opacity: 1 !important;
+  transform: none !important;
+  animation: none !important;
 }
 
 /* Keep animation/static lotus aligned */
