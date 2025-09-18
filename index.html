@@ -25,6 +25,9 @@
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/png" href="img/Logos/favicon.png">
 
+    <!-- Pre load static logo -->
+    <link rel="preload" as="image" href="img/Logos/logohanddrawnbw.png">
+
    
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="CSS/index stylesheet.css">
@@ -1478,6 +1481,52 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 </script>
 
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+  const anim = document.querySelector('#lotusAnimM');
+  const stat = document.querySelector('#lotusStaticM');
+  const root = document.querySelector('.hero-mobile');
+  if (!anim || !stat || !root) return;
+
+  // 1) Ensure static stays hidden initially (belt & braces)
+  stat.style.display = 'block';         // needed for opacity fade
+  stat.classList.remove('is-on');       // keep invisible via CSS opacity
+
+  // 2) Decode both images before showing anything (prevents flashes)
+  const decode = img => (img.decode ? img.decode().catch(() => {}) : Promise.resolve());
+  await Promise.all([decode(anim), decode(stat)]);
+
+  // 3) Force the animated WebP to start from frame 0 on reload
+  // Some browsers resume cached animated images mid-animation.
+  (function restartAnimatedImage(img){
+    const src = img.currentSrc || img.src;
+    img.src = '';           // detach
+    // force reflow so the browser commits the empty src
+    // (yes, accessing offsetHeight intentionally)
+    void img.offsetHeight;
+    img.src = src;          // reattach → animation restarts at frame 0
+  })(anim);
+
+  // 4) Reveal the animation cleanly now that it’s ready
+  anim.classList.add('is-on');
+
+  // 5) Cut to static AFTER the animation has had a chance to play
+  // Tune this to taste; this starts counting *now*, not at DOMContentLoaded.
+  const CUT_MS_MOBILE = 2100; // try 2000–2400ms
+
+  setTimeout(() => {
+    // crossfade: animate out anim, animate in static
+    anim.classList.remove('is-on');
+    anim.classList.add('is-off');
+    stat.classList.add('is-on');
+
+    // optional: if you prefer a hard swap, also do:
+    // anim.style.display = 'none';
+
+    root.classList.add('intro-done'); // in case you use this elsewhere
+  }, CUT_MS_MOBILE);
+});
+</script>
 
 
 
