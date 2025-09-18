@@ -1436,21 +1436,27 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
 <!-- lotus animation -->
+<!-- lotus animation -->
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    const lotusAnim = document.getElementById("lotusAnim");
+    const lotusAnim   = document.getElementById("lotusAnim");
     const lotusStatic = document.getElementById("lotusStatic");
+    const heroDesk    = document.querySelector(".hero-desktop");
 
-    // WebP animations don't expose duration directly,
-    // so you set a timeout for the known animation length (seconds * 1000).
-    const animationLength = 4000; // e.g. 4 seconds, adjust to your file
+    // WebP animation length (ms) — adjust if you trim it shorter
+    const animationLength = 4000;
 
     setTimeout(() => {
+      // swap animated → static lotus
       lotusAnim.style.display = "none";
       lotusStatic.style.display = "block";
+
+      // mark intro finished so the offsets no longer apply
+      heroDesk?.classList.add("intro-done");
     }, animationLength);
   });
 </script>
+
 
 
   </body>
