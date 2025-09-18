@@ -1602,7 +1602,7 @@ html{ -webkit-text-size-adjust: 100%; }
 
 /* Animated lotus bigger */
 .hero-anim {
-  width: clamp(355px, 52vw, 695px); /* slightly larger than static */
+  width: clamp(350px, 52vw, 690px); /* slightly larger than static */
   opacity: 1 !important;
   transform: none !important;
   animation: none !important;
@@ -1647,7 +1647,7 @@ html{ -webkit-text-size-adjust: 100%; }
 /* move the title slightly UP for the intro only */
 .hero-desktop.is-playing:not(.intro-done) .hero-title{
   /* subtract a bit from your existing margin to pull it up */
-  margin-top: calc(clamp(4px, 0.5vh, 12px) - 22px);
+  margin-top: calc(clamp(4px, 0.5vh, 12px) - 21px);
 }
 
 /* Optional: keep the tagline tucked a hair closer during intro */
