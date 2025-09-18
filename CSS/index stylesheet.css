@@ -1763,7 +1763,8 @@ html{ -webkit-text-size-adjust: 100%; }
     --lotus-anim-vw: 100vw;             /* bigger relative width */
     --lotus-anim-max: 900px;           /* bigger ceiling */
     --lotus-static-lift: 200px; 
-    --lotus-anim-lift: 150px; 
+    --lotus-anim-lift: 160px; 
+    --lotus-x-shift: 5px;
   }
  .hero-mobile #lotusAnimM{
     top: calc(var(--lotus-y) - var(--lotus-anim-lift)) !important;
@@ -1820,6 +1821,7 @@ html{ -webkit-text-size-adjust: 100%; }
   visibility:hidden;
   transition:opacity .35s ease;
   pointer-events:none;                   /* purely decorative */
+  left: calc(50% + var(--lotus-x-shift)) !important; /* keep translateX(-50%) */
 }
 #lotusAnimM.is-on{  opacity:1; visibility:visible; }
 #lotusAnimM.is-off{ opacity:0;  visibility:hidden; }
