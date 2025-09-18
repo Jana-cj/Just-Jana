@@ -1763,7 +1763,7 @@ html{ -webkit-text-size-adjust: 100%; }
     --lotus-anim-vw: 100vw;             /* bigger relative width */
     --lotus-anim-max: 900px;           /* bigger ceiling */
     --lotus-static-lift: 200px; 
-    --lotus-anim-lift: 200px; 
+    --lotus-anim-lift: 180px; 
   }
  .hero-mobile #lotusAnimM{
     top: calc(var(--lotus-y) - var(--lotus-anim-lift)) !important;
