@@ -1752,8 +1752,8 @@ html{ -webkit-text-size-adjust: 100%; }
   padding:2rem 1rem;
   text-align:center;
   background:linear-gradient(to right,#fff5af,#ffd0d3,#ffadf6);
-  --lotus-static-lift: 200px;  
-  --anim-lift: 200px;
+  
+
 }
 @media (max-width:768px){
   .hero-mobile{ display:flex;
@@ -1762,6 +1762,9 @@ html{ -webkit-text-size-adjust: 100%; }
     --lotus-anim-min: 500px;           /* bigger minimum */
     --lotus-anim-vw: 100vw;             /* bigger relative width */
     --lotus-anim-max: 900px;           /* bigger ceiling */
+    --lotus-anim-lift: 200px;
+    --lotus-static-lift: 200px; 
+
     
   }
 }
