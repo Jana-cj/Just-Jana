@@ -1608,7 +1608,7 @@ html{ -webkit-text-size-adjust: 100%; }
 /* Static lotus stays at original size */
 .hero-static {
   width: clamp(300px, 34vw, 600px);
-  margin-bottom: 5px;
+  margin-bottom: 6px;
 }
 
 /* Keep animation/static lotus aligned */
