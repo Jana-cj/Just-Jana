@@ -1573,7 +1573,7 @@ html{ -webkit-text-size-adjust: 100%; }
   position:relative;
   overflow:hidden;
   /* soft yellow -> blush pink -> purple */
-  background: linear-gradient(to right, #f6ddbd, #f6cecc, #f5bfdd);
+  background: linear-gradient(to right, #f9e7b5, #f7dbbf, #f5cdcc, #f5c0db, #ffb3f0);
   /* spacing tuned for big screens */
   padding: clamp(72px, 14vh, 160px) 0 clamp(48px, 10vh, 120px);
   min-height: clamp(520px, 70vh, 760px);
