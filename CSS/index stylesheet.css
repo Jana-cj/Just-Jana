@@ -1757,7 +1757,7 @@ html{ -webkit-text-size-adjust: 100%; }
 @media (max-width:768px){
   .hero-mobile{ display:flex;
   
-    --lotus-y: 100px;                   /* how far to push the lotus DOWN */
+    --lotus-y: 200px;                   /* how far to push the lotus DOWN */
     --lotus-anim-min: 500px;           /* bigger minimum */
     --lotus-anim-vw: 100vw;             /* bigger relative width */
     --lotus-anim-max: 900px;           /* bigger ceiling */
