@@ -1640,13 +1640,13 @@ html{ -webkit-text-size-adjust: 100%; }
 /* Initial-only offsets (desktop hero intro) */
 .hero-desktop.is-playing:not(.intro-done) .hero-anim{
   /* move the *animated* lotus slightly DOWN (less negative than -30px) */
-  margin-top: -16px; /* was effectively -30px; adjust to taste */
+  margin-top: -20px; /* was effectively -30px; adjust to taste */
 }
 
 /* move the title slightly UP for the intro only */
 .hero-desktop.is-playing:not(.intro-done) .hero-title{
   /* subtract a bit from your existing margin to pull it up */
-  margin-top: calc(clamp(4px, 0.5vh, 12px) - 10px);
+  margin-top: calc(clamp(4px, 0.5vh, 12px) - 7px);
 }
 
 /* Optional: keep the tagline tucked a hair closer during intro */
