@@ -1871,7 +1871,7 @@ html{ -webkit-text-size-adjust: 100%; }
 
 .hero-mobile .hero-anim{
   /* make the animated lotus just a hair bigger on mobile too */
-  width: clamp(300px, 88vw, 600px);
+  width: clamp(350px, 90vw, 650px);
 }
 
 .hero-mobile .hero-static{
