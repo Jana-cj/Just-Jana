@@ -1761,7 +1761,7 @@ html{ -webkit-text-size-adjust: 100%; }
 
 /* Mobile lotus sizing to mirror vibe */
 .hero-mobile .hero-lotus{
-  width: clamp(240px, 78vw, 520px);
+  width: clamp(300px, 88vw, 600px);
   height: auto;
   margin-top: 100px;
 }
