@@ -289,21 +289,18 @@
 <!-- Desktop gradient hero (hidden on mobile) -->
 <section class="hero-desktop" aria-label="Just Jana hero">
   <div class="hero-inner">
-    <div class="lotus-box">
-  <!-- Animated lotus first -->
-  <img src="img/Logos/lotus bloom.webp"
-       alt="Lotus Bloom Animation"
-       class="lotus-frame hero-anim"
-       id="lotusAnim">
+    <!-- Animated lotus first -->
+    <img src="img/Logos/lotus bloom.webp" 
+         alt="Lotus Bloom Animation" 
+         class="hero-lotus hero-anim"
+         id="lotusAnim">
 
-  <!-- Static lotus (hidden until anim ends) -->
-  <img src="img/Logos/logohanddrawnbw.png"
-       alt="Lotus Bloom Static"
-       class="lotus-frame hero-static"
-       id="lotusStatic"
-       style="display:none;">
-</div>
-
+    <!-- Static lotus (hidden until anim ends) -->
+    <img src="img/Logos/logohanddrawnbw.png" 
+         alt="Lotus Bloom Static" 
+         class="hero-lotus hero-static"
+         id="lotusStatic" 
+         style="display:none;">
 
     <img src="img/Logos/justjana.png" 
          alt="JUST JANA wordmark" 
@@ -1443,7 +1440,10 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener("DOMContentLoaded", () => {
     const lotusAnim = document.getElementById("lotusAnim");
     const lotusStatic = document.getElementById("lotusStatic");
-    const animationLength = 4000; // ms, set to your WebP’s duration
+
+    // WebP animations don't expose duration directly,
+    // so you set a timeout for the known animation length (seconds * 1000).
+    const animationLength = 4000; // e.g. 4 seconds, adjust to your file
 
     setTimeout(() => {
       lotusAnim.style.display = "none";
@@ -1451,8 +1451,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }, animationLength);
   });
 </script>
-
-
 
 
   </body>
