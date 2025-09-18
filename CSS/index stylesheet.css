@@ -1742,92 +1742,74 @@ html{ -webkit-text-size-adjust: 100%; }
   }
 }
 
-/* ================= Mobile Hero (FIXED) ================= */
-
-/* Base container (hidden on desktop) */
-.hero-mobile {
-  display: none; 
-  position: relative;            /* positioning context for the overlaying animation */
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem 1rem;
-  text-align: center;
-  background: linear-gradient(to right, #fff5af, #ffd0d3, #ffadf6);
+/* ================= Mobile Hero (centered anim → static) ================= */
+.hero-mobile{
+  display:none;
+  position:relative;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:2rem 1rem;
+  text-align:center;
+  background:linear-gradient(to right,#fff5af,#ffd0d3,#ffadf6);
 }
 @media (max-width:768px){
   .hero-mobile{ display:flex; }
 }
 
-/* Mobile lotus sizing to mirror vibe */
-.hero-mobile .hero-lotus{
-  width: clamp(300px, 88vw, 600px);
-  height: auto;
-  margin-top: 100px;
-}
-.hero-mobile .hero-static{
-  width: clamp(240px, 78vw, 520px);
-  margin-top: -26px;
-  margin-bottom: 6px;
-}
+/* Shared sizing */
 .hero-mobile .hero-title{
-  width: clamp(200px, 58vw, 360px);
-  margin-top: clamp(2px, 0.6vh, 10px);
+  width:clamp(200px,58vw,360px);
+  margin-top:clamp(2px,0.6vh,10px);
 }
 .hero-mobile .hero-quote{
-  width: clamp(300px, 86vw, 700px);
-  margin-top: clamp(6px, 1.2vh, 14px);
-  opacity: .95;
+  width:clamp(300px,86vw,700px);
+  margin-top:clamp(6px,1.2vh,14px);
+  opacity:.95;
 }
 
-/* Center the animated lotus as an overlay and crossfade to static */
+/* Static lotus: in-flow to reserve height, but invisible at start */
 #lotusStaticM{
-  display: block;               /* keeps layout height so nothing jumps */
-  opacity: 0;                   /* start hidden; JS adds .is-on */
-  transition: opacity .35s ease;
+  display:block;
+  width:clamp(260px,84vw,560px);     /* final size */
+  height:auto;
+  opacity:0;                         /* hidden initially */
+  visibility:hidden;
+  transition:opacity .35s ease;
 }
-#lotusAnimM{
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%) !important;  /* overrides global .hero-anim transform */
-  top: 0;
-  margin-top: -26px;            /* align with static’s offset */
-  z-index: 2;
-  width: clamp(240px, 78vw, 520px); /* match static width */
-  height: auto;
-  opacity: 0;                   /* JS toggles these classes */
-  visibility: hidden;
-  transition: opacity .35s ease;
+#lotusStaticM.is-on{
+  opacity:1;
+  visibility:visible;
 }
-/* Crossfade helpers toggled by JS */
-#lotusAnimM.is-on { opacity: 1; visibility: visible; }
-#lotusAnimM.is-off{ opacity: 0; }
-#lotusStaticM.is-on{ opacity: 1; }
 
-/* Re-enable the bloom motion on mobile despite the global .hero-anim rule */
+/* Animated lotus: slightly bigger and centered on top */
+#lotusAnimM{
+  position:absolute;
+  left:50%;
+  top:0;
+  transform:translateX(-50%) !important; /* override any global transform */
+  z-index:2;
+  width:clamp(300px,92vw,640px);         /* ~10–15% bigger than static */
+  height:auto;
+  opacity:0;                             /* hidden until JS toggles */
+  visibility:hidden;
+  transition:opacity .35s ease;
+  pointer-events:none;                   /* purely decorative */
+}
+#lotusAnimM.is-on{  opacity:1; visibility:visible; }
+#lotusAnimM.is-off{ opacity:0;  visibility:hidden; }
+
+/* Optional: mobile bloom motion if you already have the keyframes */
 .hero-mobile.is-playing #lotusAnimM{
   animation:
-    jj-bloom 900ms cubic-bezier(.22,.9,.18,1.08) 0.35s forwards,
-    jj-float  6s ease-in-out 1.4s infinite alternate !important;
+    jj-bloom 900ms cubic-bezier(.22,.9,.18,1.08) .35s forwards,
+    jj-float 6s ease-in-out 1.4s infinite alternate !important;
 }
 
-/* Neutralize the small mobile “nudge” so centering stays perfect */
-.hero-mobile.is-playing:not(.intro-done) #lotusAnimM{
-  position: absolute !important;
-  left: 50% !important;
-  transform: translateX(-50%) !important;
-  margin-top: -26px !important;
-}
-
-/* Stage in title + tagline on mobile */
-.hero-mobile .hero-piece{
-  opacity: 0;
-  transform: translateY(8px);
-  will-change: opacity, transform, filter;
-}
+/* Title/tagline reveal */
+.hero-mobile .hero-piece{ opacity:0; transform:translateY(8px); will-change:opacity,transform; }
 .hero-mobile.is-playing .hero-title{ animation: jj-fade-up .7s ease-out .95s forwards; }
 .hero-mobile.is-playing .hero-quote{ animation: jj-fade-up .7s ease-out 1.25s forwards; }
-
 
 
 

@@ -1482,36 +1482,37 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 <!-- mobile lotus animation -->
 <script>
-// lotus animation (MOBILE ONLY)
+// Mobile lotus: show animation first (bigger, centered) → fade to static
 document.addEventListener('DOMContentLoaded', async () => {
-  const anim = document.querySelector('#lotusAnimM');
-  const stat = document.querySelector('#lotusStaticM');
   const root = document.querySelector('.hero-mobile');
-  if (!anim || !stat || !root) return;
+  const anim = document.getElementById('lotusAnimM');
+  const stat = document.getElementById('lotusStaticM');
+  if (!root || !anim || !stat) return;
 
-  // (No need to set stat.style.display = 'block' if you removed inline display:none)
-
-  // Decode first to avoid flashes
-  const decode = img => (img.decode ? img.decode().catch(()=>{}) : Promise.resolve());
+  // Decode to prevent flashes on first paint
+  const decode = img => (img && img.decode ? img.decode().catch(()=>{}) : Promise.resolve());
   await Promise.all([decode(anim), decode(stat)]);
 
-  // Reset animated WebP to frame 0
+  // Force animated WebP to start at frame 0 (common browser quirk)
   const src = anim.currentSrc || anim.src;
   anim.src = '';
-  void anim.offsetHeight;
+  void anim.offsetHeight;  // reflow
   anim.src = src;
 
-  // Reveal animation on top
+  // Show animation first; static stays invisible
   anim.classList.add('is-on');
+  stat.classList.remove('is-on');
 
-  // Crossfade to static after your chosen time
-  const CUT_MS_MOBILE = 2100; // tune 2000–2400ms to taste
+  // If you know the exact length of the animated webp, match it here.
+  // Otherwise keep this close to the file's duration.
+  const DURATION_MS = 2400; // ← tweak to your animation length
+
   setTimeout(() => {
     anim.classList.remove('is-on');
-    anim.classList.add('is-off');
-    stat.classList.add('is-on');
+    anim.classList.add('is-off'); // fade-out animation
+    stat.classList.add('is-on');  // fade-in static
     root.classList.add('intro-done');
-  }, CUT_MS_MOBILE);
+  }, DURATION_MS);
 });
 </script>
 
