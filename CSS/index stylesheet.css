@@ -1783,7 +1783,7 @@ html{ -webkit-text-size-adjust: 100%; }
   opacity:0;                         /* hidden initially */
   visibility:hidden;
   transition:opacity .35s ease;
-   margin-top: var(--lotus-y);
+   margin-top: calc(var(--lotus-y) - var(--lotus-static-lift))
 }
 #lotusStaticM.is-on{
   opacity:1;
