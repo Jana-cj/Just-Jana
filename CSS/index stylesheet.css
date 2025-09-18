@@ -1602,7 +1602,7 @@ html{ -webkit-text-size-adjust: 100%; }
 
 /* Animated lotus bigger */
 .hero-anim {
-  width: clamp(345px, 52vw, 685px); /* slightly larger than static */
+  width: clamp(340px, 52vw, 680px); /* slightly larger than static */
   opacity: 1 !important;
   transform: none !important;
   animation: none !important;
