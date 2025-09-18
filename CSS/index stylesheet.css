@@ -1580,66 +1580,6 @@ html{ -webkit-text-size-adjust: 100%; }
   min-height: clamp(520px, 70vh, 760px);
 }
 
-/* ---------- Lotus alignment stack ---------- */
-
-/* Global lotus sizing + optional micro-adjustments for the ANIMATED art only */
-:root{
-  --lotus-width: clamp(300px, 34vw, 600px);   /* shared width for both images */
-  --lotus-anim-shift-x: 0px;                  /* tweak if the animation sits a touch left/right */
-  --lotus-anim-shift-y: 0px;                  /* tweak if the animation sits a touch up/down */
-  --lotus-anim-scale: 1;                      /* tweak if animated art is minutely bigger/smaller */
-}
-
-/* Wrapper that controls the size and centers the pair */
-.lotus-stack{
-  width: var(--lotus-width);
-  margin-inline: auto;
-  position: relative;
-  /* optional vertical nudge for the whole lotus block */
-  margin-top: -30px; /* keep your previous overall placement */
-}
-
-/* Both images fill the same box width */
-.lotus-img{
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-/* The STATIC image defines height (normal flow) */
-.lotus-img.static{
-  position: relative;   /* stays in flow, sets the height of the stack */
-  z-index: 1;
-}
-
-/* The ANIMATED image is perfectly overlaid on top of the static one */
-.lotus-img.anim{
-  position: absolute;
-  inset: 0;             /* top:0 right:0 bottom:0 left:0 */
-  width: 100%;
-  height: 100%;
-  object-fit: contain;  /* preserve aspect */
-  transform-origin: center;
-  transform: translate(var(--lotus-anim-shift-x), var(--lotus-anim-shift-y)) scale(var(--lotus-anim-scale));
-  z-index: 2;
-  /* if you fade/swap later, start visible */
-  opacity: 1;
-}
-
-/* Optional: small spacing tweak to your title now that margins on images are gone */
-.hero-title{
-  width: clamp(220px, 22vw, 420px);
-  margin-top: clamp(4px, 0.5vh, 12px);
-}
-
-/* Clean up previous conflicting rules */
-.hero-lotus,
-.hero-anim,
-.hero-static{
-  margin: 0 !important;
-  width: auto !important;   /* we control width on .lotus-stack now */
-  height: auto !important;
-}
 
 
 .hero-inner{
@@ -1660,13 +1600,34 @@ html{ -webkit-text-size-adjust: 100%; }
   height:auto;
 }
 
+/* Animated lotus bigger */
+.hero-anim {
+  width: clamp(340px, 50vw, 660px); /* slightly larger than static */
+  opacity: 1 !important;
+  transform: none !important;
+  animation: none !important;
+}
 
+/* Static lotus stays at original size */
+.hero-static {
+  width: clamp(300px, 34vw, 600px);
+  margin-bottom: 7px;
+  margin-top: -45px;
+  opacity: 1 !important;
+  transform: none !important;
+  animation: none !important;
+}
 
+/* Keep animation/static lotus aligned */
+.hero-anim, .hero-static {
+  position: relative;
+  z-index: 1;
+}
 .hero-title{
   width: clamp(220px, 22vw, 420px);
   height:auto;
   margin-top: clamp(4px, 0.5vh, 12px);
-  transform: translateY(-4px); 
+  transform: translateY(-6px); 
   
 }
 .hero-quote{

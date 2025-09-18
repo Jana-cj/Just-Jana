@@ -289,21 +289,18 @@
 <!-- Desktop gradient hero (hidden on mobile) -->
 <section class="hero-desktop" aria-label="Just Jana hero">
   <div class="hero-inner">
-    
-    <!-- Lotus stack (static defines size; animation overlays) -->
-    <div class="lotus-stack">
-      <!-- Static lotus (acts as the sizer) -->
-      <img src="img/Logos/logohanddrawnbw.png"
-           alt="Lotus Bloom Static"
-           id="lotusStatic"
-           class="lotus-img static">
+    <!-- Animated lotus first -->
+    <img src="img/Logos/lotus bloom.webp" 
+         alt="Lotus Bloom Animation" 
+         class="hero-lotus hero-anim"
+         id="lotusAnim">
 
-      <!-- Animated lotus (perfectly overlaid) -->
-      <img src="img/Logos/lotus bloom.webp"
-           alt="Lotus Bloom Animation"
-           id="lotusAnim"
-           class="lotus-img anim">
-    </div>
+    <!-- Static lotus (hidden until anim ends) -->
+    <img src="img/Logos/logohanddrawnbw.png" 
+         alt="Lotus Bloom Static" 
+         class="hero-lotus hero-static"
+         id="lotusStatic" 
+         style="display:none;">
 
     <img src="img/Logos/justjana.png" 
          alt="JUST JANA wordmark" 
@@ -313,7 +310,6 @@
          class="hero-piece hero-quote">
   </div>
 </section>
-
 
 
 
@@ -1439,33 +1435,22 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 </script>
 
-<!-- lotus animation cross-fade -->
+<!-- lotus animation -->
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    const lotusAnim   = document.getElementById("lotusAnim");
+    const lotusAnim = document.getElementById("lotusAnim");
     const lotusStatic = document.getElementById("lotusStatic");
-    if (!lotusAnim || !lotusStatic) return;
 
-    const animationLength = 4000; // ms
-    const fadeDuration    = 600;  // ms
+    // WebP animations don't expose duration directly,
+    // so you set a timeout for the known animation length (seconds * 1000).
+    const animationLength = 4000; // e.g. 4 seconds, adjust to your file
 
-    lotusAnim.style.opacity   = "1";
-    lotusStatic.style.opacity = "0";
-    lotusAnim.style.transition =
-    lotusStatic.style.transition = `opacity ${fadeDuration}ms ease`;
-
-    const whenDecoded = el =>
-      ('decode' in el) ? el.decode().catch(()=>{}) : Promise.resolve();
-
-    Promise.all([whenDecoded(lotusAnim), whenDecoded(lotusStatic)]).then(() => {
-      setTimeout(() => {
-        lotusAnim.style.opacity   = "0";
-        lotusStatic.style.opacity = "1";
-      }, animationLength);
-    });
+    setTimeout(() => {
+      lotusAnim.style.display = "none";
+      lotusStatic.style.display = "block";
+    }, animationLength);
   });
 </script>
-
 
 
   </body>
