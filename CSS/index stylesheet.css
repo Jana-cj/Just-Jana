@@ -1752,6 +1752,7 @@ html{ -webkit-text-size-adjust: 100%; }
   padding:2rem 1rem;
   text-align:center;
   background:linear-gradient(to right,#fff5af,#ffd0d3,#ffadf6);
+  --lotus-static-lift: 80px;  
 }
 @media (max-width:768px){
   .hero-mobile{ display:flex;
