@@ -1763,7 +1763,7 @@ html{ -webkit-text-size-adjust: 100%; }
 .hero-mobile .hero-lotus{
   width: clamp(240px, 78vw, 520px);
   height: auto;
-  
+  margin-top: 100px;
 }
 .hero-mobile .hero-static{
   width: clamp(240px, 78vw, 520px);
