@@ -1600,6 +1600,11 @@ html{ -webkit-text-size-adjust: 100%; }
   height:auto;
 }
 
+/* Animated lotus bigger */
+.hero-anim {
+  width: clamp(340px, 45vw, 660px); /* slightly larger than static */
+}
+
 /* Keep animation/static lotus aligned */
 .hero-anim, .hero-static {
   position: relative;
