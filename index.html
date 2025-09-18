@@ -286,56 +286,42 @@
     </header>
 
     <main>
-<!-- Desktop gradient hero (hidden on mobile) -->
-<section class="hero-desktop" aria-label="Just Jana hero">
+<!-- Unified gradient hero (desktop + mobile) -->
+<section class="hero" aria-label="Just Jana hero">
   <div class="hero-inner">
-    <!-- Animated lotus first -->
-    <img src="img/Logos/lotus bloom.webp" 
-         alt="Lotus Bloom Animation" 
-         class="hero-lotus hero-anim"
-         id="lotusAnim">
+    <!-- Stack for animated + static lotus -->
+    <div class="hero-stack" aria-hidden="true">
+      <!-- Animated lotus -->
+      <img
+        src="img/Logos/lotus bloom.webp"
+        alt="Lotus Bloom Animation"
+        class="hero-lotus hero-anim"
+        id="lotusAnim"
+      />
 
-    <!-- Static lotus (hidden until anim ends) -->
-    <img src="img/Logos/logohanddrawnbw.png" 
-         alt="Lotus Bloom Static" 
-         class="hero-lotus hero-static"
-         id="lotusStatic" 
-         style="display:none;">
+      <!-- Static lotus (fades on when anim ends) -->
+      <img
+        src="img/Logos/logohanddrawnbw.png"
+        alt="Lotus Bloom Static"
+        class="hero-lotus hero-static"
+        id="lotusStatic"
+      />
+    </div>
 
-    <img src="img/Logos/justjana.png" 
-         alt="JUST JANA wordmark" 
-         class="hero-piece hero-title">
-    <img src="img/Logos/tagline.png" 
-         alt="Heal. Rise. Be unapologetically you." 
-         class="hero-piece hero-quote">
+    <!-- Title + tagline -->
+    <img
+      src="img/Logos/justjana.png"
+      alt="JUST JANA wordmark"
+      class="hero-piece hero-title"
+    />
+    <img
+      src="img/Logos/tagline.png"
+      alt="Heal. Rise. Be unapologetically you."
+      class="hero-piece hero-quote"
+    />
   </div>
 </section>
 
-
-
-      <!-- Mobile Hero Banner (animated ➜ static, then title + tagline) -->
-<div class="hero-mobile" aria-label="Just Jana hero (mobile)">
-  <!-- Animated lotus first -->
-  <img src="img/Logos/lotus bloom.webp"
-       alt="Lotus Bloom Animation"
-       class="hero-lotus hero-anim"
-       id="lotusAnimM">
-
-  <!-- Static lotus (hidden until anim ends) -->
-  <img src="img/Logos/logohanddrawnbw.png"
-       alt="Lotus Bloom Static"
-       class="hero-lotus hero-static"
-       id="lotusStaticM"
-       style="display:none;">
-
-  <!-- Title + tagline -->
-  <img src="img/Logos/justjana.png"
-       alt="JUST JANA wordmark"
-       class="hero-piece hero-title">
-  <img src="img/Logos/tagline.png"
-       alt="Heal. Rise. Be unapologetically you"
-       class="hero-piece hero-quote">
-</div>
 
 
       <br>
@@ -1525,6 +1511,59 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 </script>
 
+<script>
+/**
+ * Unified hero logic:
+ * - Play staged entry
+ * - Restart animated WebP from frame 0
+ * - After CUT_MS, crossfade to the static lotus (over the top)
+ * - Works on all breakpoints with one section
+ */
+document.addEventListener('DOMContentLoaded', async () => {
+  const root = document.querySelector('.hero');
+  const anim = document.getElementById('lotusAnim');
+  const stat = document.getElementById('lotusStatic');
+  if (!root || !anim || !stat) return;
+
+  // Length of the animation before we cut to static (tune as you like)
+  const CUT_MS = 2300;  // try 2000–2600ms
+
+  // Kick the staged sequence
+  root.classList.add('is-playing');
+
+  // Make sure static is initially hidden (for the crossfade)
+  stat.classList.remove('is-on');
+  anim.classList.add('is-on');
+
+  // Decode first to avoid flashes
+  const decode = img => (img.decode ? img.decode().catch(()=>{}) : Promise.resolve());
+  await Promise.all([decode(anim), decode(stat)]);
+
+  // Restart animated WebP from frame 0 (fixes “resume from mid-frame” cache quirk)
+  (function restartAnimatedImage(img){
+    const src = img.currentSrc || img.src;
+    img.src = '';
+    void img.offsetHeight; // reflow
+    img.src = src;
+  })(anim);
+
+  // Reduced motion: skip animation and show static immediately
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    anim.classList.remove('is-on');
+    anim.classList.add('is-off');
+    stat.classList.add('is-on');
+    return;
+  }
+
+  // Crossfade to static after CUT_MS
+  setTimeout(() => {
+    anim.classList.remove('is-on');
+    anim.classList.add('is-off');
+    stat.classList.add('is-on');
+    root.classList.add('intro-done');
+  }, CUT_MS);
+});
+</script>
 
 
   </body>
