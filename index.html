@@ -1444,24 +1444,25 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener("DOMContentLoaded", () => {
     const lotusAnim   = document.getElementById("lotusAnim");
     const lotusStatic = document.getElementById("lotusStatic");
-
     if (!lotusAnim || !lotusStatic) return;
 
-    // Duration of your lotus WebP animation in ms
-    const animationLength = 4000; // adjust to your actual file length
-    const fadeDuration    = 600;  // how long the cross-fade lasts
+    const animationLength = 4000; // ms
+    const fadeDuration    = 600;  // ms
 
-    // Ensure both are visible in the same spot, but anim starts on top
     lotusAnim.style.opacity   = "1";
     lotusStatic.style.opacity = "0";
     lotusAnim.style.transition =
     lotusStatic.style.transition = `opacity ${fadeDuration}ms ease`;
 
-    // After the animation plays, fade out anim → fade in static
-    setTimeout(() => {
-      lotusAnim.style.opacity   = "0";
-      lotusStatic.style.opacity = "1";
-    }, animationLength);
+    const whenDecoded = el =>
+      ('decode' in el) ? el.decode().catch(()=>{}) : Promise.resolve();
+
+    Promise.all([whenDecoded(lotusAnim), whenDecoded(lotusStatic)]).then(() => {
+      setTimeout(() => {
+        lotusAnim.style.opacity   = "0";
+        lotusStatic.style.opacity = "1";
+      }, animationLength);
+    });
   });
 </script>
 
