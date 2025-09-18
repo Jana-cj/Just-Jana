@@ -1561,12 +1561,7 @@ html{ -webkit-text-size-adjust: 100%; }
 
 
 
-
-/* index.html */
-
-/* Hero banner */
-
-
+/* Index.html -> HERO SECTION */
 /* ================= Desktop Gradient Hero ================= */
 .hero-desktop{
   display:block;
@@ -1579,8 +1574,6 @@ html{ -webkit-text-size-adjust: 100%; }
   padding: clamp(72px, 14vh, 160px) 0 clamp(48px, 10vh, 120px);
   min-height: clamp(520px, 70vh, 760px);
 }
-
-
 
 .hero-inner{
   max-width: min(1100px, 88vw);
@@ -1628,7 +1621,6 @@ html{ -webkit-text-size-adjust: 100%; }
   height:auto;
   margin-top: clamp(4px, 0.5vh, 12px);
   transform: translateY(-6px); 
-  
 }
 .hero-quote{
   width: clamp(340px, 46vw, 820px);
@@ -1640,13 +1632,12 @@ html{ -webkit-text-size-adjust: 100%; }
 /* Initial-only offsets (desktop hero intro) */
 .hero-desktop.is-playing:not(.intro-done) .hero-anim{
   /* move the *animated* lotus slightly DOWN (less negative than -30px) */
-  margin-top: -30px; /* was effectively -30px; adjust to taste */
+  margin-top: -30px;
   left: 7px; 
 }
 
 /* move the title slightly UP for the intro only */
 .hero-desktop.is-playing:not(.intro-done) .hero-title{
-  /* subtract a bit from your existing margin to pull it up */
   margin-top: calc(clamp(4px, 0.5vh, 12px) - 21.5px);
 }
 
@@ -1655,13 +1646,12 @@ html{ -webkit-text-size-adjust: 100%; }
   margin-top: clamp(4px, 1vh, 12px);
 }
 
-
 /* Keep the mobile hero taking over under 768px */
 @media (max-width: 768px){
   .hero-desktop{ display:none; }
 }
 
-/* (Optional) subtle grain for extra warmth */
+/* (Optional) subtle grain for extra warmth) */
 .hero-desktop::after{
   content:"";
   position:absolute; inset:0;
@@ -1672,68 +1662,15 @@ html{ -webkit-text-size-adjust: 100%; }
   opacity:.35;
 }
 
-
-/* AOS reduced motion */
-@media (prefers-reduced-motion: reduce){
-  [data-aos]{
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-  }
-}
-
-
-
-/* Mobile hero background and layout */
-.hero-mobile {
-  display: none; 
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem 1rem;
-  text-align: center;
-  background: linear-gradient(to right, #fff5af, #ffd0d3, #ffadf6);
-}
-
-/* Images sizing */
-
-.logo-mobile {
-  width: 80%;
-  margin-bottom: 2rem;
-}
-
-.text-mobile {
-  max-width: 250px;
-}
-
-.tagline-mobile {
-  width: 350px;
-  height: auto;
-  margin-bottom: 4rem;
-  
-}
-
-/* Show only on mobile */
-@media (max-width:768px){
-  .hero-mobile{ display:flex; }
-
-}
-
-/* ===========================
-   HERO: staged entry sequence
-   =========================== */
-
-/* Shared initial state (desktop & mobile hero pieces) */
+/* ================= Shared staged entry sequence (desktop + mobile) ================= */
 .hero-desktop .hero-piece,
-.hero-mobile .logo-mobile,
-.hero-mobile .text-mobile,
-.hero-mobile .tagline-mobile{
+.hero-mobile .hero-piece{
   opacity: 0;
   transform: translateY(8px);
   will-change: opacity, transform, filter;
 }
 
-/* A subtle background fade so it "appears first" */
+/* Background fade */
 .hero-desktop::before,
 .hero-mobile::before{
   content:"";
@@ -1741,36 +1678,34 @@ html{ -webkit-text-size-adjust: 100%; }
   inset:0;
   opacity: 0;
   pointer-events:none;
-  /* Mirror your pastel gradient so it can fade in */
   background: linear-gradient(90deg, #fff5af 0%, #ffd0d3 50%, #ffadf6 100%);
-  z-index: 0; /* sits under the images */
+  z-index: 0;
 }
 .hero-desktop{ position: relative; }
 .hero-mobile { position: relative; }
 
-/* When JS toggles the 'is-playing' class, run the sequence */
+/* When JS toggles 'is-playing', run the sequence */
 .hero-desktop.is-playing::before,
 .hero-mobile.is-playing::before{
   animation: jj-bg-in .8s ease-out forwards;
 }
 
 /* Lotus "bloom" (scale + soft overshoot + glow) */
-.hero-desktop.is-playing .hero-lotus,
-.hero-mobile.is-playing .logo-mobile{
+.hero-desktop.is-playing .hero-lotus{
   animation:
     jj-bloom 900ms cubic-bezier(.22,.9,.18,1.08) 0.35s forwards,
-    jj-float  6s ease-in-out 1.4s infinite alternate; /* optional gentle float */
+    jj-float  6s ease-in-out 1.4s infinite alternate;
 }
 
 /* Title fades in and rises */
 .hero-desktop.is-playing .hero-title,
-.hero-mobile.is-playing .text-mobile{
+.hero-mobile.is-playing .hero-title{
   animation: jj-fade-up .7s ease-out .95s forwards;
 }
 
 /* Tagline follows last */
 .hero-desktop.is-playing .hero-quote,
-.hero-mobile.is-playing .tagline-mobile{
+.hero-mobile.is-playing .hero-quote{
   animation: jj-fade-up .7s ease-out 1.25s forwards;
 }
 
@@ -1788,27 +1723,18 @@ html{ -webkit-text-size-adjust: 100%; }
   from{ opacity:0; transform: translateY(10px); }
   to  { opacity:1; transform: translateY(0); }
 }
-/* Optional gentle float after the bloom completes */
 @keyframes jj-float{
   from{ transform: translateY(0)   scale(1); }
   to  { transform: translateY(-4px) scale(1.005); }
 }
 
-/* Layering: images above the background fade */
-.hero-desktop .hero-inner,
-.hero-mobile{
-  position: relative;
-  z-index: 1;
-}
-
 /* Respect reduced motion */
 @media (prefers-reduced-motion: reduce){
+  [data-aos],
   .hero-desktop::before,
   .hero-mobile::before,
   .hero-desktop .hero-piece,
-  .hero-mobile .logo-mobile,
-  .hero-mobile .text-mobile,
-  .hero-mobile .tagline-mobile{
+  .hero-mobile .hero-piece{
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
@@ -1816,40 +1742,12 @@ html{ -webkit-text-size-adjust: 100%; }
   }
 }
 
-/* Size the hero video like the old lotus */
-.hero-video{
-  width: clamp(480px, 55vw, 900px);
-  height: auto;
-  display:block;
-  border: none;
-  outline: none;
-  background: transparent;
-  /* Keep its own aspect clean */
-  object-fit: contain;
-}
+/* ================= Mobile Hero (FIXED) ================= */
 
-/* Make sure the hero sequencing doesn't animate the video */
-.hero-desktop .hero-video{
-  opacity: 1;               /* visible immediately */
-  transform: none;          /* no translate/scale */
-  filter: none;
-}
-
-/* If your generic "pieces" start hidden, override only for the video */
-.hero-desktop .hero-piece.hero-video{
-  opacity: 1 !important;
-  transform: none !important;
-}
-
-/* Ensure the hero playing state never targets the video with bloom/float */
-.hero-desktop.is-playing .hero-video{
-  animation: none !important;
-}
-
-/* Mobile hero layout stays the same */
+/* Base container (hidden on desktop) */
 .hero-mobile {
-  display: none;
-  position: relative;
+  display: none; 
+  position: relative;            /* positioning context for the overlaying animation */
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -1857,100 +1755,79 @@ html{ -webkit-text-size-adjust: 100%; }
   text-align: center;
   background: linear-gradient(to right, #fff5af, #ffd0d3, #ffadf6);
 }
-
 @media (max-width:768px){
   .hero-mobile{ display:flex; }
 }
 
-/* Mobile lotus + pieces sizing to mirror desktop vibe */
+/* Mobile lotus sizing to mirror vibe */
 .hero-mobile .hero-lotus{
   width: clamp(240px, 78vw, 520px);
   height: auto;
   margin-top: -18px;
 }
-
-.hero-mobile .hero-anim{
-  /* make the animated lotus just a hair bigger on mobile too */
-  width: clamp(400px, 100vw, 700px);
-}
-
 .hero-mobile .hero-static{
   width: clamp(240px, 78vw, 520px);
   margin-top: -26px;
   margin-bottom: 6px;
 }
-
 .hero-mobile .hero-title{
   width: clamp(200px, 58vw, 360px);
   margin-top: clamp(2px, 0.6vh, 10px);
 }
-
 .hero-mobile .hero-quote{
   width: clamp(300px, 86vw, 700px);
   margin-top: clamp(6px, 1.2vh, 14px);
   opacity: .95;
 }
 
-/* Intro-only nudges for mobile (affect animation phase only) */
-.hero-mobile.is-playing:not(.intro-done) .hero-anim{
-  position: relative;
-  left: 6px;           /* tiny nudge to the right */
-  margin-top: -10px;   /* tiny lift */
+/* Center the animated lotus as an overlay and crossfade to static */
+#lotusStaticM{
+  display: block;               /* keeps layout height so nothing jumps */
+  opacity: 0;                   /* start hidden; JS adds .is-on */
+  transition: opacity .35s ease;
 }
-.hero-mobile.is-playing:not(.intro-done) .hero-title{
-  margin-top: calc(clamp(2px, 0.6vh, 10px) - 8px); /* slight lift */
+#lotusAnimM{
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%) !important;  /* overrides global .hero-anim transform */
+  top: 0;
+  margin-top: -26px;            /* align with static’s offset */
+  z-index: 2;
+  width: clamp(240px, 78vw, 520px); /* match static width */
+  height: auto;
+  opacity: 0;                   /* JS toggles these classes */
+  visibility: hidden;
+  transition: opacity .35s ease;
+}
+/* Crossfade helpers toggled by JS */
+#lotusAnimM.is-on { opacity: 1; visibility: visible; }
+#lotusAnimM.is-off{ opacity: 0; }
+#lotusStaticM.is-on{ opacity: 1; }
+
+/* Re-enable the bloom motion on mobile despite the global .hero-anim rule */
+.hero-mobile.is-playing #lotusAnimM{
+  animation:
+    jj-bloom 900ms cubic-bezier(.22,.9,.18,1.08) 0.35s forwards,
+    jj-float  6s ease-in-out 1.4s infinite alternate !important;
 }
 
-/* Reuse your staged entry sequence for mobile with the same classes */
+/* Neutralize the small mobile “nudge” so centering stays perfect */
+.hero-mobile.is-playing:not(.intro-done) #lotusAnimM{
+  position: absolute !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  margin-top: -26px !important;
+}
+
+/* Stage in title + tagline on mobile */
 .hero-mobile .hero-piece{
   opacity: 0;
   transform: translateY(8px);
   will-change: opacity, transform, filter;
 }
+.hero-mobile.is-playing .hero-title{ animation: jj-fade-up .7s ease-out .95s forwards; }
+.hero-mobile.is-playing .hero-quote{ animation: jj-fade-up .7s ease-out 1.25s forwards; }
 
-/* Fade-in of background */
-.hero-mobile::before{
-  content:"";
-  position:absolute; inset:0;
-  opacity:0; pointer-events:none;
-  background: linear-gradient(90deg, #fff5af 0%, #ffd0d3 50%, #ffadf6 100%);
-  z-index:0;
-}
-.hero-mobile.is-playing::before{
-  animation: jj-bg-in .8s ease-out forwards;
-}
-
-/* Mobile sequence: lotus bloom then float, then title, then tagline */
-.hero-mobile.is-playing .hero-lotus{
-  animation:
-    jj-bloom 900ms cubic-bezier(.22,.9,.18,1.08) 0.35s forwards,
-    jj-float  6s ease-in-out 1.4s infinite alternate;
-}
-.hero-mobile.is-playing .hero-title{
-  animation: jj-fade-up .7s ease-out .95s forwards;
-}
-.hero-mobile.is-playing .hero-quote{
-  animation: jj-fade-up .7s ease-out 1.25s forwards;
-}
-
-/* (Uses your existing @keyframes: jj-bg-in, jj-bloom, jj-fade-up, jj-float) */
-
-/* Animated: sits ON TOP of the static, no layout space */
-#lotusAnimM {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  top: 0;
-  z-index: 2;
-  opacity: 0;                 /* we’ll fade it in */
-  visibility: hidden;
-  transition: opacity .35s ease;
-}
-
-/* Crossfade helpers */
-#lotusAnimM.is-on { opacity: 1; visibility: visible; }
-#lotusAnimM.is-off { opacity: 0; }
-#lotusStaticM.is-on { opacity: 1; }
 
 
 
