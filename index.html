@@ -1190,7 +1190,7 @@ if (HOVER_DEVICE.matches) {
     </script>
 
     <script>
-/* Desktop tap support: second tap closes the same dropdown */
+/* Desktop click/tap: second tap on the same title closes it */
 (function(){
   const XL_UP = window.matchMedia('(min-width: 1200px)');
   const nav = document.getElementById('siteNav');
@@ -1201,8 +1201,8 @@ if (HOVER_DEVICE.matches) {
   function closeOthers(except){
     nav.querySelectorAll('.nav-item.dropdown.show').forEach(li=>{
       if (li !== except){
-        const a = li.querySelector(':scope > a.dropdown-toggle');
-        const dd = bootstrap.Dropdown.getOrCreateInstance(a);
+        const a  = li.querySelector(':scope > a.dropdown-toggle');
+        const dd = bootstrap.Dropdown.getOrCreateInstance(a, {autoClose:'outside'});
         dd.hide();
       }
     });
@@ -1210,22 +1210,21 @@ if (HOVER_DEVICE.matches) {
 
   toggles.forEach(a=>{
     a.addEventListener('click', function(e){
-      if (!XL_UP.matches) return;              // mobile already handled by your script
+      if (!XL_UP.matches) return;        // mobile already handled by your main script
       e.preventDefault();
       e.stopPropagation();
+      e.stopImmediatePropagation?.();
 
       const li = this.closest('.nav-item.dropdown');
-      const dd = bootstrap.Dropdown.getOrCreateInstance(this, { autoClose: 'outside' });
+      const dd = bootstrap.Dropdown.getOrCreateInstance(this, {autoClose:'outside'});
 
       if (li.classList.contains('show')) {
-        // second tap on the same item → close it
-        dd.hide();
+        dd.hide();                        // second tap → close
       } else {
-        // open this one and close any others
-        closeOthers(li);
+        closeOthers(li);                  // open this and close others
         dd.show();
       }
-    }, true); // capture to beat Bootstrap’s default click
+    }, true); // capture so we run before Bootstrap's default
   });
 })();
 </script>

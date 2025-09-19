@@ -279,9 +279,6 @@ header, .hero-wrap { margin-top: 0 !important; }
 }
 .dropdown-submenu > a[aria-expanded="true"]::after{ transform: rotate(90deg); }
 
-/* Show mega on hover for pointer devices */
-@media (hover:hover){ .dropdown:hover > .dropdown-menu.dropdown-mega{ display:block; } }
-
 /* Mobile: submenus become accordions */
 @media (max-width:1199.98px){
   .dropdown-mega{ min-width:100%; }
