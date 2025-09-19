@@ -4083,7 +4083,7 @@ color: #7b7b7b;
   color: #fff;               /* arrow color */
 
   border-radius: 6px 0 0 6px; /* rounded left side */
-  width: 36px;               /* narrower width */
+  width: 26px;               /* narrower width */
   height: 48px;              /* shorter height */
 
   display: flex;
