@@ -1190,48 +1190,44 @@ if (HOVER_DEVICE.matches) {
     </script>
 
     <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const nav = document.getElementById("siteNav"); // adjust if your nav ID differs
-  const dropdownLinks = nav.querySelectorAll(".nav-item.dropdown > a");
+/* Desktop tap support: second tap closes the same dropdown */
+(function(){
+  const XL_UP = window.matchMedia('(min-width: 1200px)');
+  const nav = document.getElementById('siteNav');
+  if (!nav) return;
 
-  dropdownLinks.forEach(link => {
-    link.addEventListener("click", function (e) {
-      const parent = this.parentElement;
+  const toggles = nav.querySelectorAll('.nav-item.dropdown > a.dropdown-toggle');
 
-      // If this dropdown is already open, close it on second tap
-      if (parent.classList.contains("show")) {
-        e.preventDefault();
-        parent.classList.remove("show");
-        const menu = parent.querySelector(".dropdown-menu.show");
-        if (menu) menu.classList.remove("show");
-      } else {
-        // Close any other open dropdowns first
-        nav.querySelectorAll(".nav-item.dropdown.show").forEach(openItem => {
-          openItem.classList.remove("show");
-          const openMenu = openItem.querySelector(".dropdown-menu.show");
-          if (openMenu) openMenu.classList.remove("show");
-        });
-
-        // Then open this one
-        e.preventDefault();
-        parent.classList.add("show");
-        const menu = parent.querySelector(".dropdown-menu");
-        if (menu) menu.classList.add("show");
+  function closeOthers(except){
+    nav.querySelectorAll('.nav-item.dropdown.show').forEach(li=>{
+      if (li !== except){
+        const a = li.querySelector(':scope > a.dropdown-toggle');
+        const dd = bootstrap.Dropdown.getOrCreateInstance(a);
+        dd.hide();
       }
     });
-  });
+  }
 
-  // Optional: close dropdowns if you tap outside nav
-  document.addEventListener("click", function (e) {
-    if (!nav.contains(e.target)) {
-      nav.querySelectorAll(".nav-item.dropdown.show").forEach(openItem => {
-        openItem.classList.remove("show");
-        const menu = openItem.querySelector(".dropdown-menu.show");
-        if (menu) menu.classList.remove("show");
-      });
-    }
+  toggles.forEach(a=>{
+    a.addEventListener('click', function(e){
+      if (!XL_UP.matches) return;              // mobile already handled by your script
+      e.preventDefault();
+      e.stopPropagation();
+
+      const li = this.closest('.nav-item.dropdown');
+      const dd = bootstrap.Dropdown.getOrCreateInstance(this, { autoClose: 'outside' });
+
+      if (li.classList.contains('show')) {
+        // second tap on the same item → close it
+        dd.hide();
+      } else {
+        // open this one and close any others
+        closeOthers(li);
+        dd.show();
+      }
+    }, true); // capture to beat Bootstrap’s default click
   });
-});
+})();
 </script>
 
 
