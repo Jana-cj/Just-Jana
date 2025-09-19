@@ -4051,14 +4051,14 @@ color: #7b7b7b;
 
   
 /* ================================
-   Back-to-top button (rectangular side tab)
+   Back-to-top button (slim rectangular side tab)
    ================================ */
 
 .back-top {
   position: fixed;
-  bottom: 80px;             /* lower position, adjust as you like */
-  right: 0;                 /* stick to right edge */
-  transform: translateX(100%); /* start off-screen to the right */
+  bottom: 64px;              /* lower position */
+  right: 0;                  /* stick to right edge */
+  transform: translateX(100%); /* start off-screen */
   z-index: 9999;
 
   opacity: 0;
@@ -4079,27 +4079,27 @@ color: #7b7b7b;
   --jj-top-hover: #8a5d72; /* darker on hover/tap */
 
   border: none;
-  background: var(--jj-top); /* filled background, always visible */
-  color: #fff;               /* white arrow for contrast */
+  background: var(--jj-top); /* filled background */
+  color: #fff;               /* arrow color */
 
-  border-radius: 6px 0 0 6px; /* rounded left side only */
-  width: 44px; 
-  height: 60px;              /* small rectangle */
+  border-radius: 6px 0 0 6px; /* rounded left side */
+  width: 36px;               /* narrower width */
+  height: 48px;              /* shorter height */
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  font-size: 20px;
+  font-size: 18px;           /* slightly smaller arrow */
   line-height: 1;
   cursor: pointer;
-  transition: background .18s ease, color .18s ease, transform .18s ease;
+  transition: background .18s ease, transform .18s ease;
 }
 
 /* Hover/focus state */
 .back-top .jj-top-btn:hover,
 .back-top .jj-top-btn:focus-visible {
-  background: var(--jj-top-hover); /* darker background */
+  background: var(--jj-top-hover); /* darker */
   color: #fff;
 }
 
