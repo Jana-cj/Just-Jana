@@ -1031,16 +1031,52 @@
     });
   });
 
-  // Back to top
-  const toTopBtn = document.getElementById('toTopBtn');
-  if (toTopBtn) {
-    toTopBtn.addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
+  const wrap = document.querySelector('.back-top');
+  if (!wrap) return;
+
+  const SHOW_AFTER = 400; // px scrolled before showing
+
+  function updateVisibility() {
+    const y = window.pageYOffset || document.documentElement.scrollTop || 0;
+    const shouldShow = y > SHOW_AFTER;
+    wrap.classList.toggle('is-visible', shouldShow);
   }
 
-  // Adjust initial hash on load
-  if(location.hash){
-    setTimeout(()=> scrollWithOffset(location.hash), 50);
+  // Show/hide on scroll + after load
+  window.addEventListener('scroll', updateVisibility, { passive: true });
+  window.addEventListener('load', updateVisibility);
+
+  // Optional: lift above footer when footer comes into view
+  const footer = document.querySelector('.site-footer');
+  if ('IntersectionObserver' in window && footer) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        // If any part of the footer is visible, lift the button
+        wrap.classList.toggle('lift', entry.isIntersecting);
+      });
+    }, { root: null, threshold: 0, rootMargin: '0px 0px -20% 0px' });
+    io.observe(footer);
   }
+
+  // Click handler (works with your nav lock logic)
+  document.addEventListener('click', function (e) {
+    const btn = e.target.closest('#toTopBtn');
+    if (!btn) return;
+    e.preventDefault();
+
+    // Close mobile nav if open so scrolling is allowed
+    const collapseEl = document.getElementById('navbarSupportedContent');
+    if (collapseEl && collapseEl.classList.contains('show')) {
+      bootstrap.Collapse.getOrCreateInstance(collapseEl).hide();
+    }
+    document.body.classList.remove('nav-open');
+    document.documentElement.style.overflow = '';
+    document.body.style.overflow = '';
+
+    const scroller = document.scrollingElement || document.documentElement;
+    const smoothOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    scroller.scrollTo({ top: 0, behavior: smoothOK ? 'smooth' : 'auto' });
+  }, { passive: false });
 })();
 
      </script>
