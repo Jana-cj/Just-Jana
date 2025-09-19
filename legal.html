@@ -15,7 +15,7 @@
 
     <!-- Font-->
     <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Lato:wght@400;500;700&family=Poppins:wght@400;500;600&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     
@@ -25,14 +25,12 @@
     <!-- Favicon icon -->
     <link rel="shortcut icon" type="image/png" href="img/Logos/favicon.png">
 
-    <!-- Preload desktop hero image -->
-    <link rel="preload" as="image" href="img/Main banners/compositions banner.jpg">
-
     <!-- Reference to CSS file -->
     <link rel="stylesheet" type="text/css" href="CSS/index stylesheet.css">
 
 </head>
-<body>
+<body class="legal-page">
+
 
   
   <header>
@@ -351,7 +349,7 @@
       </div>
     </header>
 
-    <main>
+    
 
 <!-- Header / hero -->
   <header class="legal-hero">
@@ -1008,9 +1006,10 @@
     window.scrollTo({top:y, behavior:'smooth'});
   }
 
-  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  document.querySelectorAll('.toc a[href^="#"], .policy-section a[href^="#"]').forEach(a=>{
     a.addEventListener('click', function(e){
       const id = this.getAttribute('href');
+
       if(id && id.length > 1){
         e.preventDefault();
         scrollWithOffset(id);
