@@ -4394,7 +4394,24 @@ font-family: 'Georgia', serif;
 @media (max-width: 991.98px){
   .legal-page .legal-hero h1{ 
     margin-top: 3vh; 
-    text-align: left;
-    margin-left: 15px;}
+    text-align: left;}
+
+/* Legal hero: slightly shorter on mobile */
+@media (max-width: 991.98px){
+  .legal-page .legal-hero{
+    /* reduce vertical space of the gradient header */
+    padding-top: clamp(20px, 6vh, 40px);
+    padding-bottom: clamp(12px, 3.5vh, 28px);
+  }
+  /* spacing for the meta row under the title */
+  .legal-page .legal-meta{
+    margin-top: 6px;
+    margin-bottom: 18px; /* space before “On this page …” */
+    text-align: center;
+  }
+}
+
+
+  
   
 }
