@@ -4072,6 +4072,27 @@ color: #7b7b7b;
   transform: translateY(1px);
 }
 
+/* Smooth reveal/hide */
+.back-top{
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity .18s ease, transform .18s ease, visibility 0s linear .18s;
+}
+
+.back-top.is-visible{
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: opacity .18s ease, transform .18s ease;
+}
+
+/* When footer is in view, lift the button so it doesn't cover it */
+.back-top.lift{
+  bottom: 96px; /* was 16px; adjust if you want it higher/lower */
+}
+
+
 
 /* Footer */
 .site-footer {
@@ -4362,30 +4383,6 @@ font-family: 'Georgia', serif;
 .legal-page .anchor-offset{
   scroll-margin-top: var(--jj-anchor-offset, 90px);
 }
-
-/* Back-to-top button */
-.legal-page.back-top .jj-top-btn{
-  --jj-top: #b38398;
-  --jj-top-hover: #cfadc0;
-  border: 2px solid var(--jj-top);
-  background: transparent;
-  color: #fff;
-  border-radius: 999px;
-  min-width: 40px; min-height: 40px;
-  line-height: 1; padding: 6px 10px;
-  box-shadow: none;
-}
-.legal-page.back-top .jj-top-btn:hover,
-.legal-page.back-top .jj-top-btn:focus-visible{
-  border-color: var(--jj-top-hover);
-  color: var(--jj-top-hover);
-  background: transparent;
-  box-shadow: 0 0 0 3px rgba(179,131,152,.18); /* optional */
-}
-.legal-page.back-top .jj-top-btn:active{
-  transform: translateY(1px);
-}
-
 
 @media (max-width: 991.98px){
   .legal-page .toc{ 

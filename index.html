@@ -1606,32 +1606,57 @@ document.addEventListener('DOMContentLoaded', async () => {
 </script>
 
 <!-- back to top button -->
- <script>
+<script>
 (function () {
-  // Delegate so it works even if the button is injected later
+  const wrap = document.querySelector('.back-top');
+  if (!wrap) return;
+
+  const SHOW_AFTER = 400; // px scrolled before showing
+
+  function updateVisibility() {
+    const y = window.pageYOffset || document.documentElement.scrollTop || 0;
+    const shouldShow = y > SHOW_AFTER;
+    wrap.classList.toggle('is-visible', shouldShow);
+  }
+
+  // Show/hide on scroll + after load
+  window.addEventListener('scroll', updateVisibility, { passive: true });
+  window.addEventListener('load', updateVisibility);
+
+  // Optional: lift above footer when footer comes into view
+  const footer = document.querySelector('.site-footer');
+  if ('IntersectionObserver' in window && footer) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        // If any part of the footer is visible, lift the button
+        wrap.classList.toggle('lift', entry.isIntersecting);
+      });
+    }, { root: null, threshold: 0, rootMargin: '0px 0px -20% 0px' });
+    io.observe(footer);
+  }
+
+  // Click handler (works with your nav lock logic)
   document.addEventListener('click', function (e) {
     const btn = e.target.closest('#toTopBtn');
     if (!btn) return;
-
     e.preventDefault();
 
-    // If the mobile nav is open, close it so the page can scroll
+    // Close mobile nav if open so scrolling is allowed
     const collapseEl = document.getElementById('navbarSupportedContent');
     if (collapseEl && collapseEl.classList.contains('show')) {
       bootstrap.Collapse.getOrCreateInstance(collapseEl).hide();
     }
-    // Ensure body is unlocked (your nav script locks it)
     document.body.classList.remove('nav-open');
     document.documentElement.style.overflow = '';
     document.body.style.overflow = '';
 
-    // Scroll the document root
     const scroller = document.scrollingElement || document.documentElement;
     const smoothOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     scroller.scrollTo({ top: 0, behavior: smoothOK ? 'smooth' : 'auto' });
   }, { passive: false });
 })();
 </script>
+
 
 
 
