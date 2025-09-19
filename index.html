@@ -1606,6 +1606,33 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 </script>
 
+<!-- back to top button -->
+ <script>
+(function () {
+  // Delegate so it works even if the button is injected later
+  document.addEventListener('click', function (e) {
+    const btn = e.target.closest('#toTopBtn');
+    if (!btn) return;
+
+    e.preventDefault();
+
+    // If the mobile nav is open, close it so the page can scroll
+    const collapseEl = document.getElementById('navbarSupportedContent');
+    if (collapseEl && collapseEl.classList.contains('show')) {
+      bootstrap.Collapse.getOrCreateInstance(collapseEl).hide();
+    }
+    // Ensure body is unlocked (your nav script locks it)
+    document.body.classList.remove('nav-open');
+    document.documentElement.style.overflow = '';
+    document.body.style.overflow = '';
+
+    // Scroll the document root
+    const scroller = document.scrollingElement || document.documentElement;
+    const smoothOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    scroller.scrollTo({ top: 0, behavior: smoothOK ? 'smooth' : 'auto' });
+  }, { passive: false });
+})();
+</script>
 
 
 
