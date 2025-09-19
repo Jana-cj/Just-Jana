@@ -1670,7 +1670,7 @@ html{ -webkit-text-size-adjust: 100%; }
 .hero-quote{
   width: clamp(340px, 46vw, 820px);
   height:auto;
-  margin-top: clamp(8px, 1.5vh, 10px);
+  margin-top: clamp(8px, 1.5vh, 8px);
   opacity: .95;
 }
 
