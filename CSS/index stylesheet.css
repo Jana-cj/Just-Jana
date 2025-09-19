@@ -4076,7 +4076,7 @@ color: #7b7b7b;
 /* Button styling */
 .back-top .jj-top-btn {
   --jj-top: #d1bac4;       /* normal color */
-  --jj-top-hover: #a3798d; /* darker on hover/tap */
+  --jj-top-hover: #ad8d9d; /* darker on hover/tap */
 
   border: none;
   background: var(--jj-top); /* filled background */
