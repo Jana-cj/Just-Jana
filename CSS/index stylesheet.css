@@ -1353,11 +1353,7 @@ body.nav-open{
 .jj-nav-search-btn:focus-visible{ box-shadow:0 10px 22px rgba(179,131,152,.22); }
 .jj-nav-search-btn:active{ transform: translateY(1px); }
 
-@media (max-width: 575.98px){
-  .jj-nav-search-btn {
-    transform: translateY(-3px); /* adjust value to taste */
-  }
-}
+
 
 /* Width behavior */
 @media (min-width:1200px){
