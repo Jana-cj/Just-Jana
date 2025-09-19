@@ -701,17 +701,31 @@ body.nav-open{
   }
 }
 
-/* Force dropdowns to stay opaque on desktop */
-@media (min-width:1200px) {
-  .dropdown-menu,
-  .dropdown-menu.jj-surface,
-  .dropdown-menu.dropdown-mega,
-  .dropdown-submenu > .dropdown-menu {
-    background: #fff !important;   /* solid white */
+/* === Mega menu stacking fix (desktop) === */
+@media (min-width:1200px){
+  /* 1) Kill stacking contexts on columns */
+  .dropdown-menu.dropdown-mega .mega-col{
+    z-index: auto !important;            /* was 1 */
+  }
+  /* and do NOT raise them on hover */
+  @supports(selector(:has(*))){
+    .dropdown-menu.dropdown-mega .mega-col:hover,
+    .dropdown-menu.dropdown-mega .mega-col:has(.dropdown-submenu:hover),
+    .dropdown-menu.dropdown-mega .mega-col:has(.dropdown-menu:hover){
+      z-index: auto !important;          /* was 100 */
+    }
+  }
+  /* 2) The fly-out submenu sits above everything and stays solid */
+  .dropdown-menu.dropdown-mega .dropdown-submenu > .dropdown-menu{
+    position: absolute !important;
+    z-index: 1000;                        /* enough now that columns have no z-index */
+    background: #fff !important;
+    opacity: 1 !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-    opacity: 1 !important;
   }
+  /* (optional) if you want the base mega panel to create a clean layer */
+  .dropdown-menu.dropdown-mega{ isolation: isolate; }
 }
 
 /* SUBMENUS (accordion-like on mobile) */
