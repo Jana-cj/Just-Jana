@@ -822,50 +822,54 @@
     topItems.forEach(li => { if (li !== exceptLi) forceHideItem(li); });
   }
 
-  // --- Desktop hover + click behavior for top-level dropdowns (CORRECTED) ---
-  if (HOVER_DEVICE.matches) {
-    topItems.forEach(li => {
-      const t = li.querySelector(':scope > a.dropdown-toggle');
+// --- Desktop hover + click behavior for top-level dropdowns ---
+if (HOVER_DEVICE.matches) {
+  topItems.forEach(li => {
+    const t = li.querySelector(':scope > a.dropdown-toggle');
+    const menu = li.querySelector(':scope > .dropdown-menu');
 
-      // Hover in → open, close siblings
-      li.addEventListener('mouseenter', () => {
-        if (!XL_UP.matches) return;
-        closeAllDropdowns(li);
-        if (t) bootstrap.Dropdown.getOrCreateInstance(t, { autoClose:'outside' }).show();
-      });
+    // Function to open
+    const open = () => {
+      closeAllDropdowns(li);
+      if (t) bootstrap.Dropdown.getOrCreateInstance(t, { autoClose: 'outside' }).show();
+    };
+    // Function to close
+    const close = () => {
+      if (t) bootstrap.Dropdown.getOrCreateInstance(t).hide();
+    };
 
-      // Hover out → close
-      li.addEventListener('mouseleave', () => {
-        if (!XL_UP.matches) return;
-        if (t) bootstrap.Dropdown.getOrCreateInstance(t).hide();
-      });
+    // Hover in/out
+    li.addEventListener('mouseenter', () => { if (XL_UP.matches) open(); });
+    li.addEventListener('mouseleave', () => { if (XL_UP.matches) close(); });
 
-      // Desktop click behaves like hover (toggle, no navigation)
-      if (t) {
-        t.addEventListener('click', (e) => {
-          if (!XL_UP.matches) return; // let mobile logic handle its own clicks
-          e.preventDefault();
-          e.stopPropagation();
-          const inst = bootstrap.Dropdown.getOrCreateInstance(t, { autoClose:'outside' });
-          const isOpen = li.classList.contains('show');
-          closeAllDropdowns(li);
-          isOpen ? inst.hide() : inst.show();
-        }, true);
-      }
-    });
+    // Desktop click should behave same as hover (toggle, not sticky)
+    if (t) {
+      t.addEventListener('click', (e) => {
+        if (!XL_UP.matches) return; // let mobile logic handle its own clicks
+        e.preventDefault();
+        e.stopPropagation();
+        if (li.classList.contains('show')) {
+          close();
+        } else {
+          open();
+        }
+      }, true);
+    }
+  });
 
-    // Leave the whole navbar → close everything
-    nav.addEventListener('mouseleave', () => {
-      if (!XL_UP.matches) return;
-      closeAllDropdowns();
-    });
+  // If the pointer leaves the whole navbar → close all
+  nav.addEventListener('mouseleave', () => {
+    if (!XL_UP.matches) return;
+    closeAllDropdowns();
+  });
 
-    // Click outside navbar on desktop → close everything
-    document.addEventListener('click', (e) => {
-      if (!XL_UP.matches) return;
-      if (!nav.contains(e.target)) closeAllDropdowns();
-    }, { capture: true });
-  }
+  // Clicking anywhere outside navbar → close all
+  document.addEventListener('click', (e) => {
+    if (!XL_UP.matches) return;
+    if (!nav.contains(e.target)) closeAllDropdowns();
+  }, { capture: true });
+}
+
 
   function disableBootstrapOnMobile(){
     topToggles.forEach(t=>{
