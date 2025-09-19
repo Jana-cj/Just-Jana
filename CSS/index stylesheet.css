@@ -1356,7 +1356,7 @@ body.nav-open{
 @media (max-width: 575.98px){
   .jj-nav-search-btn {
     margin-top: 0.1px; /* adjust value (2–4px) to taste */
-    transform: translateY(1px); 
+    transform: translateY(-2px); 
   }
 }
 
