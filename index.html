@@ -1189,45 +1189,7 @@ if (HOVER_DEVICE.matches) {
       })();
     </script>
 
-    <script>
-/* Desktop click/tap: second tap on the same title closes it */
-(function(){
-  const XL_UP = window.matchMedia('(min-width: 1200px)');
-  const nav = document.getElementById('siteNav');
-  if (!nav) return;
 
-  const toggles = nav.querySelectorAll('.nav-item.dropdown > a.dropdown-toggle');
-
-  function closeOthers(except){
-    nav.querySelectorAll('.nav-item.dropdown.show').forEach(li=>{
-      if (li !== except){
-        const a  = li.querySelector(':scope > a.dropdown-toggle');
-        const dd = bootstrap.Dropdown.getOrCreateInstance(a, {autoClose:'outside'});
-        dd.hide();
-      }
-    });
-  }
-
-  toggles.forEach(a=>{
-    a.addEventListener('click', function(e){
-      if (!XL_UP.matches) return;        // mobile already handled by your main script
-      e.preventDefault();
-      e.stopPropagation();
-      e.stopImmediatePropagation?.();
-
-      const li = this.closest('.nav-item.dropdown');
-      const dd = bootstrap.Dropdown.getOrCreateInstance(this, {autoClose:'outside'});
-
-      if (li.classList.contains('show')) {
-        dd.hide();                        // second tap → close
-      } else {
-        closeOthers(li);                  // open this and close others
-        dd.show();
-      }
-    }, true); // capture so we run before Bootstrap's default
-  });
-})();
-</script>
 
 
     <!-- extra space above hero image -->
