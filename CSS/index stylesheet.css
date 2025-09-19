@@ -4124,7 +4124,7 @@ color: #7b7b7b;
 /* Mobile override (adjust max-width to your breakpoint) */
 @media (max-width: 767.98px){
   .back-top{
-    right: 10px;   /* push further right */
+    right: -10px;   /* push further right */
     bottom: 16px;  /* keep same bottom spacing */
   }
 }
