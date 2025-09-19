@@ -701,30 +701,51 @@ body.nav-open{
   }
 }
 
-/* === Mega menu stacking fix (desktop) === */
+/* === Mega menu: keep fly-outs opaque no matter where the mouse is === */
 @media (min-width:1200px){
-  /* 1) Kill stacking contexts on columns */
+
+  /* 1) Default: don't let columns fight with z-index */
   .dropdown-menu.dropdown-mega .mega-col{
-    z-index: auto !important;            /* was 1 */
+    position: static;
+    z-index: auto !important;          /* reset any earlier lifts */
   }
-  /* and do NOT raise them on hover */
-  @supports(selector(:has(*))){
-    .dropdown-menu.dropdown-mega .mega-col:hover,
-    .dropdown-menu.dropdown-mega .mega-col:has(.dropdown-submenu:hover),
-    .dropdown-menu.dropdown-mega .mega-col:has(.dropdown-menu:hover){
-      z-index: auto !important;          /* was 100 */
-    }
+  .dropdown-menu.dropdown-mega .mega-col:hover{
+    z-index: auto !important;          /* no stacking bump on mere hover */
   }
-  /* 2) The fly-out submenu sits above everything and stays solid */
+
+  /* 2) The fly-out panel itself is always on top & solid */
   .dropdown-menu.dropdown-mega .dropdown-submenu > .dropdown-menu{
     position: absolute !important;
-    z-index: 1000;                        /* enough now that columns have no z-index */
-    background: #fff !important;
-    opacity: 1 !important;
+    top: 0;
+    left: 100%;
+    margin-left: 8px;
+    min-width: 220px;
+    z-index: 3000;                     /* above everything in the mega */
+    background: #fff !important;       /* solid, no glass */
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
+    opacity: 1 !important;
   }
-  /* (optional) if you want the base mega panel to create a clean layer */
+
+  /* 3) When a submenu is hovered/open, raise ONLY its owner column,
+        so the panel never sits under siblings—even while you're in that column */
+  @supports(selector(:has(*))){
+    .dropdown-menu.dropdown-mega .mega-col:has(.dropdown-submenu:hover),
+    .dropdown-menu.dropdown-mega .mega-col:has(.dropdown-submenu > .dropdown-menu.show){
+      position: relative;              /* create a stacking context */
+      z-index: 4000 !important;        /* higher than siblings */
+    }
+  }
+
+  /* 4) Optional: prevent the hover transform from creating weird stacking
+        while a submenu is open (keeps visuals identical) */
+  @supports(selector(:has(*))){
+    .dropdown-menu.dropdown-mega .mega-col:has(.dropdown-submenu > .dropdown-menu.show){
+      transform: none !important;      /* remove the tiny lift only while open */
+    }
+  }
+
+  /* (Nice-to-have) isolate the whole mega layer from the page below */
   .dropdown-menu.dropdown-mega{ isolation: isolate; }
 }
 
