@@ -4265,7 +4265,7 @@ font-family: 'Georgia', serif;
 
 /* Header */
 .legal-page .legal-hero{
-  background: linear-gradient(135deg, #f6ddbd 0%, #f6cecc 50%, #f5bfdd 100%);
+  background: linear-gradient(135deg, #fff8d0 0%, #ffe3e5 50%, #ffcef9 100%);
   padding: clamp(48px, 10vh, 120px) 0 clamp(24px, 6vh, 60px);
   border-bottom: 1px solid rgba(0,0,0,.08);
 }
