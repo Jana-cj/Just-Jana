@@ -1,0 +1,91 @@
+:root{
+  --jj-accent:#a94caf;
+  --jj-ink:#2a2438;
+  --jj-muted:#6b6877;
+  --jj-bg:#fff;
+  --jj-card:#ffffff;
+  --jj-border:rgba(0,0,0,.08);
+  --jj-anchor-offset: 96px; /* adjust if your fixed navbar height differs */
+}
+
+body{ color:var(--jj-ink); background:var(--jj-bg); }
+
+/* Header */
+.legal-hero{
+  background: linear-gradient(135deg, #f6ddbd 0%, #f6cecc 50%, #f5bfdd 100%);
+  padding: clamp(48px, 10vh, 120px) 0 clamp(24px, 6vh, 60px);
+  border-bottom: 1px solid var(--jj-border);
+}
+.legal-hero h1{
+  font-weight: 700;
+  letter-spacing: .2px;
+  margin: 0;
+}
+.legal-meta{
+  color: var(--jj-muted);
+  font-size: .95rem;
+}
+
+/* Layout */
+.legal-wrap{ padding: clamp(20px, 4vw, 40px) 0; }
+
+.toc{
+  position: sticky; top: var(--jj-anchor-offset);
+  border: 1px solid var(--jj-border);
+  border-radius: 12px;
+  background: var(--jj-card);
+  padding: 16px;
+}
+.toc .list-group-item{
+  border: 0; padding: 10px 8px;
+}
+.toc .list-group-item a{
+  text-decoration: none;
+  color: var(--jj-ink);
+  display: block;
+}
+.toc .list-group-item a:hover{ color: var(--jj-accent); }
+
+.policy-section{
+  border: 1px solid var(--jj-border);
+  border-radius: 16px;
+  background: var(--jj-card);
+  padding: clamp(18px, 2.4vw, 28px);
+  margin-bottom: 20px;
+}
+.policy-section h2{
+  font-size: clamp(1.25rem, 2.2vw, 1.6rem);
+  font-weight: 700;
+  margin-bottom: .5rem;
+}
+.policy-section h3{
+  font-size: clamp(1.05rem, 1.8vw, 1.2rem);
+  margin-top: 1rem;
+}
+.policy-section p, .policy-section li{
+  line-height: 1.65;
+}
+
+.note{
+  background: rgba(169,76,175,.06);
+  border: 1px solid rgba(169,76,175,.18);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: .96rem;
+}
+
+/* Prevent headings from hiding under a fixed navbar on anchor jump */
+.anchor-offset{
+  scroll-margin-top: var(--jj-anchor-offset);
+}
+
+/* Back to top */
+.back-top{
+  position: fixed; right: 16px; bottom: 16px;
+  z-index: 1000;
+}
+.back-top .btn{ border-radius: 999px; }
+
+@media (max-width: 991.98px){
+  .toc{ position: static; margin-bottom: 18px; }
+}
