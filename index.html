@@ -1581,22 +1581,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 </script>
 
 
-<script>
-(function(){
-  function play(){
-    const isMobile = matchMedia('(max-width:768px)').matches;
-    const desk = document.querySelector('.hero-desktop');
-    const mob  = document.querySelector('.hero-mobile');
-    if (!isMobile && desk) desk.classList.add('is-playing');
-    if ( isMobile && mob)  mob.classList.add('is-playing');
-  }
-  if (document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', () => setTimeout(play, 30));
-  } else {
-    setTimeout(play, 30);
-  }
-})();
-</script>
 
 
   </body>

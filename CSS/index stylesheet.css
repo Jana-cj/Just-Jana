@@ -1787,19 +1787,6 @@ html{ -webkit-text-size-adjust: 100%; }
   }
 }
 
-/* Default: hide mobile hero */
-.hero-mobile { display: none; }
-
-/* Mobile: show mobile hero and hide desktop hero */
-@media (max-width: 768px){
-  .hero-mobile { display: block; }
-  .hero-desktop { display: none; }
-}
-
-/* (Optional) Desktop: make sure mobile hero stays hidden */
-@media (min-width: 769px){
-  .hero-mobile { display: none; }
-}
 
 
 /* ================= Mobile Hero (centered anim → static) ================= */
