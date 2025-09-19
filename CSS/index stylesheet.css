@@ -4405,9 +4405,9 @@ font-family: 'Georgia', serif;
   }
   /* spacing for the meta row under the title */
   .legal-page .legal-meta{
-    margin-top: 6px;
-    margin-bottom: 18px; /* space before “On this page …” */
-    text-align: center;
+    margin-top: 3px;
+    margin-bottom: 50px; /* space before “On this page …” */
+    text-align: left;
   }
 }
 
