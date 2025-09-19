@@ -1189,6 +1189,52 @@ if (HOVER_DEVICE.matches) {
       })();
     </script>
 
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const nav = document.getElementById("siteNav"); // adjust if your nav ID differs
+  const dropdownLinks = nav.querySelectorAll(".nav-item.dropdown > a");
+
+  dropdownLinks.forEach(link => {
+    link.addEventListener("click", function (e) {
+      const parent = this.parentElement;
+
+      // If this dropdown is already open, close it on second tap
+      if (parent.classList.contains("show")) {
+        e.preventDefault();
+        parent.classList.remove("show");
+        const menu = parent.querySelector(".dropdown-menu.show");
+        if (menu) menu.classList.remove("show");
+      } else {
+        // Close any other open dropdowns first
+        nav.querySelectorAll(".nav-item.dropdown.show").forEach(openItem => {
+          openItem.classList.remove("show");
+          const openMenu = openItem.querySelector(".dropdown-menu.show");
+          if (openMenu) openMenu.classList.remove("show");
+        });
+
+        // Then open this one
+        e.preventDefault();
+        parent.classList.add("show");
+        const menu = parent.querySelector(".dropdown-menu");
+        if (menu) menu.classList.add("show");
+      }
+    });
+  });
+
+  // Optional: close dropdowns if you tap outside nav
+  document.addEventListener("click", function (e) {
+    if (!nav.contains(e.target)) {
+      nav.querySelectorAll(".nav-item.dropdown.show").forEach(openItem => {
+        openItem.classList.remove("show");
+        const menu = openItem.querySelector(".dropdown-menu.show");
+        if (menu) menu.classList.remove("show");
+      });
+    }
+  });
+});
+</script>
+
+
     <!-- extra space above hero image -->
 
 <script>
