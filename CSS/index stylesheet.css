@@ -4293,9 +4293,11 @@ font-family: 'Georgia', serif;
     white-space: nowrap;
   }
 }
- .mb-2 {
-  color: #666666;
- }
+
+.footer-links {
+  color: #676666
+}
+
 
 /* ===========================
    Legal Page (scoped styles)
