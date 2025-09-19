@@ -701,6 +701,19 @@ body.nav-open{
   }
 }
 
+/* Force dropdowns to stay opaque on desktop */
+@media (min-width:1200px) {
+  .dropdown-menu,
+  .dropdown-menu.jj-surface,
+  .dropdown-menu.dropdown-mega,
+  .dropdown-submenu > .dropdown-menu {
+    background: #fff !important;   /* solid white */
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    opacity: 1 !important;
+  }
+}
+
 /* SUBMENUS (accordion-like on mobile) */
 @media (max-width:1199.98px){
   .dropdown-submenu > .submenu-toggle{
