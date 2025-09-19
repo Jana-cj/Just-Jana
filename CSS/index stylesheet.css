@@ -124,6 +124,40 @@ header, .hero-wrap { margin-top: 0 !important; }
   transform: scaleX(1);
 }
 
+/* Desktop (hover devices): underline ONLY while the mouse is inside the navbar */
+@media (hover:hover) and (min-width:1200px){
+  /* Default: hide underline */
+  #siteNav .nav-link::after,
+  #siteNav .nav-link::before{
+    transform: scaleX(0);
+  }
+
+  /* Show underline while actively hovering a topic inside the navbar */
+  #siteNav:hover .nav-link:hover::after,
+  #siteNav:hover .nav-link:hover::before{
+    transform: scaleX(1);
+  }
+
+  /* If a dropdown is open (Bootstrap .show / aria-expanded), allow underline
+     ONLY while the pointer is inside the navbar */
+  #siteNav:hover .nav-item.show > .nav-link::after,
+  #siteNav:hover .nav-item.show > .nav-link::before,
+  #siteNav:hover .nav-link[aria-expanded="true"]::after,
+  #siteNav:hover .nav-link[aria-expanded="true"]::before{
+    transform: scaleX(1);
+  }
+
+  /* The moment the mouse leaves the navbar, kill any underline — even if .show/expanded remains */
+  #siteNav:not(:hover) .nav-item.show > .nav-link::after,
+  #siteNav:not(:hover) .nav-item.show > .nav-link::before,
+  #siteNav:not(:hover) .nav-link[aria-expanded="true"]::after,
+  #siteNav:not(:hover) .nav-link[aria-expanded="true"]::before,
+  #siteNav:not(:hover) .nav-link:focus::after,
+  #siteNav:not(:hover) .nav-link:focus::before{
+    transform: scaleX(0) !important;
+  }
+}
+
 
 /* =================== Dropdown / Mega =================== */
 .dropdown-menu{
