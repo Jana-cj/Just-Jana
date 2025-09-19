@@ -822,49 +822,47 @@
     topItems.forEach(li => { if (li !== exceptLi) forceHideItem(li); });
   }
 
-// --- Desktop hover + click behavior for top-level dropdowns ---
+// --- Desktop hover + click that behaves like hover (no sticky) ---
 if (HOVER_DEVICE.matches) {
   topItems.forEach(li => {
-    const t = li.querySelector(':scope > a.dropdown-toggle');
+    const t    = li.querySelector(':scope > a.dropdown-toggle');
     const menu = li.querySelector(':scope > .dropdown-menu');
 
-    // Function to open
-    const open = () => {
-      closeAllDropdowns(li);
-      if (t) bootstrap.Dropdown.getOrCreateInstance(t, { autoClose: 'outside' }).show();
-    };
-    // Function to close
-    const close = () => {
-      if (t) bootstrap.Dropdown.getOrCreateInstance(t).hide();
-    };
+    const inst = t ? bootstrap.Dropdown.getOrCreateInstance(t, { autoClose: false }) : null;
 
-    // Hover in/out
-    li.addEventListener('mouseenter', () => { if (XL_UP.matches) open(); });
-    li.addEventListener('mouseleave', () => { if (XL_UP.matches) close(); });
+    const open  = () => { closeAllDropdowns(li); inst?.show();  t?.setAttribute('aria-expanded','true'); };
+    const close = () => { inst?.hide();          t?.setAttribute('aria-expanded','false'); };
 
-    // Desktop click should behave same as hover (toggle, not sticky)
+    // Open on hover
+    li.addEventListener('pointerenter', () => { if (XL_UP.matches) open(); });
+
+    // Close when pointer leaves the LI (covers toggle + menu)
+    li.addEventListener('pointerleave', () => { if (XL_UP.matches) close(); });
+
+    // Desktop click acts exactly like hover (no sticky, no navigation)
     if (t) {
       t.addEventListener('click', (e) => {
-        if (!XL_UP.matches) return; // let mobile logic handle its own clicks
+        if (!XL_UP.matches) return;      // mobile handled elsewhere
         e.preventDefault();
         e.stopPropagation();
-        if (li.classList.contains('show')) {
-          close();
-        } else {
-          open();
-        }
+        if (e.stopImmediatePropagation) e.stopImmediatePropagation(); // kill Bootstrap's click handler
+        li.classList.contains('show') ? close() : open();
+        t.blur(); // avoid focus keeping aria-expanded styles around
       }, true);
     }
+
+    // Extra safety: if you leave the menu panel itself, close
+    menu?.addEventListener('pointerleave', () => { if (XL_UP.matches) close(); });
   });
 
-  // If the pointer leaves the whole navbar → close all
-  nav.addEventListener('mouseleave', () => {
+  // Leave entire navbar → close all
+  nav.addEventListener('pointerleave', () => {
     if (!XL_UP.matches) return;
     closeAllDropdowns();
   });
 
-  // Clicking anywhere outside navbar → close all
-  document.addEventListener('click', (e) => {
+  // Click/tap anywhere outside navbar → close all
+  document.addEventListener('pointerdown', (e) => {
     if (!XL_UP.matches) return;
     if (!nav.contains(e.target)) closeAllDropdowns();
   }, { capture: true });
