@@ -3223,24 +3223,34 @@ color: #7b7b7b;
   color: #4b2e2e;
 }
 
-.mission-pillars {
-  max-width: 800px;
-  margin: 1.5em auto;
-  font-size: 1rem;
+/* Two perfectly aligned columns on desktop & mobile */
+.mission-pillars{
+  --label-col: clamp(7ch, 22vw, 10ch); /* column for “• Body:” etc. */
+  display: grid;
+  grid-template-columns: var(--label-col) 1fr;
+  column-gap: 12px;
+  row-gap: 10px;
+  align-items: start;
+  max-width: 880px;
+  margin: 1.25rem auto;
+  font-size: 1rem;           /* same size on mobile */
 }
 
-.mpillar {
-  margin-bottom: 0.75em;
-}
+.mpillar{ display: contents; }  /* lets each pair fill the two columns */
 
-.pillar-name {
-  display: inline-block;
+.pillar-name{
   font-weight: 700;
-  min-width: 85px;   /* adjust until Body / Mind / Heart / Soul align */
+  white-space: nowrap;        /* keeps title on one line */
 }
 
-.pillar-desc {
-  display: inline;
+.pillar-desc{
+  line-height: 1.6;
+}
+
+/* Optional: for *very* narrow phones, stack neatly */
+@media (max-width: 380px){
+  .mission-pillars{ grid-template-columns: 1fr; }
+  .pillar-name{ display: block; margin-bottom: .2rem; }
 }
 
 
