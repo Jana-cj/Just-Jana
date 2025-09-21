@@ -3223,30 +3223,25 @@ color: #7b7b7b;
   color: #4b2e2e;
 }
 
-/* Two perfectly aligned columns on all breakpoints */
-.mission-pillars{
-  display: grid;
-  grid-template-columns: max-content 1fr; /* left = widest name; right = description */
-  column-gap: 14px;
-  row-gap: 10px;
-  align-items: start;
-  max-width: 880px;
-  margin: 1.25rem auto;
-  font-size: 1rem;            /* keep same size on mobile */
+.mission-pillars {
+  max-width: 800px;
+  margin: 1.5em auto;
+  font-size: 1rem;
 }
 
-.mpillar{ display: contents; } /* let the two spans be the grid cells */
+.mpillar {
+  margin-bottom: 0.75em;
+}
 
-.pillar-name{
+.pillar-name {
+  display: inline-block;
   font-weight: 700;
-  white-space: nowrap;        /* keeps “• Body:” on one line */
+  min-width: 85px;   /* adjust until Body / Mind / Heart / Soul align */
 }
 
-.pillar-desc{
-  line-height: 1.6;
+.pillar-desc {
+  display: inline;
 }
-
-/* No mobile font scaling, no layout change needed */
 
 
 .values-title {
