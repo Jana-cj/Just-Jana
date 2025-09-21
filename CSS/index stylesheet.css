@@ -3223,11 +3223,23 @@ color: #7b7b7b;
   color: #4b2e2e;
 }
 
-.mission{
-  width: 100%;           /* pick how wide you want the section */
-  margin: 0 auto;       /* centers the block horizontally */
-  text-align: center;     /* aligns the text inside to the left */
+.mission-pillars {
+  display: grid;
+  grid-template-columns: auto 1fr; /* first column = pillar name, second = description */
+  gap: 6px 12px; /* row gap | column gap */
+  max-width: 800px; /* optional: keeps it tidy */
+  margin: 1em auto;
 }
+
+.mpillar {
+  display: contents; /* allows grid to treat text inside properly */
+}
+
+.mpillar::before {
+  content: attr(data-label);
+  font-weight: bold;
+}
+
 
 .values-title {
   font-size: 2rem;
