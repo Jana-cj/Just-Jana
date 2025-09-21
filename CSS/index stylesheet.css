@@ -3230,6 +3230,12 @@ color: #7b7b7b;
   margin-left: 150px;
 }
 
+@media (max-width: 768px){
+  .mission{
+    margin-left:30px;
+  }
+}
+
 .values-title {
   font-size: 2rem;
   margin-bottom: 2rem;
