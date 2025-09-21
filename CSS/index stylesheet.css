@@ -3223,6 +3223,12 @@ color: #7b7b7b;
   color: #4b2e2e;
 }
 
+.mission{
+  width: 100%;           /* pick how wide you want the section */
+  margin: 0 auto;       /* centers the block horizontally */
+  text-align: left;     /* aligns the text inside to the left */
+}
+
 .values-title {
   font-size: 2rem;
   margin-bottom: 2rem;
