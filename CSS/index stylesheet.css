@@ -3223,16 +3223,21 @@ color: #7b7b7b;
   color: #4b2e2e;
 }
 
+@media (min-width: 992px){
 .mission{
   width: 85%;           /* pick how wide you want the section */
   margin: 1em auto;       /* centers the block horizontally */
   text-align: left;     /* aligns the text inside to the left */
   margin-left: 150px;
 }
+}
 
 @media (max-width: 768px){
   .mission{
-    margin-left:30px;
+  width: 85%;           /* pick how wide you want the section */
+  margin: 1em auto;       /* centers the block horizontally */
+  text-align: left;     /* aligns the text inside to the left */
+  margin-left: 10px;
   }
 }
 
