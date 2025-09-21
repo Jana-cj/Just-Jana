@@ -3224,20 +3224,24 @@ color: #7b7b7b;
 }
 
 .mission-pillars {
-  display: grid;
-  grid-template-columns: auto 1fr; /* first column = pillar name, second = description */
-  gap: 6px 12px; /* row gap | column gap */
-  max-width: 800px; /* optional: keeps it tidy */
-  margin: 1em auto;
+  display: table; 
+  margin: 1.5em auto;
+  max-width: 800px;
 }
 
 .mpillar {
-  display: contents; /* allows grid to treat text inside properly */
+  display: table-row;
 }
 
-.mpillar::before {
-  content: attr(data-label);
+.pillar-name {
+  display: table-cell;
   font-weight: bold;
+  padding-right: 12px;
+  white-space: nowrap; /* keeps Body/Mind/Heart/Soul aligned */
+}
+
+.pillar-desc {
+  display: table-cell;
 }
 
 
