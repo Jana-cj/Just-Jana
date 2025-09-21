@@ -3224,7 +3224,7 @@ color: #7b7b7b;
 }
 
 .mission-pillars {
-  display: table; 
+  display: table;
   margin: 1.5em auto;
   max-width: 800px;
 }
@@ -3237,7 +3237,16 @@ color: #7b7b7b;
   display: table-cell;
   font-weight: bold;
   padding-right: 12px;
-  white-space: nowrap; /* keeps Body/Mind/Heart/Soul aligned */
+  white-space: nowrap;
+  position: relative;
+}
+
+/* add bullet via CSS, perfectly aligned */
+.pillar-name::before {
+  content: "•";
+  position: absolute;
+  left: -18px;   /* adjust spacing */
+  color: black;  /* you can change this to brand color */
 }
 
 .pillar-desc {
