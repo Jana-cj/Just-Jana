@@ -3223,57 +3223,30 @@ color: #7b7b7b;
   color: #4b2e2e;
 }
 
-.mission-pillars {
-  display: table;
-  margin: 1.5em auto;
-  max-width: 800px;
-  font-size: 1rem; /* lock font size same as site body text */
+/* Two perfectly aligned columns on all breakpoints */
+.mission-pillars{
+  display: grid;
+  grid-template-columns: max-content 1fr; /* left = widest name; right = description */
+  column-gap: 14px;
+  row-gap: 10px;
+  align-items: start;
+  max-width: 880px;
+  margin: 1.25rem auto;
+  font-size: 1rem;            /* keep same size on mobile */
 }
 
-.mpillar {
-  display: table-row;
+.mpillar{ display: contents; } /* let the two spans be the grid cells */
+
+.pillar-name{
+  font-weight: 700;
+  white-space: nowrap;        /* keeps “• Body:” on one line */
 }
 
-.pillar-name {
-  display: table-cell;
-  font-weight: bold;
-  padding-right: 16px;
-  white-space: nowrap;
-  position: relative;
+.pillar-desc{
+  line-height: 1.6;
 }
 
-.pillar-name::before {
-  content: "•";
-  position: absolute;
-  left: -16px; /* keeps bullets aligned */
-  color: black; /* you can set to brand color */
-}
-
-.pillar-desc {
-  display: table-cell;
-  text-align: left;
-}
-
-/* --- Mobile view: stack vertically but keep font size the same --- */
-@media (max-width: 600px) {
-  .mission-pillars {
-    display: block;
-  }
-
-  .mpillar {
-    display: block;
-    margin-bottom: 1em;
-  }
-
-  .pillar-name {
-    display: inline-block;
-    margin-right: 8px;
-  }
-
-  .pillar-desc {
-    display: inline;
-  }
-}
+/* No mobile font scaling, no layout change needed */
 
 
 .values-title {
