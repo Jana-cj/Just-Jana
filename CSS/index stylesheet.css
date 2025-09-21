@@ -3227,6 +3227,7 @@ color: #7b7b7b;
   display: table;
   margin: 1.5em auto;
   max-width: 800px;
+  font-size: 1rem; /* lock font size same as site body text */
 }
 
 .mpillar {
@@ -3236,7 +3237,7 @@ color: #7b7b7b;
 .pillar-name {
   display: table-cell;
   font-weight: bold;
-  padding-right: 16px; /* spacing before description */
+  padding-right: 16px;
   white-space: nowrap;
   position: relative;
 }
@@ -3244,13 +3245,34 @@ color: #7b7b7b;
 .pillar-name::before {
   content: "•";
   position: absolute;
-  left: -16px; /* aligns all bullets neatly */
-  color: black; /* change to brand color if you want */
+  left: -16px; /* keeps bullets aligned */
+  color: black; /* you can set to brand color */
 }
 
 .pillar-desc {
   display: table-cell;
   text-align: left;
+}
+
+/* --- Mobile view: stack vertically but keep font size the same --- */
+@media (max-width: 600px) {
+  .mission-pillars {
+    display: block;
+  }
+
+  .mpillar {
+    display: block;
+    margin-bottom: 1em;
+  }
+
+  .pillar-name {
+    display: inline-block;
+    margin-right: 8px;
+  }
+
+  .pillar-desc {
+    display: inline;
+  }
 }
 
 
