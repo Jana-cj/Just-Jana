@@ -3226,7 +3226,7 @@ color: #7b7b7b;
 .mission{
   width: 100%;           /* pick how wide you want the section */
   margin: 0 auto;       /* centers the block horizontally */
-  text-align: left;     /* aligns the text inside to the left */
+  text-align: center;     /* aligns the text inside to the left */
 }
 
 .values-title {
