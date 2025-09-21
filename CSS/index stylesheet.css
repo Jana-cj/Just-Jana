@@ -3236,21 +3236,21 @@ color: #7b7b7b;
 .pillar-name {
   display: table-cell;
   font-weight: bold;
-  padding-right: 12px;
+  padding-right: 16px; /* spacing before description */
   white-space: nowrap;
   position: relative;
 }
 
-/* add bullet via CSS, perfectly aligned */
 .pillar-name::before {
   content: "•";
   position: absolute;
-  left: -18px;   /* adjust spacing */
-  color: black;  /* you can change this to brand color */
+  left: -16px; /* aligns all bullets neatly */
+  color: black; /* change to brand color if you want */
 }
 
 .pillar-desc {
   display: table-cell;
+  text-align: left;
 }
 
 
