@@ -1727,6 +1727,19 @@ html{ -webkit-text-size-adjust: 100%; }
   opacity: .95;
 }
 
+.hero-brand {
+  display: inline-flex;
+  align-items: flex-start; /* keep TM higher than baseline */
+}
+
+.hero-brand .tm {
+  font-size: 0.6em;      /* make it smaller */
+  margin-left: 2px;      /* space from wordmark */
+  vertical-align: super; /* raise it up */
+  font-family: inherit;  /* inherit the site’s font style */
+}
+
+
 /* Initial-only offsets (desktop hero intro) */
 .hero-desktop.is-playing:not(.intro-done) .hero-anim{
   /* move the *animated* lotus slightly DOWN (less negative than -30px) */
