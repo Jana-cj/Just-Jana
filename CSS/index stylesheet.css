@@ -1369,7 +1369,7 @@ body.nav-open{
 /* === Inline nav search === */
 .jj-nav-search-item{ position:relative; display:flex; align-items:center; }
 .jj-nav-search{
-  display:grid; grid-template-columns: minmax(0, 1fr) auto; gap:.5rem; align-items: center;
+  display:grid; grid-template-columns: minmax(0,1fr) auto; gap:.5rem; align-items: center;
 }
 .jj-nav-search input[type="search"]{
   font: 600 1rem/1.2 "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
