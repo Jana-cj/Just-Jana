@@ -193,7 +193,7 @@ header, .hero-wrap { margin-top: 0 !important; }
   background: rgba(179,131,152,.22) !important;
   color: var(--jj-ink) !important;
 }
-#dropdownAbout + .dropdown-menu.jj-surface{ min-width:17rem; }
+#dropdownAbout + .dropdown-menu.jj-surface{ min-width:18rem; }
 #dropdownDiaries + .dropdown-menu.jj-surface{ min-width:17rem; }
 
 /* ---------- Mega layout + stacking (fixed) ---------- */
