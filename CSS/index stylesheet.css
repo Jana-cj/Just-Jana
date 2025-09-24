@@ -4456,27 +4456,35 @@ font-family: 'Georgia', serif;
   
 }
 
-/* desektop view scroll bar */
-/* ===== Custom Scrollbar (Webkit: Chrome, Edge, Safari) ===== */
+/* ===== Desktop & Mobile (Webkit browsers: Chrome, Edge, Safari, Android) ===== */
 ::-webkit-scrollbar {
-  width: 8px; /* slim for minimal look */
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent; /* blends with page */
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #d1bac4; /* soft JJ accent (semi-transparent) */
+  background: #d1bac4; ;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #ad8d9d; /* gentle highlight on hover */
+  background: #ad8d9d;;
 }
 
-/* ===== Firefox ===== */
+/* ===== Firefox (Desktop + Mobile) ===== */
 * {
   scrollbar-width: thin;
   scrollbar-color: #d1bac4 transparent;
 }
+
+/* ===== Optional: force scrollbars always visible ===== */
+html {
+  overflow-y: scroll; /* ensures styled scrollbar instead of overlay */
+}
+
+
+
+
