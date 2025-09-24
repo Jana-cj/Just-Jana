@@ -4462,16 +4462,16 @@ font-family: 'Georgia', serif;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(169, 76, 175, 0.35); /* soft JJ accent (semi-transparent) */
+  background: #d1bac4; /* soft JJ accent (semi-transparent) */
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(169, 76, 175, 0.55); /* gentle highlight on hover */
+  background: #ad8d9d; /* gentle highlight on hover */
 }
 
 /* ===== Firefox ===== */
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(169, 76, 175, 0.35) transparent;
+  scrollbar-color: #d1bac4 transparent;
 }
