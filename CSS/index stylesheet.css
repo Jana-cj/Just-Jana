@@ -4448,8 +4448,30 @@ font-family: 'Georgia', serif;
     text-align: center;
   }
 }
-
-
   
-  
+}
+
+/* desektop view scroll bar */
+/* ===== Custom Scrollbar (Webkit: Chrome, Edge, Safari) ===== */
+::-webkit-scrollbar {
+  width: 8px; /* slim for minimal look */
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; /* blends with page */
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(169, 76, 175, 0.35); /* soft JJ accent (semi-transparent) */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(169, 76, 175, 0.55); /* gentle highlight on hover */
+}
+
+/* ===== Firefox ===== */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(169, 76, 175, 0.35) transparent;
 }
