@@ -1662,6 +1662,35 @@ html{ -webkit-text-size-adjust: 100%; }
 /* when the nav is slid up, kill the spacer height */
 #siteNav.nav-hidden + #navSpacer { height: 0 !important; }
 
+/* Never draw the pink underline for the home icon link */
+#siteNav .nav-link.home-link::after,
+#siteNav .nav-link.home-link::before{
+  display: none !important;
+}
+
+/* If the pointer/focus is on Home, kill every other underline,
+   even if a dropdown is .show or aria-expanded="true" */
+@supports(selector(:has(*))){
+  #siteNav:has(.home-link:hover) .nav-link::after,
+  #siteNav:has(.home-link:focus-visible) .nav-link::after,
+  #siteNav:has(.home-link:hover) .nav-link::before,
+  #siteNav:has(.home-link:focus-visible) .nav-link::before{
+    transform: scaleX(0) !important;
+  }
+
+  /* Explicitly override your "keep it when .show/expanded" rules */
+  #siteNav:has(.home-link:hover) .nav-item.show > .nav-link::after,
+  #siteNav:has(.home-link:focus-visible) .nav-item.show > .nav-link::after,
+  #siteNav:has(.home-link:hover) .nav-item.show > .nav-link::before,
+  #siteNav:has(.home-link:focus-visible) .nav-item.show > .nav-link::before,
+  #siteNav:has(.home-link:hover) .nav-link[aria-expanded="true"]::after,
+  #siteNav:has(.home-link:focus-visible) .nav-link[aria-expanded="true"]::after,
+  #siteNav:has(.home-link:hover) .nav-link[aria-expanded="true"]::before,
+  #siteNav:has(.home-link:focus-visible) .nav-link[aria-expanded="true"]::before{
+    transform: scaleX(0) !important;
+  }
+}
+
 
 
 /* Index.html -> HERO SECTION */
