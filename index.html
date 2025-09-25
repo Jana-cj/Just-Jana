@@ -1662,31 +1662,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 })();
 </script>
 
-<script>
-(function () {
-  const nav = document.getElementById('siteNav');
-  if (!nav) return;
-  const home = nav.querySelector('.home-link');
-  const openers = () => nav.querySelectorAll('.nav-item.show, .nav-link[aria-expanded="true"]');
-
-  function closeAllDropdowns() {
-    // Close Bootstrap dropdowns that might be left open
-    openers().forEach(el => {
-      el.classList.remove('show');
-      if (el.matches('.nav-link[aria-expanded="true"]')) el.setAttribute('aria-expanded', 'false');
-      const menu = el.parentElement?.querySelector('.dropdown-menu.show');
-      if (menu) menu.classList.remove('show');
-    });
-  }
-
-  if (home) {
-    home.addEventListener('mouseenter', closeAllDropdowns, {passive:true});
-    home.addEventListener('focus',      closeAllDropdowns, {passive:true});
-    // Also on click/tap in case of touch devices
-    home.addEventListener('click',      closeAllDropdowns, {passive:true});
-  }
-})();
-</script>
 
 
   </body>
