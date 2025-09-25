@@ -3141,6 +3141,15 @@ color: #7b7b7b;
   }
 }
 
+/* date posted */
+.post-meta{
+  margin: 0.5rem 0 0;
+  letter-spacing: .2px;
+}
+@media (max-width: 575.98px){
+  .post-meta{ margin-top: .25rem; }
+}
+
 
 /* ---------- Scroll reveal base ---------- */
 .story-text,
