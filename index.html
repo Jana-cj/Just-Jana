@@ -1234,71 +1234,6 @@ if (HOVER_DEVICE.matches) {
 })();
 </script>
 
-<script>
-/* ================= Just Jana — Hero Intro: single, bulletproof controller ================= */
-(function () {
-  const DURATION = 2800; // set to your animated WebP real length in ms
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let ran = false;
-
-  function restartAnimatedWebP(img) {
-    if (!img) return;
-    const src = img.currentSrc || img.src;
-    img.src = "";
-    requestAnimationFrame(() => { img.src = src; });
-  }
-
-  function decodeImg(img) {
-    if (!img || !img.decode) return Promise.resolve();
-    return img.decode().catch(() => {});
-  }
-
-  function playOnce(rootSel, animId, staticId) {
-    const root = document.querySelector(rootSel);
-    const anim = document.getElementById(animId);
-    const stat = document.getElementById(staticId);
-    if (!root || !anim || !stat) return;
-
-    stat.style.display = 'none';
-    anim.style.visibility = 'hidden';
-
-    Promise.all([decodeImg(anim), decodeImg(stat)]).then(() => {
-      restartAnimatedWebP(anim);
-      anim.style.visibility = 'visible';
-      root.classList.add('is-playing');
-
-      const t = setTimeout(() => {
-        anim.style.display = 'none';
-        stat.style.display = 'block';
-        root.classList.add('intro-done');
-      }, DURATION);
-
-      root.__jjIntroCleanup = () => clearTimeout(t);
-    });
-  }
-
-  function kickoff() {
-    if (ran || prefersReduced) return;
-    ran = true;
-    playOnce('.hero-desktop', 'lotusAnim',  'lotusStatic');
-    playOnce('.hero-mobile',  'lotusAnimM', 'lotusStaticM');
-  }
-
-  addEventListener('DOMContentLoaded', () => { setTimeout(kickoff, 0); }, { once: true });
-
-  addEventListener('pageshow', (e) => {
-    if (e.persisted) { ran = false; kickoff(); }
-  });
-
-  document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'hidden') {
-      document.querySelectorAll('.hero-desktop, .hero-mobile').forEach(r => r.__jjIntroCleanup?.());
-    }
-  });
-})();
-</script>
-
-
 
 
     <script>
@@ -1571,6 +1506,24 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { passive: true });
 });
 </script>
+
+<script>
+  // Freeze on last frame (no looping)
+  document.addEventListener('DOMContentLoaded', () => {
+    const v = document.getElementById('heroLotusVideo');
+    if (!v) return;
+    v.loop = false;
+    v.addEventListener('ended', () => {
+      try {
+        // Nudge to just-before-end to keep the final frame visible
+        v.currentTime = Math.max(0, v.duration - 0.05);
+        v.pause();
+      } catch(_) {}
+    });
+  });
+</script>
+
+
 
 
 </script>
