@@ -737,29 +737,7 @@
   });
 </script>
 
-<script>
-  // Kick off hero animations once the page is visually ready.
-  // We wait for fonts/images enough to avoid a flash, but still feel snappy.
-  (function(){
-    function play(){
-      // Desktop hero (hidden on mobile <768px)
-      var heroDesk = document.querySelector('.hero-desktop');
-      // Mobile hero (shown <768px)
-      var heroMob  = document.querySelector('.hero-mobile');
 
-      // Guard if a section doesn't exist
-      if (heroDesk) heroDesk.classList.add('is-playing');
-      if (heroMob)  heroMob.classList.add('is-playing');
-    }
-
-    // Prefer 'DOMContentLoaded' + a micro task to ensure CSS is parsed
-    if (document.readyState === 'loading'){
-      document.addEventListener('DOMContentLoaded', () => setTimeout(play, 30));
-    } else {
-      setTimeout(play, 30);
-    }
-  })();
-</script>
 
 
 
@@ -1256,6 +1234,71 @@ if (HOVER_DEVICE.matches) {
 })();
 </script>
 
+<script>
+/* ================= Just Jana — Hero Intro: single, bulletproof controller ================= */
+(function () {
+  const DURATION = 2800; // set to your animated WebP real length in ms
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let ran = false;
+
+  function restartAnimatedWebP(img) {
+    if (!img) return;
+    const src = img.currentSrc || img.src;
+    img.src = "";
+    requestAnimationFrame(() => { img.src = src; });
+  }
+
+  function decodeImg(img) {
+    if (!img || !img.decode) return Promise.resolve();
+    return img.decode().catch(() => {});
+  }
+
+  function playOnce(rootSel, animId, staticId) {
+    const root = document.querySelector(rootSel);
+    const anim = document.getElementById(animId);
+    const stat = document.getElementById(staticId);
+    if (!root || !anim || !stat) return;
+
+    stat.style.display = 'none';
+    anim.style.visibility = 'hidden';
+
+    Promise.all([decodeImg(anim), decodeImg(stat)]).then(() => {
+      restartAnimatedWebP(anim);
+      anim.style.visibility = 'visible';
+      root.classList.add('is-playing');
+
+      const t = setTimeout(() => {
+        anim.style.display = 'none';
+        stat.style.display = 'block';
+        root.classList.add('intro-done');
+      }, DURATION);
+
+      root.__jjIntroCleanup = () => clearTimeout(t);
+    });
+  }
+
+  function kickoff() {
+    if (ran || prefersReduced) return;
+    ran = true;
+    playOnce('.hero-desktop', 'lotusAnim',  'lotusStatic');
+    playOnce('.hero-mobile',  'lotusAnimM', 'lotusStaticM');
+  }
+
+  addEventListener('DOMContentLoaded', () => { setTimeout(kickoff, 0); }, { once: true });
+
+  addEventListener('pageshow', (e) => {
+    if (e.persisted) { ran = false; kickoff(); }
+  });
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') {
+      document.querySelectorAll('.hero-desktop, .hero-mobile').forEach(r => r.__jjIntroCleanup?.());
+    }
+  });
+})();
+</script>
+
+
 
 
     <script>
@@ -1529,85 +1572,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
-<script>
-  // Freeze on last frame (no looping)
-  document.addEventListener('DOMContentLoaded', () => {
-    const v = document.getElementById('heroLotusVideo');
-    if (!v) return;
-    v.loop = false;
-    v.addEventListener('ended', () => {
-      try {
-        // Nudge to just-before-end to keep the final frame visible
-        v.currentTime = Math.max(0, v.duration - 0.05);
-        v.pause();
-      } catch(_) {}
-    });
-  });
-</script>
-
-<!-- lotus animation -->
-<script>
-document.addEventListener("DOMContentLoaded", async () => {
-  const ANIM_MS = 2800; // matches your art
-  const anim = document.querySelector('#lotusAnim');
-  const stat = document.querySelector('#lotusStatic');
-  const root = document.querySelector('.hero-desktop');
-  if (!anim || !stat || !root) return;
-
-  // Pre-decode to avoid flashes
-  const decode = img => (img && img.decode ? img.decode().catch(()=>{}) : Promise.resolve());
-  await Promise.all([decode(anim), decode(stat)]);
-
-  // Force animated WebP to start at frame 0 (browser quirk)
-  const src = anim.currentSrc || anim.src;
-  anim.src = '';
-  void anim.offsetHeight;
-  anim.src = src;
-
-  // Swap to static after the animation time
-  setTimeout(() => {
-    anim.style.display = 'none';
-    stat.style.display = 'block';
-    root.classList.add('intro-done'); // stops intro-only nudges
-  }, ANIM_MS);
-});
-</script>
-
-<!-- mobile lotus animation -->
-<script>
-// Mobile lotus: show animation first (bigger, centered) → fade to static
-document.addEventListener('DOMContentLoaded', async () => {
-  const root = document.querySelector('.hero-mobile');
-  const anim = document.getElementById('lotusAnimM');
-  const stat = document.getElementById('lotusStaticM');
-  if (!root || !anim || !stat) return;
-
-  // Decode to prevent flashes on first paint
-  const decode = img => (img && img.decode ? img.decode().catch(()=>{}) : Promise.resolve());
-  await Promise.all([decode(anim), decode(stat)]);
-
-  // Force animated WebP to start at frame 0 (common browser quirk)
-  const src = anim.currentSrc || anim.src;
-  anim.src = '';
-  void anim.offsetHeight;  // reflow
-  anim.src = src;
-
-  // Show animation first; static stays invisible
-  anim.classList.add('is-on');
-  stat.classList.remove('is-on');
-
-  // If you know the exact length of the animated webp, match it here.
-  // Otherwise keep this close to the file's duration.
-  const DURATION_MS = 2800; // ← tweak to your animation length
-
-  setTimeout(() => {
-    anim.classList.remove('is-on');
-    anim.classList.add('is-off'); // fade-out animation
-    stat.classList.add('is-on');  // fade-in static
-    root.classList.add('intro-done');
-  }, DURATION_MS);
-});
-</script>
 
 </script>
 <!-- back to top button -->
