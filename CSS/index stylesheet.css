@@ -4517,70 +4517,11 @@ html {
 
 
 /* Food story */
-/* ==========================================================
-   Just Jana — Food Story (namespaced styles)
-   Scope: only affects foodstory.html when using fs-* classes
-   ========================================================== */
+/* ===============================
+   Food Story: alternating layout
+   =============================== */
 
-/* ---- Text Hero ---- */
-.fs-hero{
-  position: relative;
-  display: grid;
-  place-items: center;
-  text-align: center;
-  padding: clamp(72px, 8vw, 140px) 1rem;
-  background:
-    radial-gradient(80% 120% at 50% 10%, rgba(255,255,255,.75), transparent 60%),
-    linear-gradient(160deg, #fff3e1 0%, #f6e6f0 40%, #efe6fa 100%);
-  border-bottom: 1px solid rgba(0,0,0,.06);
-  overflow: hidden;
-  isolation: isolate;
-}
-.fs-hero .fs-badge{
-  display: inline-block;
-  font: 600 12px/1 Poppins, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans";
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  padding: .4rem .7rem;
-  border-radius: 999px;
-  background: #fff;
-  border: 1px solid rgba(0,0,0,.08);
-  color: #77586a;
-  margin-bottom: 0.75rem;
-}
-.fs-hero h1{
-  font-family: "Playfair Display", serif;
-  font-weight: 600;
-  letter-spacing: .2px;
-  color: #252525;
-  margin: 0 0 .3rem 0;
-  font-size: clamp(28px, 4.8vw, 56px);
-}
-.fs-hero .fs-sub{
-  margin: 0 auto;
-  color:#4a3f45;
-  max-width: 58ch;
-  font-size: clamp(15px, 1.7vw, 18px);
-}
-.fs-hero .fs-quote{
-  margin-top: 1.25rem;
-  font-style: italic;
-  color:#5a5056;
-  max-width: 68ch;
-}
-.fs-hero .fs-grain{
-  position:absolute; inset:0;
-  background-image: radial-gradient(rgba(0,0,0,.03) 1px, transparent 1px);
-  background-size: 3px 3px;
-  mix-blend-mode: multiply;
-  opacity:.65;
-  pointer-events: none;
-}
-
-/* ---- Post meta ---- */
-.fs-meta{ margin-top: 1rem; }
-
-/* ---- Stories container ---- */
+/* container spacing stays */
 .fs-stories{
   width: min(1060px, 92%);
   margin: 2rem auto 0;
@@ -4588,32 +4529,79 @@ html {
   gap: clamp(24px, 4vw, 44px);
 }
 
-/* ---- Each story block ---- */
+/* remove card look */
 .fs-block{
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  padding: 0; /* rely on inner text spacing */
+}
+
+/* content width & spacing */
+.fs-text{
+  max-width: 75ch;
+  margin: 0;            /* will be positioned by rules below */
+}
+
+/* keep text left-aligned always (better readability) */
+.fs-text p,
+.fs-text ul,
+.fs-text ol{
+  text-align: left;
+}
+
+/* MOBILE: single column, left anchored */
+@media (max-width: 991.98px){
+  .fs-text{ margin-inline: 0; }
+}
+
+/* DESKTOP: alternate left/right by anchoring the text block */
+@media (min-width: 992px){
+  .fs-block{
+    display: flex;
+  }
+  /* odd blocks: left side */
+  .fs-block:nth-child(odd) .fs-text{
+    margin-right: auto;   /* push text to left edge */
+  }
+  /* even blocks: right side */
+  .fs-block:nth-child(even) .fs-text{
+    margin-left: auto;    /* push text to right edge */
+  }
+}
+
+/* FINAL CENTER SECTION — centered callout look */
+.fs-center{
   display: grid;
-  grid-template-columns: 1fr; /* text-only */
-  gap: 1rem;
-  align-items: start;
-  padding: clamp(16px, 2.2vw, 24px);
-  background: #fff;
-  border: 1px solid rgba(0,0,0,.06);
-  border-radius: 18px;
-  box-shadow: 0 8px 30px rgba(0,0,0,.04);
+  place-items: center;
+  padding: clamp(24px, 5vw, 48px);
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity .6s ease, transform .6s ease;
 }
-.fs-block .fs-text{ max-width: 75ch; }
-.fs-block h2{
-  font-family: "Playfair Display", serif;
-  font-weight: 600;
-  font-size: clamp(20px, 3vw, 30px);
-  margin-bottom: .5rem;
-  color:#1e1b1c;
+.fs-center.is-revealed{
+  opacity: 1;
+  transform: none;
 }
-.fs-block p{
-  margin: .6rem 0;
-  color:#3a3137;
-  line-height: 1.7;
+
+/* use callout styling for the highlight box */
+.fs-highlight{
+  width: min(920px, 94%);
+  background: #f7f3f5;                  /* same as fs-callout bg */
+  border-left: 4px solid #c6a0b1;       /* accent */
+  border-radius: 12px;
+  padding: clamp(18px, 3.6vw, 40px);
+  text-align: center;
 }
-.fs-block .fs-callout{
+.fs-highlight h2{ margin-bottom: .6rem; }
+.fs-highlight p{
+  max-width: 72ch;
+  margin: .5rem auto;
+  line-height: 1.75;
+}
+
+/* OPTIONAL: keep your fs-callout look for inline quotes in blocks */
+.fs-callout{
   border-left: 4px solid #c6a0b1;
   padding: .5rem .75rem;
   background: #f7f3f5;
@@ -4621,37 +4609,7 @@ html {
   font-style: italic;
 }
 
-/* ---- Final center highlight ---- */
-.fs-center{
-  display: grid; place-items: center;
-  padding: clamp(24px, 5vw, 48px);
-}
-.fs-highlight{
-  width: min(920px, 94%);
-  text-align: center;
-  background:
-    linear-gradient(180deg, #fff 0%, #fff 65%, rgba(255,255,255,.9) 100%),
-    linear-gradient(135deg, #fff4ec 0%, #f5eaf3 55%, #efe6ff 100%);
-  border: 1px solid rgba(0,0,0,.06);
-  border-radius: 22px;
-  padding: clamp(18px, 3.6vw, 40px);
-  box-shadow: 0 12px 36px rgba(0,0,0,.06);
-}
-.fs-highlight h2{
-  font-family: "Playfair Display", serif;
-  font-weight: 600;
-  color:#201c1d;
-  margin-bottom: .6rem;
-  font-size: clamp(20px, 3.4vw, 28px);
-}
-.fs-highlight p{
-  color:#3b2f36;
-  max-width: 72ch;
-  margin: .5rem auto;
-  line-height: 1.75;
-}
-
-/* ---- Reveal animations for fs-* only ---- */
+/* Reveal for each block’s text (works with your fs-* reveal script) */
 @media (prefers-reduced-motion: no-preference){
   .fs-text{
     opacity: 0;
@@ -4662,22 +4620,6 @@ html {
     opacity: 1;
     transform: none;
   }
-  .fs-center{
-    opacity: 0;
-    transform: translateY(14px);
-    transition: opacity .6s ease, transform .6s ease;
-  }
-  .fs-center.is-revealed{
-    opacity: 1;
-    transform: none;
-  }
-}
-
-/* ---- Mobile tweaks ---- */
-@media (max-width: 575.98px){
-  .fs-hero{ padding: 64px 1rem 72px; }
-  .fs-block{ padding: 16px 14px; }
-  .fs-block .fs-text{ max-width: 100%; }
 }
 
 
