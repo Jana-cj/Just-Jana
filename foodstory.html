@@ -414,14 +414,11 @@
 </div>
 <br>
 
-<!-- Scroll-Triggered Disclaimer -->
-<div class="story-disclaimer-banner" role="alert" aria-live="polite" aria-hidden="true">
-  <p class="story-disclaimer-text">
-    <strong>Disclaimer:</strong> The following story includes brief references to sensitive content. <br> Reader discretion is advised.
-  </p>
-  <button class="story-disclaimer-close" aria-label="Dismiss disclaimer" title="Dismiss">✕</button>
+<!-- Story Disclaimer -->
+<div class="story-disclaimer" role="alert">
+  <p><strong>Disclaimer:</strong> The following story includes brief references to sensitive content. <br> Reader discretion is advised.</p>
 </div>
-
+<br>
 
 <!-- Post meta (date) -->
 <div class="container">
@@ -1224,48 +1221,6 @@
   }, { passive: false });
 })();
 </script>
-
-<script>
-  (function () {
-    const banner = document.querySelector('.story-disclaimer-banner');
-    if (!banner) return;
-
-    const CLOSE_KEY = 'jj_disclaimer_dismissed_v1';
-
-    // If the user has dismissed it before (this session), don't show again
-    if (sessionStorage.getItem(CLOSE_KEY) === '1') {
-      banner.setAttribute('aria-hidden', 'true');
-      return;
-    }
-
-    // Show when user scrolls down X pixels
-    const SCROLL_TRIGGER = 200; // adjust as you like
-
-    let shown = false;
-    function onScroll() {
-      if (shown) return;
-      if (window.scrollY > SCROLL_TRIGGER) {
-        shown = true;
-        banner.classList.add('is-visible');
-        banner.setAttribute('aria-hidden', 'false');
-        window.removeEventListener('scroll', onScroll);
-      }
-    }
-    window.addEventListener('scroll', onScroll, { passive: true });
-
-    // Close/dismiss
-    const closeBtn = banner.querySelector('.story-disclaimer-close');
-    closeBtn.addEventListener('click', () => {
-      banner.classList.remove('is-visible');
-      banner.setAttribute('aria-hidden', 'true');
-      sessionStorage.setItem(CLOSE_KEY, '1');
-    });
-
-    // Optional: also show immediately if page loads mid-way (e.g., refresh)
-    if (window.scrollY > SCROLL_TRIGGER) onScroll();
-  })();
-</script>
-
 
 
   </body>
