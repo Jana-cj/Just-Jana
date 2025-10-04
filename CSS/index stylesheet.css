@@ -4612,7 +4612,7 @@ html {
   max-width: 90%;                   /* prevent overflow on small screens */
 }
 .fs-text { text-align: center; }
-.fs-text p { text-align: left; } /* for normal paragraphs */
+.fs-text p { text-align: center; } /* for normal paragraphs */
 
 
 
