@@ -4608,10 +4608,12 @@ html {
   background: #f7f3f5;
   border-radius: 8px;
   font-style: italic;
-  text-align: center;
   margin: 0.75rem auto;             /* centers it horizontally */
   max-width: 90%;                   /* prevent overflow on small screens */
 }
+.fs-text { text-align: center; }
+.fs-text p { text-align: left; } /* for normal paragraphs */
+
 
 
 /* Reveal for each block’s text (works with your fs-* reveal script) */
