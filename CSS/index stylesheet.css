@@ -4594,3 +4594,20 @@ html {
     transition: opacity .01s linear, transform .01s linear;
   }
 }
+
+/* 1) Start hidden so it doesn't show until scrolled into view */
+.story-block .story-text .story-disclaimer {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity .45s ease,
+    transform .45s ease,
+    box-shadow .3s ease; /* keeps your hover lift smooth */
+}
+
+/* 2) Reveal when the parent story-text is revealed by your IO script */
+.story-block .story-text.is-revealed .story-disclaimer {
+  opacity: 1;
+  transform: none;
+}
+
