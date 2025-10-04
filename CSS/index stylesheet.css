@@ -4533,34 +4533,75 @@ html {
   max-width: 90%;                   /* prevent overflow on small screens */
 }
 
-.story-disclaimer {
-  background-color: #fbeaea;          /* soft muted rose background */
-  border-left: 5px solid #c26464;     /* warm terracotta-red accent */
-  border-radius: 8px;
-  padding: 0.9rem 1rem;
-  margin: 1.5rem auto;
-  max-width: 800px;
+/* Container (fixed banner) */
+.story-disclaimer-banner {
+  position: fixed;
+  top: 0.75rem;                  /* slight offset from top */
+  left: 50%;
+  transform: translateX(-50%) translateY(-20px);
+  opacity: 0;
+  z-index: 9999;
+  max-width: 900px;
+  width: calc(100% - 2rem);      /* responsive margin on mobile */
+  background-color: #fbeaea;     /* soft muted rose */
+  border-left: 5px solid #c26464;/* terracotta accent */
+  border-radius: 12px;
+  padding: 0.9rem 2.75rem 0.9rem 1rem;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  color: #5b2b2b;
   font-size: 0.95rem;
-  font-weight: 500;
-  color: #5b2b2b;                     /* deep brownish-red text */
+  line-height: 1.45;
   text-align: center;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  /* animation */
+  transition: transform 320ms ease, opacity 320ms ease, box-shadow 320ms ease;
 }
 
-.story-disclaimer strong {
-  color: #a34b4b;                     /* slightly darker tone for "Disclaimer:" */
+/* Visible state */
+.story-disclaimer-banner.is-visible {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
 }
 
-.story-disclaimer:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .story-disclaimer-banner {
+    transition: none;
+  }
 }
 
+/* Text tweaks */
+.story-disclaimer-text strong {
+  color: #a34b4b;
+  font-weight: 700;
+}
+
+/* Close button */
+.story-disclaimer-close {
+  position: absolute;
+  right: 0.5rem;
+  top: 0.45rem;
+  appearance: none;
+  border: none;
+  background: transparent;
+  font-size: 1.1rem;
+  line-height: 1;
+  padding: 0.35rem;
+  cursor: pointer;
+  color: #7a3c3c;
+  border-radius: 6px;
+}
+.story-disclaimer-close:hover,
+.story-disclaimer-close:focus {
+  background: rgba(0,0,0,0.05);
+  outline: none;
+}
+
+/* Mobile adjustments */
 @media (max-width: 768px) {
-  .story-disclaimer {
-    margin: 1rem 1rem;
+  .story-disclaimer-banner {
     font-size: 0.9rem;
-    padding: 0.8rem;
+    padding-right: 2.4rem;
+    border-radius: 10px;
   }
 }
