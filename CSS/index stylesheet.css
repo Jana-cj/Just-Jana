@@ -4551,15 +4551,15 @@ html {
 
 /* ===== Disclaimer look & feel ===== */
 .story-disclaimer {
-  background-color: #fbeaea;         /* soft muted rose background */
-  border-left: 5px solid #c26464;    /* warm terracotta-red accent */
+ background-color: #f4f4f4;         /* light grey background */
+  border-left: 5px solid #9b9b9b;    /* medium grey accent */
   border-radius: 10px;
   padding: 0.9rem 1rem;
   margin: 1rem auto 0.75rem;         /* tighter top to sit right after hero */
   max-width: 800px;
   font-size: 0.95rem;
   font-weight: 500;
-  color: #5b2b2b;                    /* deep brownish-red text */
+  color: #1a1a1a;                      
   text-align: center;
   box-shadow: 0 2px 6px rgba(0,0,0,0.06);
 }
