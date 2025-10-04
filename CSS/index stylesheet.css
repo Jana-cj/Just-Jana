@@ -4577,16 +4577,6 @@ html {
   }
 }
 
-/* Dark mode-friendly */
-@media (prefers-color-scheme: dark) {
-  .story-disclaimer {
-    background-color: #2a1f23;
-    border-left-color: #b96a7f;
-    color: #f4e9ec;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
-  }
-  .story-disclaimer strong { color: #e6b7c2; }
-}
 
 /* Mobile tweaks */
 @media (max-width: 768px) {
