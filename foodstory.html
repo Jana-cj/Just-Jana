@@ -414,8 +414,6 @@
 </div>
 <br>
 
-<!-- Sentinel: used only on mobile to delay the disclaimer -->
-<div id="afterHeroSentinel" aria-hidden="true" style="height:1px;"></div>
 
 
 <!-- Story Disclaimer (scroll-reveal, after hero) -->
@@ -1012,34 +1010,14 @@
     </script>
 <script>
 /* ===========================================================
-   Just Jana - Story stagger reveal (mobile-delayed disclaimer)
+   Just Jana - Story stagger reveal (text → image → center)
    =========================================================== */
 (function () {
   const blocks = Array.from(document.querySelectorAll('.story-block'));
   const centerWrap = document.querySelector('.center-wrapper');
 
-  // Mobile check (live, so it updates on rotation)
-  const mqMobile = window.matchMedia('(max-width: 768px)');
-  const isMobileNow = () => mqMobile.matches;
-
-  // Mobile-only: track when we've scrolled past the hero area
-  let pastHero = false;
-  const sentinel = document.getElementById('afterHeroSentinel');
-
-  if (sentinel && 'IntersectionObserver' in window) {
-    const sentinelObserver = new IntersectionObserver((entries) => {
-      const e = entries[0];
-      // When the sentinel is NOT intersecting, we are past the hero
-      pastHero = !e.isIntersecting;
-    }, { root: null, threshold: 0 });
-    sentinelObserver.observe(sentinel);
-  } else {
-    // Fallback if no sentinel or IO: mark pastHero only after any scroll on mobile
-    window.addEventListener('scroll', () => { if (isMobileNow()) pastHero = true; }, { passive: true });
-  }
-
   if (!('IntersectionObserver' in window)) {
-    // Fallback: reveal everything
+    // Fallback: reveal everything if IO isn't supported
     blocks.forEach(b => {
       b.classList.add('already-seen');
       b.querySelector('.story-text')?.classList.add('is-revealed');
@@ -1049,6 +1027,7 @@
     return;
   }
 
+  // Reveal one block's children with a stagger
   function revealBlock(block) {
     const text = block.querySelector('.story-text');
     const img  = block.querySelector('.story-image');
@@ -1056,40 +1035,32 @@
     if (text && !text.classList.contains('is-revealed')) {
       text.classList.add('is-revealed');
     }
+    // image second (small delay for a clear stagger)
     if (img && !img.classList.contains('is-revealed')) {
+      // If user scrolled super fast, we still stagger a touch
       setTimeout(() => img.classList.add('is-revealed'), 200);
     }
   }
 
+  // Observer for story blocks
   const blockObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       const block = entry.target;
-
-      // MOBILE-ONLY: delay the disclaimer until we're past the hero and it's mostly visible
-      if (isMobileNow() && block.classList.contains('disclaimer-block')) {
-        // Require: pastHero + at least 60% of the disclaimer visible
-        if (!pastHero || entry.intersectionRatio < 0.6) {
-          return; // keep observing until conditions are met
-        }
-      }
-
       if (entry.isIntersecting) {
         revealBlock(block);
+        // Mark as seen and stop observing to avoid re-trigger
         block.classList.add('already-seen');
         blockObserver.unobserve(block);
       }
     });
   }, {
     root: null,
-    // Desktop stays the same; mobile gets a slightly stricter trigger overall
-    threshold: isMobileNow() ? 0.6 : 0.18,
-    // On mobile, nudge so it won't fire when the element barely touches viewport bottom
-    rootMargin: isMobileNow() ? '0px 0px -15%' : '0px'
+    threshold: 0.18   // triggers a bit before fully in view
   });
 
   blocks.forEach(b => blockObserver.observe(b));
 
-  // Final centered message observer (unchanged, with a mild mobile tweak)
+  // Observer for center wrapper (final reveal)
   if (centerWrap) {
     const centerObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -1098,21 +1069,11 @@
           centerObserver.unobserve(centerWrap);
         }
       });
-    }, { threshold: isMobileNow() ? 0.4 : 0.18 });
+    }, { threshold: 0.18 });
     centerObserver.observe(centerWrap);
   }
-
-  // If the user crosses the mobile breakpoint (orientation change), reflow logic
-  mqMobile.addEventListener?.('change', () => {
-    // Re-observe blocks so thresholds/rootMargins update to new mode
-    blocks.forEach(b => {
-      try { blockObserver.unobserve(b); } catch {}
-      blockObserver.observe(b);
-    });
-  });
 })();
 </script>
-
 <script>
   // Trigger the mobile hero sequence only on small screens,
   // and only when the banner is actually in view.
