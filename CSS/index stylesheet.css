@@ -4565,7 +4565,7 @@ html {
 }
 
 .story-disclaimer strong {
-  color: #a34b4b;                    /* darker tone for label */
+  color: #000000;  
   font-weight: 700;
 }
 
