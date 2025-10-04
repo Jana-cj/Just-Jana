@@ -4534,23 +4534,27 @@ html {
 }
 
 .story-disclaimer {
-  background-color: #f7f3f5;        /* soft blush background */
-  border-left: 4px solid #c6a0b1;   /* gentle mauve accent */
+  background-color: #fff7e6;         /* warm light amber background */
+  border-left: 5px solid #e69a00;    /* deeper amber border for emphasis */
   border-radius: 8px;
-  padding: 0.75rem 1rem;
+  padding: 0.9rem 1rem;
   margin: 1.5rem auto;
   max-width: 800px;
   font-size: 0.95rem;
-  font-style: italic;
-  color: #3b2f2f;
+  font-weight: 500;
+  color: #5a3b00;                    /* darker brown text for contrast */
   text-align: center;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+.story-disclaimer strong {
+  color: #b35a00;                    /* emphasize the "Disclaimer:" label */
 }
 
 @media (max-width: 768px) {
   .story-disclaimer {
     margin: 1rem 1rem;
     font-size: 0.9rem;
-    padding: 0.75rem;
+    padding: 0.8rem;
   }
 }
