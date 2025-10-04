@@ -4601,13 +4601,18 @@ html {
 }
 
 /* OPTIONAL: keep your fs-callout look for inline quotes in blocks */
-.fs-callout{
+.fs-callout {
+  display: inline-block;            /* shrink-wrap width to content */
   border-left: 4px solid #c6a0b1;
   padding: .5rem .75rem;
   background: #f7f3f5;
   border-radius: 8px;
   font-style: italic;
+  text-align: center;
+  margin: 0.75rem auto;             /* centers it horizontally */
+  max-width: 90%;                   /* prevent overflow on small screens */
 }
+
 
 /* Reveal for each block’s text (works with your fs-* reveal script) */
 @media (prefers-reduced-motion: no-preference){
