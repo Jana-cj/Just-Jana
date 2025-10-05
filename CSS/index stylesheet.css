@@ -2018,12 +2018,6 @@ color: #7b7b7b;
 }
 }
 
-.thepillars{
-  width: 70%;           /* pick how wide you want the section */
-  margin: 0 auto;       /* centers the block horizontally */
-  text-align: left;     /* aligns the text inside to the left */
-}
-
 
 .content-container {
   display: flex;
@@ -2143,6 +2137,99 @@ color: #7b7b7b;
   margin-top: 20px;
 }
 
+/* ========== Pillars grid (Just Jana style) ========== */
+:root{
+  --jj-bg: #fdf4f1;           /* matches your quote card background */
+  --jj-ink: #333333;          /* body text */
+  --jj-accent: #a86f75;       /* warm rose (buttons) */
+  --jj-accent-ink: #6f3b41;   /* darker rose for titles */
+  --jj-soft: rgba(168,111,117,0.10);
+}
+
+.pillars-grid{
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.1rem;
+  margin: 1.25rem auto 0;
+  max-width: 980px;           /* sits nicely inside your quote box */
+  padding: 0 .25rem;
+}
+
+.pillar-card{
+  background: radial-gradient(120% 140% at 10% 0%, #fff 0%, var(--jj-bg) 70%)
+              ,linear-gradient(180deg, rgba(255,255,255,.7), rgba(255,255,255,.6));
+  border: 1px solid rgba(0,0,0,0.04);
+  border-radius: 18px;
+  padding: 1.1rem .95rem 1.15rem;
+  text-align: center;
+  box-shadow: 0 8px 26px rgba(0,0,0,0.06);
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.pillar-card::after{
+  /* faint inner glow for the JJ vibe */
+  content:"";
+  position:absolute; inset:0;
+  background: linear-gradient(180deg, var(--jj-soft), transparent 40%);
+  pointer-events:none;
+  border-radius: inherit;
+}
+
+.pillar-card:hover{
+  transform: translateY(-4px);
+  box-shadow: 0 14px 34px rgba(0,0,0,0.10);
+  border-color: rgba(168,111,117,.25);
+}
+
+.pillar-icon{
+  width: 56px; height: 56px;
+  margin: .25rem auto .6rem;
+  display: block;
+  filter: drop-shadow(0 2px 2px rgba(0,0,0,.06));
+}
+
+.pillar-title{
+  font-size: 1.05rem;
+  line-height: 1.2;
+  margin: .15rem 0 .4rem;
+  color: var(--jj-accent-ink);
+  font-weight: 600;
+  letter-spacing: .2px;
+}
+
+.pillar-desc{
+  margin: 0 auto;
+  color: var(--jj-ink);
+  font-size: .95rem;
+  line-height: 1.55;
+  max-width: 28ch;            /* keeps every card tidy and readable */
+}
+
+/* Align with your quote card container */
+.quote-text .pillars-grid{ margin-top: .8rem; }
+
+/* Accessibility: focus ring for keyboard users */
+.pillar-card:focus-within,
+.pillar-card:focus{
+  outline: 2px solid rgba(168,111,117,.45);
+  outline-offset: 3px;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 1024px){
+  .pillars-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 600px){
+  .pillars-grid{ grid-template-columns: 1fr; gap: .9rem; }
+  .pillar-icon{ width: 52px; height: 52px; }
+  .pillar-title{ font-size: 1rem; }
+  .pillar-desc{ font-size: .95rem; max-width: 35ch; }
+}
+
+
 
 .read-story-btn {
   color: #ffffff;
@@ -2224,15 +2311,7 @@ color: #7b7b7b;
   }
 }
 
-/* On small screens (mobile) */
-@media (max-width: 768px) {
-  .thepillars {
-    width: 100%;        /* take full width */
-    margin: 0;          /* no auto centering */
-    padding: 0 15px;    /* optional: add side padding */
-    text-align: left;   /* force left alignment */
-  }
-}
+
 
 /* What Just Jana stands for  */
 .jana-values-section {
