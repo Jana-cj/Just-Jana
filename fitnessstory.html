@@ -112,7 +112,7 @@
                 </a>
                 
                 <ul class="dropdown-menu jj-surface p-3" aria-labelledby="dropdownAbout">
-                    <li><a class="dropdown-item" href="janasstory.html">The Story Behind Just Jana</a></li> 
+                    <li><a class="dropdown-item" href="janasstory.html" class="requires-preface" data-preface-key="story-jana-journey"></a>>The Story Behind Just Jana</a></li> 
                   <li><a class="dropdown-item" href="missionvalues.html">Our Mission & Values</a></li>
                   <li><hr class="dropdown-divider"></li>
 <li class="dropdown-submenu submenu-end">
@@ -144,7 +144,7 @@
         <div class="mega-col">
           <h6 class="dropdown-header">Move to heal</h6>
           <a class="dropdown-item" href="movement.html">Importance of Movement</a>
-          <a class="dropdown-item" href="fitnessstory.html"><span style="color:#252525"><strong>My Fitness Journey</strong></span></a>
+          <a class="dropdown-item" href="fitnessstory.html" class="requires-preface" data-preface-key="story-fitness-journey"></a>><span style="color:#252525"><strong>My Fitness Journey</strong></span></a>
           <a class="dropdown-item" href="#">Fitness Programs</a>
           <a class="dropdown-item" href="#">Balancing Strength, Cardio & Flexibility</a>
           <a class="dropdown-item" href="#">Understand Your Body</a>
@@ -154,7 +154,7 @@
         <div class="mega-col">
           <h6 class="dropdown-header">Nourish & Restore</h6>
           <a class="dropdown-item" href="#">Nutrition</a>
-          <a class="dropdown-item" href="foodstory.html">My Journey With Food</a>
+          <a class="dropdown-item" href="foodstory.html" class="requires-preface" data-preface-key="story-food-journey"></a>>My Journey With Food</a>
           <a class="dropdown-item" href="#">Recovery & Rest</a>
           <a class="dropdown-item" href="#">Environment & Health</a>
         </div>
@@ -269,8 +269,8 @@
         <!-- EMBRACING UNIQUENESS -->
         <div class="mega-col">
           <h6 class="dropdown-header">Embracing Uniqueness</h6>
-          <a class="dropdown-item" href="hair.html">My Curly Hair Journey</a>
-          <a class="dropdown-item" href="skin.html">My Tan Skin Journey</a>
+          <a class="dropdown-item" href="hair.html" class="requires-preface" data-preface-key="story-hair-journey"></a>>My Curly Hair Journey</a>
+          <a class="dropdown-item" href="skin.html" class="requires-preface" data-preface-key="story-skin-journey"></a>>My Tan Skin Journey</a>
           <a class="dropdown-item" href="#">Honouring Uniqueness As Beauty</a>
           <a class="dropdown-item" href="#">Courage in Authenticity</a>
         </div>
@@ -315,7 +315,7 @@
               <li><a class="dropdown-item" href="musicmeaning.html">Behind the Music</a></li>
             </ul>
           </div>
-          <a class="dropdown-item" href="musicstory.html">My Music Journey</a>
+          <a class="dropdown-item" href="musicstory.html" class="requires-preface" data-preface-key="story-music-journey"></a>>My Music Journey</a>
         </div>
 
                 <!-- CONNECTION -->
@@ -821,6 +821,39 @@
     </footer>
 
 
+    <!-- Just Jana - Story Preface Gate -->
+<div id="jj-preface-overlay" class="jjp-overlay" aria-hidden="true">
+  <div class="jjp-dialog" role="dialog" aria-modal="true" aria-labelledby="jjp-title" aria-describedby="jjp-body">
+    <button class="jjp-close" type="button" aria-label="Close preface">&times;</button>
+
+    <h3 id="jjp-title">🌸 A Note Before You Read</h3>
+
+    <div id="jjp-body" class="jjp-content">
+      <p>The stories I share here are not written to blame or shame anyone.<br>
+      They are shared to bring awareness to the patterns many of us inherit - the unspoken wounds, expectations, and cultural norms that quietly shape who we become.</p>
+
+      <p>Every person in my story is also a product of their own environment - their own unhealed pain, conditioning, and survival patterns.
+      I don’t hold anger toward them, nor do I want others to. I see them as part of a much larger story - one that spans generations.</p>
+
+      <p>My hope is not to divide, but to heal.</p>
+
+      <p>These reflections are about understanding - not accusing - and about learning to rewrite the story together.
+      Because when we choose awareness over silence, compassion over resentment, we begin to break the cycle for everyone who comes after us.</p>
+
+      <p><strong>This is not about me versus them - it’s about us, healing as a generation ❤️</strong></p>
+    </div>
+
+    <label class="jjp-optout">
+      <input id="jjp-dontshow" type="checkbox">
+      Don’t show this again for this story
+    </label>
+
+    <div class="jjp-actions">
+      <button id="jjp-cancel" type="button" class="jjp-btn jjp-btn-ghost">Take me back</button>
+      <button id="jjp-continue" type="button" class="jjp-btn jjp-btn-primary">I understand - continue</button>
+    </div>
+  </div>
+</div>
 
     <script>
       /* ========================================================================== 
