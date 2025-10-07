@@ -1365,7 +1365,10 @@ if (HOVER_DEVICE.matches) {
         }, {passive:true});
         viewport.addEventListener('pointermove', e=>{ if(!down) return; const dx=e.clientX-startX; drag=Math.max(drag,Math.abs(dx)); x=x0-dx; render(); }, {passive:true});
         function endPtr(){ if(!down) return; down=false; try{viewport.releasePointerCapture(pid);}catch(_){}
-          if(drag<DRAG_THRESHOLD && downA && downA.href){ window.location.href = downA.href; }
+          if (drag < DRAG_THRESHOLD && downA && downA.href) {
+  downA.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+}
+
           end(); drag=0; downA=null;
         }
         viewport.addEventListener('pointerup', endPtr, {passive:true});
