@@ -36,6 +36,14 @@
   color: #6c4c59;                            /* muted mauve */
 }
 
+.jjp-content {
+  flex: 1 1 auto;
+  min-height: 0;                /* <-- crucial for mobile */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  touch-action: auto;           /* in case something sets touch-action globally */
+}
+
 .jjp-content p {
   margin: 0 0 0.85rem 0;
   line-height: 1.6;
@@ -121,6 +129,7 @@
   display: flex;
   flex-direction: column;
   max-height: 90vh;               /* desktop/tablet guard */
+  min-height: 0;
 }
 
 /* the long text area should scroll, not overflow off-screen */
@@ -152,6 +161,7 @@
     max-width: 640px;
     /* fill the safe viewport height without being cut off */
     max-height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 24px);
+    min-height: 0;
   }
 
   /* slightly larger tap targets on mobile */
