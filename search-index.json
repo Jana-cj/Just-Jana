@@ -11,7 +11,9 @@
     "url": "janasstory.html",
     "section": "About",
     "tags": ["about", "journey","learned helplessness","vegan","femur fracture","featherfall","calisthenics"],
-    "content": "I grew up being told to shrink... This is where I began reclaiming myself..."
+    "content": "I grew up being told to shrink... This is where I began reclaiming myself...",
+    "preface": true,
+    "prefaceKey": "story-jana-journey"
   },
   {
     "title": "My Music Journey",
