@@ -179,3 +179,63 @@
     padding-right: 6px; /* avoids content cutoff by scrollbar */
   }
 }
+
+/* ==== iOS fixed+blur scroll fix: move blur off the scroll container ==== */
+
+/* 1) Overlay: no scrolling here, just a shell */
+.jjp-overlay {
+  overflow: hidden;                 /* was auto — prevent nested scroll conflict */
+  height: 100dvh;                   /* stable mobile viewport */
+  align-items: flex-start;          /* start from top on mobile */
+}
+
+/* 2) Put the blur + veils on a pseudo element that doesn't scroll */
+.jjp-overlay::before {
+  content: "";
+  position: fixed;                  /* separate layer from modal content */
+  inset: 0;
+  background:
+    radial-gradient(1200px 800px at 20% 10%, rgba(250, 236, 242, 0.45), transparent 60%),
+    radial-gradient(1000px 700px at 85% 90%, rgba(243, 229, 234, 0.35), transparent 60%),
+    rgba(30, 18, 22, 0.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  pointer-events: none;             /* don't block clicks */
+  z-index: 0;
+}
+
+/* 3) Lift the dialog above the pseudo blur */
+.jjp-dialog {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100dvh - 24px);  /* ensure overflow happens */
+  min-height: 0;                    /* CRUCIAL for flex shrink */
+  overflow: hidden;                 /* contain inner scrollbars */
+  will-change: transform;           /* nudge iOS compositing */
+}
+
+/* 4) Make ONLY the content scroll */
+.jjp-content {
+  flex: 1 1 auto;
+  min-height: 0;                    /* CRUCIAL on iOS */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  transform: translateZ(0);         /* force own layer (iOS quirk) */
+  padding-right: 6px;               /* avoid text under scrollbar */
+}
+
+/* 5) Safe areas on small screens */
+@media (max-width: 480px) {
+  .jjp-overlay {
+    padding: max(12px, env(safe-area-inset-top)) 16px
+             max(16px, env(safe-area-inset-bottom)) 16px;
+  }
+  .jjp-dialog {
+    width: 100%;
+    max-width: 640px;
+    max-height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 24px);
+  }
+}
