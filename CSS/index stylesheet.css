@@ -2221,6 +2221,38 @@ color: #7b7b7b;
   }
 }
 
+@media (min-width: 800px) {
+
+  .content-container {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 3rem;
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+
+  /* Move the photo and name slightly left */
+  .profile-section {
+    align-items: flex-end;
+    text-align: right;
+    margin-right: -1rem; /* shift left slightly */
+    flex: 1;
+  }
+
+  /* Slightly enlarge text box width */
+  .quote-text {
+    max-width: 850px;  /* previously 700 */
+    padding: 2rem 2rem;
+    text-align: left; /* optional: looks cleaner on desktop */
+  }
+
+  /* Keep the quote-section aligned with enough breathing room */
+  .quote-section {
+    flex: 2;
+    padding: 2rem 1rem;
+  }
+}
 
 
 /* What Just Jana stands for  */
