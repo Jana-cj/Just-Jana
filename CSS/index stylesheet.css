@@ -375,11 +375,6 @@ header{ height: var(--nav-h); }
   z-index: 9999;  /* stay on top */
 }
 
-@media (min-width:1200px){
-  .dropdown-submenu.submenu-body > .dropdown-menu {
-    min-width: 360px !important; /* specific width for that submenu */
-  }
-}
 
 
 /* Center nav titles across the full bar on desktop (≥1200px) */
