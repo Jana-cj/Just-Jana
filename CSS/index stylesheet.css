@@ -1701,25 +1701,10 @@ html{ -webkit-text-size-adjust: 100%; }
   overflow:hidden;
   /* soft yellow -> blush pink -> purple */
   background: linear-gradient(90deg, #f6ddbd 0%, #f6cecc 50%, #f5bfdd 100%);
-  background-size: 300% 300%;
-  animation: gradientMove 60s ease infinite;
   
   /* spacing tuned for big screens */
   padding: clamp(72px, 14vh, 160px) 0 clamp(48px, 10vh, 120px);
   min-height: clamp(520px, 70vh, 760px);
-}
-
-/* Animate the gradient shifting left to right and back */
-@keyframes gradientMove {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
 }
 
 .hero-inner{
