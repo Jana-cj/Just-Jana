@@ -1727,6 +1727,24 @@ document.addEventListener('DOMContentLoaded', async () => {
 })();
 </script>
 
+<!-- Auto-close mobile nav bar when clicking internal anchor links -->
+ <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const navbarCollapse = document.querySelector('.navbar-collapse');
+    const navbarToggler = document.querySelector('.navbar-toggler');
+    const navLinks = document.querySelectorAll('.navbar-collapse a[href^="/#"], .navbar-collapse a[href^="#"]');
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        if (navbarCollapse.classList.contains('show')) {
+          const bsCollapse = new bootstrap.Collapse(navbarCollapse, { toggle: true });
+          bsCollapse.hide();
+        }
+      });
+    });
+  });
+</script>
+
 
 
   </body>
