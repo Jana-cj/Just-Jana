@@ -1288,6 +1288,48 @@
 })();
 </script>
 
+<!-- Smoother scroll to designated location -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const navbarCollapse = document.querySelector(".navbar-collapse");
+  const navLinks = document.querySelectorAll('.navbar-collapse a[href^="/#"], .navbar-collapse a[href^="#"]');
+
+  function smoothScrollTo(target) {
+    if (!target) return;
+    const yOffset = -80; // offset to account for sticky header height
+    const y = target.getBoundingClientRect().top + window.pageYOffset + yOffset;
+
+    // Use smooth animation for ~700 ms with easing
+    window.scrollTo({
+      top: y,
+      behavior: "smooth"
+    });
+  }
+
+  navLinks.forEach(link => {
+    link.addEventListener("click", function(e) {
+      const href = this.getAttribute("href");
+      const id = href.replace("/#", "").replace("#", "");
+      const target = document.getElementById(id);
+
+      // Prevent instant browser jump
+      e.preventDefault();
+
+      // Close mobile navbar if open
+      if (navbarCollapse && navbarCollapse.classList.contains("show")) {
+        const bsCollapse = new bootstrap.Collapse(navbarCollapse, { toggle: true });
+        bsCollapse.hide();
+      }
+
+      // Delay a touch to allow navbar to start closing, then scroll
+      setTimeout(() => {
+        smoothScrollTo(target);
+      }, 250);
+    });
+  });
+});
+</script>
+
 
   </body>
 </html>
