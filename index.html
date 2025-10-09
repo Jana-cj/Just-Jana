@@ -1730,23 +1730,50 @@ document.addEventListener('DOMContentLoaded', async () => {
 })();
 </script>
 
-<!-- Auto-close mobile nav bar when clicking internal anchor links -->
- <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const navbarCollapse = document.querySelector('.navbar-collapse');
-    const navbarToggler = document.querySelector('.navbar-toggler');
-    const navLinks = document.querySelectorAll('.navbar-collapse a[href^="/#"], .navbar-collapse a[href^="#"]');
+<!-- Auto-close mobile nav bar - internal anchor links -->
 
-    navLinks.forEach(link => {
-      link.addEventListener('click', function() {
-        if (navbarCollapse.classList.contains('show')) {
-          const bsCollapse = new bootstrap.Collapse(navbarCollapse, { toggle: true });
-          bsCollapse.hide();
-        }
-      });
-    });
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const collapseEl = document.querySelector(".navbar-collapse");
+  if (!collapseEl) return;
+
+  collapseEl.addEventListener("click", function (e) {
+    const link = e.target.closest("a");
+    if (!link) return;
+
+    const isDropdownToggle = link.matches('[data-bs-toggle="dropdown"], .dropdown-toggle');
+    if (isDropdownToggle) return;
+
+    const href = link.getAttribute("href") || "";
+    const isInternalAnchor = href.startsWith("#") || href.startsWith("/#");
+    if (!isInternalAnchor) return;
+
+    const id = href.replace("/#", "").replace("#", "");
+    const target = document.getElementById(id);
+    if (!target) return;
+
+    e.preventDefault();
+
+    const scrollToTarget = () => {
+      const yOffset = -80;
+      const y = target.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    };
+
+    const bsCollapse = bootstrap.Collapse.getOrCreateInstance(collapseEl, { toggle: false });
+    if (collapseEl.classList.contains("show")) {
+      collapseEl.addEventListener("hidden.bs.collapse", function handler() {
+        collapseEl.removeEventListener("hidden.bs.collapse", handler);
+        scrollToTarget();
+      }, { once: true });
+      bsCollapse.hide();
+    } else {
+      scrollToTarget();
+    }
   });
+});
 </script>
+
 
 <!-- Smoother scroll to designated location -->
 <script>
