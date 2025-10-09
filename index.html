@@ -390,7 +390,7 @@
           <div class="quote-section">
             <div class="quote-text">
               <h2>Hey there, I’m <span>Jana</span> 🤗 </h2>
-              <p><em>Just Jana</em> &nbsp;is a safe and empowering space for anyone who has ever dimmed their light to fit in, worn masks to please others, or lost touch with who they truly are.</p>
+              <p><em>Just Jana</em> &nbsp;is a safe and empowering space I've created for anyone who has ever dimmed their light to fit in, worn masks to please others, or lost touch with who they truly are.</p>
               <p>This is a place to rise again - to reclaim your voice, your power, and your authentic self.</p>
               <p> Here, healing isn’t about becoming someone new. It’s about peeling away the layers of expectation, letting go of the masks, and remembering who you’ve always been.</p>
               <p>Healing with <em>Just Jana</em> &nbsp;is wholistic. It honours every part of you:</p>
@@ -1730,89 +1730,58 @@ document.addEventListener('DOMContentLoaded', async () => {
 })();
 </script>
 
-<!-- Auto-close mobile nav bar - internal anchor links -->
-
 <script>
 document.addEventListener("DOMContentLoaded", function () {
   const collapseEl = document.querySelector(".navbar-collapse");
   if (!collapseEl) return;
 
   collapseEl.addEventListener("click", function (e) {
-    const link = e.target.closest("a");
+    const link = e.target.closest("a[href]");
     if (!link) return;
 
-    const isDropdownToggle = link.matches('[data-bs-toggle="dropdown"], .dropdown-toggle');
-    if (isDropdownToggle) return;
-
     const href = link.getAttribute("href") || "";
-    const isInternalAnchor = href.startsWith("#") || href.startsWith("/#");
-    if (!isInternalAnchor) return;
 
-    const id = href.replace("/#", "").replace("#", "");
-    const target = document.getElementById(id);
-    if (!target) return;
-
-    e.preventDefault();
-
-    const scrollToTarget = () => {
-      const yOffset = -80;
-      const y = target.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: "smooth" });
-    };
-
-    const bsCollapse = bootstrap.Collapse.getOrCreateInstance(collapseEl, { toggle: false });
-    if (collapseEl.classList.contains("show")) {
-      collapseEl.addEventListener("hidden.bs.collapse", function handler() {
-        collapseEl.removeEventListener("hidden.bs.collapse", handler);
-        scrollToTarget();
-      }, { once: true });
-      bsCollapse.hide();
-    } else {
-      scrollToTarget();
+    // A. Ignore any dropdown toggles so submenus can open on mobile
+    const isTopDropdownToggle = link.matches('[data-bs-toggle="dropdown"], .dropdown-toggle');
+    const isSubmenuToggle     = link.matches('.submenu-toggle');
+    if (isTopDropdownToggle || isSubmenuToggle) {
+      // Let your existing submenu JS handle expand/collapse
+      return;
     }
-  });
-});
-</script>
 
-
-<!-- Smoother scroll to designated location -->
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  const navbarCollapse = document.querySelector(".navbar-collapse");
-  const navLinks = document.querySelectorAll('.navbar-collapse a[href^="/#"], .navbar-collapse a[href^="#"]');
-
-  function smoothScrollTo(target) {
-    if (!target) return;
-    const yOffset = -80; // offset to account for sticky header height
-    const y = target.getBoundingClientRect().top + window.pageYOffset + yOffset;
-
-    // Use smooth animation for ~700 ms with easing
-    window.scrollTo({
-      top: y,
-      behavior: "smooth"
-    });
-  }
-
-  navLinks.forEach(link => {
-    link.addEventListener("click", function(e) {
-      const href = this.getAttribute("href");
+    // B. Same-page anchors (/#mantra, #journeys): close then smooth-scroll
+    const isSamePageAnchor = href.startsWith("#") || href.startsWith("/#");
+    if (isSamePageAnchor) {
       const id = href.replace("/#", "").replace("#", "");
       const target = document.getElementById(id);
+      if (!target) return;
 
-      // Prevent instant browser jump
       e.preventDefault();
+      const scrollToTarget = () => {
+        const yOffset = -80; // match your header height
+        const y = target.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: "smooth" });
+      };
 
-      // Close mobile navbar if open
-      if (navbarCollapse && navbarCollapse.classList.contains("show")) {
-        const bsCollapse = new bootstrap.Collapse(navbarCollapse, { toggle: true });
+      const bsCollapse = bootstrap.Collapse.getOrCreateInstance(collapseEl, { toggle: false });
+      if (collapseEl.classList.contains("show")) {
+        collapseEl.addEventListener("hidden.bs.collapse", function handler() {
+          collapseEl.removeEventListener("hidden.bs.collapse", handler);
+          scrollToTarget();
+        }, { once: true });
         bsCollapse.hide();
+      } else {
+        scrollToTarget();
       }
+      return;
+    }
 
-      // Delay a touch to allow navbar to start closing, then scroll
-      setTimeout(() => {
-        smoothScrollTo(target);
-      }, 250);
-    });
+    // C. External or different-page links: close the sheet, then navigate normally
+    const isRealNav = !href.startsWith("javascript:") && !href.startsWith("mailto:") && !href.startsWith("tel:");
+    if (isRealNav && collapseEl.classList.contains("show")) {
+      // Do NOT preventDefault; allow normal navigation
+      bootstrap.Collapse.getOrCreateInstance(collapseEl, { toggle: false }).hide();
+    }
   });
 });
 </script>
