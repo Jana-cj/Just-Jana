@@ -1508,5 +1508,35 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 
+<!-- Force preface pop up -->
+ <script>
+document.addEventListener('DOMContentLoaded', function () {
+  // Automatically trigger preface if the user lands directly on a story page
+  const path = window.location.pathname;
+
+  // Add all story pages that should trigger the preface on load:
+  const storyMap = {
+    '/janasstory.html': 'story-jana-journey',
+    '/fitnessstory.html': 'story-fitness-journey',
+    '/foodstory.html': 'story-food-journey',
+    '/hair.html': 'story-hair-journey',
+    '/skin.html': 'story-skin-journey',
+    '/musicstory.html': 'story-music-journey',
+  };
+
+  // Check if current page matches one of them
+  if (storyMap[path]) {
+    // Avoid showing again if user ticked “Don’t show again”
+    const key = storyMap[path];
+    if (!sessionStorage.getItem('jj-preface-skip-' + key)) {
+      if (window.JJPreface && typeof JJPreface.show === 'function') {
+        JJPreface.show({ targetHref: null, key });
+      }
+    }
+  }
+});
+</script>
+
+
   </body>
 </html>
