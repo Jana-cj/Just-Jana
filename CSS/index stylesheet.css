@@ -2602,35 +2602,12 @@ color: #7b7b7b;
   .jj-journeys-viewport{ -webkit-mask-image: none; mask-image: none; }
 }
 
-/* ===================== My Journeys Heading Link ===================== */
-.jj-heading-link {
-  color: var(--jj-ink);
-  text-decoration: none;
-  font-family: "Playfair Display", serif;
-  font-weight: 600;
-  letter-spacing: 0.3px;
-  transition: color 0.3s ease, text-shadow 0.3s ease;
-  cursor: default;
-}
-
-/* Soft hover / focus styling for elegance */
-.jj-heading-link:hover,
-.jj-heading-link:focus {
-  color: var(--jj-accent); /* dusty rose accent */
-  text-shadow: 0 0 6px rgba(179,131,152,0.25);
-  outline: none;
-}
-
-/* Remove any harsh border when the anchor is clicked or targeted */
-.jj-heading-link:focus-visible,
-.jj-heading-link:target {
-  outline: none;
-  box-shadow: none;
-}
-
-/* Optional – slight bottom padding to balance the section visually */
-.jj-journeys-head h2 {
-  margin-bottom: 6px;
+/* Remove focus/target outline from My Journeys heading link */
+#journeys:focus,
+#journeys:target,
+#journeys:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 
