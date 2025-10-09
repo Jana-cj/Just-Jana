@@ -2185,47 +2185,55 @@ color: #7b7b7b;
   }
 }
 @media (min-width: 800px) {
+
   .content-container {
     flex-direction: row;
     align-items: flex-start;
-    justify-content: center;
+    justify-content: flex-start; /* changed from center to start */
     gap: 3rem;
-    max-width: 1300px;
+    max-width: 1400px;
     margin: 0 auto;
   }
-  
+
+  /* Move the profile image & name further left */
+  .profile-section {
+    flex: 1;
+    align-items: flex-end;
+    text-align: right;
+    margin-left: -80px; /* adjust this to move further left (-60 to -100) */
+  }
+
   .profile-image {
-    width: 180px;   
-    height: 180px;
+    width: 200px;   
+    height: 200px;
     object-fit: cover;
     border-radius: 50%;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.2rem;
     margin-top: 3rem; 
   }
 
-  /* Move the photo and name slightly left */
-  .profile-section {
-    align-items: flex-end;
-    text-align: right;
-    margin-right: -1rem; /* shift left slightly */
-    flex: 1;
+  .signature {
+    width: 300px;
   }
 
-
-  /* Keep the quote-section aligned with enough breathing room */
+  /* Keep text section wider and balanced */
   .quote-section {
-    flex: 2;
+    flex: 2.5;
     padding: 2rem 1rem;
   }
 
-  /* Slightly enlarge text box width */
   .quote-text {
-    max-width: 850px;  /* previously 700 */
-    padding: 2rem 2rem;
-    text-align: left; /* optional: looks cleaner on desktop */
+    max-width: 950px; /* increased from 850 */
+    padding: 2rem 3rem;
+    text-align: left;
+    margin: 0; /* ensures it sits closer to image */
   }
 
+  .quote-text::before {
+    transform: rotate(-1deg) skew(-1deg); /* slightly less tilt for wider box */
+  }
 }
+
 
 
 /* What Just Jana stands for  */
