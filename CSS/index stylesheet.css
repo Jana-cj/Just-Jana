@@ -2200,7 +2200,7 @@ color: #7b7b7b;
     flex: 1;
     align-items: flex-end;
     text-align: right;
-    margin-left: -100px; /* adjust this to move further left (-60 to -100) */
+    margin-left: -80px; /* adjust this to move further left (-60 to -100) */
   }
 
   .profile-image {
@@ -2209,6 +2209,7 @@ color: #7b7b7b;
     object-fit: cover;
     border-radius: 50%;
     margin-bottom: 1.2rem;
+    margin-left: -40px;
     margin-top: 3rem; 
   }
 
