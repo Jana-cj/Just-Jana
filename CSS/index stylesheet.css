@@ -224,6 +224,7 @@ header, .hero-wrap { margin-top: 0 !important; }
 .dropdown-submenu > .dropdown-menu{
   position:static; display:none;
     max-height: 320px;              /* tweak this */
+    min-width: 220px;
     overflow:auto;
     -webkit-overflow-scrolling:touch;
     border:0; box-shadow:none; background:transparent;
