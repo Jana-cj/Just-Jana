@@ -2227,7 +2227,7 @@ color: #7b7b7b;
   }
 
   .quote-text {
-    max-width: 950px; /* increased from 850 */
+    max-width: 970px; /* increased from 850 */
     padding: 2rem 3rem;
     text-align: center;
     margin: 0; /* ensures it sits closer to image */
