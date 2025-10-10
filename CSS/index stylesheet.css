@@ -2215,6 +2215,9 @@ color: #7b7b7b;
 
   .signature {
     width: 300px;
+    margin-top: 0.5rem;
+    position: relative;
+    left: 0; /* keep signature centered */
   }
 
   /* Keep text section wider and balanced */
