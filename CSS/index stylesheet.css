@@ -2201,6 +2201,7 @@ color: #7b7b7b;
     align-items: flex-end;
     text-align: right;
     margin-left: -80px; /* adjust this to move further left (-60 to -100) */
+    position: relative;
   }
 
   .profile-image {
@@ -2209,6 +2210,7 @@ color: #7b7b7b;
     object-fit: cover;
     border-radius: 50%;
     margin-bottom: 1.2rem;
+    position: relative; 
     left: -80px;
     margin-top: 3rem; 
   }
