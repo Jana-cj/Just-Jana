@@ -1597,6 +1597,85 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
+<script>
+  // Freeze on last frame (no looping)
+  document.addEventListener('DOMContentLoaded', () => {
+    const v = document.getElementById('heroLotusVideo');
+    if (!v) return;
+    v.loop = false;
+    v.addEventListener('ended', () => {
+      try {
+        // Nudge to just-before-end to keep the final frame visible
+        v.currentTime = Math.max(0, v.duration - 0.05);
+        v.pause();
+      } catch(_) {}
+    });
+  });
+</script>
+
+<!-- lotus animation -->
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const ANIM_MS = 2800; // matches your art
+  const anim = document.querySelector('#lotusAnim');
+  const stat = document.querySelector('#lotusStatic');
+  const root = document.querySelector('.hero-desktop');
+  if (!anim || !stat || !root) return;
+
+  // Pre-decode to avoid flashes
+  const decode = img => (img && img.decode ? img.decode().catch(()=>{}) : Promise.resolve());
+  await Promise.all([decode(anim), decode(stat)]);
+
+  // Force animated WebP to start at frame 0 (browser quirk)
+  const src = anim.currentSrc || anim.src;
+  anim.src = '';
+  void anim.offsetHeight;
+  anim.src = src;
+
+  // Swap to static after the animation time
+  setTimeout(() => {
+    anim.style.display = 'none';
+    stat.style.display = 'block';
+    root.classList.add('intro-done'); // stops intro-only nudges
+  }, ANIM_MS);
+});
+</script>
+
+<!-- mobile lotus animation -->
+<script>
+// Mobile lotus: show animation first (bigger, centered) → fade to static
+document.addEventListener('DOMContentLoaded', async () => {
+  const root = document.querySelector('.hero-mobile');
+  const anim = document.getElementById('lotusAnimM');
+  const stat = document.getElementById('lotusStaticM');
+  if (!root || !anim || !stat) return;
+
+  // Decode to prevent flashes on first paint
+  const decode = img => (img && img.decode ? img.decode().catch(()=>{}) : Promise.resolve());
+  await Promise.all([decode(anim), decode(stat)]);
+
+  // Force animated WebP to start at frame 0 (common browser quirk)
+  const src = anim.currentSrc || anim.src;
+  anim.src = '';
+  void anim.offsetHeight;  // reflow
+  anim.src = src;
+
+  // Show animation first; static stays invisible
+  anim.classList.add('is-on');
+  stat.classList.remove('is-on');
+
+  // If you know the exact length of the animated webp, match it here.
+  // Otherwise keep this close to the file's duration.
+  const DURATION_MS = 2800; // ← tweak to your animation length
+
+  setTimeout(() => {
+    anim.classList.remove('is-on');
+    anim.classList.add('is-off'); // fade-out animation
+    stat.classList.add('is-on');  // fade-in static
+    root.classList.add('intro-done');
+  }, DURATION_MS);
+});
+</script>
 
 </script>
 <!-- back to top button -->
@@ -1707,90 +1786,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 
-<script>
-// ===== Just Jana — Lotus plays once, then static (desktop + mobile) =====
-(function(){
-  function setupOnce(rootSel, animId, staticId, durationMs) {
-    const root = document.querySelector(rootSel);
-    const anim = document.getElementById(animId);
-    const stat = document.getElementById(staticId);
-    if (!root || !anim || !stat) return;
-
-    const isVideo = anim.tagName.toLowerCase() === 'video';
-    const DURATION = durationMs;
-    const decode = el => (el && el.decode ? el.decode().catch(()=>{}) : Promise.resolve());
-
-    function startFromZero(){
-      if (isVideo) {
-        anim.loop = false;
-        try { anim.pause(); } catch(e){}
-        try { anim.currentTime = 0; } catch(e){}
-        anim.play().catch(()=>{});
-      } else {
-        // Restart animated WebP/GIF from first frame
-        const src = anim.currentSrc || anim.src;
-        anim.src = ""; void anim.offsetWidth; anim.src = src;
-      }
-    }
-
-    function showStatic(){
-      if (isVideo) {
-        try { anim.pause(); } catch(e){}
-        anim.removeAttribute('src'); // prevent replay
-        try { anim.load(); } catch(e){}
-      } else {
-        try { anim.src = ""; } catch(e){}
-      }
-      anim.style.display = "none";
-      stat.style.display = "block";
-      root.classList.add('intro-done');
-    }
-
-    // Initial state
-    stat.style.display = "none";
-    anim.style.display = "block";
-    root.classList.remove('intro-done');
-
-    // Video path: rely on ended for precise stop
-    if (isVideo) {
-      anim.addEventListener('ended', showStatic, { once: true });
-      startFromZero();
-      return;
-    }
-
-    // Image path (animated WebP/GIF): visibility-aware timer
-    Promise.all([decode(anim), decode(stat)]).then(() => {
-      startFromZero();
-      let acc = 0, last = performance.now();
-      function tick(now){
-        if (document.hidden) { last = now; return requestAnimationFrame(tick); }
-        acc += (now - last);
-        last = now;
-        if (acc >= DURATION) {
-          showStatic();
-        } else {
-          requestAnimationFrame(tick);
-        }
-      }
-      requestAnimationFrame(ts => { last = ts; requestAnimationFrame(tick); });
-    });
-
-    // BFCache restore: restart from frame 0
-    window.addEventListener('pageshow', (e) => {
-      if (e.persisted) {
-        stat.style.display = "none";
-        anim.style.display = "block";
-        root.classList.remove('intro-done');
-        startFromZero();
-      }
-    });
-  }
-
-  // Set to your actual animated duration if not 3000ms
-  setupOnce('.hero-desktop', 'lotusAnim',  'lotusStatic', 3000);
-  setupOnce('.hero-mobile',  'lotusAnimM', 'lotusStaticM', 3000);
-})();
-</script>
 
 
 
