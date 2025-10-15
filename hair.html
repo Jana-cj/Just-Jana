@@ -1,6 +1,33 @@
 <!doctype html>
 <html lang="en">
   <head>
+
+    <script>
+(function () {
+  // If last page set the flag, show a minimal bar ASAP on this page
+  if (sessionStorage.getItem('jjProgressPending') === '1') {
+    var b = document.createElement('div');
+    b.id = 'jj-topbar';
+    // inline critical styles so it renders before CSS is loaded
+    b.style.cssText = [
+      'position:fixed','top:0','left:0','height:3px','width:0',
+      'z-index:99999','background:linear-gradient(90deg,#f6ddbd,#f6cecc,#f5bfdd)',
+      'box-shadow:0 0 10px rgba(0,0,0,.08)','transition:width .25s ease, opacity .25s ease',
+      'background-size:300% 100%','animation:jj-sheen 1.4s linear infinite'
+    ].join(';');
+    document.documentElement.appendChild(b);
+
+    // Keyframes for sheen (inline once)
+    var s = document.createElement('style');
+    s.textContent = '@keyframes jj-sheen{0%{background-position:0 0}100%{background-position:300% 0}}';
+    document.head.appendChild(s);
+
+    // Start at ~25% so it feels immediate
+    requestAnimationFrame(function(){ b.style.width = '25%'; });
+  }
+})();
+</script>
+
     
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -58,6 +85,10 @@
     <!-- Dates -->
     <meta itemprop="datePublished" content="2025-09-25">
     <meta itemprop="dateModified"  content="2025-09-25">
+  
+    <!-- multicolored load bar -->
+    <script src="/js/jj-progress.js" defer></script>
+  
   
   </head>
   

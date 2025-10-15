@@ -4628,3 +4628,18 @@ html {
   transform: none;
 }
 
+:root{
+  --jj-bar-1:#f6ddbd;
+  --jj-bar-2:#f6cecc;
+  --jj-bar-3:#f5bfdd;
+}
+#jj-topbar{
+  position:fixed; top:0; left:0; height:3px; width:0;
+  z-index:99999;
+  background:linear-gradient(90deg,var(--jj-bar-1),var(--jj-bar-2),var(--jj-bar-3));
+  background-size:300% 100%;
+  box-shadow:0 0 10px rgba(0,0,0,.08);
+  transition:width .25s ease, opacity .25s ease;
+  animation:jj-sheen 1.4s linear infinite;
+}
+@keyframes jj-sheen{0%{background-position:0 0}100%{background-position:300% 0}}
