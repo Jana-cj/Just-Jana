@@ -4532,6 +4532,82 @@ html {
    Food Story: alternating layout
    =============================== */
 
+/* === Just Jana – "Before You Go" content-only additions === */
+
+/* Headings inside the card */
+.highlight h2 {
+  font-size: clamp(1.25rem, 2.2vw, 1.6rem);
+  line-height: 1.2;
+  margin: 0 0 0.75rem;
+  letter-spacing: 0.2px;
+}
+
+.highlight h3.subtle {
+  font-size: clamp(1rem, 1.6vw, 1.1rem);
+  margin: 1.25rem 0 0.5rem;
+  font-weight: 600;
+  opacity: 0.95;
+}
+
+/* Body text */
+.highlight p {
+  margin: 0 0 0.9rem;
+  line-height: 1.65;
+  font-size: clamp(0.98rem, 1.2vw, 1.02rem);
+}
+
+.highlight p.muted,
+.muted {
+  color: var(--jj-smoke, #6e6e6e);
+}
+
+/* Soft list styling */
+.soft-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 1rem;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.soft-list li {
+  background: linear-gradient(
+    135deg,
+    rgba(246, 221, 189, 0.25),
+    rgba(245, 191, 221, 0.22)
+  );
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 14px;
+  padding: 0.7rem 0.85rem;
+  line-height: 1.55;
+}
+
+.soft-list li strong { font-weight: 700; }
+
+/* Links inside the card */
+.highlight a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+}
+
+/* Optional: dark mode tweaks (safe, non-destructive) */
+@media (prefers-color-scheme: dark) {
+  .highlight p.muted,
+  .muted { color: #bdbdbd; }
+
+  .soft-list li {
+    border-color: rgba(255,255,255,0.08);
+    background: linear-gradient(
+      135deg,
+      rgba(246, 221, 189, 0.12),
+      rgba(245, 191, 221, 0.10)
+    );
+  }
+}
+
+
 
 /* ===== Scroll-reveal states (hooks into your .story-text.is-revealed) ===== */
 .story-block .story-text .story-disclaimer {
