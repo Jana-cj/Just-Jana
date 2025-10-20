@@ -47,7 +47,7 @@
 
     
     <!-- Title of document -->
-    <title>Soul | Healing Compositions</title>
+    <title>Body | Importance of Movement</title>
 
     <!-- Classic ICO (multi-size) -->
 <link rel="icon" href="/favicon.ico" sizes="any">
@@ -433,7 +433,7 @@
   </header>
   <br><br><br><br>
 
-  <main id="jj-movement">
+<main id="jj-movement">
   <!-- 1) WHY MOVEMENT MATTERS -->
   <section class="card jj-why">
     <h2>Why movement matters (quick + human)</h2>
@@ -471,26 +471,6 @@
         (<a href="https://pure.qub.ac.uk/files/308934430/jamapsychiatry_pearce_2022_oi_220016_1648515922.50197.pdf" target="_blank" rel="noopener">JAMA Psychiatry 2022 meta-analysis</a>)
       </li>
     </ul>
-
-    <details class="jj-reflect">
-      <summary>Gentle check-in (click)</summary>
-      <div class="jj-grid-2">
-        <label class="prompt">My body feels… 
-          <select id="bodyFeel">
-            <option>stiff</option><option>sluggish</option><option>antsy</option>
-            <option>tired</option><option>energised</option>
-          </select>
-        </label>
-        <label class="prompt">My mind feels…
-          <select id="mindFeel">
-            <option>foggy</option><option>overwired</option><option>flat</option>
-            <option>focused</option>
-          </select>
-        </label>
-      </div>
-      <button class="jj-btn" data-action="suggest">Suggest a tiny next step</button>
-      <p class="jj-suggestion" aria-live="polite"></p>
-    </details>
   </section>
 
   <!-- 2) WHAT KIND OF MOVEMENT -->
@@ -498,31 +478,55 @@
     <h2>What kinds of movement help?</h2>
     <div class="jj-grid-3 cards">
       <article class="mini">
+        <div class="icon-wrap incidental" aria-hidden="true">
+          <!-- Footsteps icon -->
+          <svg viewBox="0 0 64 64"><path d="M21 12c8 0 9 10 7 14s-7 7-10 7-7-2-7-7 2-14 10-14zM44 30c8 0 9 10 7 14s-7 7-10 7-7-2-7-7 2-14 10-14z" fill="currentColor"/></svg>
+        </div>
         <h3>Incidental</h3>
         <p>Steps, stairs, chores, errands on foot, walking meetings, play.</p>
         <button class="jj-btn sm" data-preset="incidental">+ a little today</button>
       </article>
       <article class="mini">
+        <div class="icon-wrap cardio" aria-hidden="true">
+          <!-- Heartbeat icon -->
+          <svg viewBox="0 0 64 64"><path d="M8 26c0-8 6-14 14-14 8 0 12 6 14 9 2-3 6-9 14-9 8 0 14 6 14 14 0 20-28 28-28 28S8 46 8 26z" fill="none" stroke="currentColor" stroke-width="4"/></svg>
+        </div>
         <h3>Cardio (mostly easy)</h3>
-        <p>Brisk walks, cycling, swimming, rowing. Conversational pace most days; add hills occasionally.</p>
+        <p>Brisk walks, cycling, swimming. Conversational pace; add hills sometimes.</p>
         <button class="jj-btn sm" data-preset="cardio">Plan 20 min</button>
       </article>
       <article class="mini">
+        <div class="icon-wrap strength" aria-hidden="true">
+          <!-- Dumbbell icon -->
+          <svg viewBox="0 0 64 64"><path d="M10 24h8v16h-8zM46 24h8v16h-8zM18 30h28v4H18z" fill="currentColor"/></svg>
+        </div>
         <h3>Strength</h3>
         <p>2×/week full-body: squat • hinge • push • pull • carry. 20–40 min.</p>
         <button class="jj-btn sm" data-preset="strength">Pick 4 moves</button>
       </article>
       <article class="mini">
+        <div class="icon-wrap mobility" aria-hidden="true">
+          <!-- Stretch/yoga icon -->
+          <svg viewBox="0 0 64 64"><path d="M32 10a6 6 0 110 12 6 6 0 010-12zm-6 14l6 8 6-8 8 8-8 10H20l-8-10 8-8z" fill="currentColor"/></svg>
+        </div>
         <h3>Mobility</h3>
         <p>Neck, T-spine, hips, ankles. 5–10 min for posture, range, comfort.</p>
         <button class="jj-btn sm" data-preset="mobility">5-min flow</button>
       </article>
       <article class="mini">
+        <div class="icon-wrap micro" aria-hidden="true">
+          <!-- Hourglass icon -->
+          <svg viewBox="0 0 64 64"><path d="M16 10h32v8L36 30l12 12v12H16V42l12-12L16 18V10z" fill="currentColor"/></svg>
+        </div>
         <h3>Micro-breaks</h3>
         <p>2–3 min every 30–45 min: stand, stroll, calf raises, doorway pec stretch.</p>
         <button class="jj-btn sm" data-action="timer">Start 3-min timer</button>
       </article>
       <article class="mini">
+        <div class="icon-wrap play" aria-hidden="true">
+          <!-- Sparkles/Play icon -->
+          <svg viewBox="0 0 64 64"><path d="M18 10l3 8 8 3-8 3-3 8-3-8-8-3 8-3 3-8zm28 18l2 6 6 2-6 2-2 6-2-6-6-2 6-2 2-6z" fill="currentColor"/></svg>
+        </div>
         <h3>Play & Skill</h3>
         <p>Dance, sport, balance, skipping, handstands—joy counts as training.</p>
         <button class="jj-btn sm" data-preset="play">Schedule 10 min</button>
@@ -532,7 +536,12 @@
     <div class="jj-score">
       <div>
         <span class="label">Today’s Move Tally</span>
-        <strong><span id="jj-steps">0</span> steps • <span id="jj-stand">0</span> min stand • <span id="jj-mob">0</span> min mobility</strong>
+        <strong>
+          <span id="jj-steps">0</span> steps • 
+          <span id="jj-stand">0</span> min stand • 
+          <span id="jj-mob">0</span> min mobility • 
+          <span id="jj-str">0</span> strength blocks
+        </strong>
       </div>
       <button class="jj-btn ghost" data-action="reset">Reset</button>
     </div>
@@ -563,9 +572,30 @@
     </div>
   </section>
 
+  <!-- moved here: gentle check-in -->
+  <section class="card jj-checkin">
+    <h2>Gentle check-in</h2>
+    <div class="jj-grid-2">
+      <label class="prompt">My body feels… 
+        <select id="bodyFeel">
+          <option>stiff</option><option>sluggish</option><option>antsy</option>
+          <option>tired</option><option>energised</option>
+        </select>
+      </label>
+      <label class="prompt">My mind feels…
+        <select id="mindFeel">
+          <option>foggy</option><option>overwired</option><option>flat</option>
+          <option>focused</option>
+        </select>
+      </label>
+    </div>
+    <button class="jj-btn" data-action="suggest">Suggest a tiny next step</button>
+    <p class="jj-suggestion" aria-live="polite"></p>
+  </section>
+
   <section class="card jj-planner">
     <h2>Your gentle weekly rhythm</h2>
-    <p>Use the slider to set a step goal that meets you where you are. Tap days to sketch 2× Strength, sprinkle Mobility most days.</p>
+    <p>Use the slider to set a step goal that meets you where you are. Tap days to cycle <em>None → Strength → Cardio → Mobility</em>.</p>
     <div class="planner-ui">
       <label>Daily steps goal: 
         <input id="stepGoal" type="range" min="3000" max="12000" step="500" value="7000" />
@@ -593,16 +623,18 @@
 
   <section class="card jj-tips">
     <h2>Practical ways to move more at work</h2>
-    <ul class="checks">
-      <li><label><input type="checkbox"> First & last call of the day = walk-n-talk.</label></li>
-      <li><label><input type="checkbox"> “Stand & sip” cue every 40 min (water + 2-min stretch).</label></li>
-      <li><label><input type="checkbox"> Meetings ≤30 min? Make them walk-and-talk when possible.</label></li>
-      <li><label><input type="checkbox"> Keep a mini kit visible: band + lacrosse ball + skipping rope.</label></li>
-      <li><label><input type="checkbox"> Lunch rule: 10-min walk before you eat; 3–5 min stroll after.</label></li>
-      <li><label><input type="checkbox"> Commute add-on: park 5–10 min away or hop off a stop early.</label></li>
-      <li><label><input type="checkbox"> Calendar two 25–35 min strength blocks this week.</label></li>
-      <li><label><input type="checkbox"> 5-min evening mobility while a show loads.</label></li>
-    </ul>
+    <div class="tips-wrap">
+      <ul class="checks">
+        <li><label><input type="checkbox"> First & last call of the day = walk-n-talk.</label></li>
+        <li><label><input type="checkbox"> “Stand & sip” cue every 40 min (water + 2-min stretch).</label></li>
+        <li><label><input type="checkbox"> Meetings ≤30 min? Make them walk-and-talk when possible.</label></li>
+        <li><label><input type="checkbox"> Keep a mini kit visible: band + lacrosse ball + skipping rope.</label></li>
+        <li><label><input type="checkbox"> Lunch rule: 10-min walk before; 3–5 min stroll after.</label></li>
+        <li><label><input type="checkbox"> Commute add-on: park 5–10 min away or hop off a stop early.</label></li>
+        <li><label><input type="checkbox"> Calendar two 25–35 min strength blocks this week.</label></li>
+        <li><label><input type="checkbox"> 5-min evening mobility while a show loads.</label></li>
+      </ul>
+    </div>
   </section>
 
   <section class="card jj-kind">
@@ -624,15 +656,17 @@
     --jj-ring: rgba(245,191,221,.55);
     --jj-shadow: 0 8px 30px rgba(0,0,0,.08);
     --jj-radius: 18px;
-    --jj-btn: #a86f75; /* requested button colour */
+    --jj-btn: #a86f75;          /* requested button colour */
+    --jj-strength:#a86f75;      /* pinkish */
+    --jj-cardio:#e6a36e;        /* warm orange */
+    --jj-mobility:#7aa8a1;      /* green-teal */
+    --jj-day-bg:#fff;
+    --jj-day-border:#eee;
   }
   #jj-movement{
     font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
     color:var(--jj-ink); line-height:1.6;
-    max-width: 1100px;            /* breathing room */
-    margin-inline: auto;          /* centered column */
-    padding-inline: 1rem;         /* side padding */
-    padding-block: .5rem 2rem;
+    max-width: 1100px; margin-inline:auto; padding-inline:1rem; padding-block:.5rem 2rem;
   }
   @media (min-width:720px){ #jj-movement{ padding-inline: 1.25rem; } }
   @media (min-width:1120px){ #jj-movement{ padding-inline: 1.5rem; } }
@@ -640,44 +674,66 @@
   #jj-movement .card{background:var(--jj-card); border-radius:var(--jj-radius); padding:1.25rem; box-shadow:var(--jj-shadow); margin:1rem 0;}
   #jj-movement h2{font-size:clamp(1.2rem,1.2vw + .9rem,1.6rem); margin:.25rem 0 .75rem;}
   #jj-movement h3{font-size:1rem; margin:.2rem 0 .35rem;}
+  #jj-movement a{color:#7a2d67; text-decoration:underline}
   #jj-movement .ticks{padding-left:1.25rem;}
   #jj-movement .ticks li::marker{content:"✓  ";}
   #jj-movement .dots{list-style: disc; padding-left:1.25rem;}
-  #jj-movement .checks{list-style:none; padding:0; margin:0;}
-  #jj-movement .checks li{padding:.35rem .5rem; border-radius:12px; background:var(--jj-soft); margin:.35rem 0;}
-  #jj-movement .checks input{margin-right:.5rem; accent-color:var(--jj-btn);}
-  #jj-movement a{color:#7a2d67; text-decoration:underline}
+
+  /* Icons in movement cards */
+  #jj-movement .icon-wrap{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;margin-bottom:.35rem}
+  #jj-movement .icon-wrap svg{width:26px;height:26px;color:#fff}
+  #jj-movement .icon-wrap.incidental{background:#9e87b5}
+  #jj-movement .icon-wrap.cardio{background:var(--jj-cardio)}
+  #jj-movement .icon-wrap.strength{background:var(--jj-strength)}
+  #jj-movement .icon-wrap.mobility{background:var(--jj-mobility)}
+  #jj-movement .icon-wrap.micro{background:#6b9bd3}
+  #jj-movement .icon-wrap.play{background:#b3816a}
 
   /* Buttons */
-  #jj-movement .jj-btn{
-    border:0; background:var(--jj-btn); color:#fff;
-    padding:.6rem .9rem; border-radius:999px; box-shadow:var(--jj-shadow);
-    cursor:pointer; font-weight:600;
-  }
-  #jj-movement .jj-btn.ghost{background:#fff; border:1px solid #ece6f1; color:#333}
-  #jj-movement .jj-btn.sm{padding:.45rem .7rem; font-size:.9rem;}
+  #jj-movement .jj-btn{border:0;background:var(--jj-btn);color:#fff;padding:.6rem .9rem;border-radius:999px;box-shadow:var(--jj-shadow);cursor:pointer;font-weight:600;}
+  #jj-movement .jj-btn.ghost{background:#fff;border:1px solid #ece6f1;color:#333}
+  #jj-movement .jj-btn.sm{padding:.45rem .7rem;font-size:.9rem;}
   #jj-movement .link{background:none;border:0;color:#7a2d67;text-decoration:underline;cursor:pointer;padding:0}
 
   /* Grids & cards */
-  #jj-movement .jj-grid-2{display:grid; grid-template-columns:1fr; gap:.75rem}
-  #jj-movement .jj-grid-3{display:grid; grid-template-columns:1fr; gap:.75rem}
-  #jj-movement .cards .mini{background:#fff; border:1px solid #f0e8f5; border-radius:14px; padding:.9rem}
-  #jj-movement .jj-score{display:flex; align-items:center; justify-content:space-between; margin-top:.65rem; background:var(--jj-soft); border-radius:12px; padding:.5rem .75rem}
-  #jj-movement .quote{font-weight:700; color:#5b3a40}
+  #jj-movement .jj-grid-2{display:grid;grid-template-columns:1fr;gap:.75rem}
+  #jj-movement .jj-grid-3{display:grid;grid-template-columns:1fr;gap:.75rem}
+  #jj-movement .cards .mini{background:#fff;border:1px solid #f0e8f5;border-radius:14px;padding:.9rem}
+  #jj-movement .jj-score{display:flex;align-items:center;justify-content:space-between;margin-top:.65rem;background:var(--jj-soft);border-radius:12px;padding:.5rem .75rem}
+  #jj-movement .quote{font-weight:700;color:#5b3a40}
 
   /* Planner */
-  #jj-movement .planner-ui{display:grid; gap:.7rem}
+  #jj-movement .planner-ui{display:grid;gap:.7rem}
   #jj-movement input[type=range]{width:100%}
-  #jj-movement .jj-week{display:grid; grid-template-columns: repeat(7, 1fr); gap:.4rem}
-  #jj-movement .day{border:1px solid #eee; background:#fff; padding:.55rem 0; border-radius:12px; cursor:pointer}
+  #jj-movement .jj-week{display:grid;grid-template-columns: repeat(7, 1fr);gap:.4rem}
+  #jj-movement .day{border:1px solid var(--jj-day-border);background:var(--jj-day-bg);padding:.55rem 0;border-radius:12px;cursor:pointer;transition:.2s ease}
   #jj-movement .day.active{outline:3px solid var(--jj-ring)}
-  #jj-movement .legend{display:flex; gap:1rem; align-items:center; font-size:.9rem; color:#555}
-  #jj-movement .dot{display:inline-block; width:.75rem; height:.75rem; border-radius:50%; margin-right:.3rem; vertical-align:middle}
-  #jj-movement .dot.strength{background:#a86f75}
-  #jj-movement .dot.cardio{background:#e6a36e}
-  #jj-movement .dot.mobility{background:#7aa8a1}
-  #jj-movement .planout{min-height:2.5rem; background:var(--jj-soft); border-radius:12px; padding:.6rem}
-  #jj-movement .copied{min-height:1.2rem; color:#3a7e3a; font-weight:600}
+  #jj-movement .day.strength{background:color-mix(in srgb, var(--jj-strength) 18%, white); border-color: color-mix(in srgb, var(--jj-strength) 35%, #eee); color:#5a3135}
+  #jj-movement .day.cardio{background:color-mix(in srgb, var(--jj-cardio) 18%, white); border-color: color-mix(in srgb, var(--jj-cardio) 35%, #eee); color:#5b3e26}
+  #jj-movement .day.mobility{background:color-mix(in srgb, var(--jj-mobility) 18%, white); border-color: color-mix(in srgb, var(--jj-mobility) 35%, #eee); color:#274843}
+
+  #jj-movement .legend{display:flex;gap:1rem;align-items:center;font-size:.9rem;color:#555}
+  #jj-movement .dot{display:inline-block;width:.75rem;height:.75rem;border-radius:50%;margin-right:.3rem;vertical-align:middle}
+  #jj-movement .dot.strength{background:var(--jj-strength)}
+  #jj-movement .dot.cardio{background:var(--jj-cardio)}
+  #jj-movement .dot.mobility{background:var(--jj-mobility)}
+  #jj-movement .planout{min-height:2.5rem;background:var(--jj-soft);border-radius:12px;padding:.6rem}
+  #jj-movement .planout .strength{color:var(--jj-strength);font-weight:700}
+  #jj-movement .planout .cardio{color:var(--jj-cardio);font-weight:700}
+  #jj-movement .planout .mobility{color:var(--jj-mobility);font-weight:700}
+  #jj-movement .copied{min-height:1.2rem;color:#3a7e3a;font-weight:600}
+
+  /* Tips list centered as a group, but left-aligned items */
+  #jj-movement .tips-wrap{max-width:560px;margin:0 auto}
+  #jj-movement .checks{list-style:none;padding:0;margin:0;text-align:left}
+  #jj-movement .checks li{padding:.35rem .5rem;border-radius:12px;background:var(--jj-soft);margin:.35rem 0;}
+  #jj-movement .checks input{margin-right:.5rem;accent-color:var(--jj-btn);}
+
+  /* Make "Copy my plan" hug its text */
+  #jj-movement .planner-ui [data-action="export"]{
+    justify-self:start;width:auto;display:inline-block;white-space:nowrap;
+  }
+  #jj-movement .planner-ui .copied{justify-self:start;}
 
   @media (min-width:720px){
     #jj-movement .jj-grid-2{grid-template-columns:1fr 1fr}
@@ -701,31 +757,41 @@
     "tired:overwired": "5-minute mobility + longer exhale breaths.",
     "energised:focused": "Great! Book a 20-min cardio or strength slot this week."
   };
-  $('[data-action="suggest"]').addEventListener('click', ()=>{
-    const key = `${$('#bodyFeel').value}:${$('#mindFeel').value}`;
-    $('.jj-suggestion').textContent = feelsMap[key] || "One minute of anything—stand, stretch, breathe—counts.";
-  });
+  const suggestBtn = $('[data-action="suggest"]');
+  if (suggestBtn){
+    suggestBtn.addEventListener('click', ()=>{
+      const key = `${$('#bodyFeel').value}:${$('#mindFeel').value}`;
+      $('.jj-suggestion').textContent = feelsMap[key] || "One minute of anything—stand, stretch, breathe—counts.";
+    });
+  }
 
   // Simple counters for chips/presets
-  const counters = { steps:0, stand:0, mob:0 };
+  const counters = { steps:0, stand:0, mob:0, str:0 };
   const renderCounters = ()=>{
     $('#jj-steps').textContent = counters.steps;
     $('#jj-stand').textContent = counters.stand;
     $('#jj-mob').textContent = counters.mob;
+    $('#jj-str').textContent = counters.str;
   };
-  $$('.jj-types [data-preset], .chip').forEach(btn=>{
+  $$('[data-preset], .chip').forEach(btn=>{
     btn.addEventListener('click', ()=>{
       const t = btn.dataset.preset || btn.dataset.add;
       if(t==='incidental') counters.steps += 500;
       if(t==='cardio') counters.steps += 2000;
       if(t==='mobility' || t==='mob') counters.mob += 5;
       if(t==='play') counters.steps += 800;
+      if(t==='strength') counters.str += 1;   // now counts toward tally
       renderCounters();
     });
   });
-  $('[data-action="reset"]').addEventListener('click', ()=>{
-    counters.steps = counters.stand = counters.mob = 0; renderCounters();
-  });
+  const resetBtn = $('[data-action="reset"]');
+  if(resetBtn){
+    resetBtn.addEventListener('click', ()=>{
+      counters.steps = counters.stand = counters.mob = counters.str = 0; 
+      renderCounters();
+    });
+  }
+  renderCounters();
 
   // 3-min micro-break timer
   $$('[data-action="timer"]').forEach(b=>{
@@ -743,39 +809,55 @@
   // Step goal slider
   const goal = $('#stepGoal'), out = $('#stepGoalVal');
   const fmt = n => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  const setVal = ()=> out.textContent = fmt(parseInt(goal.value,10));
-  goal.addEventListener('input', setVal); setVal();
+  if(goal && out){
+    const setVal = ()=> out.textContent = fmt(parseInt(goal.value,10));
+    goal.addEventListener('input', setVal); setVal();
+  }
 
-  // Weekly plan builder (tap a day to cycle Strength -> Cardio -> Mobility -> clear)
-  const plan = {};
+  // Weekly plan builder: None -> Strength -> Cardio -> Mobility (colors on button + colored preview)
+  const plan = {}; // { Mon: 'strength' | 'cardio' | 'mobility' }
+  const types = [null,'strength','cardio','mobility'];
   $$('.day').forEach(d=>{
     d.addEventListener('click', ()=>{
-      d.classList.toggle('active');
       const k=d.dataset.day;
-      const current = plan[k]?.[0] || null;
-      const order = [null,'Strength','Cardio','Mobility'];
-      const next = order[(order.indexOf(current)+1) % order.length];
-      plan[k] = next? [next] : [];
+      const current = plan[k] || null;
+      const next = types[(types.indexOf(current)+1) % types.length];
+      plan[k] = next;
+      // visual class on button
+      d.classList.remove('strength','cardio','mobility','active');
+      if(next){ d.classList.add(next,'active'); }
       renderPlan();
     });
   });
+
   function renderPlan(){
-    const lines = Object.keys(plan).filter(k=>plan[k]?.length).map(k=> `${k}: ${plan[k].join(', ')}`);
-    $('#planOut').textContent = lines.length? lines.join(' • ') : 'Tap days to sketch your week. Aim for 2× Strength, frequent Mobility, and your step goal most days.';
+    const container = $('#planOut');
+    const days = Object.keys(plan);
+    const parts = [];
+    days.forEach(k=>{
+      const v = plan[k];
+      if(!v) return;
+      const label = v.charAt(0).toUpperCase()+v.slice(1);
+      parts.push(`<span>${k}: <span class="${v}">${label}</span></span>`);
+    });
+    container.innerHTML = parts.length? parts.join(' • ') : 'Tap days to sketch your week. Aim for 2× Strength, frequent Mobility, and your step goal most days.';
   }
   renderPlan();
 
   // Export plan to clipboard
-  $('[data-action="export"]').addEventListener('click', async ()=>{
-    const txt = `My Movement Plan\nSteps: ${fmt(parseInt(goal.value,10))}/day\n` + ($('#planOut').textContent||'');
-    try{
-      await navigator.clipboard.writeText(txt);
-      $('.copied').textContent = "Plan copied. Paste into your notes or calendar. ✨";
-      setTimeout(()=>{$('.copied').textContent='';}, 2500);
-    }catch(e){
-      $('.copied').textContent = "Couldn’t copy—select & copy manually.";
-    }
-  });
+  const exportBtn = $('[data-action="export"]');
+  if(exportBtn){
+    exportBtn.addEventListener('click', async ()=>{
+      const txt = `My Movement Plan\nSteps: ${fmt(parseInt($('#stepGoal').value,10))}/day\n` + ($('#planOut').textContent||'');
+      try{
+        await navigator.clipboard.writeText(txt);
+        $('.copied').textContent = "Plan copied. Paste into your notes or calendar. ✨";
+        setTimeout(()=>{$('.copied').textContent='';}, 2500);
+      }catch(e){
+        $('.copied').textContent = "Couldn’t copy—select & copy manually.";
+      }
+    });
+  }
 
   // Tiny idea expander
   $$('[data-idea="creative-walk"]').forEach(x=>{
