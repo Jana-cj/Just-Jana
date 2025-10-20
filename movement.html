@@ -421,7 +421,6 @@
       </div>
     </header>
 
-    <main>
 
   <header class="legal-hero">
     <div class="container">
@@ -433,30 +432,48 @@
     </div>
   </header>
   <br><br><br><br>
-<main id="jj-movement">
-  <section class="jj-hero">
-    <h1>Move Like You Mean It</h1>
-    <p class="jj-sub">A kind, practical guide to weaving movement into real life—no all-or-nothing, no perfection.</p>
-  </section>
 
-  <section class="jj-tldr card">
-    <h2>TL;DR (keep this handy)</h2>
-    <ul class="ticks">
-      <li><strong>Something > nothing.</strong> Even light movement counts.</li>
-      <li><strong>Break up sitting.</strong> Stand or stroll for 2–3 min every ~30–45 min.</li>
-      <li><strong>Weekly rhythm:</strong> 150–300 min moderate OR 75–150 min vigorous, plus 2× strength & regular mobility.</li>
-      <li><strong>Balance body & mind:</strong> If work tires your body but spins your mind, add creative play. If work drains your thoughts but parks your body, add restorative movement.</li>
-    </ul>
-  </section>
-
-  <section class="jj-why card">
-    <h2>Why movement matters (and why kindness helps)</h2>
+  <main id="jj-movement">
+  <!-- 1) WHY MOVEMENT MATTERS -->
+  <section class="card jj-why">
+    <h2>Why movement matters (quick + human)</h2>
     <p>
-      Your body is built to move. Regular movement improves heart and metabolic health, reduces risk of chronic disease, supports mood, sleep, and focus, and helps you feel more “at home” in yourself. 
-      You don’t have to “crush it”—you just have to <em>keep showing up</em> in ways that feel doable this week.
+      Regular movement lowers the risk of chronic disease, improves mood, sleep, and focus, and helps you feel more “at home” in your body. 
+      It doesn’t need to be extreme—just consistent, kind, and doable this week.
     </p>
+
+    <ul class="ticks">
+      <li>
+        <strong>Volume + variety win.</strong> Most adults benefit from 
+        <em>150–300 min/week</em> moderate (or 75–150 min vigorous) plus <em>2+ days/week muscle strengthening</em>. 
+        (<a href="https://www.who.int/initiatives/behealthy/physical-activity" target="_blank" rel="noopener">WHO summary</a>, 
+         <a href="https://pure.amsterdamumc.nl/files/136801990/World-health-organization-2020-guidelines-on-physical-activity-and-sedentary-behaviour.pdf" target="_blank" rel="noopener">WHO 2020 guideline PDF</a>)
+      </li>
+      <li>
+        <strong>Break up long sitting.</strong> Short 2–5 min bouts (standing or light walking) every ~30–60 min can improve 
+        post-meal glucose and insulin responses. 
+        (<a href="https://link.springer.com/content/pdf/10.1007/s40279-022-01649-4.pdf" target="_blank" rel="noopener">Sports Medicine 2022 review</a>, 
+         <a href="https://www.mdpi.com/2076-3417/14/8/3201" target="_blank" rel="noopener">2024 network meta-analysis</a>)
+      </li>
+      <li>
+        <strong>Steps are powerful (and achievable).</strong> About <em>7,000 steps/day</em> is linked with markedly lower all-cause mortality; 
+        more helps, but the big win is moving from very low to moderate steps. 
+        (<a href="https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2783711" target="_blank" rel="noopener">JAMA Netw Open 2021 cohort</a>, 
+        <a href="https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2802810" target="_blank" rel="noopener">JAMA Netw Open 2023 cohort</a>)
+      </li>
+      <li>
+        <strong>Strength matters beyond cardio.</strong> Muscle-strengthening is independently associated with lower mortality and NCD risk, 
+        with benefits around <em>30–60 min/week</em>. 
+        (<a href="https://bjsm.bmj.com/content/56/13/755" target="_blank" rel="noopener">BJSM 2022 meta-analysis</a>)
+      </li>
+      <li>
+        <strong>Mind ↔ Body benefits.</strong> Higher physical activity is prospectively associated with a lower risk of future depression. 
+        (<a href="https://pure.qub.ac.uk/files/308934430/jamapsychiatry_pearce_2022_oi_220016_1648515922.50197.pdf" target="_blank" rel="noopener">JAMA Psychiatry 2022 meta-analysis</a>)
+      </li>
+    </ul>
+
     <details class="jj-reflect">
-      <summary>Gentle check-in</summary>
+      <summary>Gentle check-in (click)</summary>
       <div class="jj-grid-2">
         <label class="prompt">My body feels… 
           <select id="bodyFeel">
@@ -476,27 +493,42 @@
     </details>
   </section>
 
-  <section class="jj-pyramid card">
-    <h2>The Movement Pyramid</h2>
-    <div class="pyramid">
-      <div class="layer base">
-        <h3>Base: Daily Living</h3>
-        <p>Incidental activity: steps, stairs, stretch breaks, chores, walking meetings, play.</p>
-        <div class="chips">
-          <button class="chip" data-add="steps">+300 steps</button>
-          <button class="chip" data-add="stand">+2 min stand</button>
-          <button class="chip" data-add="mob">+1 min mobility</button>
-        </div>
-      </div>
-      <div class="layer middle">
-        <h3>Middle: Intentional Training</h3>
-        <p>Cardio (zones you can chat in), 2×/week strength (full-body), mobility flows.</p>
-      </div>
-      <div class="layer top">
-        <h3>Top: Skill & Intensity</h3>
-        <p>Shorter bursts (hills, intervals) and skills (balance, agility, handstands, sport).</p>
-      </div>
+  <!-- 2) WHAT KIND OF MOVEMENT -->
+  <section class="card jj-types">
+    <h2>What kinds of movement help?</h2>
+    <div class="jj-grid-3 cards">
+      <article class="mini">
+        <h3>Incidental</h3>
+        <p>Steps, stairs, chores, errands on foot, walking meetings, play.</p>
+        <button class="jj-btn sm" data-preset="incidental">+ a little today</button>
+      </article>
+      <article class="mini">
+        <h3>Cardio (mostly easy)</h3>
+        <p>Brisk walks, cycling, swimming, rowing. Conversational pace most days; add hills occasionally.</p>
+        <button class="jj-btn sm" data-preset="cardio">Plan 20 min</button>
+      </article>
+      <article class="mini">
+        <h3>Strength</h3>
+        <p>2×/week full-body: squat • hinge • push • pull • carry. 20–40 min.</p>
+        <button class="jj-btn sm" data-preset="strength">Pick 4 moves</button>
+      </article>
+      <article class="mini">
+        <h3>Mobility</h3>
+        <p>Neck, T-spine, hips, ankles. 5–10 min for posture, range, comfort.</p>
+        <button class="jj-btn sm" data-preset="mobility">5-min flow</button>
+      </article>
+      <article class="mini">
+        <h3>Micro-breaks</h3>
+        <p>2–3 min every 30–45 min: stand, stroll, calf raises, doorway pec stretch.</p>
+        <button class="jj-btn sm" data-action="timer">Start 3-min timer</button>
+      </article>
+      <article class="mini">
+        <h3>Play & Skill</h3>
+        <p>Dance, sport, balance, skipping, handstands—joy counts as training.</p>
+        <button class="jj-btn sm" data-preset="play">Schedule 10 min</button>
+      </article>
     </div>
+
     <div class="jj-score">
       <div>
         <span class="label">Today’s Move Tally</span>
@@ -506,17 +538,18 @@
     </div>
   </section>
 
-  <section class="jj-balance card">
+  <!-- 3) HOW TO WEAVE IT INTO DAILY LIFE -->
+  <section class="card jj-balance">
     <h2>Balance Body ↔ Mind</h2>
-    <p class="quote">“If your daily work leaves your <em>body</em> tired but your <em>mind</em> restless, choose creative play. If it leaves your <em>mind</em> tired but your <em>body</em> idle, choose restorative movement.”</p>
+    <p class="quote">If your daily work leaves your <em>body</em> tired but your <em>mind</em> restless, lean into creative play. If it drains your <em>mind</em> but parks your <em>body</em>, choose restorative movement.</p>
 
     <div class="jj-grid-2 stacks">
       <div class="stack">
         <h3>Body tired • Mind restless</h3>
         <ul class="dots">
-          <li>10-minute <button class="link" data-idea="creative-walk">“creative walk”</button> (notice 5 colours & 5 sounds)</li>
+          <li>10-minute <button class="link" data-idea="creative-walk">creative walk</button> (notice 5 colours & 5 sounds)</li>
           <li>3 songs of free movement/stretching</li>
-          <li>Gentle swim or easy cycle & a hot shower</li>
+          <li>Gentle swim or easy cycle + warm shower</li>
         </ul>
       </div>
       <div class="stack">
@@ -530,45 +563,9 @@
     </div>
   </section>
 
-  <section class="jj-types card">
-    <h2>Types of movement you can weave into a workday</h2>
-    <div class="jj-grid-3 cards">
-      <article class="mini">
-        <h3>Incidental</h3>
-        <p>Park further, stairs, chores, walk calls, mini-errands on foot.</p>
-        <button class="jj-btn sm" data-preset="incidental">Add to my day</button>
-      </article>
-      <article class="mini">
-        <h3>Cardio</h3>
-        <p>Brisk walk, cycle, swim, row. Talkable pace most days; sprinkle hills.</p>
-        <button class="jj-btn sm" data-preset="cardio">Plan 20 min</button>
-      </article>
-      <article class="mini">
-        <h3>Strength</h3>
-        <p>2×/week whole-body: squat/hinge/push/pull/carry. 20–40 min.</p>
-        <button class="jj-btn sm" data-preset="strength">Pick 4 moves</button>
-      </article>
-      <article class="mini">
-        <h3>Mobility</h3>
-        <p>Neck, T-spine, hips, ankles. 5–10 min warm-up or evening unwind.</p>
-        <button class="jj-btn sm" data-preset="mobility">5-min flow</button>
-      </article>
-      <article class="mini">
-        <h3>Micro-breaks</h3>
-        <p>2–3 min every 30–45 min: stand, calf raises, doorway pec stretch.</p>
-        <button class="jj-btn sm" data-action="timer">Start 3-min timer</button>
-      </article>
-      <article class="mini">
-        <h3>Play & Skill</h3>
-        <p>Dance, sport, balance drills, handstands, skipping, hoops.</p>
-        <button class="jj-btn sm" data-preset="play">Schedule 10 min</button>
-      </article>
-    </div>
-  </section>
-
-  <section class="jj-planner card">
+  <section class="card jj-planner">
     <h2>Your gentle weekly rhythm</h2>
-    <p>Use the slider to set a step goal that meets you where you are. Then pick 2 strength days and sprinkle mobility most days.</p>
+    <p>Use the slider to set a step goal that meets you where you are. Tap days to sketch 2× Strength, sprinkle Mobility most days.</p>
     <div class="planner-ui">
       <label>Daily steps goal: 
         <input id="stepGoal" type="range" min="3000" max="12000" step="500" value="7000" />
@@ -594,78 +591,81 @@
     </div>
   </section>
 
-  <section class="jj-tips card">
+  <section class="card jj-tips">
     <h2>Practical ways to move more at work</h2>
     <ul class="checks">
-      <li><label><input type="checkbox"> Walk your first and last call of the day.</label></li>
-      <li><label><input type="checkbox"> Set a “stand & sip” cue every 40 min (water + 2-min stretch).</label></li>
-      <li><label><input type="checkbox"> Meetings ≤30 min? Make them walk-n-talk when possible.</label></li>
-      <li><label><input type="checkbox"> Keep a mini kit: resistance band + lacrosse ball + skipping rope.</label></li>
-      <li><label><input type="checkbox"> Lunch rule: 10-minute walk before you sit down to eat.</label></li>
-      <li><label><input type="checkbox"> Commute add-ons: park 5–10 min away or get off a stop earlier.</label></li>
-      <li><label><input type="checkbox"> Calendar 2× 25–35 min strength blocks this week.</label></li>
-      <li><label><input type="checkbox"> 5-minute evening mobility while a show loads.</label></li>
+      <li><label><input type="checkbox"> First & last call of the day = walk-n-talk.</label></li>
+      <li><label><input type="checkbox"> “Stand & sip” cue every 40 min (water + 2-min stretch).</label></li>
+      <li><label><input type="checkbox"> Meetings ≤30 min? Make them walk-and-talk when possible.</label></li>
+      <li><label><input type="checkbox"> Keep a mini kit visible: band + lacrosse ball + skipping rope.</label></li>
+      <li><label><input type="checkbox"> Lunch rule: 10-min walk before you eat; 3–5 min stroll after.</label></li>
+      <li><label><input type="checkbox"> Commute add-on: park 5–10 min away or hop off a stop early.</label></li>
+      <li><label><input type="checkbox"> Calendar two 25–35 min strength blocks this week.</label></li>
+      <li><label><input type="checkbox"> 5-min evening mobility while a show loads.</label></li>
     </ul>
   </section>
 
-  <section class="jj-kind card">
+  <section class="card jj-kind">
     <h2>Before you go</h2>
     <p>
-      You don’t have to fix everything today. Pick one tiny action, try it, and notice how you feel. 
-      Curiosity over perfection. Presence over pressure. I’m walking beside you, not ahead of you.
+      You don’t have to fix everything today. Pick one tiny action and notice how you feel. 
+      Curiosity over perfection. Presence over pressure. I’m walking beside you.
     </p>
   </section>
 </main>
 
 <style>
-  /* ===== Just Jana Movement styles (scoped) ===== */
+  /* ===== Just Jana Movement (scoped) ===== */
   :root{
-    --jj-bg: #fff;
     --jj-ink: #1e1e1e;
     --jj-sub: #4e4e4e;
     --jj-soft: #f7f5f9;
     --jj-card: #ffffff;
-    --jj-brand1:#f6ddbd; /* lotus pastel gradient */
-    --jj-brand2:#f6cecc;
-    --jj-brand3:#f5bfdd;
     --jj-ring: rgba(245,191,221,.55);
     --jj-shadow: 0 8px 30px rgba(0,0,0,.08);
     --jj-radius: 18px;
+    --jj-btn: #a86f75; /* requested button colour */
   }
-  #jj-movement{font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; color:var(--jj-ink); line-height:1.6; }
+  #jj-movement{
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    color:var(--jj-ink); line-height:1.6;
+    max-width: 1100px;            /* breathing room */
+    margin-inline: auto;          /* centered column */
+    padding-inline: 1rem;         /* side padding */
+    padding-block: .5rem 2rem;
+  }
+  @media (min-width:720px){ #jj-movement{ padding-inline: 1.25rem; } }
+  @media (min-width:1120px){ #jj-movement{ padding-inline: 1.5rem; } }
+
   #jj-movement .card{background:var(--jj-card); border-radius:var(--jj-radius); padding:1.25rem; box-shadow:var(--jj-shadow); margin:1rem 0;}
-  #jj-movement .jj-hero{padding:1.5rem 0 0.75rem;}
-  #jj-movement h1{font-size:clamp(1.8rem, 2.5vw + 1rem, 3rem); line-height:1.1; margin:0;}
   #jj-movement h2{font-size:clamp(1.2rem,1.2vw + .9rem,1.6rem); margin:.25rem 0 .75rem;}
   #jj-movement h3{font-size:1rem; margin:.2rem 0 .35rem;}
-  #jj-movement .jj-sub{color:var(--jj-sub);}
-  #jj-movement .ticks li::marker{content:"✓  ";}
   #jj-movement .ticks{padding-left:1.25rem;}
+  #jj-movement .ticks li::marker{content:"✓  ";}
   #jj-movement .dots{list-style: disc; padding-left:1.25rem;}
   #jj-movement .checks{list-style:none; padding:0; margin:0;}
   #jj-movement .checks li{padding:.35rem .5rem; border-radius:12px; background:var(--jj-soft); margin:.35rem 0;}
-  #jj-movement .checks input{margin-right:.5rem; accent-color:#c85da3;}
-  #jj-movement .jj-btn{border:0; background:linear-gradient(90deg,var(--jj-brand1),var(--jj-brand2),var(--jj-brand3)); padding:.6rem .9rem; border-radius:999px; box-shadow:var(--jj-shadow); cursor:pointer; font-weight:600;}
-  #jj-movement .jj-btn.ghost{background:#fff; border:1px solid #ece6f1;}
+  #jj-movement .checks input{margin-right:.5rem; accent-color:var(--jj-btn);}
+  #jj-movement a{color:#7a2d67; text-decoration:underline}
+
+  /* Buttons */
+  #jj-movement .jj-btn{
+    border:0; background:var(--jj-btn); color:#fff;
+    padding:.6rem .9rem; border-radius:999px; box-shadow:var(--jj-shadow);
+    cursor:pointer; font-weight:600;
+  }
+  #jj-movement .jj-btn.ghost{background:#fff; border:1px solid #ece6f1; color:#333}
   #jj-movement .jj-btn.sm{padding:.45rem .7rem; font-size:.9rem;}
   #jj-movement .link{background:none;border:0;color:#7a2d67;text-decoration:underline;cursor:pointer;padding:0}
-  #jj-movement details{background:var(--jj-soft); border-radius:14px; padding:.75rem;}
-  #jj-movement details .prompt{display:block; font-weight:600}
+
+  /* Grids & cards */
   #jj-movement .jj-grid-2{display:grid; grid-template-columns:1fr; gap:.75rem}
   #jj-movement .jj-grid-3{display:grid; grid-template-columns:1fr; gap:.75rem}
   #jj-movement .cards .mini{background:#fff; border:1px solid #f0e8f5; border-radius:14px; padding:.9rem}
-  #jj-movement .chips{display:flex; gap:.5rem; flex-wrap:wrap; margin:.5rem 0}
-  #jj-movement .chip{border:1px dashed #e5d7e9; background:#fff; padding:.35rem .6rem; border-radius:999px; cursor:pointer;}
-  #jj-movement .pyramid{display:grid; gap:.6rem}
-  #jj-movement .layer{border-radius:14px; padding:.8rem; border:1px solid #f0e8f5}
-  #jj-movement .layer.base{background:linear-gradient(120deg,#fff, #fff 55%, #fdf6ff)}
-  #jj-movement .layer.middle{background:#fff}
-  #jj-movement .layer.top{background:#fff}
   #jj-movement .jj-score{display:flex; align-items:center; justify-content:space-between; margin-top:.65rem; background:var(--jj-soft); border-radius:12px; padding:.5rem .75rem}
-  #jj-movement .quote{background:linear-gradient(90deg,var(--jj-brand1),var(--jj-brand2),var(--jj-brand3)); -webkit-background-clip:text; background-clip:text; color:transparent; font-weight:700}
-  #jj-movement .stacks .stack{background:#fff; border:1px solid #f0e8f5; border-radius:14px; padding:.9rem}
+  #jj-movement .quote{font-weight:700; color:#5b3a40}
 
-  /* planner */
+  /* Planner */
   #jj-movement .planner-ui{display:grid; gap:.7rem}
   #jj-movement input[type=range]{width:100%}
   #jj-movement .jj-week{display:grid; grid-template-columns: repeat(7, 1fr); gap:.4rem}
@@ -673,17 +673,15 @@
   #jj-movement .day.active{outline:3px solid var(--jj-ring)}
   #jj-movement .legend{display:flex; gap:1rem; align-items:center; font-size:.9rem; color:#555}
   #jj-movement .dot{display:inline-block; width:.75rem; height:.75rem; border-radius:50%; margin-right:.3rem; vertical-align:middle}
-  #jj-movement .dot.strength{background:#c85da3}
-  #jj-movement .dot.cardio{background:#f0a35b}
-  #jj-movement .dot.mobility{background:#6ab0b0}
+  #jj-movement .dot.strength{background:#a86f75}
+  #jj-movement .dot.cardio{background:#e6a36e}
+  #jj-movement .dot.mobility{background:#7aa8a1}
   #jj-movement .planout{min-height:2.5rem; background:var(--jj-soft); border-radius:12px; padding:.6rem}
   #jj-movement .copied{min-height:1.2rem; color:#3a7e3a; font-weight:600}
 
-  /* small cards grid on larger screens */
   @media (min-width:720px){
     #jj-movement .jj-grid-2{grid-template-columns:1fr 1fr}
     #jj-movement .jj-grid-3{grid-template-columns:repeat(3,1fr)}
-    #jj-movement .jj-hero{padding:1.75rem 0 1rem;}
   }
 </style>
 
@@ -692,64 +690,52 @@
   const $ = (s, p=document)=> p.querySelector(s);
   const $$ = (s, p=document)=> [...p.querySelectorAll(s)];
 
-  // Gentle suggestion based on feelings
+  // Suggestions based on feels
   const feelsMap = {
     "stiff:foggy": "2-minute neck + hip circles, then a slow nose-breath walk.",
     "stiff:overwired": "5 gentle spinal rolls + box breathing (4-4-4-4).",
     "sluggish:foggy": "Stand up, drink water, 5 calf raises, 3-min stroll.",
-    "sluggish:overwired": "10 squats, shake it out, light stretch for chest/hip flexors.",
+    "sluggish:overwired": "10 squats, shake it out, pec/hip-flexor stretch.",
     "antsy:overwired": "3 songs of free-movement—dance like no one is watching.",
     "tired:foggy": "10-minute easy walk outside and sunlight if you can.",
     "tired:overwired": "5-minute mobility + longer exhale breaths.",
-    "energised:focused": "Great! Book a 20-min cardio or strength slot in your week."
+    "energised:focused": "Great! Book a 20-min cardio or strength slot this week."
   };
   $('[data-action="suggest"]').addEventListener('click', ()=>{
     const key = `${$('#bodyFeel').value}:${$('#mindFeel').value}`;
     $('.jj-suggestion').textContent = feelsMap[key] || "One minute of anything—stand, stretch, breathe—counts.";
   });
 
-  // Chips -> simple counters
+  // Simple counters for chips/presets
   const counters = { steps:0, stand:0, mob:0 };
-  $$('.chip').forEach(ch=>{
-    ch.addEventListener('click', ()=>{
-      const t = ch.dataset.add;
-      if(t==='steps') counters.steps += 300;
-      if(t==='stand') counters.stand += 2;
-      if(t==='mob') counters.mob += 1;
-      $('#jj-steps').textContent = counters.steps;
-      $('#jj-stand').textContent = counters.stand;
-      $('#jj-mob').textContent = counters.mob;
+  const renderCounters = ()=>{
+    $('#jj-steps').textContent = counters.steps;
+    $('#jj-stand').textContent = counters.stand;
+    $('#jj-mob').textContent = counters.mob;
+  };
+  $$('.jj-types [data-preset], .chip').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const t = btn.dataset.preset || btn.dataset.add;
+      if(t==='incidental') counters.steps += 500;
+      if(t==='cardio') counters.steps += 2000;
+      if(t==='mobility' || t==='mob') counters.mob += 5;
+      if(t==='play') counters.steps += 800;
+      renderCounters();
     });
   });
   $('[data-action="reset"]').addEventListener('click', ()=>{
-    counters.steps = counters.stand = counters.mob = 0;
-    $('#jj-steps').textContent = 0; $('#jj-stand').textContent = 0; $('#jj-mob').textContent = 0;
+    counters.steps = counters.stand = counters.mob = 0; renderCounters();
   });
 
-  // Presets & timer
-  const addPreset = (type)=>{
-    if(type==='incidental') counters.steps += 500;
-    if(type==='cardio') counters.steps += 2000;
-    if(type==='mobility') counters.mob += 5;
-    if(type==='play') counters.steps += 800;
-    if(type==='strength') {/* marker only */}
-    $('#jj-steps').textContent = counters.steps;
-    $('#jj-mob').textContent = counters.mob;
-  };
-  $$('[data-preset]').forEach(b=> b.addEventListener('click', ()=> addPreset(b.dataset.preset)));
-
-  // 3-minute micro-break timer
+  // 3-min micro-break timer
   $$('[data-action="timer"]').forEach(b=>{
     b.addEventListener('click', ()=>{
-      b.disabled = true;
-      const was = b.textContent;
-      let s = 180;
+      b.disabled = true; const was = b.textContent; let s = 180;
       b.textContent = "3:00";
       const tick = setInterval(()=>{
-        s--; 
-        const m=Math.floor(s/60), r=('0'+(s%60)).slice(-2);
+        s--; const m=Math.floor(s/60), r=('0'+(s%60)).slice(-2);
         b.textContent = `${m}:${r}`;
-        if(s<=0){ clearInterval(tick); b.textContent = "Nice! Start again"; b.disabled=false; if(navigator.vibrate) navigator.vibrate(200);}
+        if(s<=0){ clearInterval(tick); b.textContent = was; b.disabled=false; if(navigator.vibrate) navigator.vibrate(200);}
       },1000);
     });
   });
@@ -760,36 +746,31 @@
   const setVal = ()=> out.textContent = fmt(parseInt(goal.value,10));
   goal.addEventListener('input', setVal); setVal();
 
-  // Weekly plan builder
+  // Weekly plan builder (tap a day to cycle Strength -> Cardio -> Mobility -> clear)
   const plan = {};
   $$('.day').forEach(d=>{
     d.addEventListener('click', ()=>{
       d.classList.toggle('active');
       const k=d.dataset.day;
-      if(!plan[k]) plan[k]=[];
-      // Cycle what we add: Strength -> Cardio -> Mobility -> clear
-      const next = (plan[k].length%4);
-      if(next===0) plan[k]=['Strength'];
-      else if(next===1) plan[k]=['Cardio'];
-      else if(next===2) plan[k]=['Mobility'];
-      else plan[k]=[];
-      render();
+      const current = plan[k]?.[0] || null;
+      const order = [null,'Strength','Cardio','Mobility'];
+      const next = order[(order.indexOf(current)+1) % order.length];
+      plan[k] = next? [next] : [];
+      renderPlan();
     });
   });
-  function render(){
-    const lines = Object.keys(plan).filter(k=>plan[k]?.length).map(k=>{
-      return `${k}: ${plan[k].join(', ')}`;
-    });
-    $('#planOut').textContent = lines.length? lines.join(' • ') : 'Tap days to sketch your week. Aim for 2× Strength, frequent Mobility, and step goal most days.';
+  function renderPlan(){
+    const lines = Object.keys(plan).filter(k=>plan[k]?.length).map(k=> `${k}: ${plan[k].join(', ')}`);
+    $('#planOut').textContent = lines.length? lines.join(' • ') : 'Tap days to sketch your week. Aim for 2× Strength, frequent Mobility, and your step goal most days.';
   }
-  render();
+  renderPlan();
 
   // Export plan to clipboard
   $('[data-action="export"]').addEventListener('click', async ()=>{
     const txt = `My Movement Plan\nSteps: ${fmt(parseInt(goal.value,10))}/day\n` + ($('#planOut').textContent||'');
     try{
       await navigator.clipboard.writeText(txt);
-      $('.copied').textContent = "Plan copied. Paste it into your notes or calendar. ✨";
+      $('.copied').textContent = "Plan copied. Paste into your notes or calendar. ✨";
       setTimeout(()=>{$('.copied').textContent='';}, 2500);
     }catch(e){
       $('.copied').textContent = "Couldn’t copy—select & copy manually.";
@@ -799,13 +780,11 @@
   // Tiny idea expander
   $$('[data-idea="creative-walk"]').forEach(x=>{
     x.addEventListener('click', ()=>{
-      alert("Creative walk: pick 5 colours + 5 sounds to notice. No phones. Breathe through your nose. Move how your body asks.");
+      alert("Creative walk: notice 5 colours + 5 sounds. No phone. Move how your body asks.");
     });
   });
 })();
 </script>
-
-  </main>
 
   
   <!-- Back to top button -->
