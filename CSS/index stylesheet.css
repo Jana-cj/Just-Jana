@@ -4384,34 +4384,30 @@ font-family: 'Georgia', serif;
    Safe to paste in global stylesheet
    =========================== */
 
-.legal-page { 
-  color: var(--jj-ink, #2a2438); 
-  background: var(--jj-bg, #fff); 
-}
 
 /* Header */
-.legal-page .legal-hero{
+.legal-hero{
   background: linear-gradient(135deg, #fff8d0 0%, #ffe3e5 50%, #ffcef9 100%);
   padding: clamp(48px, 10vh, 120px) 0 clamp(24px, 6vh, 60px);
   border-bottom: 1px solid rgba(0,0,0,.08);
 }
-.legal-page .legal-hero h1{
+.legal-hero h1{
   font-weight: 700;
   letter-spacing: .2px;
   margin: 0;
 }
-.legal-page .legal-meta{
+.legal-meta{
   color: var(--jj-muted, #9e9da4);
   font-size: .95rem;
 }
 
 /* Layout */
-.legal-page .legal-wrap{ 
+.legal-wrap{ 
   padding: clamp(20px, 4vw, 40px) 0; 
 }
 
 /* Table of contents (sticky on desktop) */
-.legal-page .toc{
+.toc{
   position: sticky; 
   top: var(--jj-anchor-offset, 90px); /* works even if var not globally set */
   border: 1px solid rgba(0,0,0,.08);
@@ -4419,43 +4415,43 @@ font-family: 'Georgia', serif;
   background: #fff;
   padding: 16px;
 }
-.legal-page .toc .list-group-item{
+.toc .list-group-item{
   border: 0; 
   padding: 10px 8px;
 }
-.legal-page .toc .list-group-item a{
+.toc .list-group-item a{
   text-decoration: none;
   color: var(--jj-ink, #2a2438);
   display: block;
 }
-.legal-page .toc .list-group-item a:hover{ 
+.toc .list-group-item a:hover{ 
   color: var(--jj-accent, #a94caf); 
 }
 
 /* Content cards */
-.legal-page .policy-section{
+.policy-section{
   border: 1px solid rgba(0,0,0,.08);
   border-radius: 16px;
   background: #fff;
   padding: clamp(18px, 2.4vw, 28px);
   margin-bottom: 20px;
 }
-.legal-page .policy-section h2{
+.policy-section h2{
   font-size: clamp(1.25rem, 2.2vw, 1.6rem);
   font-weight: 700;
   margin-bottom: .5rem;
 }
-.legal-page .policy-section h3{
+.policy-section h3{
   font-size: clamp(1.05rem, 1.8vw, 1.2rem);
   margin-top: 1rem;
 }
-.legal-page .policy-section p, 
-.legal-page .policy-section li{
+.policy-section p, 
+.policy-section li{
   line-height: 1.65;
 }
 
 /* Inline note box */
-.legal-page .note{
+.note{
   background: rgba(169,76,175,.06);
   border: 1px solid rgba(169,76,175,.18);
   border-radius: 12px;
@@ -4464,31 +4460,31 @@ font-family: 'Georgia', serif;
 }
 
 /* Prevent anchor headings being hidden under fixed nav */
-.legal-page .anchor-offset{
+.anchor-offset{
   scroll-margin-top: var(--jj-anchor-offset, 90px);
 }
 
 @media (max-width: 991.98px){
-  .legal-page .toc{ 
+  .toc{ 
     position: static; 
     margin-bottom: 18px; 
   }
 }
 
 @media (max-width: 991.98px){
-  .legal-page .legal-hero h1{ 
+  .legal-hero h1{ 
     margin-top: 0.5vh; 
     text-align: center;}
 
 /* Legal hero: slightly shorter on mobile */
 @media (max-width: 991.98px){
-  .legal-page .legal-hero{
+  .legal-hero{
     /* reduce vertical space of the gradient header */
     padding-top: clamp(20px, 6vh, 40px);
     padding-bottom: clamp(12px, 3.5vh, 28px);
   }
   /* spacing for the meta row under the title */
-  .legal-page .legal-meta{
+  .legal-meta{
     margin-top: 6px;
     margin-bottom: 18px; /* space before “On this page …” */
     text-align: center;
