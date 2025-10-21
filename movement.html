@@ -434,9 +434,10 @@
 
 <main>
 
-  <!-- ========================= HERO ========================= -->
+  <!-- HERO -->
   <section id="hero" class="section hero">
     <div class="center-wrapper narrow">
+      <h1 class="h1">The Importance of Movement</h1>
       <p class="tagline">Movement isn’t just something you do — it’s how your body whispers, <em>“I’m still here.”</em></p>
       <p>Every stretch, every breath, every quiet sway is your body’s way of saying, <em>“Thank you for noticing me.”</em> This isn’t a call to push harder. It’s an invitation to move with awareness and honour your rhythm.</p>
       <div class="cta">
@@ -445,7 +446,7 @@
     </div>
   </section>
 
-  <!-- ===================== WHY MOVEMENT MATTERS ===================== -->
+  <!-- WHY MOVEMENT MATTERS -->
   <section id="why" class="section">
     <div class="center-wrapper grid-2">
       <div class="card pad">
@@ -468,7 +469,7 @@
     </div>
   </section>
 
-  <!-- ===================== MOVEMENT TYPES (IMAGES) ===================== -->
+  <!-- MOVEMENT TYPES (with small images) -->
   <section id="movement-types" class="section">
     <div class="center-wrapper">
       <h2>What kinds of movement help?</h2>
@@ -514,7 +515,7 @@
     </div>
   </section>
 
-  <!-- ===================== BALANCE BODY & MIND ===================== -->
+  <!-- BALANCE -->
   <section id="balance" class="section">
     <div class="center-wrapper narrow card pad">
       <h2>Balance body and mind</h2>
@@ -523,7 +524,7 @@
     </div>
   </section>
 
-  <!-- ===================== GENTLE CHECK-IN ===================== -->
+  <!-- GENTLE CHECK-IN -->
   <section id="jj-checkin" class="section pad-lg">
     <div class="center-wrapper narrow">
       <h2 class="h1">Gentle Check-In</h2>
@@ -551,7 +552,7 @@
     </div>
   </section>
 
-  <!-- ===================== WEEKLY RHYTHM ===================== -->
+  <!-- WEEKLY RHYTHM -->
   <section id="weekly" class="section">
     <div class="center-wrapper narrow">
       <h2>Your gentle weekly rhythm</h2>
@@ -573,7 +574,7 @@
     </div>
   </section>
 
-  <!-- ===================== BUSY WORKDAY TIPS ===================== -->
+  <!-- BUSY WORKDAY TIPS -->
   <section id="busy-workday" class="section">
     <div class="center-wrapper">
       <h2>Incorporate movement into a busy workday</h2>
@@ -608,7 +609,7 @@
     </div>
   </section>
 
-  <!-- ===================== PRACTICAL CHECKLIST ===================== -->
+  <!-- PRACTICAL CHECKLIST -->
   <section id="practical" class="section">
     <div class="center-wrapper narrow">
       <h2>Practical ways to move more (without overwhelm)</h2>
@@ -625,7 +626,7 @@
     </div>
   </section>
 
-  <!-- ===================== CLOSER ===================== -->
+  <!-- CLOSER -->
   <section id="closer" class="section pad-lg">
     <div class="center-wrapper narrow card pad">
       <h2>Movement as medicine</h2>
@@ -636,7 +637,7 @@
     </div>
   </section>
 
-  <!-- ===================== FOOTNOTES ===================== -->
+  <!-- NOTES -->
   <section id="notes" class="section">
     <div class="center-wrapper narrow fn card pad">
       <h3>Notes & gentle references</h3>
@@ -650,11 +651,12 @@
         <li><strong>Walking & creativity:</strong> Controlled experiments show walking increases creative output vs. seated work.</li>
         <li><strong>Ergonomics:</strong> Desk-based mobility reduces musculoskeletal discomfort and fatigue in office settings.</li>
       </ol>
-      <p class="note">If you’d like, I can swap these for specific paper titles with elegant tooltip links.</p>
+      <p class="note">Want exact paper titles with subtle tooltip links? Say the word and I’ll swap them in.</p>
     </div>
   </section>
 
 </main>
+
 
 
   
@@ -1335,7 +1337,8 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
 
 <script>
-  /* ---------- Gentle Check-In mapping ---------- */
+
+  // ----- Gentle Check-In -----
 (() => {
   const map = {
     stressed: {
@@ -1432,7 +1435,7 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 })();
 
-/* ---------- Weekly Rhythm: day buttons recolor + display text color ---------- */
+// ----- Weekly Rhythm (recolor days + display copy) -----
 (() => {
   const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
   const grid = document.getElementById('weekGrid');
@@ -1466,7 +1469,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
       b.addEventListener('click', ()=>{
         activeDay = d;
-        Array.from(grid.querySelectorAll('.day-btn')).forEach(x=>x.setAttribute('aria-pressed','false'));
+        grid.querySelectorAll('.day-btn').forEach(x=>x.setAttribute('aria-pressed','false'));
         b.setAttribute('aria-pressed','true');
 
         const t = plan[d];
@@ -1504,6 +1507,7 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 })();
 
+  
 </script>
 
 
