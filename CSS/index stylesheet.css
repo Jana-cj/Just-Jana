@@ -4819,3 +4819,12 @@ main { display:block; visibility:visible; opacity:1; }
 @supports not (selector(:has(*))) {
   #jj-checkin .check-card:focus-within { box-shadow: inset 0 0 0 2px rgba(0,0,0,.08); }
 }
+
+/* Safety overrides for the movement page scope */
+.jj-move { display:block !important; visibility:visible !important; opacity:1 !important; }
+.jj-move .section { display:block !important; visibility:visible !important; opacity:1 !important; }
+
+/* If an overlay is “hidden” but still occupying space anywhere */
+#jjSearchOverlay[hidden], #jjSearchModal[hidden], #jj-preface-overlay[aria-hidden="true"] {
+  display: none !important;
+}
