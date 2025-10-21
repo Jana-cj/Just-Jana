@@ -431,227 +431,351 @@
     </div>
   </header>
   
-<main id="movementContent" class="jj-move">
-  <!-- HERO -->
-  <section id="hero" class="section hero">
-    <div class="center-wrapper narrow">
-      <h1 class="h1">The Importance of Movement</h1>
-      <p class="tagline">Movement isn’t just something you do — it’s how your body whispers, <em>“I’m still here.”</em></p>
-      <p>Every stretch, every breath, every quiet sway is your body’s way of saying, <em>“Thank you for noticing me.”</em> This isn’t a call to push harder. It’s an invitation to move with awareness and honour your rhythm.</p>
-      <div class="cta">
-        <a href="#why" class="btn">Find your rhythm →</a>
+<main id="movement-page" class="jj-container">
+
+  <!-- Top local nav -->
+  <nav class="jj-subnav" aria-label="On-page">
+    <button class="subnav-item" data-target="#why-move">Why movement?</button>
+    <button class="subnav-item" data-target="#kinds">Different kinds</button>
+    <button class="subnav-item" data-target="#pyramid">Movement pyramid</button>
+    <button class="subnav-item" data-target="#balance">Body × Mind balance</button>
+    <button class="subnav-item" data-target="#feels">How are you feeling?</button>
+    <button class="subnav-item" data-target="#schedule">Weekly schedule</button>
+    <button class="subnav-item" data-target="#work">Movement @ work</button>
+  </nav>
+
+  <!-- Hero / Why movement matters -->
+  <section id="why-move" class="card glass">
+    <h1 class="title">The Importance of Movement</h1>
+    <p class="lead">
+      Movement is your daily multivitamin for heart, muscles, brain and mood.
+      Aim for <strong>150–300 min/week of moderate activity</strong> (or 75–150 min vigorous),
+      plus <strong>2+ muscle-strengthening days</strong>, and sprinkle light movement through your day
+      to offset sitting. <a class="ref" href="#refs">See references</a>.
+    </p>
+
+    <ul class="benefits">
+      <li>Lower risk of heart disease, stroke, type 2 diabetes, some cancers.</li>
+      <li>Better sleep, cognition, and mental health; fewer depressive symptoms.</li>
+      <li>Stronger bones, balance & fewer falls; more energy from NEAT (your “incidental” movement).</li>
+    </ul>
+  </section>
+
+  <!-- Different kinds of movement (mobile: swipe; desktop: grid) -->
+  <section id="kinds" class="card">
+    <div class="section-head">
+      <h2>Different Kinds of Movement</h2>
+      <p class="muted">Swipe on mobile • Click/drag works too</p>
+    </div>
+
+    <div class="kinds-strip" id="kindsStrip" aria-label="Movement types carousel">
+      <!-- Card 1 -->
+      <article class="kind">
+        <img src="assets/move_walk.jpg" alt="Brisk walking outdoors" loading="lazy">
+        <h3>Aerobic (Cardio)</h3>
+        <p>Walk, cycle, jog, dance. Sustained effort for heart & lungs. Intervals if short on time.</p>
+        <small class="tag">20–40 min • 3–5×/wk</small>
+      </article>
+
+      <!-- Card 2 -->
+      <article class="kind">
+        <img src="assets/move_strength.jpg" alt="Resistance training with dumbbells" loading="lazy">
+        <h3>Strength</h3>
+        <p>Push, pull, hinge, squat, carry. Free weights, bands, or bodyweight for full-body resilience.</p>
+        <small class="tag">2–3×/wk</small>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="kind">
+        <img src="assets/move_mobility.jpg" alt="Mobility flow on mat" loading="lazy">
+        <h3>Mobility & Flexibility</h3>
+        <p>Range-of-motion work & stretching to feel supple and move freely; great in warm-downs.</p>
+        <small class="tag">Most days • 5–10 min</small>
+      </article>
+
+      <!-- Card 4 -->
+      <article class="kind">
+        <img src="assets/move_neat.jpg" alt="Taking the stairs at work" loading="lazy">
+        <h3>NEAT</h3>
+        <p>Your incidental movement: stairs, walking calls, house tasks. Big impact across the week.</p>
+        <small class="tag">All day • add micro-moves</small>
+      </article>
+
+      <!-- Card 5 -->
+      <article class="kind">
+        <img src="assets/move_balance.jpg" alt="Single-leg balance practice" loading="lazy">
+        <h3>Balance & Coordination</h3>
+        <p>Single-leg stands, carries, agility ladders. Keeps ankles, hips and brain sharp.</p>
+        <small class="tag">2–3×/wk</small>
+      </article>
+
+      <!-- Card 6 -->
+      <article class="kind">
+        <img src="assets/move_mindbody.jpg" alt="Calm breath-led practice" loading="lazy">
+        <h3>Mind–Body</h3>
+        <p>Yoga, tai chi, breath-led flows. Down-shift your nervous system and rebuild gently.</p>
+        <small class="tag">Any day • 5–20 min</small>
+      </article>
+    </div>
+
+    <div class="dots" id="kindsDots" aria-hidden="true"></div>
+  </section>
+
+  <!-- Movement pyramid -->
+  <section id="pyramid" class="card glass">
+    <h2>The Movement Pyramid</h2>
+    <p class="muted">Build from the base up: frequent light movement → regular cardio & strength → top-up with skill, sprints, sport.</p>
+
+    <div class="pyramid">
+      <div class="layer base">
+        <strong>NEAT & Light Activity, all day</strong>
+        <span>Walk, stairs, stretch breaks, posture resets</span>
+      </div>
+      <div class="layer mid">
+        <strong>Cardio 3–5×/wk</strong>
+        <span>Moderate steady work; optional intervals</span>
+      </div>
+      <div class="layer mid2">
+        <strong>Strength 2–3×/wk</strong>
+        <span>Full-body patterns: push/pull/hinge/squat/carry</span>
+      </div>
+      <div class="layer top">
+        <strong>Mobility, Balance & Skill</strong>
+        <span>Daily mobility, balance play, sport practice</span>
       </div>
     </div>
   </section>
 
-  <!-- WHY MOVEMENT MATTERS -->
-  <section id="why" class="section">
-    <div class="center-wrapper grid-2">
-      <div class="card pad">
-        <h2>Why movement matters</h2>
-        <p>We often think of movement as a task. In truth, it’s a relationship — a way of partnering with your body.</p>
-        <ul>
-          <li><strong>Body:</strong> movement nourishes strength, mobility, and longevity <span class="dot">•</span> <span class="fn">see note <sup>1</sup></span></li>
-          <li><strong>Mind:</strong> it elevates mood and eases stress — a natural support for mental health <span class="dot">•</span> <span class="fn">note <sup>2</sup></span></li>
-          <li><strong>Heart:</strong> rhythmic movement helps regulate the nervous system and emotions <span class="dot">•</span> <span class="fn">note <sup>3</sup></span></li>
-          <li><strong>Soul:</strong> mindful motion deepens interoceptive awareness — feeling your inner world <span class="dot">•</span> <span class="fn">note <sup>4</sup></span></li>
-        </ul>
-        <p class="subtle">“When you move with intention, your body becomes both the healer and the healed.”</p>
-      </div>
-
-      <div class="card pad">
-        <h3>Your relationship with movement</h3>
-        <p>For years, I moved to change how I looked — chasing numbers and mirrors. Now, I move to remember how I <em>feel</em>.</p>
-        <p>Your body doesn’t need punishment. It needs partnership. When you move <em>with</em> your body, even the smallest motion becomes sacred.</p>
-      </div>
-    </div>
+  <!-- Body × Mind balance -->
+  <section id="balance" class="card">
+    <h2>Body × Mind Balance</h2>
+    <p>
+      Training loads the <em>body</em>; recovery down-regulates the <em>mind</em>. Blend stress and soothe:
+      pair hard days with easy days, and anchor sessions with breath work and sleep hygiene.
+    </p>
+    <ul class="balance-list">
+      <li><strong>Up-shift:</strong> intervals, heavy sets, skill practice.</li>
+      <li><strong>Down-shift:</strong> 2–5 min nasal breathing, a slow walk, gentle mobility.</li>
+      <li><strong>Signals:</strong> If sleep, mood, or desire to train dip for 3+ days, back off volume/intensity.</li>
+    </ul>
   </section>
 
-  <!-- MOVEMENT TYPES -->
-  <section id="movement-types" class="section">
-    <div class="center-wrapper">
-      <h2>What kinds of movement help?</h2>
-      <p class="subtle">There’s no one right way — only the way that brings you closer to yourself. A blend of strength, aerobic work, and mobility often supports the best outcomes <span class="fn">note <sup>5</sup></span>.</p>
+  <!-- Feeling check with suggestions -->
+  <section id="feels" class="card glass">
+    <h2>How are you feeling today?</h2>
+    <div class="feel-row">
+      <label for="feelSlider" class="muted">Low</label>
+      <input id="feelSlider" type="range" min="0" max="100" value="60" aria-label="Energy level slider">
+      <label for="feelSlider" class="muted">High</label>
+    </div>
+    <div id="feelSuggestion" class="suggestion">Loading suggestion…</div>
+    <details class="tips">
+      <summary>Why this suggestion?</summary>
+      <p>We match intensity to energy: lower days = mobility/walks; mid = steady cardio/technique; high = intervals or heavier lifts. This keeps progress smooth and sustainable.</p>
+    </details>
+  </section>
 
-      <div class="tiles">
-        <article class="card tile">
-          <img src="img/Fitness/strength.jpg" alt="Gentle strength practice (squat or push)"/>
-          <div class="body">
-            <h3>Strength</h3>
-            <p>For resilience — a reminder you can hold your own weight.</p>
-            <p class="tagline-mini">Examples: squats, pushups, rows, carries</p>
-          </div>
-        </article>
+  <!-- Weekly schedule (copyable for Notes) -->
+  <section id="schedule" class="card">
+    <h2>Your Gentle Weekly Rhythm</h2>
+    <p class="muted">A color-coded starter you can tweak. Tap “Copy” to paste into Notes.</p>
 
-        <article class="card tile">
-          <img src="img/Fitness/cardio.jpg" alt="Easy cardio such as walking or dancing"/>
-          <div class="body">
-            <h3>Cardio</h3>
-            <p>For release — let your heart speak through rhythm and breath.</p>
-            <p class="tagline-mini">Examples: walking, dancing, cycling, swimming</p>
-          </div>
-        </article>
-
-        <article class="card tile">
-          <img src="img/Fitness/mobility.jpg" alt="Mobility and flexibility stretch"/>
-          <div class="body">
-            <h3>Mobility &amp; Flexibility</h3>
-            <p>For restoration — create space where tension once lived.</p>
-            <p class="tagline-mini">Examples: hips, thoracic, ankles, hamstrings</p>
-          </div>
-        </article>
-
-        <article class="card tile">
-          <img src="img/Fitness/mindful.jpg" alt="Mindful, breath-led movement such as yoga"/>
-          <div class="body">
-            <h3>Mindful Movement</h3>
-            <p>For reflection — move not for progress, but for peace.</p>
-            <p class="tagline-mini">Examples: breathwork, yoga, tai chi, stillness</p>
-          </div>
-        </article>
+    <div class="week-grid" id="weekGrid" role="table" aria-label="Weekly plan">
+      <div class="day">
+        <h3>Mon</h3>
+        <div class="slot strength">Strength A (push/hinge) + 10' mobility</div>
+        <div class="slot light">NEAT: 8–10k steps</div>
       </div>
-    </div>
-  </section>
-
-  <!-- BALANCE -->
-  <section id="balance" class="section">
-    <div class="center-wrapper narrow card pad">
-      <h2>Balance body and mind</h2>
-      <p>True balance isn’t found in perfect routines — it’s found in presence. Some days your body craves movement; other days it needs stillness. Both are sacred.</p>
-      <p class="lead">Before you move, ask: <em>“What do I truly need right now — release, grounding, stillness, or expression?”</em></p>
-    </div>
-  </section>
-
-  <!-- GENTLE CHECK-IN -->
-  <section id="jj-checkin" class="section pad-lg">
-    <div class="center-wrapper narrow">
-      <h2 class="h1">Gentle Check-In</h2>
-      <p class="subtle">How are you arriving today? Pick what feels closest — I’ll suggest something kind and doable.</p>
-
-      <form id="checkinForm" class="checkin-grid" aria-label="How are you feeling today?">
-        <label class="check-card"><input type="radio" name="mood" value="stressed"/><span class="check-body"><strong>Stressed / Anxious</strong><small>mind racing, tense shoulders</small></span></label>
-        <label class="check-card"><input type="radio" name="mood" value="lowenergy"/><span class="check-body"><strong>Low Energy</strong><small>sleepy, flat, sluggish</small></span></label>
-        <label class="check-card"><input type="radio" name="mood" value="sore"/><span class="check-body"><strong>Sore / Tight</strong><small>stiff hips, back or neck</small></span></label>
-        <label class="check-card"><input type="radio" name="mood" value="overwhelmed"/><span class="check-body"><strong>Overwhelmed / Busy</strong><small>too much on your plate</small></span></label>
-        <label class="check-card"><input type="radio" name="mood" value="motivated"/><span class="check-body"><strong>Motivated</strong><small>ready to move</small></span></label>
-        <label class="check-card"><input type="radio" name="mood" value="heavy"/><span class="check-body"><strong>Heavy Emotions</strong><small>sad, flat, tender</small></span></label>
-      </form>
-
-      <div id="checkinResult" class="result-panel" aria-live="polite" hidden>
-        <p class="lead" id="resultTitle"></p>
-        <ul id="resultList" class="suggestions"></ul>
-        <div class="chip-row" id="resultTags" aria-hidden="true"></div>
-        <div class="links-row" style="margin-top:10px;">
-          <a href="#movement-types" class="ghost">Explore movement types</a>
-          <a href="#busy-workday" class="ghost">Move during busy days</a>
-        </div>
-        <p class="note" style="margin-top:8px">If you have acute pain, dizziness, or injury, pause and consider a professional check-in first.</p>
+      <div class="day">
+        <h3>Tue</h3>
+        <div class="slot cardio">Cardio steady 30–40'</div>
+        <div class="slot balance">Balance play 5'</div>
+      </div>
+      <div class="day">
+        <h3>Wed</h3>
+        <div class="slot strength">Strength B (pull/squat) + 10' mobility</div>
+        <div class="slot light">Walk calls + stairs</div>
+      </div>
+      <div class="day">
+        <h3>Thu</h3>
+        <div class="slot cardio">Intervals 8–12' work total</div>
+        <div class="slot mind">Mind–body 10–15'</div>
+      </div>
+      <div class="day">
+        <h3>Fri</h3>
+        <div class="slot strength">Strength C (full-body) + carry</div>
+        <div class="slot light">Evening stroll</div>
+      </div>
+      <div class="day">
+        <h3>Sat</h3>
+        <div class="slot cardio">Long easy walk/cycle 45–60'</div>
+        <div class="slot mobility">Mobility flow 10'</div>
+      </div>
+      <div class="day">
+        <h3>Sun</h3>
+        <div class="slot mind">Rest & breath • gentle stretch</div>
+        <div class="slot light">House reset (NEAT)</div>
       </div>
     </div>
-  </section>
 
-  <!-- WEEKLY RHYTHM -->
-  <section id="weekly" class="section">
-    <div class="center-wrapper narrow">
-      <h2>Your gentle weekly rhythm</h2>
-      <p class="subtle">Find a rhythm that feels like you. Tap a day, choose a focus — the day button and display will match the color of your choice (pink = Strength, orange = Cardio, green = Mobility; Rest is neutral).</p>
-
-      <div class="week" role="list" id="weekGrid" aria-label="Weekly plan"></div>
-
-      <div class="picker" aria-label="Pick a movement type">
-        <button class="pick" data-type="strength" type="button">Strength</button>
-        <button class="pick" data-type="cardio" type="button">Cardio</button>
-        <button class="pick" data-type="mobility" type="button">Mobility</button>
-        <button class="pick" data-type="rest" type="button">Rest / Reflection</button>
-      </div>
-
-      <div class="display" id="displayBox" aria-live="polite">
-        <div class="what rest" id="displayWhat">No day selected</div>
-        <div class="desc" id="displayDesc">Pick a day, then choose a movement type to set your rhythm.</div>
-      </div>
+    <div class="copy-row">
+      <button id="copyPlan" class="btn">Copy weekly plan</button>
+      <span id="copyMsg" class="muted" role="status" aria-live="polite"></span>
     </div>
   </section>
 
-  <!-- BUSY WORKDAY TIPS -->
-  <section id="busy-workday" class="section">
-    <div class="center-wrapper">
-      <h2>Incorporate movement into a busy workday</h2>
-      <p class="subtle">Movement happens in micro-moments. Small breaks improve focus and well-being <span class="fn">note <sup>6</sup></span>.</p>
-
-      <div class="tips-list">
-        <div class="card pad">
-          <h3>Morning reset (2–3 min)</h3>
-          <p>Before opening your phone: gentle spinal rolls, neck circles, 10 slow breaths.</p>
-        </div>
-        <div class="card pad">
-          <h3>Hourly micro-break</h3>
-          <p>Stand up for 60–90s, open chest, 10 deep breaths. Light movement every 30–60 min supports glucose control and energy <span class="fn">note <sup>6</sup></span>.</p>
-        </div>
-        <div class="card pad">
-          <h3>Walking calls</h3>
-          <p>Take phone calls while walking — it boosts creativity and cognitive flexibility <span class="fn">note <sup>7</sup></span>.</p>
-        </div>
-        <div class="card pad">
-          <h3>Desk mobility</h3>
-          <p>Wrists, thoracic opens, gentle rotations — better posture, less fatigue <span class="fn">note <sup>8</sup></span>.</p>
-        </div>
-        <div class="card pad">
-          <h3>Stair or hallway laps</h3>
-          <p>2–5 minutes between tasks. Add one extra minute if a meeting overran.</p>
-        </div>
-        <div class="card pad">
-          <h3>Evening unwind</h3>
-          <p>10-minute walk, easy yoga, or breathwork to shift from doing → resting.</p>
-        </div>
-      </div>
-    </div>
+  <!-- Workday movement -->
+  <section id="work" class="card glass">
+    <h2>Movement at Work (Doable)</h2>
+    <ul class="work-tips">
+      <li><strong>3 per hour:</strong> stand, shoulder roll, 30-sec calf pumps.</li>
+      <li><strong>Walking calls:</strong> headset + loop the corridor or outside.</li>
+      <li><strong>Drink & drift:</strong> small water = more micro-walks (NEAT win).</li>
+      <li><strong>Stairs policy:</strong> 1–2 flights whenever possible.</li>
+      <li><strong>Desk band:</strong> 1× mini set (pull-aparts, rows) between tasks.</li>
+      <li><strong>Lunch 10:</strong> 10-minute brisk walk before you eat.</li>
+    </ul>
+    <p class="muted">
+      Prolonged sitting raises cardiometabolic and mortality risk; frequent light breaks help counter it.
+      <a class="ref" href="#refs">See references</a>.
+    </p>
   </section>
 
-  <!-- PRACTICAL CHECKLIST -->
-  <section id="practical" class="section">
-    <div class="center-wrapper narrow">
-      <h2>Practical ways to move more (without overwhelm)</h2>
-      <div class="checklist-wrap">
-        <form class="checks" aria-label="Simple movement checklist">
-          <label><input type="checkbox"/> <span>Take calls while walking</span></label>
-          <label><input type="checkbox"/> <span>Stretch while the kettle boils</span></label>
-          <label><input type="checkbox"/> <span>Dance while cooking one song</span></label>
-          <label><input type="checkbox"/> <span>Walk barefoot on grass for 2 minutes</span></label>
-          <label><input type="checkbox"/> <span>Three slow breaths between tasks</span></label>
-          <label><input type="checkbox"/> <span>One posture reset before bed</span></label>
-        </form>
-      </div>
-    </div>
+  <!-- References -->
+  <section id="refs" class="card">
+    <h2>References</h2>
+    <ol class="refs">
+      <li><a href="https://bjsm.bmj.com/content/54/24/1451" target="_blank" rel="noopener">WHO 2020 Physical Activity Guidelines (BJSM summary)</a></li>
+      <li><a href="https://www.who.int/initiatives/behealthy/physical-activity" target="_blank" rel="noopener">WHO: Be Active</a></li>
+      <li><a href="https://www.acsm.org/education-resources/pronouncements-scientific-communications/position-stands/" target="_blank" rel="noopener">ACSM Position Stands</a></li>
+      <li><a href="https://bjsm.bmj.com/content/56/13/755" target="_blank" rel="noopener">Muscle-strengthening & lower mortality (systematic review)</a></li>
+      <li><a href="https://www.bmj.com/content/384/bmj-2023-075847" target="_blank" rel="noopener">Exercise for depression (BMJ network meta-analysis, 2024)</a></li>
+      <li><a href="https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2814094" target="_blank" rel="noopener">Occupational sitting & mortality/CVD risk (JAMA Net Open)</a></li>
+      <li><a href="https://www.mayoclinicproceedings.org/article/S0025-6196(15)00123-8/fulltext" target="_blank" rel="noopener">NEAT overview (Mayo Clinic Proceedings)</a></li>
+      <li><a href="https://sportsmedicine-open.springeropen.com/articles/10.1186/s40798-023-00652-x" target="_blank" rel="noopener">Stretching & acute ROM (meta-analysis)</a></li>
+    </ol>
   </section>
 
-  <!-- CLOSER -->
-  <section id="closer" class="section pad-lg">
-    <div class="center-wrapper narrow card pad">
-      <h2>Movement as medicine</h2>
-      <p>Movement is how the body remembers joy. Even on slow or stiff days, it’s a quiet love letter to life.</p>
-      <p>Start where you are. Move how your body wants to move. Trust that each breath, stretch, and heartbeat is part of your healing.</p>
-      <p class="lead"><em>You don’t have to move perfectly. You just have to move with presence.</em></p>
-      <p><a href="#jj-checkin" class="btn">Begin with one small move →</a></p>
-    </div>
-  </section>
+  <!-- Inline JS (safe, no external deps) -->
+  <script>
+  (function () {
+    // subnav smooth scroll
+    document.querySelectorAll('.subnav-item').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const sel = btn.getAttribute('data-target');
+        const el = document.querySelector(sel);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
 
-  <!-- NOTES -->
-  <section id="notes" class="section">
-    <div class="center-wrapper narrow fn card pad">
-      <h3>Notes & gentle references</h3>
-      <ol>
-        <li><strong>Longevity & daily movement:</strong> Meta-analyses show even modest daily activity is linked with reduced all-cause mortality (large cohort data).</li>
-        <li><strong>Mood & depression:</strong> Regular physical activity supports mood via endorphins/serotonin and stress-hormone modulation (medical school reviews & clinical trials).</li>
-        <li><strong>Emotion regulation:</strong> Rhythmic aerobic activity and dance can support parasympathetic balance and affect regulation.</li>
-        <li><strong>Interoception:</strong> Mindful movement (yoga/tai chi) improves body-awareness measures in controlled studies.</li>
-        <li><strong>Best outcomes:</strong> Blended programs (strength + aerobic + mobility) consistently outperform single-modality on multiple metrics.</li>
-        <li><strong>Micro-breaks:</strong> Light activity (2–3 min) every 30–60 min helps post-prandial glucose and subjective energy during sedentary work.</li>
-        <li><strong>Walking & creativity:</strong> Controlled experiments show walking increases creative output vs. seated work.</li>
-        <li><strong>Ergonomics:</strong> Desk-based mobility reduces musculoskeletal discomfort and fatigue in office settings.</li>
-      </ol>
-      <p class="note">Want exact paper titles with subtle tooltip links? Say the word and I’ll swap them in.</p>
-    </div>
-  </section>
+    // feeling suggestions
+    const slider = document.getElementById('feelSlider');
+    const out = document.getElementById('feelSuggestion');
+    const suggest = (v) => {
+      if (v < 30) return "Low battery: 10–20' gentle walk + 5' mobility + 2' slow nasal breaths.";
+      if (v < 60) return "Middle lane: 30–40' steady walk/cycle or technique work + light stretch.";
+      if (v < 85) return "Good pop: Strength focus (full-body) or short intervals (8–12' work total).";
+      return "High vibe: Heavier lifts or sport play; cap near 60–75' and finish with 5' down-shift.";
+    };
+    const updateFeel = () => out.textContent = suggest(+slider.value);
+    slider.addEventListener('input', updateFeel);
+    updateFeel();
+
+    // copy weekly plan
+    const copyBtn = document.getElementById('copyPlan');
+    const copyMsg = document.getElementById('copyMsg');
+    const weekToText = () => {
+      const days = [...document.querySelectorAll('#weekGrid .day')].map(d => {
+        const label = d.querySelector('h3').textContent.trim();
+        const items = [...d.querySelectorAll('.slot')].map(s => '- ' + s.textContent.trim()).join('\\n');
+        return label + ':\\n' + items;
+      });
+      return 'WEEKLY PLAN (Just Jana)\\n\\n' + days.join('\\n\\n');
+    };
+    copyBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(weekToText());
+        copyMsg.textContent = 'Copied ✓ Paste into Notes';
+        setTimeout(() => copyMsg.textContent = '', 3000);
+      } catch (e) {
+        copyMsg.textContent = 'Press Ctrl/Cmd+C to copy';
+      }
+    });
+
+    // swipeable kinds (mobile) + auto-swipe
+    const strip = document.getElementById('kindsStrip');
+    const dots = document.getElementById('kindsDots');
+    let isDown = false, startX = 0, scrollLeft = 0, autoTimer;
+
+    const setDots = () => {
+      const cards = strip.querySelectorAll('.kind');
+      dots.innerHTML = '';
+      cards.forEach((_, i) => {
+        const b = document.createElement('button');
+        b.className = 'dot';
+        b.addEventListener('click', () => {
+          const w = strip.querySelector('.kind').offsetWidth + 16; // card + gap
+          strip.scrollTo({ left: i * w, behavior: 'smooth' });
+        });
+        dots.appendChild(b);
+      });
+      markDot();
+    };
+
+    const markDot = () => {
+      const cards = strip.querySelectorAll('.kind');
+      const w = cards[0].offsetWidth + 16;
+      const idx = Math.round(strip.scrollLeft / w);
+      [...dots.children].forEach((d, i) => d.classList.toggle('active', i === idx));
+    };
+
+    const startDrag = (x) => { isDown = true; startX = x - strip.offsetLeft; scrollLeft = strip.scrollLeft; strip.classList.add('grabbing'); };
+    const moveDrag = (x) => { if(!isDown) return; const walk = (x - strip.offsetLeft - startX); strip.scrollLeft = scrollLeft - walk; };
+    const endDrag = () => { isDown = false; strip.classList.remove('grabbing'); snapToCard(); };
+
+    const snapToCard = () => {
+      const card = strip.querySelector('.kind');
+      if (!card) return;
+      const w = card.offsetWidth + 16;
+      const idx = Math.round(strip.scrollLeft / w);
+      strip.scrollTo({ left: idx * w, behavior: 'smooth' });
+    };
+
+    // pointer/mouse
+    strip.addEventListener('mousedown', e => startDrag(e.pageX));
+    window.addEventListener('mousemove', e => moveDrag(e.pageX));
+    window.addEventListener('mouseup', endDrag);
+
+    // touch
+    strip.addEventListener('touchstart', e => startDrag(e.touches[0].pageX), {passive:true});
+    strip.addEventListener('touchmove', e => moveDrag(e.touches[0].pageX), {passive:true});
+    strip.addEventListener('touchend', endDrag);
+
+    // snap & dots on scroll/resize
+    strip.addEventListener('scroll', () => { markDot(); });
+    window.addEventListener('resize', () => { setDots(); snapToCard(); });
+
+    // gentle auto-advance on mobile
+    const autoSwipe = () => {
+      clearInterval(autoTimer);
+      const isMobile = window.matchMedia('(max-width: 900px)').matches;
+      if (!isMobile) return;
+      autoTimer = setInterval(() => {
+        const card = strip.querySelector('.kind');
+        if (!card) return;
+        const w = card.offsetWidth + 16;
+        const maxIdx = strip.querySelectorAll('.kind').length - 1;
+        const idx = Math.round(strip.scrollLeft / w);
+        const next = (idx + 1) % (maxIdx + 1);
+        strip.scrollTo({ left: next * w, behavior: 'smooth' });
+      }, 4000);
+    };
+
+    setDots();
+    autoSwipe();
+    window.addEventListener('resize', autoSwipe);
+  })();
+  </script>
 </main>
 
   
@@ -1330,179 +1454,5 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 });
 </script>
-
-<!-- ===== Page-specific JS (Check-In + Weekly Rhythm) ===== -->
-  <script>
-  // ----- Gentle Check-In -----
-  (() => {
-    const map = {
-      stressed: {
-        title: "Try a 5–10 min nervous-system reset.",
-        suggestions: [
-          "3–5 minutes of box breathing (inhale 4 • hold 4 • exhale 4 • hold 4).",
-          "Gentle neck rolls + shoulder melts (1–2 minutes).",
-          "Quiet 8–10 minute walk with eyes on the horizon."
-        ],
-        tags: ["mindful","mobility","cardio"]
-      },
-      lowenergy: {
-        title: "Wake up softly — then decide if you want more.",
-        suggestions: [
-          "2 minutes: cat-cow + spinal rolls.",
-          "5 minutes: brisk hallway/yard laps; if energy rises, add 5 more.",
-          "Optional: 6–8 bodyweight squats and wall pushups (1–2 rounds)."
-        ],
-        tags: ["mobility","cardio","strength"]
-      },
-      sore: {
-        title: "Create space where tension lives.",
-        suggestions: [
-          "Hip flexor + thoracic openers (8–10 slow breaths each).",
-          "90/90 hip switches (1–2 minutes).",
-          "Calf + hamstring ladder (light, pain-free range)."
-        ],
-        tags: ["mobility","mindful"]
-      },
-      overwhelmed: {
-        title: "Micro-moves that fit inside a busy day.",
-        suggestions: [
-          "Every hour: 60–90s stand, shoulder open, 10 deep breaths.",
-          "Walking calls or stair laps between tasks.",
-          "End-of-day 6–8 minute decompression walk."
-        ],
-        tags: ["cardio","mobility","mindful"]
-      },
-      motivated: {
-        title: "Channel that spark (10–20 min).",
-        suggestions: [
-          "Strength micro-circuit × 2–3: 10 squats • 8 pushups (incline if needed) • 20s plank.",
-          "Or: 10–15 min tempo walk or dance session.",
-          "Finish: 60–90s breath to land the nervous system."
-        ],
-        tags: ["strength","cardio","mindful"]
-      },
-      heavy: {
-        title: "Move emotions gently through the body.",
-        suggestions: [
-          "Quiet 10-minute walk, eyes soft, breath slow.",
-          "Floor stretch flow: child’s pose → thread-the-needle → sphinx.",
-          "2 minutes box breathing; hand on heart."
-        ],
-        tags: ["mindful","mobility","cardio"]
-      }
-    };
-
-    const form  = document.getElementById('checkinForm');
-    const panel = document.getElementById('checkinResult');
-    const title = document.getElementById('resultTitle');
-    const list  = document.getElementById('resultList');
-    const chips = document.getElementById('resultTags');
-
-    if (form && panel && title && list && chips) {
-      form.addEventListener('change', () => {
-        const mood = new FormData(form).get('mood');
-        const data = map[mood];
-        if (!data) return;
-
-        title.textContent = data.title;
-
-        list.innerHTML = '';
-        data.suggestions.forEach(item => {
-          const li = document.createElement('li');
-          li.textContent = item;
-          list.appendChild(li);
-        });
-
-        chips.innerHTML = '';
-        data.tags.forEach(t => {
-          const span = document.createElement('span');
-          span.className = `tag tag--${t}`;
-          span.textContent = (
-            t === 'strength' ? 'Strength' :
-            t === 'cardio'   ? 'Cardio'   :
-            t === 'mobility' ? 'Mobility' : 'Mindful'
-          );
-          chips.appendChild(span);
-        });
-        chips.setAttribute('aria-hidden', 'false');
-        panel.hidden = false;
-      });
-    }
-  })();
-
-  // ----- Weekly Rhythm (recolor days + display copy) -----
-  (() => {
-    const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-    const grid = document.getElementById('weekGrid');
-    const displayWhat = document.getElementById('displayWhat');
-    const displayDesc = document.getElementById('displayDesc');
-
-    if (!grid || !displayWhat || !displayDesc) return;
-
-    const descMap = {
-      strength: 'Build foundation: squats, pushes, pulls, carries.',
-      cardio:   'Move energy: walk, dance, cycle, swim.',
-      mobility: 'Release tension: hips, thoracic, ankles, hamstrings.',
-      rest:     'Reflect and restore: gentle stroll, breath, stillness.'
-    };
-
-    const plan = Object.create(null);
-    let activeDay = null;
-
-    function renderDays(){
-      grid.innerHTML = '';
-      days.forEach(d=>{
-        const b = document.createElement('button');
-        b.type='button';
-        b.className = 'day-btn';
-        b.dataset.day = d;
-        b.setAttribute('aria-pressed','false');
-        b.textContent = d;
-
-        const t = plan[d];
-        if(t){ b.classList.add(t); }
-
-        b.addEventListener('click', ()=>{
-          activeDay = d;
-          grid.querySelectorAll('.day-btn').forEach(x=>x.setAttribute('aria-pressed','false'));
-          b.setAttribute('aria-pressed','true');
-
-          const t = plan[d];
-          if(t){
-            displayWhat.textContent = `${d}: ${t[0].toUpperCase()+t.slice(1)}`;
-            displayWhat.className = `what ${t}`;
-            displayDesc.textContent = descMap[t];
-          }else{
-            displayWhat.textContent = `${d}: No type selected`;
-            displayWhat.className = `what rest`;
-            displayDesc.textContent = 'Pick a type below to set your rhythm.';
-          }
-        });
-        grid.appendChild(b);
-      });
-    }
-    renderDays();
-
-    document.querySelectorAll('.pick').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        if(!activeDay){ activeDay = days[0]; }
-        const type = btn.dataset.type;
-        plan[activeDay] = type;
-
-        const target = grid.querySelector(`.day-btn[data-day="${activeDay}"]`);
-        if (target) {
-          target.classList.remove('strength','cardio','mobility','rest');
-          target.classList.add(type);
-        }
-
-        displayWhat.textContent = `${activeDay}: ${type[0].toUpperCase()+type.slice(1)}`;
-        displayWhat.className = `what ${type}`;
-        displayDesc.textContent = descMap[type];
-      });
-    });
-  })();
-  </script>
-
-
   </body>
 </html>
