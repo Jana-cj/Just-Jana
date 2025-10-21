@@ -4808,15 +4808,14 @@ h2{margin:0 0 10px}
 .dot{font-weight:700}
 
 /* Safety: overlays must truly hide when flagged */
-#jjNavOverlay { display: none !important; }
-#jj-preface-overlay[aria-hidden="true"] { display: none !important; }
+#jjNavOverlay{display:none !important;}
+#jj-preface-overlay[aria-hidden="true"]{display:none !important;}
 
-/* Ensure text is visible and sections render */
-body { color: #1b1b1f; background:#fff; }
+/* Base visibility guards */
+body { color:#1b1b1f; background:#fff; }
 main { display:block; visibility:visible; opacity:1; }
 
-/* If your browser doesn’t support :has() yet (older Firefox), fall back */
+/* :has() fallback nuance for older Firefox */
 @supports not (selector(:has(*))) {
-  /* Optional highlight when a check card is focused */
-  #jj-checkin .check-card:focus-within { box-shadow: 0 0 0 2px rgba(0,0,0,.08) inset; }
+  #jj-checkin .check-card:focus-within { box-shadow: inset 0 0 0 2px rgba(0,0,0,.08); }
 }
