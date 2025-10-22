@@ -443,7 +443,6 @@
 
       <!-- Mobile chips -->
       <nav class="jjmv-chips" aria-label="Section shortcuts">
-        <button class="jjmv-chip-scroll left" aria-label="Scroll left">‹</button>
         <div class="jjmv-chips-track" role="tablist">
           <a role="tab" class="jjmv-chip" href="#why"      data-target="why">Why movement matters</a>
           <a role="tab" class="jjmv-chip" href="#ways"     data-target="ways">Different ways to move</a>
@@ -1252,11 +1251,25 @@ document.addEventListener("DOMContentLoaded", function() {
   const debounced = (fn, t=120)=>{ let h; return (...a)=>{ clearTimeout(h); h=setTimeout(()=>fn(...a), t); }; };
   window.addEventListener('resize', debounced(makeObserver), { passive:true });
 
-  // Mobile chip left/right buttons
-  document.querySelector('.jjmv-chip-scroll.left')
-    ?.addEventListener('click', ()=> track && track.scrollBy({left:-240,behavior:'smooth'}));
-  document.querySelector('.jjmv-chip-scroll.right')
-    ?.addEventListener('click', ()=> track && track.scrollBy({left: 240,behavior:'smooth'}));
+  // -------- Right-only chevron + enable/disable when scrollable --------
+const rightBtn = document.querySelector('.jjmv-chip-scroll.right');
+
+function canScrollRight() {
+  if (!track) return false;
+  return track.scrollLeft + track.clientWidth < track.scrollWidth - 1;
+}
+function updateRightBtn() {
+  if (!rightBtn) return;
+  rightBtn.disabled = !canScrollRight();
+}
+rightBtn?.addEventListener('click', () => {
+  track?.scrollBy({ left: 240, behavior: 'smooth' });
+});
+
+track?.addEventListener('scroll', updateRightBtn, { passive: true });
+window.addEventListener('resize', updateRightBtn, { passive: true });
+updateRightBtn();
+
 
   // -------- Mobile-only drag-to-scroll binding with cleanup --------
   let unbindDrag = null;
