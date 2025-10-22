@@ -4888,3 +4888,30 @@ html{scroll-behavior:smooth}
 
 /* Optional: if your layout sets anchors as position:relative with negative top, normalize */
 [id]{scroll-margin-top: var(--jj-header-offset)}
+
+/* Make sure nothing above the chip rail eats horizontal swipes */
+@media (max-width:900px){
+  .jjmv-toc,
+  .jjmv-chips,
+  .jjmv-chips-track { overflow: visible; }
+
+  /* The rail already had momentum & pan-x; add guardrails for edge cases */
+  .jjmv-chips-track{
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+    max-width: 100%;
+    white-space: nowrap;
+  }
+
+  /* Keep chips readable and tappable */
+  .jjmv-chip{
+    font-size: 14px;
+    line-height: 1.25;
+    padding: 10px 12px;
+  }
+}
+
+/* Prevent global smooth scrolling from fighting JS offset on some mobile browsers */
+html { scroll-behavior: auto; }
