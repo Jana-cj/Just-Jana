@@ -4790,3 +4790,45 @@ html {
 /* Smooth scroll */
 html{scroll-behavior:smooth}
 
+/* Pink hover for TOC links */
+.jjmv-toc-link,
+.jjmv-toc-link:visited{
+  color: var(--jjmv-ink-2);
+  text-decoration: none;
+}
+
+.jjmv-toc-link:hover,
+.jjmv-toc-link:focus-visible{
+  color: #e07fa1; /* soft JJ pink for text */
+  background: rgba(245,191,221,.35); /* var(--jjmv-grad-c) tint */
+  text-decoration: none;
+}
+
+/* Pink hover for mobile chips */
+.jjmv-chip:hover,
+.jjmv-chip:focus-visible{
+  color: #e07fa1;
+  background: rgba(245,191,221,.35);
+  text-decoration: none;
+}
+
+/* Keep the active state as-is (gradient pill) */
+.jjmv-toc-link.active{
+  color: var(--jjmv-ink);
+  background: linear-gradient(
+    90deg,
+    rgba(246,221,189,.45),
+    rgba(246,206,204,.45),
+    rgba(245,191,221,.45)
+  );
+}
+.jjmv-chip.active{
+  color: var(--jjmv-ink);
+  background: linear-gradient(
+    90deg,
+    rgba(246,221,189,.40),
+    rgba(246,206,204,.40),
+    rgba(245,191,221,.40)
+  );
+}
+
