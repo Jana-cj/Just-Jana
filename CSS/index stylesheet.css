@@ -4701,53 +4701,31 @@ html {
 
 
 
-/* ===========================
-   Just Jana · Importance of Movement (LIGHT MODE)
-   Desktop: sticky TOC list + progress bar
-   Mobile: swipeable chip rail
-   No pink hover anywhere
-   =========================== */
-
+/* ===== Just Jana · Movement (On-this-page) ===== */
 :root{
-  /* Ink & surfaces */
   --jjmv-ink: #2b2330;
   --jjmv-ink-2:#6a5d68;
   --jjmv-bg:#fff7fb;
   --jjmv-card: rgba(255,255,255,.72);
   --jjmv-shadow: 0 10px 28px rgba(0,0,0,.08);
   --jjmv-radius: 22px;
-
-  /* Brand gradient */
-  --jjmv-grad-a:#f6ddbd;
-  --jjmv-grad-b:#f6cecc;
-  --jjmv-grad-c:#f5bfdd;
-
-  /* Header offset (fallback if your navbar script hasn’t set --nav-h) */
-  --nav-h: 88px;                     /* your JS usually overwrites this */
-  --jj-header-offset: calc(var(--nav-h) + 12px);
+  --jjmv-grad-a:#fff5bb;
+  --jjmv-grad-b:#ffd2d5;
+  --jjmv-grad-c:#ffc2f8;
 }
 
-/* Page hero (optional) */
+
+/* small wrapper & hero (no header/footer) */
 .jjmv-wrap{max-width:1100px;margin:0 auto;padding:0 20px}
-.jjmv-hero{
-  background:linear-gradient(90deg,var(--jjmv-grad-a),var(--jjmv-grad-b),var(--jjmv-grad-c));
-  padding:56px 0 36px;color:var(--jjmv-ink)
-}
-.jjmv-eyebrow{
-  margin:0 0 6px;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--jjmv-ink-2);font-weight:600
-}
+.jjmv-hero{background:linear-gradient(90deg,var(--jjmv-grad-a),var(--jjmv-grad-b),var(--jjmv-grad-c));padding:56px 0 36px;color:var(--jjmv-ink)}
+.jjmv-eyebrow{margin:0 0 6px;letter-spacing:.12em;text-transform:uppercase;color:var(--jjmv-ink-2);font-weight:600}
 .jjmv-title{margin:0 0 6px;font-size:clamp(28px,4vw,44px)}
 .jjmv-sub{margin:0;color:var(--jjmv-ink-2)}
 
-/* Layout */
-.jjmv-page{
-  display:grid;grid-template-columns:320px 1fr;gap:28px;
-  max-width:1100px;margin:28px auto;padding:0 20px
-}
+.jjmv-page{display:grid;grid-template-columns:320px 1fr;gap:28px;max-width:1100px;margin:28px auto;padding:0 20px}
 @media (max-width:900px){ .jjmv-page{grid-template-columns:1fr} }
 
-/* TOC card (sticky on desktop) */
+/* TOC card */
 .jjmv-toc{
   position:sticky;top:16px;align-self:start;
   backdrop-filter:saturate(150%) blur(10px);
@@ -4755,136 +4733,60 @@ html {
   border-radius:var(--jjmv-radius);
   box-shadow:var(--jjmv-shadow);
   padding:16px;border:1px solid rgba(0,0,0,.04);
-  overflow:visible; /* ensure chips/menus aren’t clipped */
 }
 .jjmv-toc-head{display:flex;align-items:center;gap:10px;padding:4px 8px 12px}
-.jjmv-toc-title{
-  margin:0;font-size:16px;letter-spacing:.08em;text-transform:uppercase;color:var(--jjmv-ink-2)
-}
-.jjmv-dot{
-  width:10px;height:10px;border-radius:999px;
-  background:linear-gradient(120deg,var(--jjmv-grad-a),var(--jjmv-grad-b),var(--jjmv-grad-c));
-  box-shadow:0 0 0 4px rgba(245,191,221,.18)
-}
+.jjmv-toc-title{margin:0;font-size:16px;letter-spacing:.08em;text-transform:uppercase;color:var(--jjmv-ink-2)}
+.jjmv-dot{width:10px;height:10px;border-radius:999px;background:linear-gradient(120deg,var(--jjmv-grad-a),var(--jjmv-grad-b),var(--jjmv-grad-c));box-shadow:0 0 0 4px rgba(245,191,221,.18)}
 
 /* Desktop list */
 .jjmv-toc-list{position:relative}
-.jjmv-toc-list ol{
-  margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px
-}
+.jjmv-toc-list ol{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
 .jjmv-toc-link{
   display:flex;align-items:center;gap:10px;
   padding:10px 12px;border-radius:14px;text-decoration:none;
-  color:var(--jjmv-ink-2); background:transparent; transition:background .16s ease, color .16s ease;
+  color:var(--jjmv-ink-2);
 }
-.jjmv-toc-link::before{
-  content:'';width:6px;height:6px;border-radius:999px;background:currentColor;opacity:.35;flex:0 0 6px
-}
-/* Neutral hover (no pink) */
-.jjmv-toc-link:hover,
-.jjmv-toc-link:focus-visible{
-  color:var(--jjmv-ink);
-  background:rgba(0,0,0,.05);
-  text-decoration:none;
-}
-/* Active state (gradient pill) */
+.jjmv-toc-link::before{content:'';width:6px;height:6px;border-radius:999px;background:currentColor;opacity:.35;flex:0 0 6px}
+.jjmv-toc-link:hover{background:rgba(0,0,0,.04)}
 .jjmv-toc-link.active{
   color:var(--jjmv-ink);
   background:linear-gradient(90deg, rgba(246,221,189,.45), rgba(246,206,204,.45), rgba(245,191,221,.45));
 }
-.jjmv-toc-link.active::before{
-  opacity:1;background:linear-gradient(120deg,var(--jjmv-grad-a),var(--jjmv-grad-b),var(--jjmv-grad-c))
-}
+.jjmv-toc-link.active::before{opacity:1;background:linear-gradient(120deg,var(--jjmv-grad-a),var(--jjmv-grad-b),var(--jjmv-grad-c))}
 
-/* Progress bar (desktop) */
-.jjmv-progress-bar{
-  height:4px;background:rgba(0,0,0,.06);border-radius:999px;margin:14px 8px 4px
-}
-.jjmv-progress{
-  height:100%;width:0%;border-radius:999px;
-  background:linear-gradient(90deg,var(--jjmv-grad-a),var(--jjmv-grad-b),var(--jjmv-grad-c));
-  transition:width .25s ease
-}
+/* Progress bar */
+.jjmv-progress-bar{height:4px;background:rgba(0,0,0,.06);border-radius:999px;margin:14px 8px 4px}
+.jjmv-progress{height:100%;width:0%;border-radius:999px;background:linear-gradient(90deg,var(--jjmv-grad-a),var(--jjmv-grad-b),var(--jjmv-grad-c));transition:width .25s ease}
 
-/* ===== Mobile: swipeable chips ===== */
+/* Mobile chips */
 .jjmv-chips{display:none}
 @media (max-width:900px){
-  /* TOC becomes non-sticky on mobile to prevent overlay issues */
   .jjmv-toc{position:static}
-
-  .jjmv-chips{
-    display:flex;align-items:center;gap:8px;padding:6px;
-    position:relative;z-index:1;overflow:visible;
-  }
-  .jjmv-chips-track{
-    display:flex;gap:8px;
-    overflow-x:auto; overflow-y:hidden;
-    -webkit-overflow-scrolling: touch;   /* momentum on iOS */
-    touch-action: pan-x;                  /* allow finger horizontal pan */
-    overscroll-behavior-x: contain;       /* prevent parent steal */
-    scroll-snap-type: x proximity;
-    max-width:100%;
-    min-height:44px;                      /* keep chips visible height */
-    pointer-events:auto;
-  }
-  .jjmv-chips-track::-webkit-scrollbar{ display:none; }
-
+  .jjmv-chips{display:flex;align-items:center;gap:8px;padding:6px}
+  .jjmv-chips-track{display:flex;gap:8px;overflow:auto;scrollbar-width:none}
+  .jjmv-chips-track::-webkit-scrollbar{display:none}
   .jjmv-chip{
-    flex:0 0 auto;
-    scroll-snap-align:start;
-    white-space:nowrap;
-    padding:10px 12px;border-radius:999px;
-    text-decoration:none;
-    color:var(--jjmv-ink-2);
-    background:rgba(0,0,0,.04);
-    border:1px solid rgba(0,0,0,.05);
-    font-size:14px; line-height:1.25;
-    -webkit-user-select:none; user-select:none;  /* prevents text selection while dragging */
-    transition:background .16s ease, color .16s ease;
+    display:inline-flex;align-items:center;white-space:nowrap;
+    padding:10px 12px;border-radius:999px;text-decoration:none;
+    color:var(--jjmv-ink-2); background:rgba(0,0,0,.04); border:1px solid rgba(0,0,0,.05);
   }
-  /* Neutral hover/focus (no pink) */
-  .jjmv-chip:hover,
-  .jjmv-chip:focus-visible{
-    color:var(--jjmv-ink);
-    background:rgba(0,0,0,.05);
-    text-decoration:none;
-  }
-  /* Active chip */
-  .jjmv-chip.active{
-    color:var(--jjmv-ink);
-    background:linear-gradient(90deg, rgba(246,221,189,.40), rgba(246,206,204,.40), rgba(245,191,221,.40));
-  }
-
-  /* Hide desktop list on mobile */
+  .jjmv-chip.active{background:linear-gradient(90deg, rgba(246,221,189,.4), rgba(246,206,204,.4), rgba(245,191,221,.4)); color:var(--jjmv-ink)}
+  .jjmv-chip-scroll{background:transparent;border:none;font-size:20px;padding:8px;border-radius:12px;color:var(--jjmv-ink-2)}
   .jjmv-toc-list{display:none}
 }
 
-/* Content blocks */
+/* Content scaffolding */
 .jjmv-content{display:flex;flex-direction:column;gap:64px}
-.jjmv-block{
-  background:#ffffff;border:1px solid rgba(0,0,0,.04);
-  box-shadow:var(--jjmv-shadow);border-radius:18px;padding:24px;color:var(--jjmv-ink);
-  /* Keep anchors visible below fixed header (clicks & hash jump) */
-  scroll-margin-top: var(--jj-header-offset);
-}
-.jjmv-block h2{
-  margin-top:0;margin-bottom:10px;
-  color:var(--jjmv-ink);
-  font-size:clamp(24px, 3.6vw, 32px);  /* visible on mobile */
-  line-height:1.25;
-}
-@media (max-width:900px){
-  .jjmv-block{scroll-margin-top: var(--jj-header-offset);}
-  .jjmv-block h2{font-size:clamp(22px,5.5vw,28px)}
-}
+.jjmv-block{background:#ffffff;border:1px solid rgba(0,0,0,.04);box-shadow:var(--jjmv-shadow);border-radius:18px;padding:24px;color:var(--jjmv-ink)}
+.jjmv-block h2{margin-top:0}
 
-/* Smooth scroll behavior for anchor navigation */
+/* Keep anchors visible below any fixed headers you already have */
+.jjmv-block{scroll-margin-top:90px}
+@media (max-width:900px){ .jjmv-block{scroll-margin-top:70px} }
+
+/* Smooth scroll */
 html{scroll-behavior:smooth}
 
-/* Safety: ensure no parent accidentally blocks chip scrolling on mobile */
-@media (max-width:900px){
-  .jjmv-toc, .jjmv-chips{overflow:visible}
-}
 
-/* Optional: if your layout sets anchors as position:relative with negative top, normalize */
-[id]{scroll-margin-top: var(--jj-header-offset)}
+
+
