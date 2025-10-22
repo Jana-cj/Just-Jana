@@ -1228,48 +1228,98 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
 
 <script>
-/* Movement chips: manual swipe on mobile (drag-to-scroll) */
+/* Just Jana – Movement page TOC (mobile drag, header-safe scroll) */
 (function(){
-  const track = document.querySelector('.jjmv-chips-track');
-  if(!track) return;
+  const links = Array.from(document.querySelectorAll('.jjmv-toc-link'));
+  const chips = Array.from(document.querySelectorAll('.jjmv-chip'));
+  const progress = document.querySelector('.jjmv-progress');
+  const sections = links.map(a => document.getElementById(a.dataset.target));
 
-  // Keep your existing left/right buttons:
-  document.querySelector('.jjmv-chip-scroll.left')?.addEventListener('click', ()=> {
-    track.scrollBy({ left: -240, behavior: 'smooth' });
-  });
-  document.querySelector('.jjmv-chip-scroll.right')?.addEventListener('click', ()=> {
-    track.scrollBy({ left:  240, behavior: 'smooth' });
-  });
+  function headerOffsetPx(){
+    // Read --nav-h set by your navbar code; fallback if missing
+    const raw = getComputedStyle(document.documentElement).getPropertyValue('--nav-h').trim();
+    const n = parseFloat(raw || '88');
+    return (isFinite(n) ? n : 88) + 12; // add a little breathing space
+  }
 
-  // Pointer-based dragging (works for touch + mouse)
-  let isDown = false, startX = 0, startLeft = 0, moved = 0;
-  const DRAG_THRESHOLD = 8; // px: don't trigger a chip click if user dragged
+  function scrollToWithOffset(el){
+    if(!el) return;
+    const top = el.getBoundingClientRect().top + window.pageYOffset - headerOffsetPx();
+    const smoothOK = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top, behavior: smoothOK ? 'smooth' : 'auto' });
+    // focus for a11y without jumping
+    setTimeout(()=>{ el.setAttribute('tabindex','-1'); el.focus({preventScroll:true}); }, 240);
+  }
 
-  track.addEventListener('pointerdown', e => {
-    isDown = true; moved = 0;
-    startX = e.clientX; startLeft = track.scrollLeft;
-    track.setPointerCapture(e.pointerId);
-  });
+  function goTo(id){
+    const el = document.getElementById(id);
+    if(!el) return;
+    scrollToWithOffset(el);
+    history.replaceState(null, '', '#' + id);
+  }
 
-  track.addEventListener('pointermove', e => {
-    if(!isDown) return;
-    const dx = e.clientX - startX;
-    moved = Math.max(moved, Math.abs(dx));
-    track.scrollLeft = startLeft - dx;
-  });
+  function setActive(id){
+    links.forEach(a => a.classList.toggle('active', a.dataset.target === id));
+    chips.forEach(c => c.classList.toggle('active', c.dataset.target === id));
+  }
 
-  function endDrag(){ isDown = false; }
-  track.addEventListener('pointerup', endDrag);
-  track.addEventListener('pointercancel', endDrag);
-  track.addEventListener('pointerleave', endDrag);
+  links.forEach(a => a.addEventListener('click', e => { e.preventDefault(); goTo(a.dataset.target); }));
+  chips.forEach(c => c.addEventListener('click', e => { e.preventDefault(); goTo(c.dataset.target); }));
 
-  // If user dragged, suppress the click that would follow
-  track.addEventListener('click', function(e){
-    if(moved > DRAG_THRESHOLD){
-      e.preventDefault();
-      e.stopPropagation();
+  // Scroll spy + progress (account for header height)
+  const io = new IntersectionObserver((entries)=>{
+    const visible = entries.filter(e => e.isIntersecting);
+    if(visible.length){
+      visible.sort((a,b)=> b.intersectionRatio - a.intersectionRatio);
+      setActive(visible[0].target.id);
     }
-  }, true);
+    const doc = document.documentElement;
+    const scrolled = (doc.scrollTop || document.body.scrollTop);
+    const height = (doc.scrollHeight - doc.clientHeight);
+    if(progress) progress.style.width = (Math.max(0, Math.min(1, height ? scrolled/height : 0)) * 100) + '%';
+  }, { root: null, rootMargin: `-${Math.max(0, headerOffsetPx()-10)}px 0px -55% 0px`, threshold: [0.1,0.25,0.5,0.75,1] });
+
+  sections.forEach(s => s && io.observe(s));
+
+  // Respect hash on load (and reapply offset)
+  window.addEventListener('load', ()=>{
+    const initial = location.hash.replace('#','');
+    if(initial){ setActive(initial); scrollToWithOffset(document.getElementById(initial)); }
+  });
+
+  // Mobile chip left/right buttons
+  const track = document.querySelector('.jjmv-chips-track');
+  document.querySelector('.jjmv-chip-scroll.left')?.addEventListener('click', ()=> track && track.scrollBy({left:-240,behavior:'smooth'}));
+  document.querySelector('.jjmv-chip-scroll.right')?.addEventListener('click', ()=> track && track.scrollBy({left:240,behavior:'smooth'}));
+
+  // Drag-to-scroll on the chip rail (touch + mouse via Pointer Events)
+  if(track){
+    let isDown = false, startX = 0, startLeft = 0, moved = 0;
+    const DRAG_THRESHOLD = 8;
+
+    track.addEventListener('pointerdown', e=>{
+      isDown = true; moved = 0;
+      startX = e.clientX; startLeft = track.scrollLeft;
+      track.setPointerCapture(e.pointerId);
+    });
+
+    track.addEventListener('pointermove', e=>{
+      if(!isDown) return;
+      const dx = e.clientX - startX;
+      moved = Math.max(moved, Math.abs(dx));
+      track.scrollLeft = startLeft - dx;
+    });
+
+    function endDrag(){ isDown = false; }
+    track.addEventListener('pointerup', endDrag);
+    track.addEventListener('pointercancel', endDrag);
+    track.addEventListener('pointerleave', endDrag);
+
+    // If user dragged, suppress click on chips
+    track.addEventListener('click', function(e){
+      if(moved > DRAG_THRESHOLD){ e.preventDefault(); e.stopPropagation(); }
+    }, true);
+  }
 })();
 </script>
 

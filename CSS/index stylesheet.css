@@ -4844,5 +4844,42 @@ html{scroll-behavior:smooth}
 /* If your fixed header overlaps anchors, this ensures titles aren’t hidden when jumping */
 .jjmv-block{ scroll-margin-top: calc(var(--nav-h, 80px) + 10px); }
 
+/* --- Make chip rail truly swipeable & not clipped --- */
+@media (max-width: 900px){
+  .jjmv-chips { display:flex; align-items:center; gap:8px; padding:6px; position:relative; z-index:1; }
+  .jjmv-chips-track{
+    display:flex; gap:8px;
+    overflow-x:auto; overflow-y:hidden;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x;                 /* let finger drags scroll horizontally */
+    overscroll-behavior-x: contain;      /* avoid parent scroll stealing */
+    scroll-snap-type: x proximity;
+    max-width:100%;
+    min-height:44px;
+    pointer-events:auto;
+  }
+  .jjmv-chips-track::-webkit-scrollbar{ display:none; }
+
+  .jjmv-chip{
+    flex:0 0 auto;
+    scroll-snap-align:start;
+    white-space:nowrap;
+    padding:10px 12px; border-radius:999px;
+    text-decoration:none;
+    color:var(--jjmv-ink-2);
+    background:rgba(0,0,0,.04);
+    border:1px solid rgba(0,0,0,.05);
+    font-size:14px; line-height:1.25;
+    -webkit-user-select:none; user-select:none;  /* prevent text selection while dragging */
+  }
+
+  /* Section headings stay readable on mobile */
+  .jjmv-block h2{ font-size:clamp(22px,5.5vw,28px); line-height:1.25; color:var(--jjmv-ink); margin-bottom:10px; }
+}
+
+/* Keep anchors visible under fixed header when navigating */
+:root { --jj-header-offset: calc(var(--nav-h, 88px) + 12px); }
+.jjmv-block{ scroll-margin-top: var(--jj-header-offset); }
+
 
 
