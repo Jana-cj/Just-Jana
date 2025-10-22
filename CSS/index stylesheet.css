@@ -4819,11 +4819,6 @@ html{scroll-behavior:smooth}
     font-size:14px; line-height:1.2;     /* ensure text is visible */
   }
 
-  /* pink hover/Focus (mobile + desktop) */
-  .jjmv-chip:hover, .jjmv-chip:focus-visible{
-    color:#bf3b74; background:rgba(245,191,221,.35);
-    text-decoration:none;
-  }
 
   /* arrow buttons sit above but don't block swipes */
   .jjmv-chip-scroll{
@@ -4836,10 +4831,7 @@ html{scroll-behavior:smooth}
   .jjmv-block h2{ font-size:clamp(20px,5vw,28px); line-height:1.25; }
 }
 
-/* Desktop hover stays pink too */
-.jjmv-toc-link:hover, .jjmv-toc-link:focus-visible{
-  color:#bf3b74; background:rgba(245,191,221,.35); text-decoration:none;
-}
+
 
 
 
