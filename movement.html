@@ -1183,12 +1183,15 @@ document.addEventListener("DOMContentLoaded", function() {
   const sections = links.map(a => document.getElementById(a.dataset.target));
   const track    = document.querySelector('.jjmv-chips-track');
   const mqMobile = window.matchMedia('(max-width: 900px)');
+  const navEl    = document.getElementById('siteNav');
 
   function headerOffsetPx(){
-    // Read --nav-h set by your navbar code; fallback if missing
+    // Prefer actual nav height (works on mobile too), fall back to CSS var, then 88.
+    const navH = navEl ? navEl.offsetHeight : 0;
+    if (navH > 0) return navH + 12;
     const raw = getComputedStyle(document.documentElement).getPropertyValue('--nav-h').trim();
     const n = parseFloat(raw || '88');
-    return (isFinite(n) ? n : 88) + 12; // add a little breathing space
+    return (isFinite(n) ? n : 88) + 12;
   }
 
   function scrollToWithOffset(el){
@@ -1216,7 +1219,7 @@ document.addEventListener("DOMContentLoaded", function() {
   links.forEach(a => a.addEventListener('click', e => { e.preventDefault(); goTo(a.dataset.target); }));
   chips.forEach(c => c.addEventListener('click', e => { e.preventDefault(); goTo(c.dataset.target); }));
 
-  // Scroll spy + progress (account for header height)
+  // Scroll spy + progress (accounts for header height)
   let io;
   function makeObserver(){
     if(io) io.disconnect();
@@ -1245,12 +1248,9 @@ document.addEventListener("DOMContentLoaded", function() {
     if(initial){ setActive(initial); scrollToWithOffset(document.getElementById(initial)); }
   });
 
-  // Rebuild observer on resize (nav height may change)
-  window.addEventListener('resize', () => {
-    // Debounce a touch; cheap enough
-    clearTimeout(makeObserver._t);
-    makeObserver._t = setTimeout(makeObserver, 120);
-  }, { passive:true });
+  // Rebuild observer when layout likely changes nav height
+  const debounced = (fn, t=120)=>{ let h; return (...a)=>{ clearTimeout(h); h=setTimeout(()=>fn(...a), t); }; };
+  window.addEventListener('resize', debounced(makeObserver), { passive:true });
 
   // Mobile chip left/right buttons
   document.querySelector('.jjmv-chip-scroll.left')
@@ -1270,7 +1270,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const onDown = e => {
       isDown = true; moved = 0;
       startX = e.clientX; startLeft = track.scrollLeft;
-      track.setPointerCapture?.(e.pointerId);
+      // NOTE: do NOT use setPointerCapture here (iOS Safari quirk with links)
     };
     const onMove = e => {
       if(!isDown) return;
@@ -1289,6 +1289,9 @@ document.addEventListener("DOMContentLoaded", function() {
     track.addEventListener('pointercancel', endDrag);
     track.addEventListener('pointerleave', endDrag);
     track.addEventListener('click', onClickBlockIfDragged, true);
+
+    // Give track precedence for horizontal pans (helps some Android builds)
+    track.style.touchAction = 'pan-x';
 
     unbindDrag = function(){
       track.removeEventListener('pointerdown', onDown);
