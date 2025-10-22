@@ -439,6 +439,116 @@
   </header>
   <br><br><br><br>
 
+<body>
+  <!-- Page Hero -->
+  <header class=\"jj-hero\">
+    <div class=\"wrap\">
+      <p class=\"eyebrow\">Body · Movement</p>
+      <h1>Move to Feel. Move to Heal.</h1>
+      <p class=\"sub\">A gentle, science-rooted guide to building a movement practice that loves you back.</p>
+    </div>
+  </header>
+
+  <div class=\"page\">
+    <!-- On This Page Navigation -->
+    <aside class=\"toc-card\" aria-label=\"On this page\">
+      <div class=\"toc-head\">
+        <span class=\"dot\"></span>
+        <h2>On this page</h2>
+      </div>
+
+      <!-- Mobile chips -->
+      <nav class=\"toc-chips\" aria-label=\"Section shortcuts\">
+        <button class=\"chips-scroll left\" aria-label=\"Scroll left\">‹</button>
+        <div class=\"chips-track\" role=\"tablist\">
+          <a role=\"tab\" class=\"chip\" href=\"#why\" data-target=\"why\">Why movement matters</a>
+          <a role=\"tab\" class=\"chip\" href=\"#ways\" data-target=\"ways\">Different ways to move</a>
+          <a role=\"tab\" class=\"chip\" href=\"#pyramid\" data-target=\"pyramid\">Functional movement pyramid</a>
+          <a role=\"tab\" class=\"chip\" href=\"#balance\" data-target=\"balance\">Body & Mind balance</a>
+          <a role=\"tab\" class=\"chip\" href=\"#schedule\" data-target=\"schedule\">Build your weekly schedule</a>
+          <a role=\"tab\" class=\"chip\" href=\"#tips\" data-target=\"tips\">Daily life tips</a>
+          <a role=\"tab\" class=\"chip\" href=\"#culture\" data-target=\"culture\">Cultural lens</a>
+          <a role=\"tab\" class=\"chip\" href=\"#myths\" data-target=\"myths\">Myths & FAQs</a>
+          <a role=\"tab\" class=\"chip\" href=\"#safety\" data-target=\"safety\">Safety & red flags</a>
+          <a role=\"tab\" class=\"chip\" href=\"#before\" data-target=\"before\">Before you go</a>
+          <a role=\"tab\" class=\"chip\" href=\"#refs\" data-target=\"refs\">References</a>
+        </div>
+        <button class=\"chips-scroll right\" aria-label=\"Scroll right\">›</button>
+      </nav>
+
+      <!-- Desktop list -->
+      <nav class=\"toc-list\" aria-label=\"Section navigation\">
+        <ol>
+          <li><a class=\"toc-link\" href=\"#why\" data-target=\"why\">Why movement matters</a></li>
+          <li><a class=\"toc-link\" href=\"#ways\" data-target=\"ways\">Different ways to move</a></li>
+          <li><a class=\"toc-link\" href=\"#pyramid\" data-target=\"pyramid\">Functional movement pyramid</a></li>
+          <li><a class=\"toc-link\" href=\"#balance\" data-target=\"balance\">Body and Mind balance</a></li>
+          <li><a class=\"toc-link\" href=\"#schedule\" data-target=\"schedule\">Build your weekly workout schedule</a></li>
+          <li><a class=\"toc-link\" href=\"#tips\" data-target=\"tips\">Tips to incorporate movement into daily life</a></li>
+          <li><a class=\"toc-link\" href=\"#culture\" data-target=\"culture\">Cultural lens: Gentle reframes</a></li>
+          <li><a class=\"toc-link\" href=\"#myths\" data-target=\"myths\">Myths and FAQs</a></li>
+          <li><a class=\"toc-link\" href=\"#safety\" data-target=\"safety\">Safety and red flags</a></li>
+          <li><a class=\"toc-link\" href=\"#before\" data-target=\"before\">Before you go</a></li>
+          <li><a class=\"toc-link\" href=\"#refs\" data-target=\"refs\">References</a></li>
+        </ol>
+        <div class=\"progress-bar\" aria-hidden=\"true\">
+          <div class=\"progress\"></div>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main content demo (replace with your real sections) -->
+    <main class=\"content\">
+      <section id=\"why\" class=\"block\">
+        <h2>Why movement matters</h2>
+        <p>Short intro text…</p>
+      </section>
+      <section id=\"ways\" class=\"block\">
+        <h2>Different ways to move</h2>
+        <p>Short intro text…</p>
+      </section>
+      <section id=\"pyramid\" class=\"block\">
+        <h2>Functional movement pyramid</h2>
+        <p>Short intro text…</p>
+      </section>
+      <section id=\"balance\" class=\"block\">
+        <h2>Body and Mind balance</h2>
+        <p>Short intro text…</p>
+      </section>
+      <section id=\"schedule\" class=\"block\">
+        <h2>Build your weekly workout schedule</h2>
+        <p>Short intro text…</p>
+      </section>
+      <section id=\"tips\" class=\"block\">
+        <h2>Tips to incorporate movement into daily life</h2>
+        <p>Short intro text…</p>
+      </section>
+      <section id=\"culture\" class=\"block\">
+        <h2>Cultural lens: Gentle reframes</h2>
+        <p>Short intro text…</p>
+      </section>
+      <section id=\"myths\" class=\"block\">
+        <h2>Myths and FAQs</h2>
+        <p>Short intro text…</p>
+      </section>
+      <section id=\"safety\" class=\"block\">
+        <h2>Safety and red flags</h2>
+        <p>Short intro text…</p>
+      </section>
+      <section id=\"before\" class=\"block\">
+        <h2>Before you go</h2>
+        <p>Short intro text…</p>
+      </section>
+      <section id=\"refs\" class=\"block\">
+        <h2>References</h2>
+        <p>Short intro text…</p>
+      </section>
+    </main>
+  </div>
+
+  <script src=\"jj-move-nav.js\"></script>
+</body>
+
   
   <!-- Back to top button -->
  <div class="back-top">
@@ -1114,6 +1224,75 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   });
 });
+</script>
+
+<script>
+  // Just Jana – Movement Page TOC interactions
+(function(){
+  const links = Array.from(document.querySelectorAll('.toc-link'));
+  const chips = Array.from(document.querySelectorAll('.chip'));
+  const progress = document.querySelector('.progress');
+  const sections = links.map(a => document.getElementById(a.dataset.target));
+
+  // Smooth scroll with focus management (for a11y)
+  function goTo(id){
+    const el = document.getElementById(id);
+    if(!el) return;
+    el.scrollIntoView({behavior:'smooth', block:'start'});
+    // move focus without outline jump
+    setTimeout(()=>{ el.setAttribute('tabindex','-1'); el.focus({preventScroll:true}); }, 300);
+    history.replaceState(null, '', '#' + id);
+  }
+
+  function setActive(id){
+    links.forEach(a => a.classList.toggle('active', a.dataset.target === id));
+    chips.forEach(c => c.classList.toggle('active', c.dataset.target === id));
+  }
+
+  // Click handlers
+  links.forEach(a => a.addEventListener('click', e => {
+    e.preventDefault();
+    goTo(a.dataset.target);
+  }));
+  chips.forEach(c => c.addEventListener('click', e => {
+    e.preventDefault();
+    goTo(c.dataset.target);
+  }));
+
+  // IntersectionObserver for scrollspy & progress
+  const io = new IntersectionObserver((entries)=>{
+    // find most visible
+    let topMost = entries
+      .filter(e => e.isIntersecting)
+      .sort((a,b)=> b.intersectionRatio - a.intersectionRatio)[0];
+    if(topMost){
+      const id = topMost.target.id;
+      setActive(id);
+    }
+
+    // update progress
+    const doc = document.documentElement;
+    const scrolled = (doc.scrollTop || document.body.scrollTop);
+    const height = (doc.scrollHeight - doc.clientHeight);
+    const pct = Math.max(0, Math.min(1, scrolled / (height || 1))) * 100;
+    if(progress){ progress.style.width = pct + '%'; }
+  }, { rootMargin: '-40% 0px -55% 0px', threshold: [0.1, 0.25, 0.5, 0.75, 1] });
+
+  sections.forEach(s => s && io.observe(s));
+
+  // If page opens with a hash
+  const initial = location.hash.replace('#','');
+  if(initial){ setActive(initial); }
+
+  // Mobile chips scroll buttons
+  const track = document.querySelector('.chips-track');
+  document.querySelector('.chips-scroll.left')?.addEventListener('click', ()=>{
+    track && track.scrollBy({left:-220, behavior:'smooth'});
+  });
+  document.querySelector('.chips-scroll.right')?.addEventListener('click', ()=>{
+    track && track.scrollBy({left:220, behavior:'smooth'});
+  });
+})();
 </script>
 
 
