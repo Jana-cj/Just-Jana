@@ -1227,6 +1227,52 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 
+<!-- Mobile nav bar manual swipe -->
+<script>
+(function(){
+  const track = document.querySelector('.jjmv-chips-track');
+  if(!track) return;
+
+  // Arrow buttons (keep existing behavior if you already wired this)
+  document.querySelector('.jjmv-chip-scroll.left')?.addEventListener('click', ()=>{
+    track.scrollBy({ left: -240, behavior:'smooth' });
+  });
+  document.querySelector('.jjmv-chip-scroll.right')?.addEventListener('click', ()=>{
+    track.scrollBy({ left:  240, behavior:'smooth' });
+  });
+
+  // Drag-to-scroll (mouse & touch via Pointer Events)
+  let isDown = false, startX = 0, startLeft = 0, moved = 0;
+  const DRAG_THRESHOLD = 8; // px
+
+  track.addEventListener('pointerdown', e=>{
+    isDown = true; moved = 0;
+    startX = e.clientX; startLeft = track.scrollLeft;
+    track.setPointerCapture(e.pointerId);
+  });
+
+  track.addEventListener('pointermove', e=>{
+    if(!isDown) return;
+    const dx = e.clientX - startX;
+    moved = Math.max(moved, Math.abs(dx));
+    track.scrollLeft = startLeft - dx;
+  });
+
+  function endDrag(e){ isDown = false; }
+  track.addEventListener('pointerup', endDrag);
+  track.addEventListener('pointercancel', endDrag);
+  track.addEventListener('pointerleave', endDrag);
+
+  // Prevent accidental chip clicks when the user was dragging
+  track.addEventListener('click', function(e){
+    if(moved > DRAG_THRESHOLD){
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }, true);
+})();
+</script>
+
 
 
   </body>
