@@ -4713,10 +4713,11 @@ html {
   --jjmv-card: rgba(255,255,255,.72);
   --jjmv-shadow: 0 10px 28px rgba(0,0,0,.08);
   --jjmv-radius: 22px;
-  --jjmv-grad-a:#f6ddbd;
-  --jjmv-grad-b:#f6cecc;
-  --jjmv-grad-c:#f5bfdd;
+  --jjmv-grad-a:#fff8d0;
+  --jjmv-grad-b:#ffe3e5;
+  --jjmv-grad-c:#ffcef9;
 }
+
 
 /* small wrapper & hero (no header/footer) */
 .jjmv-wrap{max-width:1100px;margin:0 auto;padding:0 20px}
