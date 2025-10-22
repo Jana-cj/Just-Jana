@@ -4699,11 +4699,7 @@ html {
 }
 @keyframes jj-sheen{0%{background-position:0 0}100%{background-position:300% 0}}
 
-/* Importance of movement */
-.movement-tagline {
-  font-size: 20px;
-  color: #6a6969;
-}
+
 
 /* ===== Just Jana · Movement (On-this-page) ===== */
 :root{
@@ -4791,6 +4787,62 @@ html {
 /* Smooth scroll */
 html{scroll-behavior:smooth}
 
+/* ===== Movement nav: mobile swipe + readable titles ===== */
+@media (max-width: 900px){
+  /* Chip rail should scroll with a finger */
+  .jjmv-chips{
+    display:flex; align-items:center; gap:8px; padding:6px;
+    position:relative; z-index:1;
+  }
+  .jjmv-chips-track{
+    display:flex; gap:8px;
+    overflow-x:auto; overflow-y:hidden;
+    -webkit-overflow-scrolling: touch;   /* iOS momentum */
+    touch-action: pan-x;                  /* let finger swipes pan horizontally */
+    scroll-snap-type: x proximity;
+    max-width:100%;
+    min-height:44px;                      /* keep chips visible */
+  }
+  .jjmv-chips-track::-webkit-scrollbar{ display:none; }
+
+  .jjmv-chip{
+    flex:0 0 auto;                        /* stop shrinking */
+    scroll-snap-align:start;
+    white-space:nowrap;
+    padding:10px 12px; border-radius:999px;
+    text-decoration:none;
+    color:var(--jjmv-ink-2);
+    background:rgba(0,0,0,.04);
+    border:1px solid rgba(0,0,0,.05);
+    font-size:14px; line-height:1.25;     /* readable, non-clipped */
+  }
+
+  /* Arrow buttons won't block swipes on the track */
+  .jjmv-chip-scroll{
+    background:transparent; border:0; font-size:20px; padding:8px;
+    border-radius:12px; color:var(--jjmv-ink-2);
+    z-index:2; pointer-events:auto;
+  }
+
+  /* Section headings on mobile – ensure they’re visible and sized nicely */
+  .jjmv-block h2{
+    font-size: clamp(22px, 5.5vw, 28px);
+    line-height: 1.25;
+    color: var(--jjmv-ink);
+    margin-bottom: 10px;
+  }
+}
+
+/* (keep your pink hover) */
+.jjmv-toc-link:hover, .jjmv-toc-link:focus-visible{ 
+  color:#bf3b74; background:rgba(245,191,221,.35); text-decoration:none;
+}
+.jjmv-chip:hover, .jjmv-chip:focus-visible{
+  color:#bf3b74; background:rgba(245,191,221,.35); text-decoration:none;
+}
+
+/* If your fixed header overlaps anchors, this ensures titles aren’t hidden when jumping */
+.jjmv-block{ scroll-margin-top: calc(var(--nav-h, 80px) + 10px); }
 
 
 
