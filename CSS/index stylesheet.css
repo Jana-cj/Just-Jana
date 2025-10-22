@@ -4791,47 +4791,6 @@ html {
 /* Smooth scroll */
 html{scroll-behavior:smooth}
 
-/* --- MOBILE: make the chip bar swipeable & readable --- */
-@media (max-width:900px){
-  .jjmv-chips{
-    display:flex; align-items:center; gap:8px; padding:6px;
-    position:relative; z-index:1;
-  }
-  .jjmv-chips-track{
-    display:flex; gap:8px;
-    overflow-x:auto; overflow-y:hidden;
-    -webkit-overflow-scrolling: touch;  /* momentum scroll on iOS */
-    touch-action: pan-x;                 /* allow finger swipes */
-    scroll-snap-type: x proximity;
-    max-width:100%;
-  }
-  .jjmv-chips-track::-webkit-scrollbar{ display:none; }
-
-  .jjmv-chip{
-    flex:0 0 auto;                       /* don’t shrink */
-    scroll-snap-align:start;
-    white-space:nowrap;
-    padding:10px 12px; border-radius:999px;
-    text-decoration:none;
-    color:var(--jjmv-ink-2);
-    background:rgba(0,0,0,.04);
-    border:1px solid rgba(0,0,0,.05);
-    font-size:14px; line-height:1.2;     /* ensure text is visible */
-  }
-
-
-  /* arrow buttons sit above but don't block swipes */
-  .jjmv-chip-scroll{
-    background:transparent; border:0; font-size:20px; padding:8px;
-    border-radius:12px; color:var(--jjmv-ink-2);
-    z-index:2; pointer-events:auto;
-  }
-
-  /* Make section headings readable on small screens */
-  .jjmv-block h2{ font-size:clamp(20px,5vw,28px); line-height:1.25; }
-}
-
-
 
 
 
