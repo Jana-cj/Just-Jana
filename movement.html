@@ -425,6 +425,8 @@
     </header>
 
 
+
+
 <section class="jjmv-hero">
     <div class="jjmv-wrap">
       <p class="jjmv-eyebrow">Body · Movement</p>
@@ -496,6 +498,59 @@
       <section id="refs" class="jjmv-block"><h2>References</h2><p>…</p></section>
     </main>
   </div>
+
+  <!-- Place the script just before your closing </body> -->
+  <script>
+    /* Just Jana – Movement page TOC interactions (light mode only) */
+    (function(){
+      const links = Array.from(document.querySelectorAll('.jjmv-toc-link'));
+      const chips = Array.from(document.querySelectorAll('.jjmv-chip'));
+      const progress = document.querySelector('.jjmv-progress');
+      const sections = links.map(a => document.getElementById(a.dataset.target));
+
+      function goTo(id){
+        const el = document.getElementById(id);
+        if(!el) return;
+        el.scrollIntoView({behavior:'smooth', block:'start'});
+        // focus for a11y without jump
+        setTimeout(()=>{ el.setAttribute('tabindex','-1'); el.focus({preventScroll:true}); }, 240);
+        history.replaceState(null, '', '#' + id);
+      }
+      function setActive(id){
+        links.forEach(a => a.classList.toggle('active', a.dataset.target === id));
+        chips.forEach(c => c.classList.toggle('active', c.dataset.target === id));
+      }
+
+      links.forEach(a => a.addEventListener('click', e => { e.preventDefault(); goTo(a.dataset.target); }));
+      chips.forEach(c => c.addEventListener('click', e => { e.preventDefault(); goTo(c.dataset.target); }));
+
+      // Scroll spy + progress
+      const io = new IntersectionObserver((entries)=>{
+        // pick most visible currently intersecting
+        const visible = entries.filter(e => e.isIntersecting);
+        if(visible.length){
+          visible.sort((a,b)=> b.intersectionRatio - a.intersectionRatio);
+          setActive(visible[0].target.id);
+        }
+        const doc = document.documentElement;
+        const scrolled = (doc.scrollTop || document.body.scrollTop);
+        const height = (doc.scrollHeight - doc.clientHeight);
+        const pct = Math.max(0, Math.min(1, height ? (scrolled/height) : 0)) * 100;
+        if(progress) progress.style.width = pct + '%';
+      }, { rootMargin: '-42% 0px -52% 0px', threshold: [0.1,0.25,0.5,0.75,1] });
+
+      sections.forEach(s => s && io.observe(s));
+
+      // Respect hash on load
+      const initial = location.hash.replace('#','');
+      if(initial){ setActive(initial); }
+
+      // Mobile chip scrollers
+      const track = document.querySelector('.jjmv-chips-track');
+      document.querySelector('.jjmv-chip-scroll.left')?.addEventListener('click', ()=> track && track.scrollBy({left:-240,behavior:'smooth'}));
+      document.querySelector('.jjmv-chip-scroll.right')?.addEventListener('click', ()=> track && track.scrollBy({left: 240,behavior:'smooth'}));
+    })();
+  </script>
 
   
   <!-- Back to top button -->
@@ -1172,149 +1227,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   });
 });
-</script>
-
-<script>
-/* Just Jana – Movement page TOC (mobile drag, header-safe scroll) */
-(function(){
-  const links    = Array.from(document.querySelectorAll('.jjmv-toc-link'));
-  const chips    = Array.from(document.querySelectorAll('.jjmv-chip'));
-  const progress = document.querySelector('.jjmv-progress');
-  const sections = links.map(a => document.getElementById(a.dataset.target));
-  const track    = document.querySelector('.jjmv-chips-track');
-  const mqMobile = window.matchMedia('(max-width: 900px)');
-  const navEl    = document.getElementById('siteNav');
-
-  function headerOffsetPx(){
-    // Prefer actual nav height (works on mobile too), fall back to CSS var, then 88.
-    const navH = navEl ? navEl.offsetHeight : 0;
-    if (navH > 0) return navH + 12;
-    const raw = getComputedStyle(document.documentElement).getPropertyValue('--nav-h').trim();
-    const n = parseFloat(raw || '88');
-    return (isFinite(n) ? n : 88) + 12;
-  }
-
-  function scrollToWithOffset(el){
-    if(!el) return;
-    const top = el.getBoundingClientRect().top + window.pageYOffset - headerOffsetPx();
-    const smoothOK = !matchMedia('(prefers-reduced-motion: reduce)').matches;
-    window.scrollTo({ top, behavior: smoothOK ? 'smooth' : 'auto' });
-    // focus for a11y without jumping
-    setTimeout(()=>{ el.setAttribute('tabindex','-1'); el.focus({preventScroll:true}); }, 240);
-  }
-
-  function goTo(id){
-    const el = document.getElementById(id);
-    if(!el) return;
-    scrollToWithOffset(el);
-    history.replaceState(null, '', '#' + id);
-  }
-
-  function setActive(id){
-    links.forEach(a => a.classList.toggle('active', a.dataset.target === id));
-    chips.forEach(c => c.classList.toggle('active', c.dataset.target === id));
-  }
-
-  // Click/activate handlers
-  links.forEach(a => a.addEventListener('click', e => { e.preventDefault(); goTo(a.dataset.target); }));
-  chips.forEach(c => c.addEventListener('click', e => { e.preventDefault(); goTo(c.dataset.target); }));
-
-  // Scroll spy + progress (accounts for header height)
-  let io;
-  function makeObserver(){
-    if(io) io.disconnect();
-    io = new IntersectionObserver((entries)=>{
-      const visible = entries.filter(e => e.isIntersecting);
-      if(visible.length){
-        visible.sort((a,b)=> b.intersectionRatio - a.intersectionRatio);
-        setActive(visible[0].target.id);
-      }
-      const doc = document.documentElement;
-      const scrolled = (doc.scrollTop || document.body.scrollTop);
-      const height = (doc.scrollHeight - doc.clientHeight);
-      if(progress) progress.style.width = (Math.max(0, Math.min(1, height ? scrolled/height : 0)) * 100) + '%';
-    }, {
-      root: null,
-      rootMargin: `-${Math.max(0, headerOffsetPx()-10)}px 0px -55% 0px`,
-      threshold: [0.1,0.25,0.5,0.75,1]
-    });
-    sections.forEach(s => s && io.observe(s));
-  }
-  makeObserver();
-
-  // Respect hash on load (and reapply offset)
-  window.addEventListener('load', ()=>{
-    const initial = location.hash.replace('#','');
-    if(initial){ setActive(initial); scrollToWithOffset(document.getElementById(initial)); }
-  });
-
-  // Rebuild observer when layout likely changes nav height
-  const debounced = (fn, t=120)=>{ let h; return (...a)=>{ clearTimeout(h); h=setTimeout(()=>fn(...a), t); }; };
-  window.addEventListener('resize', debounced(makeObserver), { passive:true });
-
-  // Mobile chip left/right buttons
-  document.querySelector('.jjmv-chip-scroll.left')
-    ?.addEventListener('click', ()=> track && track.scrollBy({left:-240,behavior:'smooth'}));
-  document.querySelector('.jjmv-chip-scroll.right')
-    ?.addEventListener('click', ()=> track && track.scrollBy({left: 240,behavior:'smooth'}));
-
-  // -------- Mobile-only drag-to-scroll binding with cleanup --------
-  let unbindDrag = null;
-
-  function bindChipDragMobile(){
-    if(!track || !mqMobile.matches) return;
-
-    let isDown = false, startX = 0, startLeft = 0, moved = 0;
-    const DRAG_THRESHOLD = 8;
-
-    const onDown = e => {
-      isDown = true; moved = 0;
-      startX = e.clientX; startLeft = track.scrollLeft;
-      // NOTE: do NOT use setPointerCapture here (iOS Safari quirk with links)
-    };
-    const onMove = e => {
-      if(!isDown) return;
-      const dx = e.clientX - startX;
-      moved = Math.max(moved, Math.abs(dx));
-      track.scrollLeft = startLeft - dx;
-    };
-    const endDrag = () => { isDown = false; };
-    const onClickBlockIfDragged = e => {
-      if(moved > DRAG_THRESHOLD){ e.preventDefault(); e.stopPropagation(); }
-    };
-
-    track.addEventListener('pointerdown', onDown);
-    track.addEventListener('pointermove', onMove);
-    track.addEventListener('pointerup', endDrag);
-    track.addEventListener('pointercancel', endDrag);
-    track.addEventListener('pointerleave', endDrag);
-    track.addEventListener('click', onClickBlockIfDragged, true);
-
-    // Give track precedence for horizontal pans (helps some Android builds)
-    track.style.touchAction = 'pan-x';
-
-    unbindDrag = function(){
-      track.removeEventListener('pointerdown', onDown);
-      track.removeEventListener('pointermove', onMove);
-      track.removeEventListener('pointerup', endDrag);
-      track.removeEventListener('pointercancel', endDrag);
-      track.removeEventListener('pointerleave', endDrag);
-      track.removeEventListener('click', onClickBlockIfDragged, true);
-      unbindDrag = null;
-    };
-  }
-
-  function applyMobileBinding(){
-    if(mqMobile.matches){
-      if(!unbindDrag) bindChipDragMobile();
-    } else {
-      if(unbindDrag) unbindDrag();
-    }
-  }
-
-  applyMobileBinding();
-  mqMobile.addEventListener?.('change', applyMobileBinding);
-})();
 </script>
 
 
