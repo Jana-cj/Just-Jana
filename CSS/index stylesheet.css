@@ -5054,3 +5054,101 @@ html{scroll-behavior:smooth}
   #why .lead, #ways .lead{ font-size: 0.98rem; }
 }
 
+/* ================================
+   MOBILE-ONLY FIXES (≤ 991.98px)
+   ================================ */
+@media (max-width: 991.98px){
+
+  /* Let inner scrollers pan horizontally on mobile while the page stays put */
+  html, body{ overflow-x: clip; } /* overrides the earlier overflow-x:hidden only on mobile */
+
+  /* Prevent any content from getting cut off on the right */
+  .jjmv-hero, .jjmv-page, .jjmv-block, .jjmv-toc, .jjmv-content{
+    max-width: 100%;
+    overflow-x: visible;
+  }
+
+  /* --- On-this-page: chips become swipeable --- */
+  .jjmv-chips{
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 0;
+  }
+  .jjmv-chips-track{
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    padding-inline: 4px;
+    touch-action: pan-x !important;
+    overscroll-behavior-x: contain;
+  }
+  .jjmv-chip{
+    flex: 0 0 auto;
+    white-space: nowrap;
+    scroll-snap-align: start;
+    border: 1px solid rgba(179,131,152,.35);
+    border-radius: 999px;
+    padding: .45rem .8rem;
+    background: #fff;
+    text-decoration: none;
+    color: #1f1f1f;
+    font: 600 .95rem/1 "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  }
+  .jjmv-chip.active{ background: rgba(179,131,152,.12); }
+
+  .jjmv-chip-scroll{
+    appearance: none;
+    border: 1px solid rgba(179,131,152,.35);
+    background: #fff;
+    width: 34px; height: 34px; border-radius: 10px;
+    line-height: 1; font-size: 18px;
+  }
+
+  /* --- “Different ways to move” becomes side-by-side + swipe --- */
+  .jjmv-grid{
+    display: flex;               /* not grid on mobile */
+    gap: 12px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    padding: 2px 8px 10px;
+    touch-action: pan-x !important;
+    overscroll-behavior-x: contain;
+  }
+  /* Each card shows side-by-side (and snaps) */
+  .jjmv-card{
+    flex: 0 0 82%;
+    max-width: 82%;
+    scroll-snap-align: start;
+  }
+  /* Slightly bigger on very small phones */
+  @media (max-width: 575.98px){
+    .jjmv-card{ flex-basis: 88%; max-width: 88%; }
+  }
+
+  /* Make images a bit taller on mobile only */
+  .jjmv-fig{
+    aspect-ratio: 5 / 7;     /* “longer” images */
+    border-radius: 14px;
+    overflow: hidden;
+    background: #eee;
+    box-shadow: 0 10px 24px rgba(0,0,0,.06);
+  }
+  .jjmv-fig img{
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+
+  /* Optional: small swipe hint (mobile only) */
+  .jjmv-hint{
+    display: block;
+    font-size: .95rem;
+    color: #8a6b7b;
+    margin: 4px 10px 0 auto;
+  }
+}
+
+/* Desktop stays untouched: your existing desktop grid, nav, spacing, etc. remain in effect */
