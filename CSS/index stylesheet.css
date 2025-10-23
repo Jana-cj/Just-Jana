@@ -5293,7 +5293,7 @@ html{scroll-behavior:smooth}
   text-shadow: 0 1px 1px rgba(0,0,0,.25);
 }
 .qz-pill {
-  display: inline-block; background: #2f6bbd; padding: 6px 10px; border-radius: 999px;
+  display: inline-block; background: #a86f75; padding: 6px 10px; border-radius: 999px;
   font-size: .82rem; font-weight: 700; box-shadow: 0 4px 12px rgba(0,0,0,.25);
 }
 .qz-card h3 { margin: 8px 0 4px; font-size: clamp(1.2rem, 1.6vw + .6rem, 1.6rem); }
