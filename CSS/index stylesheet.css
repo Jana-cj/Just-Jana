@@ -5109,6 +5109,27 @@ html{scroll-behavior:smooth}
 #jj-balance .bal-result .plan ul{ margin:6px 0 8px; padding-left:18px; }
 #jj-balance .cta-row{ display:flex; justify-content:flex-end; gap:8px; }
 
+/* === Mobile-first: stack copy then panel === */
+#jj-balance .bal-wrap{
+  display: grid;
+  grid-template-columns: 1fr;   /* stack */
+  gap: clamp(14px, 3vw, 28px);
+  align-items: start;
+  overflow-x: visible;          /* no sideways scroll on mobile */
+  padding-bottom: 0;
+}
+
+/* Keep natural DOM order: .bal-copy comes before .bal-panel */
+#jj-balance .bal-copy{ order: 1; }
+#jj-balance .bal-panel{ order: 2; }
+
+/* === Desktop and up: side-by-side === */
+@media (min-width: 900px){
+  #jj-balance .bal-wrap{
+    grid-template-columns: 1.1fr 1fr;  /* copy left | panel right */
+  }
+}
+
 
 
 /* ---------- Mobile-first polish ---------- */
