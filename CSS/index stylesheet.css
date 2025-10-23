@@ -5037,6 +5037,71 @@ html{scroll-behavior:smooth}
 /* Optional: align with your nav gutters if using .jj-bleed or jj-align-nav elsewhere */
 /* nothing to change here; styles are contained */
 
+/* ===== Body × Mind Balance (light only) ===== */
+#jj-balance{ color-scheme: only light; }
+#jj-balance h2{ margin:0 0 8px; letter-spacing:.2px; }
+
+#jj-balance .intro{
+  margin: 0 0 14px;
+  opacity: .95;
+  max-width: 70ch;
+}
+
+/* Layout */
+#jj-balance .bal-wrap{
+  display:grid;
+  gap: clamp(14px, 3vw, 22px);
+}
+
+/* Check-in controls */
+#jj-balance .bal-check{ display:grid; gap:14px; }
+#jj-balance .bal-check h3{ margin:0; font-size:1.05rem; }
+
+#jj-balance .bal-group{
+  margin: 0; padding: 10px; border: 1px solid rgba(0,0,0,.06);
+  border-radius: 12px; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,.04);
+  display:flex; flex-wrap:wrap; gap:8px 10px; align-items:center;
+}
+#jj-balance .bal-group legend{
+  padding:0 6px; font-weight:600; opacity:.9; margin-right:6px;
+}
+#jj-balance .bal-group label{
+  display:inline-flex; align-items:center; gap:6px;
+  padding:6px 10px; border-radius:999px; background:#f5f5f7;
+  cursor:pointer; user-select:none; transition: background .15s ease, transform .1s ease;
+  border:1px solid rgba(0,0,0,.05);
+}
+#jj-balance .bal-group input{ appearance:none; width:14px; height:14px; border-radius:50%; border:2px solid #777; }
+#jj-balance .bal-group input:checked{ border-color:#5b6ea8; background:#5b6ea8; }
+#jj-balance .bal-group label:has(input:checked){ background:#e9eefc; border-color:#cdd8ff; }
+
+/* Buttons */
+#jj-balance .bal-btn{
+  justify-self:start; border:none; background:#2f4f7f; color:#fff;
+  padding:10px 14px; border-radius:10px; cursor:pointer;
+  box-shadow:0 2px 10px rgba(47,79,127,.25);
+}
+#jj-balance .bal-btn:hover{ filter:brightness(1.05); }
+#jj-balance .bal-secondary{
+  border:1px solid rgba(0,0,0,.1); background:#fff; padding:8px 12px;
+  border-radius:10px; cursor:pointer;
+}
+
+/* Result card */
+#jj-balance .bal-result{
+  border:1px solid rgba(0,0,0,.06); border-radius:14px;
+  background:#ffffff; box-shadow:0 4px 12px rgba(0,0,0,.06);
+  padding:14px 16px;
+}
+#jj-balance .bal-result h4{ margin:0 0 8px; }
+#jj-balance .bal-result ul{ margin:8px 0 10px; padding-left:18px; }
+#jj-balance .bal-result .note{ margin:0 0 8px; opacity:.85; }
+
+/* Desktop width harmony */
+@media (min-width: 900px){
+  #jj-balance .bal-wrap{ grid-template-columns: 1.2fr; }
+}
+
 
 
 /* ---------- Mobile-first polish ---------- */
