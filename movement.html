@@ -864,7 +864,64 @@
   </div>
 </section>
 
-      <section id="balance" class="jjmv-block jj-align-nav"><h2>Body and Mind balance</h2><p>…</p></section>
+<section id="jj-balance" class="jjmv-block jj-align-nav">
+  <div class="bal-wrap">
+    <!-- LEFT: copy -->
+    <div class="bal-copy">
+      <h2>Body × Mind Balance</h2>
+      <p class="intro">
+        We’re not one-dimensional. A high-quality life needs both a cared-for body and a supported mind.
+        When mental health is tended—stress, sleep, nervous system—physical progress improves too: you
+        recover better, learn skills faster, and stay consistent. Let’s match today’s movement to how
+        you actually feel.
+      </p>
+    </div>
+
+    <!-- RIGHT: dropdown check-in -->
+    <div class="bal-panel" role="region" aria-labelledby="bal-title">
+      <h3 id="bal-title">Quick check-in</h3>
+
+      <form class="bal-form" autocomplete="off">
+        <label class="select-block">
+          <span>How does your <strong>body</strong> feel?</span>
+          <div class="select-wrap">
+            <select id="bodySelect" aria-label="Body state">
+              <option value="" selected>Choose one…</option>
+              <option value="tired">😴 Tired / sore</option>
+              <option value="low">🪫 Low energy</option>
+              <option value="ok">🙂 Okay</option>
+              <option value="restless">🏃 Restless / antsy</option>
+            </select>
+          </div>
+        </label>
+
+        <label class="select-block">
+          <span>How does your <strong>mind</strong> feel?</span>
+          <div class="select-wrap">
+            <select id="mindSelect" aria-label="Mind state">
+              <option value="" selected>Choose one…</option>
+              <option value="calm">🌿 Calm</option>
+              <option value="stressed">⚡ Stressed / anxious</option>
+              <option value="foggy">🌫️ Foggy / low</option>
+              <option value="restless">💭 Restless / overactive</option>
+            </select>
+          </div>
+        </label>
+
+        <button type="button" class="bal-btn" id="balMakePlan">Get recommendation</button>
+      </form>
+
+      <div class="bal-result" id="balResult" hidden>
+        <div class="result-chip" id="balState">Today</div>
+        <h4>Gentle plan</h4>
+        <div class="plan"></div>
+        <div class="cta-row">
+          <button type="button" class="bal-secondary" id="balReset">Reset</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
       <section id="schedule" class="jjmv-block jj-align-nav"><h2>Build your weekly workout schedule</h2><p>…</p></section>
       <section id="tips" class="jjmv-block jj-align-nav"><h2>Tips to incorporate movement into daily life</h2><p>…</p></section>
       <section id="culture" class="jjmv-block jj-align-nav"><h2>Cultural lens: Gentle reframes</h2><p>…</p></section>
@@ -1691,6 +1748,120 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   });
 });
+</script>
+
+<script>
+(function(){
+  const bodySel   = document.getElementById('bodySelect');
+  const mindSel   = document.getElementById('mindSelect');
+  const makeBtn   = document.getElementById('balMakePlan');
+  const result    = document.getElementById('balResult');
+  const planEl    = result?.querySelector('.plan');
+  const chip      = document.getElementById('balState');
+  const resetBtn  = document.getElementById('balReset');
+
+  const plans = {
+    'tired|restless': [
+      '15–20 min creative focus (learn a few chords, sketch, or write).',
+      'Then 5 min legs-up-the-wall + 6 slow breaths.',
+      'Early wind-down: dim lights, warm shower, light stretch.'
+    ],
+    'tired|stressed': [
+      '10–15 min restorative (child’s pose → 90/90 → forward fold).',
+      '2× (physiological sighs × 3 + 1-min nasal breathing).',
+      'Optional: 8–12 min easy outdoor walk.'
+    ],
+    'tired|foggy': [
+      'Nourish + nap window if possible.',
+      '5–10 min mobility (cat–cow, thoracic rotations, neck/shoulder release).',
+      'Gratitude jot: 3 tiny wins.'
+    ],
+    'tired|calm': [
+      'True recovery day.',
+      '10–20 min yin holds + easy stroll.',
+      'Hydration, protein, early night.'
+    ],
+    'low|restless': [
+      '10–15 min brain focus first (music practice / puzzle).',
+      '8–12 min mobility with breath.',
+      'Short sunlight walk.'
+    ],
+    'low|stressed': [
+      '15–20 min zone-2 walk (talkable pace).',
+      'Box breathing 4-4-4-4 × 4.',
+      'Protein + complex carb and water.'
+    ],
+    'low|foggy': [
+      'Sunlight + brisk 10-min walk.',
+      '2 sets: 10 air squats, 10 wall slides, 30s calf.',
+      'One tiny admin task, then stop.'
+    ],
+    'low|calm': [
+      'Technique day at RPE 5–6 for the big patterns.',
+      '20–30 min; finish better than you started.'
+    ],
+    'ok|stressed': [
+      '20–30 min rhythmic cardio (cycle/row/jog).',
+      '5 min exhale-longer-than-inhale breathing.',
+      '1–3 min brain dump.'
+    ],
+    'ok|foggy': [
+      'Full-body circuit 20–25 min at RPE 6–7.',
+      'Goblet squat • hinge • incline push-ups • band rows • suitcase carry.',
+      '5-min walk finish.'
+    ],
+    'ok|restless': [
+      'Warm-up → 10 min skill block (jump rope, running drills, handstand wall holds).',
+      'Then 15–20 min steady cardio; light stretch.'
+    ],
+    'ok|calm': [
+      'Run your planned session (strength or cardio).',
+      'Add 5 min mobility + 1 min slow breaths.'
+    ],
+    'restless|stressed': [
+      '20–30 min steady nasal-breathing cardio.',
+      '3 min 4-7-8 breathing + 2 min quiet sit.',
+      'Low-stim evening.'
+    ],
+    'restless|foggy': [
+      '15–20 min zone-2 walk or easy ride.',
+      '8–10 min mobility flow with music you love.',
+      'One small task to create momentum.'
+    ],
+    'restless|restless': [
+      'Play/skill session 20–30 min (dance, hoops, skipping).',
+      'Downshift with 5 min stretch and long exhales.'
+    ],
+    'restless|calm': [
+      'Progressive strength 25–35 min (squat, hinge, push, pull, carry) at RPE 7.',
+      '3–5 min breath-led stretching.'
+    ],
+  };
+
+  function makePlan(){
+    const body = bodySel.value;
+    const mind = mindSel.value;
+    if(!body || !mind){ alert('Please choose one option for body and mind.'); return; }
+    const key = `${body}|${mind}`;
+    const steps = plans[key] || ['Move gently for 10–15 minutes in a way that feels kind today.',
+                                 'Breathe slow; finish with a short walk.'];
+    chip.textContent = `${body[0].toUpperCase()+body.slice(1)} body × ${mind[0].toUpperCase()+mind.slice(1)} mind`;
+    planEl.innerHTML = '<ul>'+ steps.map(s=>`<li>${s}</li>`).join('') + '</ul>';
+    result.hidden = false;
+    result.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
+  function resetForm(){
+    bodySel.selectedIndex = 0;
+    mindSel.selectedIndex = 0;
+    document.getElementById('balResult').hidden = true;
+    planEl.innerHTML = '';
+    chip.textContent = 'Today';
+  }
+
+  makeBtn?.addEventListener('click', makePlan);
+  resetBtn?.addEventListener('click', resetForm);
+})();
 </script>
 
 
