@@ -4787,6 +4787,22 @@ html {
 /* Smooth scroll */
 html{scroll-behavior:smooth}
 
+:root{ --jj-gutter: clamp(16px, 4vw, 48px); }
+
+/* full-bleed section that respects side gutters */
+.jj-bleed{
+  /* span the viewport width with gutters */
+  width: calc(100vw - var(--jj-gutter) * 2);
+  margin-left: calc(50% - 50vw + var(--jj-gutter));
+  margin-right: calc(50% - 50vw + var(--jj-gutter));
+}
+
+/* slightly larger inner padding so it feels “full” */
+@media (min-width:1024px){
+  .jj-bleed{ padding: 36px 40px; }
+}
+
+
 /* why movement matters section */
 #why.jjmv-block .lead { margin-top:.5rem; font-size:1.05rem; line-height:1.7; }
 #why.jjmv-block .checklist { margin:.75rem 0 1rem; padding-left:1.2rem; }
