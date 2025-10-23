@@ -4882,7 +4882,7 @@ html{scroll-behavior:smooth}
 /* Image figure */
 .jjmv-fig{
   position:relative;
-  aspect-ratio:16/10;
+  aspect-ratio:4/3;
   overflow:hidden;
   background:#f7f7f7;
   transition:opacity .24s ease, visibility .24s ease;
@@ -4927,6 +4927,11 @@ html{scroll-behavior:smooth}
 /* Reduce motion preference */
 @media (prefers-reduced-motion: reduce){
   .jjmv-fig, .jjmv-details{ transition:none; }
+}
+
+/* (Optional) a touch taller on mobile */
+@media (max-width: 768px){
+  .jjmv-fig{ aspect-ratio: 3 / 2; }  /* tweak as you like */
 }
 
 /* Mobile: make row swipeable */
