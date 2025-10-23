@@ -5130,6 +5130,135 @@ html{scroll-behavior:smooth}
   }
 }
 
+/* ============================
+   Just Jana theming (desktop)
+   – Dropdowns + primary button
+   ============================ */
+
+/* 1) Desktop-only: theme the dropdowns */
+@media (min-width: 900px){
+  /* Soft JJ pastel surface + subtle border */
+  #jj-balance .select-wrap{
+    background:
+      linear-gradient(180deg, rgba(246,221,189,.55), rgba(246,206,204,.45) 60%, rgba(245,191,221,.35));
+    border: 1px solid rgba(168,111,117,.25);            /* #a86f75 */
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.8),
+      0 6px 18px rgba(168,111,117,.10);                 /* soft JJ glow */
+  }
+
+  /* Text styling inside select */
+  #jj-balance select{
+    font-weight: 600;
+    color: #3a2f36;                                     /* deep ink */
+    text-shadow: 0 1px 0 rgba(255,255,255,.35);
+  }
+
+  /* Custom caret in brand color */
+  #jj-balance .select-wrap::after{
+    content:"▾";
+    position:absolute; right:12px; top:50%; transform:translateY(-50%);
+    font-size:16px; color:#a86f75; opacity:.9;
+    pointer-events:none;
+  }
+
+  /* Hover + focus ring (iOS-y) */
+  #jj-balance .select-wrap:hover{
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.9),
+      0 8px 20px rgba(168,111,117,.14);
+  }
+  #jj-balance .select-wrap:has(select:focus){
+    outline: none;
+    box-shadow:
+      0 0 0 3px rgba(168,111,117,.18),                  /* focus ring */
+      0 10px 26px rgba(168,111,117,.16);
+    border-color: rgba(168,111,117,.45);
+  }
+}
+
+/* 2) Primary button → #a86f75 (with subtle states) */
+#jj-balance .bal-btn{
+  background: #a86f75;
+  box-shadow: 0 8px 18px rgba(168,111,117,.28);
+}
+#jj-balance .bal-btn:hover{ filter: brightness(1.05); }
+#jj-balance .bal-btn:active{ transform: translateY(1px); filter: brightness(.98); }
+
+/* Optional: match the outline button to theme */
+#jj-balance .bal-secondary{
+  border-color: rgba(168,111,117,.35);
+}
+#jj-balance .bal-secondary:hover{
+  background: rgba(168,111,117,.06);
+}
+
+/* ============================
+   Just Jana theming (mobile too)
+   – Dropdowns use JJ pastel surface
+   ============================ */
+
+/* Base theme for ALL sizes (mobile included) */
+#jj-balance .select-wrap{
+  background:
+    linear-gradient(180deg,
+      rgba(246,221,189,.55),
+      rgba(246,206,204,.45) 60%,
+      rgba(245,191,221,.35));
+  border: 1px solid rgba(168,111,117,.25);              /* #a86f75 */
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.8),
+    0 6px 18px rgba(168,111,117,.10);
+}
+
+/* Select text + caret */
+#jj-balance select{
+  width:100%;
+  padding:12px 40px 12px 12px;
+  border:0; background:transparent; outline:none;
+  font-size:.98rem; font-weight:600; color:#3a2f36;
+  text-shadow: 0 1px 0 rgba(255,255,255,.35);
+  appearance:none;
+}
+#jj-balance .select-wrap::after{
+  content:"▾";
+  position:absolute; right:12px; top:50%; transform:translateY(-50%);
+  font-size:16px; color:#a86f75; opacity:.9; pointer-events:none;
+}
+
+/* Hover/focus (mobile-safe): tap gives focus ring */
+#jj-balance .select-wrap:hover{
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.9),
+    0 8px 20px rgba(168,111,117,.14);
+}
+#jj-balance .select-wrap:has(select:focus){
+  box-shadow:
+    0 0 0 3px rgba(168,111,117,.18),
+    0 10px 26px rgba(168,111,117,.16);
+  border-color: rgba(168,111,117,.45);
+}
+
+/* Improve tap target spacing on small screens */
+@media (max-width: 899.98px){
+  #jj-balance .select-block{ margin: 12px 0 14px; }
+  #jj-balance select{ padding: 14px 44px 14px 14px; font-size:1rem; }
+}
+
+/* Keep the button color consistent across sizes */
+#jj-balance .bal-btn{
+  background:#a86f75;
+  box-shadow:0 8px 18px rgba(168,111,117,.28);
+}
+#jj-balance .bal-btn:hover{ filter:brightness(1.05); }
+#jj-balance .bal-btn:active{ transform:translateY(1px); filter:brightness(.98); }
+
+/* Optional: theme the secondary action slightly */
+#jj-balance .bal-secondary{ border-color:rgba(168,111,117,.35); }
+#jj-balance .bal-secondary:hover{ background:rgba(168,111,117,.06); }
+
 
 
 /* ---------- Mobile-first polish ---------- */
