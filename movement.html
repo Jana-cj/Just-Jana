@@ -540,158 +540,177 @@
   </p>
 </section>
 
-      <section id="ways" class="jjmv-block jj-align-nav"><h2>Different ways to move</h2><p class="lead">Pick what fits today. Everything counts.</p>
-    <button class="scroll-next" aria-label="See more movement ideas">›</button>
-  </header>
+      <section id="ways" class="jjmv-block jj-align-nav"><h2>Different ways to move</h2><!-- Mobile swipe nav (auto-hidden on desktop) -->
+<div class="jjmv-nav" aria-hidden="true">
+  <button class="jjmv-btn jjmv-prev" type="button" aria-label="Scroll left">‹</button>
+  <button class="jjmv-btn jjmv-next" type="button" aria-label="Scroll right">›</button>
+</div>
 
-  <div id="moveRail" class="move-rail" aria-label="Movement idea cards" tabindex="0">
-    <!-- 1 -->
-    <article class="move-card" aria-label="Incidental movement ideas" style="--img:url('/img/move/neat.jpg')">
-      <div class="card-media" role="img" aria-label="Walking up stairs"></div>
-      <div class="card-body">
-        <h3>Incidental / NEAT</h3>
-        <ul>
-          <li>Stairs over lifts; walk/cycle short errands</li>
-          <li>Walk-on-call; park further; hourly desk breaks</li>
-          <li>Carry groceries, make two trips</li>
-        </ul>
-      </div>
-    </article>
+<!-- Cards: grid on desktop, swipe row on mobile -->
+<div class="jjmv-grid" id="jjmvGrid" tabindex="0" aria-label="Swipe through movement ideas">
+  <!-- 1 -->
+  <article class="jjmv-card">
+    <figure class="jjmv-fig">
+      <img src="img/Movement/incidental.jpg" alt="Taking stairs and walking short errands" loading="lazy">
+    </figure>
+    <h3 class="jjmv-h3">1. Incidental / NEAT <span class="jjmv-tag">sprinkle through your day</span></h3>
+    <ul class="jjmv-list">
+      <li>Take stairs over lifts</li>
+      <li>Walk/cycle short errands</li>
+      <li>Walk-while-on-a-call</li>
+      <li>Park further; get off transit 1 stop early</li>
+      <li>Carry groceries (farmer carry), make two trips</li>
+      <li>1–2 min desk breaks each hour (stand, roll shoulders, 10 calf raises)</li>
+    </ul>
+  </article>
 
-    <!-- 2 -->
-    <article class="move-card" aria-label="Mobility and tissue care" style="--img:url('/img/move/mobility.jpg')">
-      <div class="card-media" role="img" aria-label="Gentle floor mobility"></div>
-      <div class="card-body">
-        <h3>Mobility &amp; Tissue Care</h3>
-        <ul>
-          <li>Cat–cow, thoracic rotations, 90/90</li>
-          <li>Ankle rocks, couch stretch, bar hang</li>
-        </ul>
-      </div>
-    </article>
+  <!-- 2 -->
+  <article class="jjmv-card">
+    <figure class="jjmv-fig">
+      <img src="img/Movement/mobility.jpg" alt="Mobility and tissue care stretches" loading="lazy">
+    </figure>
+    <h3 class="jjmv-h3">2. Mobility &amp; Tissue Care <span class="jjmv-tag">5–20 min</span></h3>
+    <ul class="jjmv-list">
+      <li>Cat–cow, thoracic rotations, world’s greatest stretch</li>
+      <li>90/90 hips, ankle rocks, couch stretch</li>
+      <li>Gentle spine decompression (hang from a bar or doorframe)</li>
+    </ul>
+  </article>
 
-    <!-- 3 -->
-    <article class="move-card" aria-label="Play & Joy" style="--img:url('/img/move/play.jpg')">
-      <div class="card-media" role="img" aria-label="Dancing at home"></div>
-      <div class="card-body">
-        <h3>Play &amp; Joy</h3>
-        <ul>
-          <li>Dance to one song; shoot hoops</li>
-          <li>Skip rope; frisbee/badminton</li>
-        </ul>
-      </div>
-    </article>
+  <!-- 3 -->
+  <article class="jjmv-card">
+    <figure class="jjmv-fig">
+      <img src="img/Movement/play.jpg" alt="Playful movement like dancing or games" loading="lazy">
+    </figure>
+    <h3 class="jjmv-h3">3. Play &amp; Joy <span class="jjmv-tag">anytime, low-pressure</span></h3>
+    <ul class="jjmv-list">
+      <li>Dance to one song</li>
+      <li>Shoot hoops or play catch</li>
+      <li>Skip rope for 2–5 min waves</li>
+      <li>Backyard badminton, frisbee, hacky sack</li>
+    </ul>
+  </article>
 
-    <!-- 4 -->
-    <article class="move-card" aria-label="Strength training basics" style="--img:url('/img/move/strength.jpg')">
-      <div class="card-media" role="img" aria-label="Home dumbbells"></div>
-      <div class="card-body">
-        <h3>Strength (Steady, Not Max)</h3>
-        <ul>
-          <li>Squat • Hinge • Push • Pull • Carry</li>
-          <li>Goblet squat, RDL/bridge, incline PU, band row</li>
-        </ul>
-      </div>
-    </article>
+  <!-- 4 -->
+  <article class="jjmv-card">
+    <figure class="jjmv-fig">
+      <img src="img/Movement/strength.jpg" alt="Strength training with simple movements" loading="lazy">
+    </figure>
+    <h3 class="jjmv-h3">4. Strength <span class="jjmv-tag">20–40 min, 2–4×/week</span></h3>
+    <ul class="jjmv-list">
+      <li>Squat: bodyweight/goblet</li>
+      <li>Hinge: hip hinge/glute bridge/RDL</li>
+      <li>Push: incline or kneeling push-ups</li>
+      <li>Pull: band/door-anchor rows</li>
+      <li>Carry/Core: suitcase/farmer carry, dead-bugs, planks</li>
+    </ul>
+  </article>
 
-    <!-- 5 -->
-    <article class="move-card" aria-label="Cardio as play" style="--img:url('/img/move/cardio.jpg')">
-      <div class="card-media" role="img" aria-label="Cycling outdoors"></div>
-      <div class="card-body">
-        <h3>Cardio as Play</h3>
-        <ul>
-          <li>Run–walk; 2 easy + 1 drill swim</li>
-          <li>Cycle 5–15–5; hike for views</li>
-        </ul>
-      </div>
-    </article>
+  <!-- 5 -->
+  <article class="jjmv-card">
+    <figure class="jjmv-fig">
+      <img src="img/Movement/cardio-play.jpg" alt="Cardio as play like running, swimming, cycling" loading="lazy">
+    </figure>
+    <h3 class="jjmv-h3">5. Cardio as Play <span class="jjmv-tag">10–40 min, talkable pace</span></h3>
+    <ul class="jjmv-list">
+      <li>Run-walk (1 min jog / 2 min walk × 10)</li>
+      <li>Swim: 2 easy laps + 1 drill, repeat</li>
+      <li>Cycle loop: 5 easy → 15 steady → 5 easy</li>
+      <li>Hike for views; photos at each lookout</li>
+    </ul>
+  </article>
 
-    <!-- 6 -->
-    <article class="move-card" aria-label="Micro-workouts" style="--img:url('/img/move/snacks.jpg')">
-      <div class="card-media" role="img" aria-label="Quick desk stretch"></div>
-      <div class="card-body">
-        <h3>Micro-Workouts (5–10 min)</h3>
-        <ul>
-          <li>10 squats, 10 wall slides, 30s calf</li>
-          <li>Dead-bugs + side planks; stair step-ups</li>
-        </ul>
-      </div>
-    </article>
+  <!-- 6 -->
+  <article class="jjmv-card">
+    <figure class="jjmv-fig">
+      <img src="img/Movement/micro.jpg" alt="Short micro-workouts during the day" loading="lazy">
+    </figure>
+    <h3 class="jjmv-h3">6. Micro-Workouts <span class="jjmv-tag">movement snacks, 5–10 min</span></h3>
+    <ul class="jjmv-list">
+      <li>10 air squats, 10 wall slides, 30s calf stretch</li>
+      <li>6 dead-bugs/side + 20–30s side plank/side</li>
+      <li>Step-ups 2 min × 3, with 1 min easy</li>
+    </ul>
+  </article>
 
-    <!-- 7 -->
-    <article class="move-card" aria-label="Restorative and breath" style="--img:url('/img/move/restorative.jpg')">
-      <div class="card-media" role="img" aria-label="Legs up the wall"></div>
-      <div class="card-body">
-        <h3>Restorative &amp; Breath</h3>
-        <ul>
-          <li>Box breathing, physiological sighs</li>
-          <li>Legs-up-the-wall; yin hip/hamstring</li>
-        </ul>
-      </div>
-    </article>
+  <!-- 7 -->
+  <article class="jjmv-card">
+    <figure class="jjmv-fig">
+      <img src="img/Movement/restorative.jpg" alt="Restorative breathing and gentle poses" loading="lazy">
+    </figure>
+    <h3 class="jjmv-h3">7. Restorative &amp; Breath <span class="jjmv-tag">2–10 min</span></h3>
+    <ul class="jjmv-list">
+      <li>Box breathing or physiological sighs</li>
+      <li>Legs-up-the-wall</li>
+      <li>Gentle yin holds for hips/hamstrings</li>
+    </ul>
+  </article>
 
-    <!-- 8 -->
-    <article class="move-card" aria-label="Skill and coordination" style="--img:url('/img/move/skill.jpg')">
-      <div class="card-media" role="img" aria-label="Balance practice"></div>
-      <div class="card-body">
-        <h3>Skill &amp; Coordination</h3>
-        <ul>
-          <li>Balance while brushing teeth</li>
-          <li>Light jump rope; ground transfers</li>
-        </ul>
-      </div>
-    </article>
+  <!-- 8 -->
+  <article class="jjmv-card">
+    <figure class="jjmv-fig">
+      <img src="img/Movement/skill.jpg" alt="Skill and coordination drills" loading="lazy">
+    </figure>
+    <h3 class="jjmv-h3">8. Skill &amp; Coordination <span class="jjmv-tag">fun brain-body work</span></h3>
+    <ul class="jjmv-list">
+      <li>Light jump rope; balance while brushing teeth</li>
+      <li>Cartwheel or handstand wall-walks (scaled, safe)</li>
+      <li>Ground transfers: sit→stand without hands, 3–5 reps</li>
+    </ul>
+  </article>
 
-    <!-- 9 -->
-    <article class="move-card" aria-label="Active chores" style="--img:url('/img/move/chores.jpg')">
-      <div class="card-media" role="img" aria-label="Gardening"></div>
-      <div class="card-body">
-        <h3>Chores That Count</h3>
-        <ul>
-          <li>Vacuum, mop, garden, wash car</li>
-          <li>Carry water jugs; move pots</li>
-        </ul>
-      </div>
-    </article>
+  <!-- 9 -->
+  <article class="jjmv-card">
+    <figure class="jjmv-fig">
+      <img src="img/Movement/chores.jpg" alt="Chores that count as movement" loading="lazy">
+    </figure>
+    <h3 class="jjmv-h3">9. Chores That Count</h3>
+    <ul class="jjmv-list">
+      <li>Vacuum, mop, garden, wash the car by hand</li>
+      <li>Carry water jugs, move pots, weed 10–15 min</li>
+    </ul>
+  </article>
 
-    <!-- 10 -->
-    <article class="move-card" aria-label="Outdoors and sunlight" style="--img:url('/img/move/outdoors.jpg')">
-      <div class="card-media" role="img" aria-label="Morning walk"></div>
-      <div class="card-body">
-        <h3>Outdoors &amp; Sunlight</h3>
-        <ul>
-          <li>Morning light stroll (5–15 min)</li>
-          <li>Sunset photos or voice-notes</li>
-        </ul>
-      </div>
-    </article>
+  <!-- 10 -->
+  <article class="jjmv-card">
+    <figure class="jjmv-fig">
+      <img src="img/Movement/outdoors.jpg" alt="Outdoors and sunlight walks" loading="lazy">
+    </figure>
+    <h3 class="jjmv-h3">10. Outdoors &amp; Sunlight</h3>
+    <ul class="jjmv-list">
+      <li>Morning light stroll (5–15 min)</li>
+      <li>Sunset walk with photos or voice-notes</li>
+    </ul>
+  </article>
 
-    <!-- 11 -->
-    <article class="move-card" aria-label="Community movement" style="--img:url('/img/move/community.jpg')">
-      <div class="card-media" role="img" aria-label="Walking club"></div>
-      <div class="card-body">
-        <h3>Community &amp; Connection</h3>
-        <ul>
-          <li>Casual walk club / parkrun</li>
-          <li>Pickleball, touch footy, frisbee</li>
-        </ul>
-      </div>
-    </article>
+  <!-- 11 -->
+  <article class="jjmv-card">
+    <figure class="jjmv-fig">
+      <img src="img/Movement/community.jpg" alt="Community movement with others" loading="lazy">
+    </figure>
+    <h3 class="jjmv-h3">11. Community &amp; Connection</h3>
+    <ul class="jjmv-list">
+      <li>Join a casual walk club or parkrun (walkers welcome)</li>
+      <li>Weekend social sport (touch footy, pickleball, frisbee)</li>
+    </ul>
+  </article>
 
-    <!-- 12 -->
-    <article class="move-card" aria-label="Mindful movement" style="--img:url('/img/move/mindful.jpg')">
-      <div class="card-media" role="img" aria-label="Yoga at home"></div>
-      <div class="card-body">
-        <h3>Mindful Movement</h3>
-        <ul>
-          <li>Slow yoga or tai chi</li>
-          <li>Breath-led stretching</li>
-        </ul>
-      </div>
-    </article>
-  </div>
-</section>
+  <!-- 12 -->
+  <article class="jjmv-card">
+    <figure class="jjmv-fig">
+      <img src="img/Movement/mindful.jpg" alt="Mindful movement such as yoga or tai chi" loading="lazy">
+    </figure>
+    <h3 class="jjmv-h3">12. Mindful Movement</h3>
+    <ul class="jjmv-list">
+      <li>Slow yoga flow or tai chi follow-along</li>
+      <li>Breath-led stretching: inhale lengthen, exhale soften</li>
+    </ul>
+  </article>
+</div>
 
+<!-- Optional mobile hint -->
+<div class="jjmv-hint" aria-hidden="true">Swipe →</div></section>
+      
       <section id="pyramid" class="jjmv-block jj-align-nav"><h2>Functional movement pyramid</h2><p>…</p></section>
       <section id="balance" class="jjmv-block jj-align-nav"><h2>Body and Mind balance</h2><p>…</p></section>
       <section id="schedule" class="jjmv-block jj-align-nav"><h2>Build your weekly workout schedule</h2><p>…</p></section>
@@ -759,34 +778,58 @@
     })();
   </script>
 
-<!-- different ways to move -->
-<script>
-(function(){
-  const rail = document.getElementById('moveRail');
-  const btn  = document.querySelector('#jj-move-ideas .scroll-next');
-  if(!rail || !btn) return;
+  <script>
+    /* Hooks */
+const grid = document.getElementById('jjmvGrid');
+const prevBtn = document.querySelector('.jjmv-prev');
+const nextBtn = document.querySelector('.jjmv-next');
 
-  const nudge = () => rail.scrollBy({left: Math.max(280, rail.clientWidth * 0.9), behavior: 'smooth'});
-  btn.addEventListener('click', nudge);
+/* Arrow buttons scroll by one card width (mobile) */
+function cardWidth(){
+  if (!grid) return 0;
+  const card = grid.querySelector('.jjmv-card');
+  return card ? card.getBoundingClientRect().width + parseFloat(getComputedStyle(grid).gap || 16) : 300;
+}
+function scrollByCards(dir){
+  grid.scrollBy({ left: dir * cardWidth(), behavior: 'smooth' });
+}
+prevBtn && prevBtn.addEventListener('click', ()=> scrollByCards(-1));
+nextBtn && nextBtn.addEventListener('click', ()=> scrollByCards(1));
 
-  // hide button when end reached (mobile)
-  const toggleBtn = () => {
-    const atEnd = Math.ceil(rail.scrollLeft + rail.clientWidth) >= rail.scrollWidth;
-    btn.classList.toggle('is-hidden', atEnd || window.matchMedia('(min-width:1024px)').matches);
-  };
-  rail.addEventListener('scroll', toggleBtn, {passive:true});
-  window.addEventListener('resize', toggleBtn);
-  toggleBtn();
+/* Click-drag to scroll (nice on desktop trackpads & mouse) */
+let isDown = false, startX = 0, startScroll = 0;
+if (grid){
+  grid.addEventListener('pointerdown', (e)=>{
+    // only enable when it's flex (mobile) OR overflow exists
+    const isOverflow = grid.scrollWidth > grid.clientWidth;
+    if (!isOverflow) return;
+    isDown = true;
+    grid.setPointerCapture(e.pointerId);
+    startX = e.clientX;
+    startScroll = grid.scrollLeft;
+    grid.style.scrollBehavior = 'auto';
+  });
+  grid.addEventListener('pointermove', (e)=>{
+    if (!isDown) return;
+    const dx = e.clientX - startX;
+    grid.scrollLeft = startScroll - dx;
+  });
+  ['pointerup','pointercancel','mouseleave'].forEach(ev=>{
+    grid.addEventListener(ev, ()=>{
+      isDown = false;
+      grid.style.scrollBehavior = '';
+    });
+  });
+}
 
-  // horizontal wheel support
-  rail.addEventListener('wheel', (e)=> {
-    if (window.matchMedia('(min-width:1024px)').matches) return;
-    if (Math.abs(e.deltaX) < Math.abs(e.deltaY)) return;
-    e.preventDefault();
-    rail.scrollLeft += e.deltaX;
-  }, {passive:false});
-})();
-</script>
+/* Keyboard support (left/right) */
+grid && grid.addEventListener('keydown', (e)=>{
+  if (e.key === 'ArrowRight'){ e.preventDefault(); scrollByCards(1); }
+  if (e.key === 'ArrowLeft'){  e.preventDefault(); scrollByCards(-1); }
+});
+
+  </script>
+
   
   <!-- Back to top button -->
  <div class="back-top">

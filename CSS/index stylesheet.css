@@ -4821,124 +4821,157 @@ html{scroll-behavior:smooth}
 
 
 /* different ways to move */
-/* ================================
-   Just Jana — Move Ideas (LIGHT ONLY)
-   Targets only the #jj-move-ideas section
-   ================================ */
+/* ========== Light mode tokens ========== */
+:root{
+  --mv-bg: #ffffff;
+  --mv-ink: #1f1f1f;
+  --mv-ink-soft:#555;
+  --mv-card:#fff;
+  --mv-border: rgba(0,0,0,.08);
+  --mv-shadow: 0 6px 20px rgba(0,0,0,.07);
+  --mv-radius:16px;
+  --mv-gap:clamp(14px,2vw,22px);
+  --mv-maxw:1200px;
+}
 
-/* Containment + default text color inherit from your site */
-#jj-move-ideas { color-scheme: only light; }
+/* Section shell (inherits your jj-align-nav width rules) */
+#ways.jjmv-block{
+  background: var(--mv-bg);
+  color: var(--mv-ink);
+  padding: clamp(12px,3vw,28px) 0;
+}
 
-/* ----- Header ----- */
-#jj-move-ideas .move-head{
-  position: relative;
+/* Header */
+.jjmv-head{
+  max-width: var(--mv-maxw);
+  margin-inline:auto;
+  padding-inline: clamp(12px,4vw,24px);
+}
+.jjmv-title{
+  font-size: clamp(22px,2.2vw,32px);
+  line-height:1.2;
+  margin: 0 0 10px 0;
+  font-weight: 700;
+}
+.jjmv-sub{
+  font-weight: 500;
+  color: var(--mv-ink-soft);
+}
+
+/* Grid/row container */
+.jjmv-grid{
+  max-width: var(--mv-maxw);
+  margin-inline:auto;
+  padding-inline: clamp(12px,4vw,24px);
   display: grid;
-  align-items: end;
-  grid-template-columns: 1fr auto;
-  gap: 8px 12px;
-  margin-bottom: 8px;
-}
-#jj-move-ideas .move-head .lead{
-  grid-column: 1 / -1;
-  margin: 0;
-  opacity: .9;
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  gap: var(--mv-gap);
 }
 
-/* ----- Mobile: horizontal swiper rail ----- */
-#jj-move-ideas .move-rail{
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: 82%;
-  gap: clamp(12px, 3.5vw, 18px);
-  overflow-x: auto;
-  padding: 2px 2px 10px;
-  scroll-snap-type: x mandatory;
-  overscroll-behavior-x: contain;
-  -webkit-overflow-scrolling: touch;
+/* Card */
+.jjmv-card{
+  background: var(--mv-card);
+  border: 1px solid var(--mv-border);
+  border-radius: var(--mv-radius);
+  box-shadow: var(--mv-shadow);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform .18s ease, box-shadow .18s ease;
 }
-#jj-move-ideas .move-rail:focus{ outline: none; }
-
-/* Subtle light scrollbar */
-#jj-move-ideas .move-rail::-webkit-scrollbar{ height: 6px; }
-#jj-move-ideas .move-rail::-webkit-scrollbar-thumb{
-  background: rgba(0,0,0,.18);
-  border-radius: 999px;
-}
-#jj-move-ideas .move-rail::-webkit-scrollbar-track{
-  background: rgba(0,0,0,.06);
-}
-
-/* ----- Nudge button (mobile only) ----- */
-#jj-move-ideas .scroll-next{
-  align-self: center;
-  justify-self: end;
-  border: none;
-  background: rgba(0,0,0,.06);
-  width: 36px; height: 36px; border-radius: 999px;
-  font-size: 22px; line-height: 1; cursor: pointer;
-  transition: transform .15s ease, background .2s ease, opacity .2s ease;
-}
-#jj-move-ideas .scroll-next:hover{ transform: translateX(1px); background: rgba(0,0,0,.1); }
-#jj-move-ideas .scroll-next.is-hidden{ opacity:.15; pointer-events:none; }
-
-/* ----- Cards (LIGHT) ----- */
-#jj-move-ideas .move-card{
-  scroll-snap-align: start; min-width: 0;
-  border-radius: 16px; overflow: hidden;
-  background: #ffffff;                 /* force light card */
-  box-shadow: 0 4px 14px rgba(0,0,0,.06);
-  display:flex; flex-direction: column;
-  transition: transform .2s ease, box-shadow .2s ease;
-  border: 1px solid rgba(0,0,0,.05);
-}
-#jj-move-ideas .move-card:hover{
+.jjmv-card:hover{
   transform: translateY(-2px);
-  box-shadow: 0 8px 22px rgba(0,0,0,.08);
+  box-shadow: 0 10px 28px rgba(0,0,0,.10);
 }
 
-/* Media/photo area (light fallback) */
-#jj-move-ideas .card-media{
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  background: #f3f3f3 center / cover no-repeat; /* light fallback */
-  background-image: var(--img); /* set via inline --img:url(...) */
+/* Image */
+.jjmv-fig{
+  aspect-ratio: 16/10;
+  overflow: hidden;
+  background: #f7f7f7;
+}
+.jjmv-fig img{
+  width:100%;
+  height:100%;
+  object-fit: cover;
+  display:block;
 }
 
-/* Text area */
-#jj-move-ideas .card-body{ padding: 14px 16px 16px; }
-#jj-move-ideas .move-card h3{
-  margin: 4px 0 8px;
-  font-size: 1.06rem;
-  line-height: 1.3;
-  letter-spacing: .2px;
+/* Card body */
+.jjmv-h3{
+  font-size: clamp(16px,1.4vw,20px);
+  line-height:1.25;
+  padding: 14px 16px 4px;
+  margin: 0;
 }
-#jj-move-ideas .move-card ul{ margin: 0; padding-left: 18px; }
-#jj-move-ideas .move-card li{ margin: 2px 0; }
+.jjmv-tag{
+  font-weight:600;
+  color: var(--mv-ink-soft);
+}
+.jjmv-list{
+  padding: 0 18px 18px 34px;
+  margin: 0;
+}
+.jjmv-list li{ margin: 6px 0; }
 
-/* ----- Desktop: 4-column grid, wraps 4/4/4 ----- */
-@media (min-width:1024px){
-  #jj-move-ideas .move-rail{
-    grid-auto-flow: row;
-    grid-auto-columns: unset;
-    grid-template-columns: repeat(4, 1fr);
-    overflow: visible;        /* disable horizontal scroll on desktop */
-    gap: clamp(14px, 2vw, 22px);
-    padding: 0;
+/* Swipe hint (mobile only) */
+.jjmv-hint{
+  display:none;
+  text-align: right;
+  max-width: var(--mv-maxw);
+  margin: 6px auto 0;
+  padding-inline: clamp(12px,4vw,24px);
+  color: var(--mv-ink-soft);
+  font-size: 14px;
+}
+
+/* Mobile swipe nav buttons */
+.jjmv-nav{
+  display:none;
+  position: relative;
+  max-width: var(--mv-maxw);
+  margin: 0 auto;
+  padding-inline: clamp(12px,4vw,24px);
+}
+.jjmv-btn{
+  position:absolute;
+  top:-10px;
+  transform: translateY(-100%);
+  width:36px; height:36px;
+  border-radius: 999px;
+  border:1px solid var(--mv-border);
+  background:#fff;
+  box-shadow: var(--mv-shadow);
+  font-size:20px;
+  line-height: 34px;
+  text-align:center;
+  cursor:pointer;
+  user-select:none;
+}
+.jjmv-prev{ left: clamp(12px,4vw,24px); }
+.jjmv-next{ right: clamp(12px,4vw,24px); }
+
+/* ======= Responsive: mobile switches to swipe row ======= */
+@media (max-width: 768px){
+  .jjmv-grid{
+    display: flex;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    gap: var(--mv-gap);
+    padding-block: 6px;
   }
-  #jj-move-ideas .scroll-next{ display:none; }
-}
+  .jjmv-grid::-webkit-scrollbar{ display:none; }
 
-/* ----- Optional tweaks (light-only aesthetics) ----- */
-/* Rounded media top only; uncomment if you prefer
-#jj-move-ideas .card-media{ border-radius: 14px 14px 0 0; }
-*/
+  .jjmv-card{
+    min-width: 84%;
+    scroll-snap-align: start;
+    flex: 0 0 auto;
+  }
 
-/* If you use <img> instead of background-image, keep it neat:
-#jj-move-ideas img.card-media{
-  width:100%; height:auto; display:block;
-  aspect-ratio:16/9; object-fit:cover; background:#f3f3f3;
+  .jjmv-hint,
+  .jjmv-nav{ display:block; }
 }
-*/
 
 
 
