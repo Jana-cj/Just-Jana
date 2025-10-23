@@ -4833,3 +4833,88 @@ html{scroll-behavior:smooth}
 
 
 
+/* ---------- Mobile-first polish ---------- */
+@media (max-width: 900px){
+  /* Softer card padding + radius on small screens */
+  .jjmv-block{
+    padding: 18px 16px;
+    border-radius: 16px;
+  }
+
+  /* Headings scale nicely */
+  .jjmv-block h2{
+    font-size: clamp(20px, 4.8vw, 28px);
+    line-height: 1.25;
+    margin-bottom: 8px;
+    text-align: left; /* avoid center + bullet weirdness */
+  }
+
+  /* Body copy */
+  .jjmv-block p,
+  .jjmv-block li{
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  /* Reframe boxes don’t feel cramped */
+  #why.jjmv-block .reframe,
+  #ways.jjmv-block .reframe{
+    padding: 12px 14px;
+    border-radius: 14px;
+  }
+
+  /* Card grid collapses to one column (already true, just explicit) */
+  #ways.jjmv-block .jjmv-cards{
+    grid-template-columns: 1fr !important;
+    gap: .7rem;
+  }
+
+  /* Keep links inside sources from overflowing */
+  #why .checklist .src a{
+    word-break: break-word;
+    overflow-wrap: anywhere;
+  }
+
+  /* Chips bar: smooth scroll + better hit area */
+  .jjmv-chips-track{
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+    padding-bottom: 6px;
+  }
+  .jjmv-chip{ scroll-snap-align: start; }
+}
+
+/* ---------- Bullet list fix (mobile + desktop) ---------- */
+/* Make the checklist immune to any global li flex rules */
+#why .checklist{
+  margin: .6rem 0 1rem;
+  padding: 0;               /* remove default left indent */
+  list-style: none;         /* we’ll draw our own bullets */
+}
+#why .checklist li{
+  display: block !important; /* override any li{display:flex} elsewhere */
+  position: relative;
+  padding-left: 1.2rem;      /* room for our custom dot */
+  margin: .35rem 0 .55rem;
+}
+#why .checklist li::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .7em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: .5;
+}
+#why .checklist .src{
+  margin-top: .25rem;
+  font-size: .9em;
+  opacity: .85;
+}
+
+/* Optional: slightly smaller lead on phones so it doesn’t push content down */
+@media (max-width: 480px){
+  #why .lead, #ways .lead{ font-size: 0.98rem; }
+}
