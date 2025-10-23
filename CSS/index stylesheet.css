@@ -5260,6 +5260,136 @@ html{scroll-behavior:smooth}
 #jj-balance .bal-secondary:hover{ background:rgba(168,111,117,.06); }
 
 
+/* ============ Just Jana — Schedule Quiz (light-only) ============ */
+#schedule { color-scheme: only light; }
+#schedule h2 { margin: 0 0 8px; letter-spacing: .2px; }
+#schedule .lead { margin: 0 0 12px; opacity: .95; }
+
+/* Card row sits directly under the title */
+#schedule .qz-row {
+  max-width: min(1100px, 96vw);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+/* Screenshot-style card */
+.qz-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 26px;
+  min-height: clamp(280px, 36vw, 360px);
+  cursor: pointer;
+  background: #e8eaf2;
+  border: 1px solid rgba(0,0,0,.06);
+  box-shadow: 0 14px 34px rgba(0,0,0,.10);
+}
+.qz-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.qz-fade { position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,.15), rgba(0,0,0,.45) 65%);
+  mix-blend: multiply;
+}
+.qz-body { position: absolute; left: 16px; right: 16px; bottom: 14px; color: #fff;
+  text-shadow: 0 1px 1px rgba(0,0,0,.25);
+}
+.qz-pill {
+  display: inline-block; background: #2f6bbd; padding: 6px 10px; border-radius: 999px;
+  font-size: .82rem; font-weight: 700; box-shadow: 0 4px 12px rgba(0,0,0,.25);
+}
+.qz-card h3 { margin: 8px 0 4px; font-size: clamp(1.2rem, 1.6vw + .6rem, 1.6rem); }
+.qz-card p { margin: 0; opacity: .9; }
+
+/* ===== Overlay shells (questions + results share same shell) ===== */
+#schedule #wiz, #schedule #results {
+  position: fixed; inset: 0; display: none; place-items: center;
+  background: rgba(0,0,0,.22); z-index: 9999;
+}
+#schedule #wiz[aria-hidden="false"], #schedule #results[aria-hidden="false"] { display: grid; }
+
+#schedule .shell {
+  width: min(960px, 94vw);
+  max-height: 92vh;                /* keeps bottom buttons visible */
+  display: grid;
+  grid-template-rows: auto 1fr auto;   /* sticky head/foot */
+  background: #fff;
+  border: 1px solid rgba(0,0,0,.06);
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.18);
+  overflow: hidden;                 /* main scrolls internally */
+}
+
+#schedule .head, #schedule .foot {
+  padding: clamp(12px, 2.2vw, 18px) clamp(14px, 2.6vw, 22px);
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  background: #fff;
+  border-bottom: 1px solid rgba(0,0,0,.06);
+}
+#schedule .foot { border-top: 1px solid rgba(0,0,0,.06); border-bottom: 0; }
+
+#schedule .close {
+  border: 0; background: #fff; font-size: 22px;
+  width: 36px; height: 36px; border-radius: 10px; cursor: pointer;
+}
+#schedule .crumb { font-weight: 700; font-size: .9rem; opacity: .85; }
+
+#schedule .main {
+  padding: clamp(18px, 3vw, 28px) clamp(20px, 3.5vw, 32px) clamp(12px, 2.5vw, 24px);
+  overflow: auto;        /* content scrolls; footer stays visible */
+}
+#schedule .main h3 { margin: 4px 0 6px; }
+#schedule .main .sub { margin: 0 0 12px; opacity: .85; }
+
+#schedule .opts { display: grid; gap: 10px; }
+
+/* iOS-like option chips + selects */
+.qz-chip, .qz-select, .qz-input {
+  border: 1px solid rgba(168,111,117,.28); background: #fff;
+  padding: 12px 14px; border-radius: 14px; font-weight: 600;
+  box-shadow: 0 6px 16px rgba(168,111,117,.10);
+}
+.qz-chip { cursor: pointer; }
+.qz-chip:hover { filter: brightness(1.03); }
+.qz-chip.active {
+  background: #a86f75; color: #fff; border-color: #a86f75;
+  box-shadow: 0 8px 18px rgba(168,111,117,.25);
+}
+
+.qz-select { display: flex; align-items: center; justify-content: space-between; }
+.qz-select select { width: 100%; border: 0; background: transparent; font-weight: 600; outline: none; }
+.qz-select .caret { color: #a86f75; margin-left: 10px; }
+
+.qz-input input { width: 100%; border: 0; outline: none; font-weight: 600; background: transparent; }
+
+/* Buttons */
+#schedule .ghost {
+  border: 1px solid rgba(0,0,0,.12); background: #fff;
+  padding: 10px 14px; border-radius: 12px; cursor: pointer;
+}
+
+/* ===== Results page styling ===== */
+.results-main h3 { margin: 0 0 10px; }
+.week {
+  list-style: none; margin: 0 0 12px; padding: 0;
+  display: grid; gap: 10px;
+}
+.week li {
+  background: #fff; border: 1px solid rgba(0,0,0,.06);
+  border-radius: 16px; padding: clamp(14px, 2.2vw, 18px);
+  box-shadow: 0 4px 12px rgba(0,0,0,.06);
+}
+.week .title { font-weight: 700; margin: 0 0 6px; }
+.week .meta { font-size: .9rem; opacity: .85; margin-bottom: 6px; }
+.week .tasks { margin: 0; padding-left: 18px; }
+
+.always-title { margin: 10px 0 6px; }
+.always { margin: 0; padding-left: 18px; }
+
+/* Reduce motion-friendly taps */
+@media (hover:hover) {
+  .qz-card:hover { transform: translateY(-1px); transition: transform .15s ease; }
+}
+
+
 
 /* ---------- Mobile-first polish ---------- */
 @media (max-width: 900px){
