@@ -4845,7 +4845,7 @@ html{scroll-behavior:smooth}
   padding-inline:clamp(12px,4vw,24px);
 }
 .jjmv-title{
-  font-size:clamp(35px,2.2vw,32px);
+  font-size:clamp(35px,2.2vw,40px);
   font-weight:700; line-height:1.2; margin:0 0 10px;
 }
 .jjmv-sub{ color:var(--mv-ink-soft); font-weight:500;}
