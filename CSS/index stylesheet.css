@@ -4918,3 +4918,53 @@ html{scroll-behavior:smooth}
 @media (max-width: 480px){
   #why .lead, #ways .lead{ font-size: 0.98rem; }
 }
+
+/* ---------- mobile hardening (≤900px) ---------- */
+@media (max-width:900px){
+  /* keep everything inside the viewport */
+  .jjmv-wrap,
+  .jjmv-page{ max-width:100%; padding-left:16px; padding-right:16px; }
+  .jjmv-page{ grid-template-columns:1fr; gap:16px; }
+
+  /* stop wide helpers from overflowing on phones */
+  .jjmv-block,
+  .jjmv-block.jj-align-nav,
+  .jjmv-block.jj-shift-left,
+  .jjmv-block.jj-bleed{
+    margin-left:0 !important;
+    margin-right:0 !important;
+    width:100% !important;
+    max-width:100% !important;
+    padding-left:16px;
+    padding-right:16px;
+    box-sizing:border-box;
+  }
+
+  /* readable headings + body */
+  .jjmv-block h2{ font-size:clamp(20px,4.8vw,28px); line-height:1.25; margin:0 0 8px; text-align:left; }
+  .jjmv-block p, .jjmv-block li{ font-size:15px; line-height:1.55; color:var(--jjmv-ink); opacity:1; }
+
+  /* if any reveal/AOS sets opacity:0, force visible on phones */
+  [data-aos], .reveal{ opacity:1 !important; transform:none !important; }
+
+  /* card grids -> 1 column */
+  #ways .jjmv-cards{ grid-template-columns:1fr !important; gap:.7rem; }
+}
+
+/* ---------- checklist bullet fix (all sizes) ---------- */
+#why .checklist{ margin:.6rem 0 1rem; padding:0; list-style:none; }
+#why .checklist li{
+  display:block !important;           /* override any global li flex rules */
+  position:relative;
+  padding-left:1.25rem;               /* space for our custom dot */
+  margin:.35rem 0 .55rem;
+  word-break:break-word;
+  color:var(--jjmv-ink);
+}
+#why .checklist li::before{
+  content:"";
+  position:absolute; left:0; top:.78em;
+  width:6px; height:6px; border-radius:50%;
+  background:currentColor; opacity:.45;
+}
+#why .checklist .src{ display:block; margin-top:.25rem; font-size:.9em; opacity:.85; }
