@@ -1046,6 +1046,59 @@
 #jj-quizhub .week .meta{ font-size:.9rem; opacity:.85; margin-bottom:6px; }
 #jj-quizhub .always h4{ margin:6px 0 6px; }
 #jj-quizhub .always ul{ margin:0; padding-left:18px; }
+
+/* == Center the whole quiz hub + widen content == */
+#jj-quizhub {
+  /* soft side padding for breathing room */
+  padding-left: clamp(12px, 4vw, 40px);
+  padding-right: clamp(12px, 4vw, 40px);
+}
+#jj-quizhub .quiz-row {
+  /* center within a max width */
+  max-width: min(1200px, 92vw);
+  margin: 0 auto;                 /* centers the grid */
+  gap: clamp(16px, 2.6vw, 28px);  /* a touch more space between cards */
+}
+
+/* == Make cards a little larger + airier == */
+.quiz-card{
+  min-height: clamp(280px, 36vw, 360px); /* taller cards */
+  border-radius: 26px;
+  box-shadow: 0 14px 34px rgba(0,0,0,.10);
+}
+.quiz-card h3{ font-size: clamp(1.2rem, 1.6vw + .6rem, 1.6rem); }
+.quiz-card p{ font-size: clamp(.92rem, .4vw + .6rem, 1.02rem); }
+
+/* On desktop, keep three centered columns with comfy gutters */
+@media (min-width: 900px){
+  .quiz-row{
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* == Wizard: slightly wider shell + more inner padding == */
+#qz-wizard .wiz{
+  width: min(960px, 94vw);     /* bigger than before */
+  border-radius: 24px;
+}
+#qz-wizard .wiz-main{
+  padding: clamp(18px, 3vw, 28px) clamp(20px, 3.5vw, 32px) clamp(12px, 2.5vw, 24px);
+}
+#qz-wizard .wiz-head,
+#qz-wizard .wiz-foot{
+  padding: clamp(12px, 2.2vw, 18px) clamp(14px, 2.6vw, 22px);
+}
+
+/* == Results: center and widen to match cards == */
+#jj-quizhub .jjw-output{
+  max-width: min(1000px, 94vw);
+  margin: 18px auto 0; /* centered */
+}
+#jj-quizhub .week li{
+  border-radius: 16px;
+  padding: clamp(14px, 2.2vw, 18px);
+}
+
 </style>
 
 <script>
