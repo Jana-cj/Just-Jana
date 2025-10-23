@@ -922,7 +922,547 @@
     </div>
   </div>
 </section>
-      <section id="schedule" class="jjmv-block jj-align-nav"><h2>Build your weekly workout schedule</h2><p>…</p></section>
+<!-- ========================== -->
+<!-- Just Jana · Weekly Builder -->
+<!-- ========================== -->
+<section id="schedule" class="jjmv-block jj-align-nav" aria-labelledby="jjw-title">
+  <div class="jjw-wrap">
+    <!-- LEFT: Copy -->
+    <div class="jjw-copy">
+      <h2 id="jjw-title">Build Your Gentle 7-Day Plan</h2>
+      <p class="lead">
+        Answer a few quick questions and we’ll sketch a kind, effective week that matches your life.
+        You’ll get a simple 7-day micro plan + a personalised 5-minute “always-yes” routine you can do
+        even on busy days.
+      </p>
+    </div>
+
+    <!-- RIGHT: iOS-like card -->
+    <div class="jjw-panel" role="region" aria-label="Weekly planner quiz">
+      <form id="jjw-form" class="jjw-form" autocomplete="off">
+        <!-- GOALS -->
+        <fieldset class="group">
+          <legend>Primary goal</legend>
+          <div class="row">
+            <label class="select">
+              <select id="goalPrimary" required>
+                <option value="">Choose…</option>
+                <option value="strength">Strength</option>
+                <option value="hypertrophy">Hypertrophy / shape</option>
+                <option value="cardio">Cardio / engine</option>
+                <option value="mobility">Mobility / flexibility</option>
+                <option value="general">General health / energy</option>
+                <option value="skill">Skill / play</option>
+              </select>
+              <span class="caret">▾</span>
+            </label>
+            <label class="select">
+              <span class="sub">Secondary goal (optional)</span>
+              <select id="goalSecondary">
+                <option value="">None</option>
+                <option value="strength">Strength</option>
+                <option value="hypertrophy">Hypertrophy / shape</option>
+                <option value="cardio">Cardio / engine</option>
+                <option value="mobility">Mobility / flexibility</option>
+                <option value="general">General health / energy</option>
+                <option value="skill">Skill / play</option>
+              </select>
+              <span class="caret">▾</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- FEEL -->
+        <fieldset class="group">
+          <legend>How should movement feel this month?</legend>
+          <div class="chips" data-multi="single" id="feel">
+            <button type="button" data-val="calming">Calming</button>
+            <button type="button" data-val="energising">Energising</button>
+            <button type="button" data-val="challenging">Challenging but kind</button>
+            <button type="button" data-val="playful">Playful</button>
+          </div>
+        </fieldset>
+
+        <!-- TIME & FREQUENCY -->
+        <fieldset class="group">
+          <legend>Time & frequency</legend>
+          <div class="row">
+            <label class="select">
+              <span>Days you can move</span>
+              <select id="days">
+                <option value="3">3</option>
+                <option value="4" selected>4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">6–7</option>
+              </select>
+              <span class="caret">▾</span>
+            </label>
+            <label class="select">
+              <span>Typical session length</span>
+              <select id="length">
+                <option value="10">5–10 min</option>
+                <option value="20">15–20 min</option>
+                <option value="30" selected>25–35 min</option>
+                <option value="50">40–60 min</option>
+              </select>
+              <span class="caret">▾</span>
+            </label>
+            <label class="select">
+              <span>Preferred time</span>
+              <select id="daytime">
+                <option>Morning</option>
+                <option>Midday</option>
+                <option>Afternoon/Evening</option>
+                <option selected>No preference</option>
+              </select>
+              <span class="caret">▾</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- PREFERENCES -->
+        <fieldset class="group">
+          <legend>Preferences</legend>
+          <div class="row">
+            <label class="select">
+              <span>Where</span>
+              <select id="where">
+                <option>Home</option>
+                <option>Gym</option>
+                <option>Outdoors</option>
+                <option selected>Mix</option>
+              </select>
+              <span class="caret">▾</span>
+            </label>
+            <label class="select">
+              <span>Equipment</span>
+              <select id="equip">
+                <option value="body">Bodyweight only</option>
+                <option value="bands">Bands</option>
+                <option value="db">Dumbbells/Kettlebell</option>
+                <option value="barbell">Barbell access</option>
+                <option value="cardio">Cardio machine</option>
+                <option value="pool">Pool/track</option>
+              </select>
+              <span class="caret">▾</span>
+            </label>
+          </div>
+          <div class="chips" id="enjoy" data-multi="true" aria-label="What you enjoy">
+            <button type="button" data-val="walk">Walking/hiking</button>
+            <button type="button" data-val="cycle">Cycling</button>
+            <button type="button" data-val="swim">Swimming</button>
+            <button type="button" data-val="run">Running</button>
+            <button type="button" data-val="strength">Strength circuits</button>
+            <button type="button" data-val="yoga">Yoga/mobility</button>
+            <button type="button" data-val="play">Dance/sport/play</button>
+          </div>
+        </fieldset>
+
+        <!-- CAPACITY & RECOVERY -->
+        <fieldset class="group">
+          <legend>Current capacity</legend>
+          <div class="row">
+            <label class="select">
+              <span>Activity now</span>
+              <select id="active">
+                <option value="sed">Mostly sedentary</option>
+                <option value="light" selected>1–2 light sessions/wk</option>
+                <option value="reg">3+ sessions/wk</option>
+              </select>
+              <span class="caret">▾</span>
+            </label>
+            <label class="select">
+              <span>Sleep/stress this week</span>
+              <select id="stress">
+                <option value="poor">Poor</option>
+                <option value="ok" selected>OK</option>
+                <option value="good">Good</option>
+              </select>
+              <span class="caret">▾</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- TIGHT AREAS -->
+        <fieldset class="group">
+          <legend>Areas that feel tight/limited</legend>
+          <div class="chips" id="tight" data-multi="true">
+            <button type="button" data-val="neck">Neck/shoulders</button>
+            <button type="button" data-val="tspine">T-spine</button>
+            <button type="button" data-val="hips">Hips</button>
+            <button type="button" data-val="ankles">Ankles</button>
+            <button type="button" data-val="hams">Hamstrings/calves</button>
+            <button type="button" data-val="none">None</button>
+          </div>
+        </fieldset>
+
+        <!-- SAFETY & CONTEXT -->
+        <fieldset class="group">
+          <legend>Safety & context</legend>
+          <div class="row">
+            <label class="select">
+              <span>Background/skill to include</span>
+              <select id="background">
+                <option>None</option>
+                <option>Team sport</option>
+                <option>Run/Swim</option>
+                <option>Lifts/Calisthenics</option>
+                <option>Dance</option>
+              </select>
+              <span class="caret">▾</span>
+            </label>
+            <label class="select">
+              <span>Any injuries/pain?</span>
+              <select id="injury">
+                <option value="no" selected>No</option>
+                <option value="yes">Yes (go gentler)</option>
+              </select>
+              <span class="caret">▾</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <button class="primary" type="button" id="jjw-build">Generate my week</button>
+      </form>
+
+      <!-- OUTPUT -->
+      <div id="jjw-output" class="jjw-output" hidden>
+        <div class="head">
+          <div class="chip">Your 7-day micro plan</div>
+          <button class="secondary" id="jjw-reset" type="button">Start over</button>
+        </div>
+        <ol class="week" id="jjw-week"></ol>
+
+        <div class="always">
+          <h4>5-minute “always-yes” moves</h4>
+          <ul id="jjw-always"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+/* ===============================
+   Just Jana · Weekly Builder UI
+   Light mode only; scoped to #jj-weekly
+   =============================== */
+#jj-weekly{ color-scheme: only light; }
+#jj-weekly .jjw-wrap{
+  display:grid; gap: clamp(16px,3vw,28px); align-items:start;
+}
+@media (min-width: 900px){
+  #jj-weekly .jjw-wrap{ grid-template-columns: 1.1fr 1fr; }
+}
+#jj-weekly h2{ margin:0 0 8px; letter-spacing:.2px; }
+#jj-weekly .lead{ margin:0; opacity:.95; max-width:64ch; }
+
+/* Card */
+#jj-weekly .jjw-panel{
+  background:#fff; border:1px solid rgba(0,0,0,.06);
+  border-radius:20px; padding: clamp(14px,2.4vw,18px);
+  box-shadow: 0 10px 30px rgba(33,40,79,.08), 0 2px 8px rgba(0,0,0,.04);
+}
+
+/* Groups */
+#jj-weekly .group{ margin:10px 0 14px; border:0; padding:0; }
+#jj-weekly .group legend{ font-weight:700; margin-bottom:8px; opacity:.9; }
+#jj-weekly .row{ display:grid; gap:10px; grid-template-columns: 1fr; }
+@media (min-width:600px){ #jj-weekly .row{ grid-template-columns: repeat(3, 1fr); }}
+
+/* Selects */
+#jj-weekly .select{ position:relative; display:block; }
+#jj-weekly .select .sub{ display:block; font-size:.84rem; opacity:.8; margin-bottom:6px; }
+#jj-weekly select{
+  width:100%; padding:12px 40px 12px 12px; border:0; outline:none;
+  background: transparent; appearance:none; font-weight:600; color:#3a2f36; font-size:.98rem;
+}
+#jj-weekly .select{
+  border-radius:12px; overflow:hidden; background:
+    linear-gradient(180deg, rgba(246,221,189,.55), rgba(246,206,204,.45) 60%, rgba(245,191,221,.35));
+  border:1px solid rgba(168,111,117,.25);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.8), 0 6px 18px rgba(168,111,117,.10);
+}
+#jj-weekly .select .caret{
+  position:absolute; right:12px; top:50%; transform:translateY(-50%);
+  color:#a86f75; opacity:.9; pointer-events:none;
+}
+#jj-weekly .select:has(select:focus){
+  box-shadow: 0 0 0 3px rgba(168,111,117,.18), 0 10px 26px rgba(168,111,117,.16);
+  border-color: rgba(168,111,117,.45);
+}
+
+/* Chips */
+#jj-weekly .chips{ display:flex; flex-wrap:wrap; gap:8px; }
+#jj-weekly .chips button{
+  border:1px solid rgba(168,111,117,.28); background:#fff;
+  padding:8px 10px; border-radius:999px; cursor:pointer;
+  font-weight:600;
+}
+#jj-weekly .chips button.active{
+  background:#a86f75; color:#fff; border-color:#a86f75;
+  box-shadow:0 6px 16px rgba(168,111,117,.25);
+}
+
+/* Buttons */
+#jj-weekly .primary{
+  background:#a86f75; color:#fff; border:0; border-radius:12px;
+  padding:10px 14px; cursor:pointer; font-weight:700;
+  box-shadow:0 8px 18px rgba(168,111,117,.28);
+}
+#jj-weekly .primary:hover{ filter:brightness(1.05); }
+#jj-weekly .secondary{
+  border:1px solid rgba(0,0,0,.1); background:#fff; padding:8px 12px; border-radius:12px; cursor:pointer;
+}
+
+/* Output */
+#jj-weekly .jjw-output{ margin-top:12px; }
+#jj-weekly .head{ display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:8px; }
+#jj-weekly .chip{
+  display:inline-block; padding:4px 8px; border-radius:999px;
+  background:#eef2ff; color:#2f3d8f; border:1px solid #dbe3ff; font-weight:700; font-size:.82rem;
+}
+#jj-weekly .week{
+  display:grid; gap:10px; counter-reset: day;
+  list-style:none; margin:0 0 12px; padding:0;
+}
+#jj-weekly .week li{
+  counter-increment: day; background:#fff; border:1px solid rgba(0,0,0,.06);
+  border-radius:14px; padding:12px 14px; box-shadow:0 4px 12px rgba(0,0,0,.06);
+}
+#jj-weekly .week li .title{ font-weight:700; margin:0 0 6px; }
+#jj-weekly .week li .meta{ font-size:.9rem; opacity:.8; margin-bottom:6px; }
+#jj-weekly .week li .tasks{ margin:0; padding-left:18px; }
+
+#jj-weekly .always h4{ margin:6px 0 6px; }
+#jj-weekly .always ul{ margin:0; padding-left:18px; }
+</style>
+
+<script>
+(() => {
+  // --- helpers ---
+  const $ = sel => document.querySelector(sel);
+  const $$ = sel => Array.from(document.querySelectorAll(sel));
+
+  // chip toggles
+  $$('#jj-weekly .chips').forEach(group => {
+    const multi = group.dataset.multi === 'true';
+    group.addEventListener('click', e => {
+      const btn = e.target.closest('button'); if (!btn) return;
+      if (!multi) {
+        group.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      } else {
+        // special "none" behaviour in tight areas
+        if (btn.dataset.val === 'none') {
+          group.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+        } else {
+          group.querySelector('button[data-val="none"]')?.classList.remove('active');
+          btn.classList.toggle('active');
+        }
+      }
+    });
+  });
+
+  // --- core logic ---
+  const buildBtn = $('#jjw-build');
+  const outWrap  = $('#jjw-output');
+  const weekEl   = $('#jjw-week');
+  const alwaysEl = $('#jjw-always');
+  const resetBtn = $('#jjw-reset');
+
+  function getChipsVal(id, multi=false){
+    const actives = $$('#' + id + ' button.active').map(b => b.dataset.val);
+    return multi ? actives : (actives[0] || '');
+  }
+
+  function sessionMinutes(bucket){
+    const m = parseInt(bucket, 10);
+    if (m === 10) return 10;
+    if (m === 20) return 20;
+    if (m === 30) return 30;
+    return 50; // 40–60
+  }
+
+  // assemble "always yes" from tight areas (5 minutes total)
+  function buildAlwaysYes(tightList){
+    const lib = {
+      neck:   ['30s wall slides', '30s chin tucks', '30s upper-trap stretch'],
+      tspine: ['6 thoracic openers/side', '30s child\'s pose w/ side reach', '30s thread-the-needle/side'],
+      hips:   ['90/90 switches × 6', '30s couch stretch/side', '8 glute bridges'],
+      ankles: ['10 ankle rocks/side', '10 calf raises', '30s dorsiflexion stretch'],
+      hams:   ['10 RDL hip hinges', '30s hamstring floss/side', '30s calf stretch']
+    };
+    if (!tightList.length || tightList.includes('none')) {
+      return ['Cat–cow × 6', '10 hip hinges', '30s chest opener', '30s calf stretch', '3 slow breaths'];
+    }
+    // pick up to 2 areas to keep it short
+    const areas = tightList.slice(0,2);
+    const result = [];
+    areas.forEach(a => result.push(...lib[a]));
+    return result.slice(0,5);
+  }
+
+  // choose split pattern based on days
+  function chooseSplit(days){
+    if (days <= 3) return ['Strength-Full','Zone2','Mobility+Core','Strength-Full','Play','Zone2','Rest'];
+    if (days === 4) return ['Strength-Full','Zone2','Strength-Full','Mobility+Core','Play','Zone2','Rest'];
+    if (days === 5) return ['Strength-Upper','Zone2','Strength-Lower','Mobility+Core','Play','Zone2','Rest'];
+    // 6–7
+    return ['Strength-Upper','Zone2','Strength-Lower','Skill/Intervals','Mobility+Core','Play','Zone2'];
+  }
+
+  function titleFor(dayType){
+    return {
+      'Strength-Full':'Full-body strength',
+      'Strength-Upper':'Upper strength',
+      'Strength-Lower':'Lower strength',
+      'Zone2':'Zone-2 cardio',
+      'Skill/Intervals':'Skill or gentle intervals',
+      'Mobility+Core':'Mobility + core',
+      'Play':'Play / outdoors',
+      'Rest':'Recovery / light walk'
+    }[dayType] || dayType;
+  }
+
+  function rpeByContext(stress, feel, type){
+    let r = (type.includes('Strength') ? 7 : type==='Skill/Intervals' ? 6 : type==='Zone2' ? 5 : 4);
+    if (stress === 'poor') r -= 1;
+    if (feel === 'calming') r = Math.min(r, type==='Strength-Full'||type.includes('Strength')?6:5);
+    if (feel === 'playful' && (type==='Play'||type==='Skill/Intervals')) r += 1;
+    return Math.max(3, Math.min(8, r));
+  }
+
+  function tasksFor(type, equip, enjoy, minutes){
+    const t = [];
+    const short = minutes <= 20;
+    // strength libraries
+    const full = ['Squat pattern 8–12','Hinge 8–12','Push 6–10','Row 8–12','Carry/Core 30–40s'];
+    const upper= ['Push (incline/KPUs) 6–10','Row/Band pull 8–12','Overhead press 6–10','Carry 30–40s'];
+    const lower= ['Squat/Lunge 8–12','Hinge/RDL 8–12','Calf raises 12–15','Core (dead-bug) 8/side'];
+    const zone = enjoy.includes('cycle')? 'Cycle' : enjoy.includes('swim')? 'Swim' : enjoy.includes('run')? 'Run-walk' : 'Brisk walk';
+    const play = enjoy.includes('play')? 'Dance / social sport' : 'Choose a fun outdoor activity';
+    const yoga = 'Mobility flow (hips/T-spine/ankles) + breath';
+
+    if (type==='Strength-Full'){
+      t.push(...(equip==='barbell' ? full.map(s=>s.replace('Row','Barbell row')) : full));
+      if (short) t.pop();
+    } else if (type==='Strength-Upper'){
+      t.push(...(equip==='barbell' ? upper.map(s=>s.replace('Row/Band pull','Barbell row')) : upper));
+      if (short) t.pop();
+    } else if (type==='Strength-Lower'){
+      t.push(...lower);
+      if (short) t.pop();
+    } else if (type==='Zone2'){
+      t.push(`${zone} at conversational pace`);
+    } else if (type==='Skill/Intervals'){
+      const skill = enjoy.includes('run')? 'Running drills 10 min' :
+                    enjoy.includes('swim')? 'Swim drills 10 min' :
+                    enjoy.includes('strength')? 'Technique practice 10 min' :
+                    'Skill play 10 min';
+      t.push(skill, 'Light intervals 6×(40s easy / 20s brisk)');
+    } else if (type==='Mobility+Core'){
+      t.push(yoga, 'Core: dead-bugs + side planks');
+    } else if (type==='Play'){
+      t.push(play);
+    } else if (type==='Rest'){
+      t.push('10–20 min easy walk + 5 min stretch');
+    }
+    return t;
+  }
+
+  function minutesByType(type, base){
+    if (type.includes('Strength')) return base;            // same as session selection
+    if (type==='Mobility+Core')  return Math.max(15, base-5);
+    if (type==='Skill/Intervals')return Math.max(20, base);
+    if (type==='Play')           return Math.max(20, base);
+    if (type==='Zone2')          return Math.max(20, base);
+    if (type==='Rest')           return 15;
+    return base;
+  }
+
+  function buildWeek(){
+    const pGoal = $('#goalPrimary').value;
+    const sGoal = $('#goalSecondary').value;
+    const feel  = getChipsVal('feel');
+    const days  = parseInt($('#days').value,10);
+    const length= sessionMinutes($('#length').value);
+    const equip = $('#equip').value;
+    const enjoy = getChipsVal('enjoy', true);
+    const stress= $('#stress').value;
+    const tight = getChipsVal('tight', true);
+    const inj   = $('#injury').value;
+
+    // safety softening
+    const stressSoften = stress === 'poor' || inj === 'yes';
+
+    // base split, then bias by primary goal
+    let split = chooseSplit(days>=6?6:days);
+    if (pGoal==='mobility') split = split.map(s => s.includes('Strength') ? 'Mobility+Core' : s);
+    if (pGoal==='cardio')   split = split.map(s => s==='Play' ? 'Zone2' : s);
+    if (pGoal==='strength' || pGoal==='hypertrophy'){
+      // ensure 2+ strength days
+      if (!split.some(s=>s.includes('Strength'))) split[0]='Strength-Full';
+      if (split.filter(s=>s.includes('Strength')).length<2) split[2]='Strength-Full';
+    }
+    if (pGoal==='skill') split[3] = 'Skill/Intervals';
+
+    // soften if needed
+    if (stressSoften){
+      split = split.map(s => (s.includes('Strength') ? 'Mobility+Core' : s));
+    }
+
+    // build day objects
+    const week = split.map((type, i) => {
+      const mins = minutesByType(type, length);
+      const rpe  = rpeByContext(stress, feel, type);
+      const tasks= tasksFor(type, equip, enjoy, mins);
+      return {
+        day: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'][i],
+        title: titleFor(type),
+        meta: `~${mins} min · RPE ${rpe}`,
+        tasks
+      };
+    });
+
+    // always-yes
+    const always = buildAlwaysYes(tight);
+
+    return { week, always, pGoal, sGoal };
+  }
+
+  function render({week, always}){
+    // Week
+    weekEl.innerHTML = week.map(d => `
+      <li>
+        <div class="title">${d.day} — ${d.title}</div>
+        <div class="meta">${d.meta}</div>
+        <ul class="tasks">${d.tasks.map(t=>`<li>${t}</li>`).join('')}</ul>
+      </li>
+    `).join('');
+    // Always-yes
+    alwaysEl.innerHTML = always.map(i=>`<li>${i}</li>`).join('');
+    outWrap.hidden = false;
+    outWrap.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
+  // build
+  buildBtn.addEventListener('click', () => {
+    const req = $('#goalPrimary').value && getChipsVal('feel');
+    if (!req){ alert('Please choose your primary goal and how you want movement to feel.'); return; }
+    render(buildWeek());
+  });
+
+  // reset
+  resetBtn.addEventListener('click', () => {
+    $('#jjw-form').reset();
+    $$('#jj-weekly .chips button').forEach(b=>b.classList.remove('active'));
+    outWrap.hidden = true; weekEl.innerHTML=''; alwaysEl.innerHTML='';
+  });
+})();
+</script>
       <section id="tips" class="jjmv-block jj-align-nav"><h2>Tips to incorporate movement into daily life</h2><p>…</p></section>
       <section id="culture" class="jjmv-block jj-align-nav"><h2>Cultural lens: Gentle reframes</h2><p>…</p></section>
       <section id="myths" class="jjmv-block jj-align-nav"><h2>Myths & FAQs</h2><p>…</p></section>
