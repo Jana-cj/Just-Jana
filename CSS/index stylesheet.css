@@ -4787,20 +4787,29 @@ html {
 /* Smooth scroll */
 html{scroll-behavior:smooth}
 
-:root{ --jj-gutter: clamp(16px, 4vw, 48px); }
-
-/* full-bleed section that respects side gutters */
-.jj-bleed{
-  /* span the viewport width with gutters */
-  width: calc(100vw - var(--jj-gutter) * 2);
-  margin-left: calc(50% - 50vw + var(--jj-gutter));
-  margin-right: calc(50% - 50vw + var(--jj-gutter));
+:root{
+  --jj-toc-w: 320px; /* left sidebar width */
+  --jj-gap: 28px;    /* gap between sidebar and content */
 }
 
-/* slightly larger inner padding so it feels “full” */
-@media (min-width:1024px){
-  .jj-bleed{ padding: 36px 40px; }
+/* Make selected sections start under the nav and keep the same right edge as other cards */
+@media (min-width: 901px){
+  .jjmv-block.jj-align-nav {
+    /* pull left by sidebar + gap */
+    margin-left: calc(-1 * (var(--jj-toc-w) + var(--jj-gap)));
+    /* widen by the same amount so the right edge stays aligned */
+    width: calc(100% + var(--jj-toc-w) + var(--jj-gap));
+    box-sizing: border-box;
+
+    /* comfy padding when wider (tweak if you like) */
+    padding-left: 36px;
+    padding-right: 36px;
+
+    /* ensure shadows aren’t clipped */
+    overflow: visible;
+  }
 }
+
 
 
 /* why movement matters section */
