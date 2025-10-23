@@ -4821,14 +4821,81 @@ html{scroll-behavior:smooth}
 
 
 /* different ways to move */
-#ways.jjmv-block .lead { margin-top:.5rem; font-size:1.05rem; line-height:1.7; }
-#ways.jjmv-block .jjmv-cards { display:grid; gap:.8rem; margin: .75rem 0 1rem; padding:0; list-style:none; }
-#ways.jjmv-block .card { padding: .9rem 1rem; border-radius:.9rem; background:rgba(245,191,221,.12); }
-#ways.jjmv-block .card h3 { margin:0 0 .25rem; font-size:1rem; }
-#ways.jjmv-block .card p { margin:.2rem 0; }
-#ways.jjmv-block .reframe { margin-top:.75rem; background:rgba(246,206,204,.14); padding:.75rem 1rem; border-radius:.75rem; }
-@media (min-width: 720px){
-  #ways.jjmv-block .jjmv-cards { grid-template-columns: repeat(2, minmax(0,1fr)); }
+/* Head */
+#jj-move-ideas .move-head{
+  position: relative;
+  display: grid;
+  align-items: end;
+  grid-template-columns: 1fr auto;
+  gap: 8px 12px;
+  margin-bottom: 8px;
+}
+#jj-move-ideas .move-head .lead{ grid-column: 1 / -1; }
+
+/* Mobile: horizontal swiper */
+.move-rail{
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 82%;
+  gap: clamp(12px, 3.5vw, 18px);
+  overflow-x: auto;
+  padding: 2px 2px 10px;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+}
+.move-card{ scroll-snap-align: start; min-width: 0; }
+
+/* Scrollbar (subtle) */
+.move-rail::-webkit-scrollbar{ height: 6px; }
+.move-rail::-webkit-scrollbar-thumb{ background: rgba(0,0,0,.15); border-radius: 999px; }
+@media (prefers-color-scheme: dark){
+  .move-rail::-webkit-scrollbar-thumb{ background: rgba(255,255,255,.18); }
+}
+
+/* Right nudge button (mobile only) */
+.scroll-next{
+  align-self: center;
+  justify-self: end;
+  border: none; background: rgba(0,0,0,.06);
+  width: 36px; height: 36px; border-radius: 999px;
+  font-size: 22px; line-height: 1; cursor: pointer;
+  transition: transform .15s ease, background .2s ease, opacity .2s ease;
+}
+.scroll-next:hover{ transform: translateX(1px); background: rgba(0,0,0,.1); }
+.scroll-next.is-hidden{ opacity:.15; pointer-events:none; }
+
+/* Cards */
+.move-card{
+  border-radius: 16px; overflow: hidden;
+  background: var(--card-bg, #fff);
+  box-shadow: 0 4px 14px rgba(0,0,0,.06);
+  display:flex; flex-direction: column;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.move-card:hover{ transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0,0,0,.08); }
+.card-media{
+  width: 100%; aspect-ratio: 16/9; background: #eee center/cover no-repeat;
+  background-image: var(--img);
+}
+.card-body{ padding: 14px 16px 16px; }
+.move-card h3{ margin: 4px 0 8px; font-size: 1.05rem; line-height: 1.3; }
+.move-card ul{ margin:0; padding-left: 18px; }
+@media (prefers-color-scheme: dark){
+  .move-card{ background:#181818; box-shadow: 0 4px 14px rgba(0,0,0,.35); }
+  .card-media{ background-color:#222; }
+}
+
+/* Desktop: switch to 4-column grid with wrapping (4,4,4) */
+@media (min-width:1024px){
+  .move-rail{
+    grid-auto-flow: row;
+    grid-auto-columns: unset;
+    grid-template-columns: repeat(4, 1fr);
+    overflow: visible;     /* no scroll on desktop */
+    gap: clamp(14px, 2vw, 22px);
+  }
+  .scroll-next{ display:none; }
 }
 
 
@@ -4919,52 +4986,3 @@ html{scroll-behavior:smooth}
   #why .lead, #ways .lead{ font-size: 0.98rem; }
 }
 
-/* ---------- mobile hardening (≤900px) ---------- */
-@media (max-width:900px){
-  /* keep everything inside the viewport */
-  .jjmv-wrap,
-  .jjmv-page{ max-width:100%; padding-left:16px; padding-right:16px; }
-  .jjmv-page{ grid-template-columns:1fr; gap:16px; }
-
-  /* stop wide helpers from overflowing on phones */
-  .jjmv-block,
-  .jjmv-block.jj-align-nav,
-  .jjmv-block.jj-shift-left,
-  .jjmv-block.jj-bleed{
-    margin-left:0 !important;
-    margin-right:0 !important;
-    width:100% !important;
-    max-width:100% !important;
-    padding-left:16px;
-    padding-right:16px;
-    box-sizing:border-box;
-  }
-
-  /* readable headings + body */
-  .jjmv-block h2{ font-size:clamp(20px,4.8vw,28px); line-height:1.25; margin:0 0 8px; text-align:left; }
-  .jjmv-block p, .jjmv-block li{ font-size:15px; line-height:1.55; color:var(--jjmv-ink); opacity:1; }
-
-  /* if any reveal/AOS sets opacity:0, force visible on phones */
-  [data-aos], .reveal{ opacity:1 !important; transform:none !important; }
-
-  /* card grids -> 1 column */
-  #ways .jjmv-cards{ grid-template-columns:1fr !important; gap:.7rem; }
-}
-
-/* ---------- checklist bullet fix (all sizes) ---------- */
-#why .checklist{ margin:.6rem 0 1rem; padding:0; list-style:none; }
-#why .checklist li{
-  display:block !important;           /* override any global li flex rules */
-  position:relative;
-  padding-left:1.25rem;               /* space for our custom dot */
-  margin:.35rem 0 .55rem;
-  word-break:break-word;
-  color:var(--jjmv-ink);
-}
-#why .checklist li::before{
-  content:"";
-  position:absolute; left:0; top:.78em;
-  width:6px; height:6px; border-radius:50%;
-  background:currentColor; opacity:.45;
-}
-#why .checklist .src{ display:block; margin-top:.25rem; font-size:.9em; opacity:.85; }
