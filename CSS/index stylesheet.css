@@ -5421,7 +5421,171 @@ html{scroll-behavior:smooth}
     border-radius: 14px;
   }
 
-  
+  /* —— Just Jana cultural cards —— */
+:root{
+  --jj-card-bg: rgba(255,255,255,0.78);
+  --jj-card-border: rgba(255,255,255,0.6);
+  --jj-ink: #1a1a1a;
+  --jj-ink-dim: #4b4b4b;
+  --jj-glow: 0 8px 22px rgba(0,0,0,0.08);
+  --jj-glow-strong: 0 18px 40px rgba(0,0,0,0.12);
+  --jj-radius: 22px;
+  --jj-pastel-1: #f6ddbd; /* Just Jana palette */
+  --jj-pastel-2: #f6cecc;
+  --jj-pastel-3: #f5bfdd;
+}
+
+@media (prefers-color-scheme: dark){
+  :root{
+    --jj-card-bg: rgba(12,12,14,0.6);
+    --jj-card-border: rgba(255,255,255,0.12);
+    --jj-ink: #f3f3f3;
+    --jj-ink-dim: #bdbdbd;
+    --jj-glow: 0 8px 22px rgba(0,0,0,0.5);
+    --jj-glow-strong: 0 18px 40px rgba(0,0,0,0.55);
+  }
+}
+
+#culture{
+  /* gentle top/bottom spacing; assume jj-bleed handles width elsewhere */
+  padding-block: clamp(20px, 4vw, 44px);
+}
+
+#culture h2{
+  font-size: clamp(1.4rem, 2.8vw, 2rem);
+  line-height: 1.15;
+  margin: 0 0 10px;
+  letter-spacing: 0.2px;
+}
+
+#culture .jj-section-intro{
+  color: var(--jj-ink-dim);
+  margin: 0 0 22px;
+  max-width: 70ch;
+}
+
+/* subtle section accent underline like iOS settings dividers */
+#culture h2::after{
+  content:"";
+  display:block;
+  width:min(120px, 30%);
+  height:3px;
+  margin-top:10px;
+  border-radius:999px;
+  background: linear-gradient(90deg, var(--jj-pastel-1), var(--jj-pastel-2), var(--jj-pastel-3));
+}
+
+/* Grid */
+.jj-card-grid{
+  display: grid;
+  gap: clamp(14px, 2.4vw, 22px);
+}
+
+@media (min-width: 560px){
+  .jj-card-grid{
+    grid-template-columns: repeat(2, minmax(0,1fr));
+  }
+}
+@media (min-width: 980px){
+  .jj-card-grid{
+    grid-template-columns: repeat(3, minmax(0,1fr));
+  }
+}
+
+/* Card */
+.jj-card{
+  position: relative;
+  border-radius: var(--jj-radius);
+  background: var(--jj-card-bg);
+  backdrop-filter: blur(14px) saturate(1.1);
+  -webkit-backdrop-filter: blur(14px) saturate(1.1);
+  box-shadow: var(--jj-glow);
+  border: 1px solid var(--jj-card-border);
+  padding: 18px 18px 16px;
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  will-change: transform;
+}
+
+.jj-card:hover{
+  transform: translateY(-2px);
+  box-shadow: var(--jj-glow-strong);
+  border-color: rgba(255,255,255,0.8);
+}
+
+.jj-card header{
+  margin-bottom: 10px;
+}
+
+.jj-card h3{
+  font-size: clamp(1.05rem, 2.1vw, 1.2rem);
+  line-height: 1.25;
+  margin: 6px 0 4px;
+  letter-spacing: .2px;
+}
+
+.jj-card .jj-sub{
+  color: var(--jj-ink-dim);
+  font-size: .95rem;
+  margin: 0;
+}
+
+/* tiny pastel pill */
+.jj-tag{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: .75rem;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--jj-pastel-1), var(--jj-pastel-2), var(--jj-pastel-3));
+  color: #3c2b2b;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 1px 1px rgba(0,0,0,.06);
+}
+
+.jj-card .jj-body p{
+  margin: 8px 0 10px;
+}
+
+.jj-checks{
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+  display: grid;
+  gap: 8px;
+}
+
+.jj-checks li{
+  position: relative;
+  padding-left: 26px;
+}
+.jj-checks li::before{
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 0;
+  line-height: 1.2;
+  width: 18px;
+  height: 18px;
+  border-radius: 6px;
+  display: grid;
+  place-items: center;
+  font-size: .8rem;
+  color: #2e2e2e;
+  background: linear-gradient(180deg, #ffffff, rgba(255,255,255,.6));
+  box-shadow: 0 1px 0 rgba(0,0,0,.06);
+}
+
+#culture .jj-footer-note{
+  margin-top: clamp(16px, 3.2vw, 28px);
+  color: var(--jj-ink-dim);
+}
+
+/* Motion-respect */
+@media (prefers-reduced-motion: reduce){
+  .jj-card{ transition: none; }
+  .jj-card:hover{ transform: none; }
+}
+
 
   /* Card grid collapses to one column (already true, just explicit) */
   #ways.jjmv-block .jjmv-cards{
