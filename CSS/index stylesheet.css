@@ -5421,68 +5421,7 @@ html{scroll-behavior:smooth}
     border-radius: 14px;
   }
 
-  /* ==== Wide reframe card used after #ways (pyramid, balance, schedule, etc.) ==== */
-:root{
-  --jjreframe-max: 1280px;                 /* wider than regular content */
-  --jjreframe-pad: clamp(14px, 3.2vw, 28px);
-}
-
-.jjreframe{
-  display:block;
-  max-width: min(var(--jjreframe-max), 96vw);  /* centered, nice gutters */
-  margin: 14px auto 0;
-  padding: var(--jjreframe-pad);
-  background: rgba(245,191,221,.16);           /* JJ soft pink */
-  border: 1px solid rgba(168,111,117,.16);     /* #a86f75 subtle border */
-  border-radius: 18px;
-  box-shadow:
-    0 14px 30px rgba(168,111,117,.10),         /* soft outer glow */
-    inset 0 1px 0 rgba(255,255,255,.85);       /* gentle iOS-like top edge */
-  color: #1f1f1f;
-  line-height: 1.7;
-}
-
-/* Typography polish */
-.jjreframe em{ font-style: italic; opacity: .95; }
-.jjreframe strong{ font-weight: 800; }
-
-/* Slightly larger & rounder on desktop for that “wide card” feel */
-@media (min-width: 900px){
-  .jjreframe{ border-radius: 22px; }
-}
-
-/* ==== JJ Wide Reframe (for sections after #ways) ==== */
-:root{
-  --jjreframe-max: 1280px;                /* wider than normal content */
-  --jjreframe-pad: clamp(14px, 3.2vw, 28px);
-  --jjreframe-bg: rgba(245,191,221,.16);   /* soft JJ pink */
-  --jjreframe-border: rgba(168,111,117,.16);
-}
-
-/* High-specificity so nothing overrides it */
-:is(#pyramid,#jj-balance,#schedule,#tips,#culture,#myths,#safety,#before,#refs) .jjreframe{
-  display: block;
-  max-width: min(var(--jjreframe-max), 96vw);
-  margin: 14px auto 0;                     /* centered + breathing room */
-  padding: var(--jjreframe-pad);
-  background-color: var(--jjreframe-bg) !important;  /* keep the pink visible */
-  border: 1px solid var(--jjreframe-border);
-  border-radius: 18px;
-  box-shadow:
-    0 14px 30px rgba(168,111,117,.10),
-    inset 0 1px 0 rgba(255,255,255,.85);
-  color: #1f1f1f;
-  line-height: 1.7;
-}
-:is(#pyramid,#jj-balance,#schedule,#tips,#culture,#myths,#safety,#before,#refs) .jjreframe em{ opacity:.95; }
-:is(#pyramid,#jj-balance,#schedule,#tips,#culture,#myths,#safety,#before,#refs) .jjreframe strong{ font-weight:800; }
-
-@media (min-width: 900px){
-  :is(#pyramid,#jj-balance,#schedule,#tips,#culture,#myths,#safety,#before,#refs) .jjreframe{
-    border-radius: 22px;
-  }
-}
-
+  
 
   /* Card grid collapses to one column (already true, just explicit) */
   #ways.jjmv-block .jjmv-cards{
