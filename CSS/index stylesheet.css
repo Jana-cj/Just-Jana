@@ -5421,6 +5421,20 @@ html{scroll-behavior:smooth}
     border-radius: 14px;
   }
 
+  :root{
+  --jj-maxw: 1200px;
+  --jj-side-pad: clamp(12px, 4vw, 24px);
+}
+
+/* Reframe boxes for all sections after #ways */
+:is(#ways,#pyramid,#balance,#schedule,#tips,#culture,#myths,#safety,#before,#refs) .reframe{
+  max-width: var(--jj-maxw);
+  margin: 12px auto 0;          /* centers and adds top breathing room */
+  padding: 12px var(--jj-side-pad);
+  border-radius: 14px;           /* matches the card feel */
+}
+
+
   /* Card grid collapses to one column (already true, just explicit) */
   #ways.jjmv-block .jjmv-cards{
     grid-template-columns: 1fr !important;
