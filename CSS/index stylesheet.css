@@ -3082,6 +3082,118 @@ color: #7b7b7b;
   box-shadow: 0 10px 24px rgba(0,0,0,.08); /* optional */
 }
 
+/* ===== Full-viewport video that preserves aspect ratio ===== */
+.jj-video-viewport{
+  position: relative; width: 100%; background:#000; margin:0; padding:0;
+}
+.jj-video-viewport .jj-video-frame{
+  height: calc(100dvh - var(--nav-h, 0px));
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden; position: relative;
+}
+@supports not (height: 100dvh){
+  .jj-video-viewport .jj-video-frame{ height: calc(100vh - var(--nav-h, 0px)); }
+}
+.jj-video-contained{
+  max-width: 100%; max-height: 100%;
+  width: auto; height: auto; object-fit: contain; display: block;
+  border-radius: 12px; box-shadow: 0 10px 24px rgba(0,0,0,.08);
+  background:#000;
+}
+
+/* ===== Just Jana controls ===== */
+.jj-controls{
+  --jj-grad: linear-gradient(90deg,#f6ddbd,#f6cecc,#f5bfdd);
+  --jj-ink:#252525; --jj-ink-weak:#5e3c46;
+
+  position: absolute; left: 50%; bottom: clamp(8px, 2.5vh, 20px);
+  transform: translateX(-50%);
+  width: min(96vw, 880px);
+  display: grid; grid-template-columns: auto 1fr auto auto auto; gap: 10px;
+  align-items: center;
+  padding: 10px 12px;
+  background: color-mix(in srgb, white 12%, transparent);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.18);
+  border: 1px solid rgba(246, 221, 189, .6);
+}
+
+/* buttons */
+.jj-btn{
+  appearance: none; border: none; cursor: pointer;
+  padding: 10px 12px; border-radius: 12px;
+  background: var(--jj-grad); background-size: 300% 100%;
+  transition: transform .08s ease, box-shadow .2s ease, background-position .8s linear;
+  box-shadow: 0 6px 14px rgba(0,0,0,.12); color: var(--jj-ink);
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 44px; min-height: 44px;
+}
+.jj-btn:hover{ background-position: 100% 0; }
+.jj-btn:active{ transform: translateY(1px); }
+.jj-btn i{ font-size: 16px; }
+
+/* time + seek */
+.jj-time{
+  display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center;
+  color: var(--jj-ink-weak); font: 500 14px/1.2 Poppins, system-ui, sans-serif;
+  min-width: 0;
+}
+.jj-cur,.jj-dur{ white-space: nowrap; }
+.jj-seek{
+  -webkit-appearance: none; appearance: none; width: 100%;
+  background: transparent; height: 28px;
+}
+.jj-seek:focus{ outline: none; }
+
+/* track */
+.jj-seek::-webkit-slider-runnable-track{
+  height: 6px; border-radius: 999px; background: rgba(0,0,0,.15);
+}
+.jj-seek::-moz-range-track{
+  height: 6px; border-radius: 999px; background: rgba(0,0,0,.15);
+}
+/* fill on top via gradient */
+.jj-seek{ background-image: linear-gradient(to right, #f6cecc var(--jj-pct,0%), rgba(0,0,0,.15) 0%); background-repeat:no-repeat; border-radius:999px; }
+/* thumb */
+.jj-seek::-webkit-slider-thumb{
+  -webkit-appearance: none; appearance: none; width:18px; height:18px; border-radius:50%;
+  background: var(--jj-grad); border: 0; margin-top: -6px; box-shadow: 0 0 0 3px rgba(255,255,255,.8);
+}
+.jj-seek::-moz-range-thumb{
+  width:18px; height:18px; border-radius:50%;
+  background: var(--jj-grad); border: 0; box-shadow: 0 0 0 3px rgba(255,255,255,.8);
+}
+
+/* volume */
+.jj-vol{
+  -webkit-appearance: none; appearance: none; width: 90px; max-width: 18vw; height: 28px;
+  background: transparent;
+}
+.jj-vol:focus{ outline: none; }
+.jj-vol::-webkit-slider-runnable-track,
+.jj-vol::-moz-range-track{
+  height: 6px; border-radius: 999px; background: rgba(0,0,0,.15);
+}
+.jj-vol{ background-image: linear-gradient(to right, #f5bfdd calc(100%*var(--jj-vol, .8)), rgba(0,0,0,.15) 0%); background-repeat:no-repeat; border-radius:999px; }
+.jj-vol::-webkit-slider-thumb,
+.jj-vol::-moz-range-thumb{
+  -webkit-appearance:none; appearance:none; width:16px; height:16px; border-radius:50%;
+  background: var(--jj-grad); border:0; margin-top:-5px; box-shadow: 0 0 0 3px rgba(255,255,255,.8);
+}
+
+/* auto-hide controls when playing (desktop), show on pause/hover/touch */
+.jj-video-frame.playing .jj-controls{ opacity:.0; transition: opacity .35s ease .9s; }
+.jj-video-frame.playing:hover .jj-controls,
+.jj-video-frame.playing.touching .jj-controls,
+.jj-video-frame.paused .jj-controls{ opacity:1; transition-delay:0s; }
+
+/* small screens: make bar a bit taller and simpler */
+@media (max-width: 640px){
+  .jj-controls{ grid-template-columns: auto 1fr auto auto; gap:8px; }
+  .jj-vol{ display:none; }
+}
+
 
 /* Show only on screens <=768px */
 @media (max-width: 768px) {

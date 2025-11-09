@@ -588,16 +588,40 @@
       webkit-playsinline
       muted
       preload="metadata"
-      controls
       poster="img/Femur fracture/crutches.png"
       aria-label="Recovery from femur fracture to gym PBs"
+      tabindex="0"
     >
       <source src="img/Femur fracture/transformation.mp4" type="video/mp4">
       Your browser doesn’t support HTML5 video.
       <a href="img/Femur fracture/transformation.mp4">Download</a>.
     </video>
+
+    <!-- Just Jana custom controls -->
+    <div class="jj-controls" role="group" aria-label="Video controls">
+      <button class="jj-btn jj-play" aria-label="Play/Pause" title="Play/Pause">
+        <i class="fa-solid fa-play"></i>
+      </button>
+
+      <div class="jj-time">
+        <span class="jj-cur" aria-live="off">0:00</span>
+        <input class="jj-seek" type="range" min="0" max="100" value="0" step="0.1" aria-label="Seek">
+        <span class="jj-dur">0:00</span>
+      </div>
+
+      <button class="jj-btn jj-mute" aria-label="Mute/Unmute" title="Mute/Unmute">
+        <i class="fa-solid fa-volume-xmark"></i>
+      </button>
+
+      <input class="jj-vol" type="range" min="0" max="1" step="0.05" value="0.8" aria-label="Volume">
+
+      <button class="jj-btn jj-full" aria-label="Fullscreen" title="Fullscreen">
+        <i class="fa-solid fa-expand"></i>
+      </button>
+    </div>
   </div>
 </section>
+
 
 
     
@@ -914,11 +938,10 @@
             closeAllDropdowns(); unlockBody();
           }
         }, {capture:true});
-        const setH = () => {
-          if (XL_UP.matches) {
-            document.documentElement.style.setProperty('--nav-h', (nav?.offsetHeight || 80) + 'px');
-          }
-        };
+const setH = () => {
+  document.documentElement.style.setProperty('--nav-h', (nav?.offsetHeight || 80) + 'px');
+};
+
         setH(); addEventListener('resize', setH, {passive:true});
         let lastY = window.scrollY;
         addEventListener('scroll', ()=>{
@@ -1405,55 +1428,186 @@ document.addEventListener('DOMContentLoaded', function () {
 
 <script>
 (function () {
+  const wrap  = document.querySelector('#recovery-video .jj-video-frame');
   const video = document.getElementById('transformationVideo');
-  if (!video) return;
+  const controls = document.querySelector('#recovery-video .jj-controls');
+  if (!wrap || !video || !controls) return;
 
-  const prefersReduced = window.matchMedia &&
-                         window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Controls elements
+  const btnPlay = controls.querySelector('.jj-play');
+  const btnMute = controls.querySelector('.jj-mute');
+  const btnFull = controls.querySelector('.jj-full');
+  const seek    = controls.querySelector('.jj-seek');
+  const vol     = controls.querySelector('.jj-vol');
+  const cur     = controls.querySelector('.jj-cur');
+  const dur     = controls.querySelector('.jj-dur');
 
-  // Mobile autoplay requirements
-  video.muted = true;
+  // Accessibility & motion preferences
+  const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Make sure native controls are off (we use custom)
+  video.removeAttribute('controls');
+  video.muted = true; // allow mobile autoplay
   video.setAttribute('playsinline','');
   video.setAttribute('webkit-playsinline','');
 
+  // ----- helpers
+  const fmt = s => {
+    s = Math.max(0, s|0);
+    const m = (s/60)|0, r = (s%60)|0;
+    return m + ':' + (r<10?'0':'') + r;
+  };
+  const setPlayingState = () => {
+    wrap.classList.toggle('playing', !video.paused && !video.ended);
+    wrap.classList.toggle('paused',  video.paused || video.ended);
+    btnPlay.innerHTML = video.paused ? '<i class="fa-solid fa-play"></i>' : '<i class="fa-solid fa-pause"></i>';
+  };
+
+  // ----- duration (after metadata)
+  let metaReady = false;
+  function onLoadedMeta() {
+    metaReady = true;
+    dur.textContent = isFinite(video.duration) ? fmt(video.duration) : '0:00';
+    seek.value = 0; seek.style.setProperty('--jj-pct','0%');
+  }
+  video.addEventListener('loadedmetadata', onLoadedMeta, { once:true });
+
+  // ----- time updates
+  function onTime() {
+    if (!metaReady || !isFinite(video.duration)) return;
+    cur.textContent = fmt(video.currentTime);
+    const pct = (video.currentTime / video.duration) * 100;
+    seek.value = pct; seek.style.setProperty('--jj-pct', pct.toFixed(2) + '%');
+  }
+  video.addEventListener('timeupdate', onTime);
+  video.addEventListener('progress', onTime);
+
+  // ----- play/pause toggle
   function tryPlay(){
     const p = video.play();
-    if (p && typeof p.catch === 'function') {
-      p.catch(() => { video.setAttribute('controls',''); });
+    if (p && typeof p.catch === 'function') p.catch(()=>{/* ignore */});
+  }
+  btnPlay.addEventListener('click', () => {
+    if (video.paused) tryPlay(); else video.pause();
+  });
+
+  // ----- seek
+  let seeking = false;
+  seek.addEventListener('input', () => {
+    seeking = true;
+    if (!isFinite(video.duration)) return;
+    const t = (seek.value / 100) * video.duration;
+    video.currentTime = t;
+    onTime();
+  });
+  seek.addEventListener('change', () => { seeking = false; });
+
+  // ----- mute / volume
+  function reflectVol(){
+    vol.value = video.muted ? 0 : (video.volume || 0);
+    controls.style.setProperty('--jj-vol', vol.value);
+    btnMute.innerHTML = (video.muted || vol.value == 0)
+      ? '<i class="fa-solid fa-volume-xmark"></i>'
+      : '<i class="fa-solid fa-volume-high"></i>';
+  }
+  btnMute.addEventListener('click', () => {
+    if (video.muted) {
+      video.muted = false;
+      if (video.volume === 0) video.volume = 0.8;
+    } else {
+      video.muted = true;
     }
-  }
+    reflectVol();
+  });
+  vol.addEventListener('input', () => {
+    const v = parseFloat(vol.value);
+    video.volume = v; video.muted = v === 0;
+    reflectVol();
+  });
+  // initial volume UI
+  video.volume = 0.8; reflectVol();
 
-  if (!('IntersectionObserver' in window) || prefersReduced){
-    video.setAttribute('controls','');
-    return;
-  }
-
-  // Start when ~60% of the video is in view, pause when out
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(entry=>{
-      if (entry.target !== video) return;
-      if (entry.isIntersecting && entry.intersectionRatio >= 0.6) {
-        tryPlay();
-      } else {
-        if (!video.paused) video.pause();
-      }
-    });
-  }, { threshold: [0, 0.6, 1] });
-
-  io.observe(video);
-
-  // Pause when tab hidden; resume if still in view on return
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) { if (!video.paused) video.pause(); }
-    else {
-      const r = video.getBoundingClientRect();
-      const vh = window.innerHeight || document.documentElement.clientHeight;
-      const visible = r.top < vh*0.6 && r.bottom > vh*0.4;
-      if (visible) tryPlay();
+  // ----- fullscreen
+  btnFull.addEventListener('click', async () => {
+    if (!document.fullscreenElement) {
+      await wrap.requestFullscreen?.();
+      btnFull.innerHTML = '<i class="fa-solid fa-compress"></i>';
+    } else {
+      await document.exitFullscreen?.();
+      btnFull.innerHTML = '<i class="fa-solid fa-expand"></i>';
     }
   });
+
+  // ----- keyboard shortcuts (when video focused or hovered)
+  function keyHandler(e){
+    if (e.defaultPrevented) return;
+    const k = e.key.toLowerCase();
+    if ([' ', 'k'].includes(k)){ e.preventDefault(); video.paused ? tryPlay() : video.pause(); }
+    else if (k === 'm'){ video.muted = !video.muted; reflectVol(); }
+    else if (k === 'arrowright'){ video.currentTime = Math.min(video.currentTime + 5, (video.duration||video.currentTime)); }
+    else if (k === 'arrowleft'){ video.currentTime = Math.max(video.currentTime - 5, 0); }
+    else if (k === 'f'){ btnFull.click(); }
+  }
+  wrap.addEventListener('keydown', keyHandler);
+
+  // ----- show controls on touch for a bit
+  let touchTimer;
+  function flagTouching(){
+    wrap.classList.add('touching');
+    clearTimeout(touchTimer);
+    touchTimer = setTimeout(()=>wrap.classList.remove('touching'), 1500);
+  }
+  wrap.addEventListener('pointerdown', flagTouching, {passive:true});
+  wrap.addEventListener('mousemove', flagTouching, {passive:true});
+
+  // ----- autoplay in view / pause out of view
+  function observePlayPause(){
+    if (!('IntersectionObserver' in window) || prefersReduced){
+      // don’t auto-play for reduced motion
+      setPlayingState(); return;
+    }
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if (entry.target !== video) return;
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.6) {
+          tryPlay();
+        } else {
+          if (!video.paused) video.pause();
+        }
+      });
+    }, { threshold: [0, 0.6, 1] });
+    io.observe(video);
+
+    // pause on background tab
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) { if (!video.paused) video.pause(); }
+      else {
+        const r = video.getBoundingClientRect();
+        const vh = window.innerHeight || document.documentElement.clientHeight;
+        const visible = r.top < vh*0.6 && r.bottom > vh*0.4;
+        if (visible) tryPlay();
+      }
+    });
+  }
+  observePlayPause();
+
+  // reflect state changes
+  video.addEventListener('play', setPlayingState);
+  video.addEventListener('pause', setPlayingState);
+  video.addEventListener('ended', setPlayingState);
+
+  // ensure duration text if metadata already available
+  if (video.readyState >= 1) onLoadedMeta();
+
+  // Resize handler: keep the frame height correct if nav height changes
+  const updH = () => {
+    document.documentElement.style.setProperty('--nav-h', (document.getElementById('siteNav')?.offsetHeight || 0) + 'px');
+  };
+  updH(); window.addEventListener('resize', updH, {passive:true});
+
 })();
 </script>
+
 
 
   </body>
