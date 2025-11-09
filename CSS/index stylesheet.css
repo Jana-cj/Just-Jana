@@ -3206,6 +3206,97 @@ color: #7b7b7b;
   border: 1px solid rgba(0,0,0,.04); /* subtle edge on white */
 }
 
+/* --- White letterbox remains --- */
+.jj-video-viewport,
+.jj-video-viewport .jj-video-frame,
+.jj-video-contained{ background:#fff !important; }
+
+/* --- Controls container --- */
+.jjv-controls{
+  position:absolute; inset:auto 0 0 0;
+  display:flex; align-items:center; gap:.75rem;
+  padding:.75rem .9rem;
+  background:linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.92) 38%, rgba(255,255,255,.98) 100%);
+  transition:opacity .25s ease, transform .25s ease;
+  opacity:1; transform:translateY(0);
+  user-select:none;
+}
+
+/* Auto-hide state (set by JS) */
+.jjv-controls.is-hidden{
+  opacity:0; transform:translateY(10px);
+  pointer-events:none;
+}
+
+/* Keep visible while paused, seeking, or focused (JS toggles .is-sticky) */
+.jjv-controls.is-sticky{ opacity:1; transform:translateY(0); pointer-events:auto; }
+
+/* Buttons — Just Jana vibe */
+.jjv-btn{
+  width:40px; height:40px; border:0; border-radius:999px;
+  background:linear-gradient(135deg,#f6ddbd,#f6cecc 50%,#f5bfdd);
+  box-shadow:0 6px 18px rgba(0,0,0,.08);
+  display:inline-grid; place-items:center;
+  cursor:pointer;
+}
+.jjv-btn:focus-visible{ outline:2px solid #b38398; outline-offset:2px; }
+
+/* Icons using masks for crisp themeable glyphs */
+.jjv-btn::before{
+  content:""; display:block; width:14px; height:14px; background:#5e3c46;
+  -webkit-mask-size:contain; mask-size:contain; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center;
+}
+.jjv-play.is-paused::before { /* shows Play when paused */
+  -webkit-mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path fill="%23000" d="M18 12v40l34-20z"/></svg>');
+          mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M18 12v40l34-20z"/></svg>');
+}
+.jjv-play.is-playing::before { /* shows Pause when playing */
+  -webkit-mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M18 12h10v40H18zM36 12h10v40H36z"/></svg>');
+          mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M18 12h10v40H18zM36 12h10v40H36z"/></svg>');
+}
+.jjv-mute.is-muted::before{
+  -webkit-mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M28 18L18 26H10v12h8l10 8V18zm20.2 2.2l-4.2 4.2 4.8 4.8-4.8 4.8 4.2 4.2 4.8-4.8 4.8 4.8 4.2-4.2-4.8-4.8 4.8-4.8-4.2-4.2-4.8 4.8-4.8-4.8z"/></svg>');
+          mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M28 18L18 26H10v12h8l10 8V18zm20.2 2.2l-4.2 4.2 4.8 4.8-4.8 4.8 4.2 4.2 4.8-4.8 4.8 4.8 4.2-4.2-4.8-4.8 4.8-4.8-4.2-4.2-4.8 4.8-4.8-4.8z"/></svg>');
+}
+.jjv-mute:not(.is-muted)::before{
+  -webkit-mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M28 18L18 26H10v12h8l10 8V18zm18 2a18 18 0 010 24l-3.5-3.5a13 13 0 000-17L46 20z"/></svg>');
+          mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M28 18L18 26H10v12h8l10 8V18zm18 2a18 18 0 010 24l-3.5-3.5a13 13 0 000-17L46 20z"/></svg>');
+}
+.jjv-replay::before{
+  -webkit-mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M12 18v12h12l-5-5a17 17 0 112 25l-4 4A22 22 0 1030 13l5 5H12z"/></svg>');
+          mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M12 18v12h12l-5-5a17 17 0 112 25l-4 4A22 22 0 1030 13l5 5H12z"/></svg>');
+}
+
+/* Time + seek */
+.jjv-time{ display:flex; align-items:center; gap:.6rem; flex:1; min-width:0; color:#5e3c46; font-weight:600; }
+.jjv-current, .jjv-duration{ font-variant-numeric:tabular-nums; }
+.jjv-scrub{ position:relative; flex:1; height:28px; display:flex; align-items:center; }
+.jjv-track{
+  position:absolute; left:0; right:0; height:6px; border-radius:999px;
+  background:rgba(0,0,0,.06); overflow:hidden;
+}
+.jjv-fill{
+  height:100%; width:0%;
+  background:linear-gradient(90deg,#f6ddbd,#f6cecc,#f5bfdd);
+  transition:width .08s linear;
+}
+
+/* Range input sits above, transparent */
+.jjv-range{
+  -webkit-appearance:none; appearance:none; width:100%; height:28px; background:transparent; margin:0; padding:0;
+}
+.jjv-range::-webkit-slider-thumb{ -webkit-appearance:none; appearance:none; width:16px; height:16px; border-radius:50%;
+  background:#5e3c46; border:2px solid #fff; box-shadow:0 2px 8px rgba(0,0,0,.15); margin-top:-5px;
+}
+.jjv-range::-moz-range-thumb{ width:16px; height:16px; border-radius:50%; background:#5e3c46; border:2px solid #fff; }
+
+/* Layout tweaks for small screens */
+@media (max-width: 560px){
+  .jjv-time{ gap:.5rem; }
+  .jjv-current, .jjv-duration{ font-size:.9rem; }
+  .jjv-btn{ width:36px; height:36px; }
+}
+
 
 /* Show only on screens <=768px */
 @media (max-width: 768px) {

@@ -578,7 +578,6 @@
     </div>
     </div>
 
-<!-- Recovery → Gym PBs (full-viewport, fits without scrolling) -->
 <section id="recovery-video" class="jj-video-viewport" aria-label="Recovery to Gym PBs">
   <div class="jj-video-frame">
     <video
@@ -589,38 +588,33 @@
       muted
       preload="metadata"
       poster="img/Femur fracture/crutches.png"
-      aria-label="Recovery from femur fracture to gym PBs"
-      tabindex="0"
-    >
+      aria-label="Recovery from femur fracture to gym PBs">
       <source src="img/Femur fracture/transformation.mp4" type="video/mp4">
       Your browser doesn’t support HTML5 video.
       <a href="img/Femur fracture/transformation.mp4">Download</a>.
     </video>
 
-    <!-- Just Jana custom controls -->
-    <div class="jj-controls" role="group" aria-label="Video controls">
-      <button class="jj-btn jj-play" aria-label="Play/Pause" title="Play/Pause">
-        <i class="fa-solid fa-play"></i>
-      </button>
+    <!-- Themed overlay controls -->
+    <div class="jjv-controls" role="group" aria-label="Video controls">
+      <button class="jjv-btn jjv-play" aria-label="Play/Pause" type="button"></button>
 
-      <div class="jj-time">
-        <span class="jj-cur" aria-live="off">0:00</span>
-        <input class="jj-seek" type="range" min="0" max="100" value="0" step="0.1" aria-label="Seek">
-        <span class="jj-dur">0:00</span>
+      <div class="jjv-time">
+        <span class="jjv-current" aria-live="off">0:00</span>
+        <div class="jjv-scrub" aria-label="Seek">
+          <input class="jjv-range" type="range" min="0" max="1000" value="0" step="1" aria-valuemin="0" aria-valuemax="1000" aria-valuenow="0" />
+          <div class="jjv-track"><div class="jjv-fill"></div></div>
+        </div>
+        <span class="jjv-duration">0:00</span>
       </div>
 
-      <button class="jj-btn jj-mute" aria-label="Mute/Unmute" title="Mute/Unmute">
-        <i class="fa-solid fa-volume-xmark"></i>
-      </button>
-
-      <input class="jj-vol" type="range" min="0" max="1" step="0.05" value="0.8" aria-label="Volume">
-
-      <button class="jj-btn jj-full" aria-label="Fullscreen" title="Fullscreen">
-        <i class="fa-solid fa-expand"></i>
-      </button>
+      <div class="jjv-right">
+        <button class="jjv-btn jjv-mute" aria-label="Mute/Unmute" type="button"></button>
+        <button class="jjv-btn jjv-replay" aria-label="Replay from start" type="button"></button>
+      </div>
     </div>
   </div>
 </section>
+
 
 
 
@@ -1605,6 +1599,147 @@ document.addEventListener('DOMContentLoaded', function () {
   };
   updH(); window.addEventListener('resize', updH, {passive:true});
 
+})();
+</script>
+<script>
+(function(){
+  const video   = document.getElementById('transformationVideo');
+  const wrap    = document.querySelector('#recovery-video .jj-video-frame');
+  const bar     = document.querySelector('#recovery-video .jjv-controls');
+  if(!video || !wrap || !bar) return;
+
+  // Buttons & fields
+  const btnPlay   = bar.querySelector('.jjv-play');
+  const btnMute   = bar.querySelector('.jjv-mute');
+  const btnReplay = bar.querySelector('.jjv-replay');
+  const rng       = bar.querySelector('.jjv-range');
+  const fill      = bar.querySelector('.jjv-fill');
+  const curEl     = bar.querySelector('.jjv-current');
+  const durEl     = bar.querySelector('.jjv-duration');
+
+  // Ensure autoplay capability for IO logic used elsewhere
+  video.muted = true;
+  video.setAttribute('playsinline','');
+  video.setAttribute('webkit-playsinline','');
+
+  const fmt = s => {
+    s = Math.max(0, Math.floor(s||0));
+    const m = Math.floor(s/60), r = s%60;
+    return `${m}:${r.toString().padStart(2,'0')}`;
+  };
+
+  // Duration once known
+  function setDuration(){
+    if (Number.isFinite(video.duration)) durEl.textContent = fmt(video.duration);
+  }
+  if (video.readyState >= 1) setDuration();
+  video.addEventListener('loadedmetadata', setDuration);
+
+  // Update progress UI
+  function updateProgress(){
+    if (!Number.isFinite(video.duration)) return;
+    const ratio = video.currentTime / video.duration;
+    const val   = Math.round(ratio * 1000);
+    rng.value = String(val);
+    fill.style.width = (ratio * 100).toFixed(2) + '%';
+    curEl.textContent = fmt(video.currentTime);
+    rng.setAttribute('aria-valuenow', String(val));
+  }
+  video.addEventListener('timeupdate', updateProgress);
+  video.addEventListener('seeked', updateProgress);
+
+  // Seek interactions
+  let seeking = false;
+  rng.addEventListener('input', () => {
+    if (!Number.isFinite(video.duration)) return;
+    const ratio = rng.value / 1000;
+    video.currentTime = ratio * video.duration;
+    updateProgress();
+    showControlsSticky(); // keep visible while scrubbing
+  });
+  rng.addEventListener('pointerdown', () => { seeking = true; showControlsSticky(); });
+  window.addEventListener('pointerup', () => { seeking = false; unstickLater(); });
+
+  // Play/pause
+  function reflectPlayState(){
+    btnPlay.classList.toggle('is-playing', !video.paused && !video.ended);
+    btnPlay.classList.toggle('is-paused',  video.paused || video.ended);
+  }
+  btnPlay.addEventListener('click', () => {
+    if (video.paused) video.play().catch(()=>{});
+    else video.pause();
+  });
+  video.addEventListener('play',  reflectPlayState);
+  video.addEventListener('pause', reflectPlayState);
+  video.addEventListener('ended', reflectPlayState);
+
+  // Mute
+  function reflectMute(){ btnMute.classList.toggle('is-muted', video.muted); }
+  btnMute.addEventListener('click', () => { video.muted = !video.muted; reflectMute(); });
+  reflectMute();
+
+  // Replay
+  btnReplay.addEventListener('click', () => { video.currentTime = 0; video.play().catch(()=>{}); });
+
+  // ---------- Auto-show / auto-hide logic ----------
+  let hideTimer = null, sticky = false, pointerInside = false;
+
+  function showControls(){
+    bar.classList.remove('is-hidden');
+  }
+  function hideControls(){
+    if (sticky || seeking) return;
+    // keep visible if paused to aid discoverability
+    if (video.paused) return;
+    if (!pointerInside) bar.classList.add('is-hidden');
+  }
+  function showControlsSticky(){
+    sticky = true;
+    bar.classList.remove('is-hidden');
+    bar.classList.add('is-sticky');
+  }
+  function unstickLater(delay=1200){
+    // remove sticky after a short grace period, then schedule hide
+    clearTimeout(hideTimer);
+    setTimeout(()=>{ sticky = false; bar.classList.remove('is-sticky'); scheduleHide(); }, delay);
+  }
+  function scheduleHide(ms=2500){
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(hideControls, ms);
+  }
+
+  // Reveal on any movement/tap/keys over the video area
+  const nudge = () => { showControls(); scheduleHide(); };
+  wrap.addEventListener('mousemove', nudge, {passive:true});
+  wrap.addEventListener('pointermove', nudge, {passive:true});
+  wrap.addEventListener('touchstart', nudge, {passive:true});
+  wrap.addEventListener('click', nudge, {passive:true}); // single tap on mobile also reveals
+
+  // Track hover/pointer presence
+  wrap.addEventListener('pointerenter', ()=>{ pointerInside = true; showControls(); });
+  wrap.addEventListener('pointerleave', ()=>{ pointerInside = false; scheduleHide(400); });
+
+  // Keep controls visible when any control is focused (keyboard users)
+  bar.addEventListener('focusin', showControlsSticky);
+  bar.addEventListener('focusout', () => unstickLater());
+
+  // Hide when playing starts (after brief peek)
+  video.addEventListener('play', () => { reflectPlayState(); scheduleHide(1600); });
+  video.addEventListener('pause', () => { showControlsSticky(); });
+
+  // If video not intersecting (your IO may pause it), keep controls hidden
+  const io = ('IntersectionObserver' in window) ? new IntersectionObserver((entries)=>{
+    const e = entries[0];
+    if (!e) return;
+    if (!e.isIntersecting){ bar.classList.add('is-hidden'); }
+    else { nudge(); }
+  }, {threshold: .2}) : null;
+  io && io.observe(video);
+
+  // Initialize UI
+  reflectPlayState();
+  updateProgress();
+  showControls(); scheduleHide(1800);
 })();
 </script>
 
