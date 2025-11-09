@@ -3056,272 +3056,236 @@ color: #7b7b7b;
   color: #4b2e2e;
 }
 
-/* ===== Full-viewport video that preserves aspect ratio ===== */
-.jj-video-viewport{
-  position: relative; width: 100%; background:#000; /* subtle letterboxing */
-  margin: 0; padding: 0;
+/* ============================
+   Just Jana – Video Section CSS
+   Markup target:
+   #recovery-video.jj-video-viewport
+     .jj-video-frame
+       video.jj-video-contained
+       .jjv-controls …
+   ============================ */
+
+/* --- Viewport wrapper (gives white letterbox and reserves room for detached bar) --- */
+#recovery-video.jj-video-viewport{
+  position: relative;
+  width: 100%;
+  background: #fff;                     /* white letterbox to match page */
+  margin: 0;
+  padding: 0;
+  /* space below for the detached controls bar */
+  padding-bottom: clamp(64px, 7vh, 96px);
 }
-.jj-video-viewport .jj-video-frame{
-  /* Use dynamic viewport height (mobile-safe), minus sticky header */
+
+/* --- Frame: centers the video, creates positioning context for the bar --- */
+#recovery-video .jj-video-frame{
+  position: relative;                   /* anchor for absolute controls */
   height: calc(100dvh - var(--nav-h, 0px));
-  display: flex; align-items: center; justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
+  background: #fff;                     /* keep white behind video */
 }
-/* Fallback for older browsers that lack dvh */
 @supports not (height: 100dvh){
-  .jj-video-viewport .jj-video-frame{ height: calc(100vh - var(--nav-h, 0px)); }
+  #recovery-video .jj-video-frame{ height: calc(100vh - var(--nav-h, 0px)); }
 }
-.jj-video-contained{
-  /* Keep the original aspect ratio and fit entirely in view */
+
+/* --- Video: keep aspect ratio, never overflow --- */
+#recovery-video .jj-video-contained{
   max-width: 100%;
   max-height: 100%;
-  width: auto; height: auto;
-  object-fit: contain;            /* preserves ratio, adds letterboxing if needed */
+  width: auto;
+  height: auto;
   display: block;
-  border-radius: 12px;            /* optional: match your image rounding */
-  box-shadow: 0 10px 24px rgba(0,0,0,.08); /* optional */
-}
-
-/* ===== Full-viewport video that preserves aspect ratio ===== */
-.jj-video-viewport{
-  position: relative; width: 100%; background:#000; margin:0; padding:0;
-}
-.jj-video-viewport .jj-video-frame{
-  height: calc(100dvh - var(--nav-h, 0px));
-  display: flex; align-items: center; justify-content: center;
-  overflow: hidden; position: relative;
-}
-@supports not (height: 100dvh){
-  .jj-video-viewport .jj-video-frame{ height: calc(100vh - var(--nav-h, 0px)); }
-}
-.jj-video-contained{
-  max-width: 100%; max-height: 100%;
-  width: auto; height: auto; object-fit: contain; display: block;
-  border-radius: 12px; box-shadow: 0 10px 24px rgba(0,0,0,.08);
-  background:#000;
-}
-
-/* ===== Just Jana controls ===== */
-.jj-controls{
-  --jj-grad: linear-gradient(90deg,#f6ddbd,#f6cecc,#f5bfdd);
-  --jj-ink:#252525; --jj-ink-weak:#5e3c46;
-
-  position: absolute; left: 50%; bottom: clamp(8px, 2.5vh, 20px);
-  transform: translateX(-50%);
-  width: min(96vw, 880px);
-  display: grid; grid-template-columns: auto 1fr auto auto auto; gap: 10px;
-  align-items: center;
-  padding: 10px 12px;
-  background: color-mix(in srgb, white 12%, transparent);
-  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,.18);
-  border: 1px solid rgba(246, 221, 189, .6);
-}
-
-/* buttons */
-.jj-btn{
-  appearance: none; border: none; cursor: pointer;
-  padding: 10px 12px; border-radius: 12px;
-  background: var(--jj-grad); background-size: 300% 100%;
-  transition: transform .08s ease, box-shadow .2s ease, background-position .8s linear;
-  box-shadow: 0 6px 14px rgba(0,0,0,.12); color: var(--jj-ink);
-  display: inline-flex; align-items: center; justify-content: center;
-  min-width: 44px; min-height: 44px;
-}
-.jj-btn:hover{ background-position: 100% 0; }
-.jj-btn:active{ transform: translateY(1px); }
-.jj-btn i{ font-size: 16px; }
-
-/* time + seek */
-.jj-time{
-  display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center;
-  color: var(--jj-ink-weak); font: 500 14px/1.2 Poppins, system-ui, sans-serif;
-  min-width: 0;
-}
-.jj-cur,.jj-dur{ white-space: nowrap; }
-.jj-seek{
-  -webkit-appearance: none; appearance: none; width: 100%;
-  background: transparent; height: 28px;
-}
-.jj-seek:focus{ outline: none; }
-
-/* track */
-.jj-seek::-webkit-slider-runnable-track{
-  height: 6px; border-radius: 999px; background: rgba(0,0,0,.15);
-}
-.jj-seek::-moz-range-track{
-  height: 6px; border-radius: 999px; background: rgba(0,0,0,.15);
-}
-/* fill on top via gradient */
-.jj-seek{ background-image: linear-gradient(to right, #f6cecc var(--jj-pct,0%), rgba(0,0,0,.15) 0%); background-repeat:no-repeat; border-radius:999px; }
-/* thumb */
-.jj-seek::-webkit-slider-thumb{
-  -webkit-appearance: none; appearance: none; width:18px; height:18px; border-radius:50%;
-  background: var(--jj-grad); border: 0; margin-top: -6px; box-shadow: 0 0 0 3px rgba(255,255,255,.8);
-}
-.jj-seek::-moz-range-thumb{
-  width:18px; height:18px; border-radius:50%;
-  background: var(--jj-grad); border: 0; box-shadow: 0 0 0 3px rgba(255,255,255,.8);
-}
-
-/* volume */
-.jj-vol{
-  -webkit-appearance: none; appearance: none; width: 90px; max-width: 18vw; height: 28px;
-  background: transparent;
-}
-.jj-vol:focus{ outline: none; }
-.jj-vol::-webkit-slider-runnable-track,
-.jj-vol::-moz-range-track{
-  height: 6px; border-radius: 999px; background: rgba(0,0,0,.15);
-}
-.jj-vol{ background-image: linear-gradient(to right, #f5bfdd calc(100%*var(--jj-vol, .8)), rgba(0,0,0,.15) 0%); background-repeat:no-repeat; border-radius:999px; }
-.jj-vol::-webkit-slider-thumb,
-.jj-vol::-moz-range-thumb{
-  -webkit-appearance:none; appearance:none; width:16px; height:16px; border-radius:50%;
-  background: var(--jj-grad); border:0; margin-top:-5px; box-shadow: 0 0 0 3px rgba(255,255,255,.8);
-}
-
-/* auto-hide controls when playing (desktop), show on pause/hover/touch */
-.jj-video-frame.playing .jj-controls{ opacity:.0; transition: opacity .35s ease .9s; }
-.jj-video-frame.playing:hover .jj-controls,
-.jj-video-frame.playing.touching .jj-controls,
-.jj-video-frame.paused .jj-controls{ opacity:1; transition-delay:0s; }
-
-/* small screens: make bar a bit taller and simpler */
-@media (max-width: 640px){
-  .jj-controls{ grid-template-columns: auto 1fr auto auto; gap:8px; }
-  .jj-vol{ display:none; }
-}
-/* White letterbox for video */
-.jj-video-viewport,
-.jj-video-viewport .jj-video-frame,
-.jj-video-contained{
-  background: #fff !important;
-}
-
-/* Optional: soften the shadow since the page is light */
-.jj-video-contained{
+  object-fit: contain;
+  border-radius: 12px;
+  background: #000;                     /* shows through where letterboxed */
   box-shadow: 0 6px 18px rgba(0,0,0,.08);
-  border: 1px solid rgba(0,0,0,.04); /* subtle edge on white */
+  border: 1px solid rgba(0,0,0,.04);
 }
 
-/* --- White letterbox remains --- */
-.jj-video-viewport,
-.jj-video-viewport .jj-video-frame,
-.jj-video-contained{ background:#fff !important; }
+/* ============================
+   Detached Controls (below video)
+   ============================ */
+#recovery-video .jjv-controls{
+  position: absolute;
+  top: 100%;                            /* sit directly under the frame */
+  left: 50%;
+  transform: translate(-50%, 12px);
+  right: auto;                          /* explicitly unset opposite edges */
+  bottom: auto;
 
-/* --- Controls container --- */
-.jjv-controls{
-  position:absolute; inset:auto 0 0 0;
-  display:flex; align-items:center; gap:.75rem;
-  padding:.75rem .9rem;
-  background:linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.92) 38%, rgba(255,255,255,.98) 100%);
-  transition:opacity .25s ease, transform .25s ease;
-  opacity:1; transform:translateY(0);
-  user-select:none;
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+
+  /* style */
+  background: rgba(255,255,255,.98);
+  border: 1px solid rgba(0,0,0,.06);
+  box-shadow: 0 8px 22px rgba(0,0,0,.10);
+  border-radius: 14px;
+  padding: .75rem .9rem;
+
+  /* sizing – JS will also cap with maxWidth; keep a hard cap as safety */
+  width: auto;
+  max-width: 96vw;
+
+  /* auto-hide transitions (JS toggles classes) */
+  opacity: 1;
+  transform-origin: 50% 0;
+  transition: opacity .25s ease, transform .25s ease;
+  z-index: 3;
 }
 
-/* Auto-hide state (set by JS) */
-.jjv-controls.is-hidden{
-  opacity:0; transform:translateY(10px);
-  pointer-events:none;
+/* auto-hide state set by JS */
+#recovery-video .jjv-controls.is-hidden{
+  opacity: 0;
+  transform: translate(-50%, 20px);
+  pointer-events: none;
+}
+/* keep visible while sticky/focused/seeking */
+#recovery-video .jjv-controls.is-sticky{
+  opacity: 1;
+  transform: translate(-50%, 12px);
+  pointer-events: auto;
 }
 
-/* Keep visible while paused, seeking, or focused (JS toggles .is-sticky) */
-.jjv-controls.is-sticky{ opacity:1; transform:translateY(0); pointer-events:auto; }
+/* --- Buttons (play, mute, replay) --- */
+#recovery-video .jjv-btn{
+  --jj-grad: linear-gradient(135deg,#f6ddbd,#f6cecc 50%,#f5bfdd);
+  --jj-ink: #5e3c46;
 
-/* Buttons — Just Jana vibe */
-.jjv-btn{
-  width:40px; height:40px; border:0; border-radius:999px;
-  background:linear-gradient(135deg,#f6ddbd,#f6cecc 50%,#f5bfdd);
-  box-shadow:0 6px 18px rgba(0,0,0,.08);
-  display:inline-grid; place-items:center;
-  cursor:pointer;
+  width: 40px; height: 40px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--jj-grad);
+  box-shadow: 0 6px 18px rgba(0,0,0,.08);
+  display: inline-grid;
+  place-items: center;
+  cursor: pointer;
 }
-.jjv-btn:focus-visible{ outline:2px solid #b38398; outline-offset:2px; }
+#recovery-video .jjv-btn:focus-visible{
+  outline: 2px solid #b38398;
+  outline-offset: 2px;
+}
 
-/* Icons using masks for crisp themeable glyphs */
-.jjv-btn::before{
-  content:""; display:block; width:14px; height:14px; background:#5e3c46;
-  -webkit-mask-size:contain; mask-size:contain; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center;
+/* Icon masks (compact, themeable) */
+#recovery-video .jjv-btn::before{
+  content:"";
+  display:block;
+  width:14px; height:14px;
+  background: var(--jj-ink);
+  -webkit-mask-size: contain; mask-size: contain;
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-position: center; mask-position: center;
 }
-.jjv-play.is-paused::before { /* shows Play when paused */
-  -webkit-mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path fill="%23000" d="M18 12v40l34-20z"/></svg>');
+/* Play/Pause */
+#recovery-video .jjv-play.is-paused::before{
+  -webkit-mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M18 12v40l34-20z"/></svg>');
           mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M18 12v40l34-20z"/></svg>');
 }
-.jjv-play.is-playing::before { /* shows Pause when playing */
+#recovery-video .jjv-play.is-playing::before{
   -webkit-mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M18 12h10v40H18zM36 12h10v40H36z"/></svg>');
           mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M18 12h10v40H18zM36 12h10v40H36z"/></svg>');
 }
-.jjv-mute.is-muted::before{
+/* Mute */
+#recovery-video .jjv-mute.is-muted::before{
   -webkit-mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M28 18L18 26H10v12h8l10 8V18zm20.2 2.2l-4.2 4.2 4.8 4.8-4.8 4.8 4.2 4.2 4.8-4.8 4.8 4.8 4.2-4.2-4.8-4.8 4.8-4.8-4.2-4.2-4.8 4.8-4.8-4.8z"/></svg>');
           mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M28 18L18 26H10v12h8l10 8V18zm20.2 2.2l-4.2 4.2 4.8 4.8-4.8 4.8 4.2 4.2 4.8-4.8 4.8 4.8 4.2-4.2-4.8-4.8 4.8-4.8-4.2-4.2-4.8 4.8-4.8-4.8z"/></svg>');
 }
-.jjv-mute:not(.is-muted)::before{
+#recovery-video .jjv-mute:not(.is-muted)::before{
   -webkit-mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M28 18L18 26H10v12h8l10 8V18zm18 2a18 18 0 010 24l-3.5-3.5a13 13 0 000-17L46 20z"/></svg>');
           mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M28 18L18 26H10v12h8l10 8V18zm18 2a18 18 0 010 24l-3.5-3.5a13 13 0 000-17L46 20z"/></svg>');
 }
-.jjv-replay::before{
+/* Replay */
+#recovery-video .jjv-replay::before{
   -webkit-mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M12 18v12h12l-5-5a17 17 0 112 25l-4 4A22 22 0 1030 13l5 5H12z"/></svg>');
           mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M12 18v12h12l-5-5a17 17 0 112 25l-4 4A22 22 0 1030 13l5 5H12z"/></svg>');
 }
 
-/* Time + seek */
-.jjv-time{ display:flex; align-items:center; gap:.6rem; flex:1; min-width:0; color:#5e3c46; font-weight:600; }
-.jjv-current, .jjv-duration{ font-variant-numeric:tabular-nums; }
-.jjv-scrub{ position:relative; flex:1; height:28px; display:flex; align-items:center; }
-.jjv-track{
-  position:absolute; left:0; right:0; height:6px; border-radius:999px;
-  background:rgba(0,0,0,.06); overflow:hidden;
+/* --- Time & Scrub --- */
+#recovery-video .jjv-time{
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  flex: 1;
+  min-width: 0;
+  color: #5e3c46;
+  font: 600 14px/1.2 Poppins, system-ui, sans-serif;
 }
-.jjv-fill{
-  height:100%; width:0%;
-  background:linear-gradient(90deg,#f6ddbd,#f6cecc,#f5bfdd);
-  transition:width .08s linear;
+#recovery-video .jjv-current,
+#recovery-video .jjv-duration{
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
-/* Range input sits above, transparent */
-.jjv-range{
-  -webkit-appearance:none; appearance:none; width:100%; height:28px; background:transparent; margin:0; padding:0;
+/* Track + fill */
+#recovery-video .jjv-scrub{
+  position: relative;
+  flex: 1;
+  height: 28px;
+  display: flex;
+  align-items: center;
 }
-.jjv-range::-webkit-slider-thumb{ -webkit-appearance:none; appearance:none; width:16px; height:16px; border-radius:50%;
-  background:#5e3c46; border:2px solid #fff; box-shadow:0 2px 8px rgba(0,0,0,.15); margin-top:-5px;
+#recovery-video .jjv-track{
+  position: absolute;
+  left: 0; right: 0; height: 6px;
+  border-radius: 999px;
+  background: rgba(0,0,0,.06);
+  overflow: hidden;
 }
-.jjv-range::-moz-range-thumb{ width:16px; height:16px; border-radius:50%; background:#5e3c46; border:2px solid #fff; }
+#recovery-video .jjv-fill{
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg,#f6ddbd,#f6cecc,#f5bfdd);
+  transition: width .08s linear;
+}
 
-/* Layout tweaks for small screens */
+/* Range sits on top, transparent */
+#recovery-video .jjv-range{
+  -webkit-appearance: none; appearance: none;
+  width: 100%; height: 28px; background: transparent;
+  margin: 0; padding: 0;
+}
+#recovery-video .jjv-range:focus{ outline: none; }
+#recovery-video .jjv-range::-webkit-slider-thumb{
+  -webkit-appearance: none; appearance: none;
+  width: 16px; height: 16px; border-radius: 50%;
+  background: #5e3c46; border: 2px solid #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,.15);
+  margin-top: -5px;
+}
+#recovery-video .jjv-range::-moz-range-thumb{
+  width: 16px; height: 16px; border-radius: 50%;
+  background: #5e3c46; border: 2px solid #fff;
+}
+
+/* Right cluster keeps spacing tidy */
+#recovery-video .jjv-right{
+  display: inline-flex;
+  gap: .5rem;
+}
+
+/* --- Small screens tweaks --- */
 @media (max-width: 560px){
-  .jjv-time{ gap:.5rem; }
-  .jjv-current, .jjv-duration{ font-size:.9rem; }
-  .jjv-btn{ width:36px; height:36px; }
+  #recovery-video .jjv-controls{ gap: .6rem; padding: .6rem .75rem; }
+  #recovery-video .jjv-btn{ width: 36px; height: 36px; }
+  #recovery-video .jjv-time{ font-size: .92rem; gap: .5rem; }
 }
 
-/* give space below the video for the detached controls */
-#recovery-video.jj-video-viewport{
-  padding-bottom: clamp(64px, 7vh, 96px);
+/* --- Desktop tighten a touch --- */
+@media (min-width: 1024px){
+  #recovery-video .jjv-controls{ gap: .6rem; padding: .6rem .8rem; }
 }
 
-/* move the bar below the video (not overlapping it) */
-#recovery-video .jjv-controls{
-  position:absolute;
-  left:50%;
-  top:100%;                 /* sit just under the frame */
-  transform:translate(-50%, 12px);
-  inset:auto auto auto auto;/* cancel previous inset */
-  background:rgba(255,255,255,.98); /* solid-ish since it's outside video */
-  border:1px solid rgba(0,0,0,.06);
-  box-shadow:0 8px 22px rgba(0,0,0,.10);
-  width:auto;               /* JS will set a max-width */
-  max-width:96vw;           /* safety on small screens */
-}
-
-/* optional: slightly tighter desktop spacing so it feels “shorter” */
-@media (min-width:1024px){
-  #recovery-video .jjv-controls{
-    gap:.6rem; padding:.6rem .8rem;
+/* --- Reduced motion: skip fades/shifts --- */
+@media (prefers-reduced-motion: reduce){
+  #recovery-video .jjv-controls,
+  #recovery-video .jjv-controls.is-hidden{
+    transition: none;
+    transform: translate(-50%, 12px);
   }
 }
+
 
 
 /* Show only on screens <=768px */
