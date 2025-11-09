@@ -578,6 +578,33 @@
     </div>
     </div>
 
+    <section id="transformation" class="jj-video-section" aria-label="Recovery to Gym PBs video">
+  <div class="container">
+    <h2 class="visually-hidden">Recovery Journey</h2>
+    <div class="jj-video-wrap">
+      <video
+        id="transformationVideo"
+        class="jj-video"
+        playsinline
+        webkit-playsinline
+        muted
+        preload="metadata"
+        controls
+        poster="img/Femur fracture/crutches.png"  
+        aria-describedby="transformationCaption"
+      >
+        <!-- Update the path/filename here if yours differs -->
+        <source src="img/Femur fracture/transformation.mp4" type="video/mp4">
+        Your browser doesn’t support HTML5 video.
+        <a href="img/Femur fracture/transformation.mp4">Download it</a>.
+      </video>
+    </div>
+    <p id="transformationCaption" class="jj-video-caption">
+      Recovery from femur fracture → first steps back → gym PBs.
+    </p>
+  </div>
+</section>
+
     
     <div class="center-wrapper">
   <div class="highlight no-flip">
@@ -1379,6 +1406,68 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 });
+</script>
+
+<script>
+/* ===========================================================
+   Autoplay video on scroll (plays inline on mobile)
+   =========================================================== */
+(function () {
+  const video = document.getElementById('transformationVideo');
+  if (!video) return;
+
+  // Respect Reduced Motion
+  const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Ensure muted + inline for mobile Safari
+  video.muted = true;
+  video.setAttribute('playsinline', '');
+  video.setAttribute('webkit-playsinline', '');
+
+  // Helper to safely play
+  function tryPlay() {
+    const p = video.play();
+    if (p && typeof p.catch === 'function') {
+      p.catch(() => {
+        // If autoplay is blocked for any reason, leave controls visible so user can tap play.
+        video.setAttribute('controls', '');
+      });
+    }
+  }
+
+  if (!('IntersectionObserver' in window) || prefersReduced) {
+    // Fallback: don’t auto-play for reduced motion or lack of IO
+    // (keeps controls so the user can play manually)
+    video.setAttribute('controls', '');
+    return;
+  }
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.target !== video) return;
+      if (entry.isIntersecting && entry.intersectionRatio >= 0.6) {
+        tryPlay();
+      } else {
+        // Pause when scrolled away
+        if (!video.paused) video.pause();
+      }
+    });
+  }, { threshold: [0, 0.6, 1] });
+
+  io.observe(video);
+
+  // Optional: pause when tab is hidden, resume when visible and still in view
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      if (!video.paused) video.pause();
+    } else {
+      const rect = video.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      const visible = rect.top < vh * 0.4 ? (rect.bottom > vh * 0.4) : (rect.top < vh * 0.6);
+      if (visible) tryPlay();
+    }
+  });
+})();
 </script>
 
 
