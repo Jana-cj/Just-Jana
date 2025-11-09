@@ -3193,6 +3193,18 @@ color: #7b7b7b;
   .jj-controls{ grid-template-columns: auto 1fr auto auto; gap:8px; }
   .jj-vol{ display:none; }
 }
+/* White letterbox for video */
+.jj-video-viewport,
+.jj-video-viewport .jj-video-frame,
+.jj-video-contained{
+  background: #fff !important;
+}
+
+/* Optional: soften the shadow since the page is light */
+.jj-video-contained{
+  box-shadow: 0 6px 18px rgba(0,0,0,.08);
+  border: 1px solid rgba(0,0,0,.04); /* subtle edge on white */
+}
 
 
 /* Show only on screens <=768px */
