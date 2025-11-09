@@ -3297,6 +3297,32 @@ color: #7b7b7b;
   .jjv-btn{ width:36px; height:36px; }
 }
 
+/* give space below the video for the detached controls */
+#recovery-video.jj-video-viewport{
+  padding-bottom: clamp(64px, 7vh, 96px);
+}
+
+/* move the bar below the video (not overlapping it) */
+#recovery-video .jjv-controls{
+  position:absolute;
+  left:50%;
+  top:100%;                 /* sit just under the frame */
+  transform:translate(-50%, 12px);
+  inset:auto auto auto auto;/* cancel previous inset */
+  background:rgba(255,255,255,.98); /* solid-ish since it's outside video */
+  border:1px solid rgba(0,0,0,.06);
+  box-shadow:0 8px 22px rgba(0,0,0,.10);
+  width:auto;               /* JS will set a max-width */
+  max-width:96vw;           /* safety on small screens */
+}
+
+/* optional: slightly tighter desktop spacing so it feels “shorter” */
+@media (min-width:1024px){
+  #recovery-video .jjv-controls{
+    gap:.6rem; padding:.6rem .8rem;
+  }
+}
+
 
 /* Show only on screens <=768px */
 @media (max-width: 768px) {

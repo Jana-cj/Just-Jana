@@ -587,7 +587,7 @@
       webkit-playsinline
       muted
       preload="metadata"
-      poster="img/Femur fracture/crutches.png"
+      poster="img/Femur fracture/femur fracture.jpg"
       aria-label="Recovery from femur fracture to gym PBs">
       <source src="img/Femur fracture/transformation.mp4" type="video/mp4">
       Your browser doesn’t support HTML5 video.
@@ -1743,6 +1743,119 @@ document.addEventListener('DOMContentLoaded', function () {
 })();
 </script>
 
+<script>
+(function(){
+  const video   = document.getElementById('transformationVideo');
+  const section = document.getElementById('recovery-video');          // NEW
+  const wrap    = document.querySelector('#recovery-video .jj-video-frame');
+  const bar     = document.querySelector('#recovery-video .jjv-controls');
+  if(!video || !wrap || !bar || !section) return;
+
+  /* ---------------- width just-over-video on desktop ---------------- */
+  function sizeControls(){
+    // current rendered video width:
+    const vw   = window.innerWidth || document.documentElement.clientWidth;
+    const rect = video.getBoundingClientRect();
+    const vidW = Math.max(0, rect.width || 0);
+
+    // Desktop: a touch wider than the video (+120px), capped by viewport
+    // Mobile/tablet: keep near-viewport but not edge-to-edge
+    const isDesktop = vw >= 1024;
+    const targetMax = isDesktop ? Math.min(vidW + 120, vw - 64) : Math.min(vw * 0.96, vidW + 40);
+
+    bar.style.maxWidth = targetMax + 'px';
+  }
+  sizeControls();
+  addEventListener('resize', sizeControls, {passive:true});
+  // Recompute after metadata/layout shifts too:
+  video.addEventListener('loadedmetadata', sizeControls);
+  video.addEventListener('loadeddata', sizeControls);
+
+  /* ---------------- auto-hide timing: 2 seconds ---------------- */
+  let hideTimer = null, sticky = false, seeking = false, pointerInside = false;
+
+  function showControls(){
+    bar.classList.remove('is-hidden');
+  }
+  function hideControls(){
+    if (sticky || seeking) return;
+    if (video.paused) return;          // keep visible when paused
+    if (!pointerInside) bar.classList.add('is-hidden');
+  }
+  function scheduleHide(ms=2000){      // CHANGED: 2000ms
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(hideControls, ms);
+  }
+  function showControlsSticky(){
+    sticky = true;
+    bar.classList.remove('is-hidden');
+    bar.classList.add('is-sticky');
+  }
+  function unstickLater(delay=900){
+    clearTimeout(hideTimer);
+    setTimeout(()=>{ sticky = false; bar.classList.remove('is-sticky'); scheduleHide(2000); }, delay);
+  }
+
+  // keep your existing listeners; just ensure they call scheduleHide(2000)
+  const nudge = () => { showControls(); scheduleHide(2000); };
+  wrap.addEventListener('mousemove', nudge, {passive:true});
+  wrap.addEventListener('pointermove', nudge, {passive:true});
+  wrap.addEventListener('touchstart', nudge, {passive:true});
+  wrap.addEventListener('click', nudge, {passive:true});
+
+  wrap.addEventListener('pointerenter', ()=>{ pointerInside = true; showControls(); });
+  wrap.addEventListener('pointerleave', ()=>{ pointerInside = false; scheduleHide(400); });
+
+  bar.addEventListener('focusin', showControlsSticky);
+  bar.addEventListener('focusout', () => unstickLater());
+
+  // reflect play/pause with your existing code; ensure on play we hide after 2s
+  video.addEventListener('play',  () => scheduleHide(2000));
+  video.addEventListener('pause', () => showControlsSticky());
+
+  /* ---------------- autoplay/pause by section visibility ---------------- */
+  function tryPlay(){ video.play().catch(()=>{}); }
+
+  if ('IntersectionObserver' in window){
+    const io = new IntersectionObserver((entries)=>{
+      const e = entries[0];
+      if (!e) return;
+
+      // when at least half the section is on-screen, play; otherwise pause
+      if (e.isIntersecting && e.intersectionRatio >= 0.5){
+        tryPlay();                     // auto-play when arriving in area
+        scheduleHide(2000);            // let controls peek then vanish
+      } else {
+        if (!video.paused) video.pause();
+      }
+    }, { root:null, threshold:[0, .5, 1] });
+
+    io.observe(section);
+  }
+
+  // pause when tab is hidden, resume if still in view on return
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden){
+      if (!video.paused) video.pause();
+    } else {
+      const r  = section.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      const inView = r.top < vh*0.5 && r.bottom > vh*0.5; // roughly half in view
+      if (inView) tryPlay();
+    }
+  });
+
+  /* ----------- seeking hooks (if not already present in your file) ----------- */
+  const rng = bar.querySelector('.jjv-range');
+  if (rng){
+    rng.addEventListener('pointerdown', () => { seeking = true; showControlsSticky(); });
+    addEventListener('pointerup', () => { if (seeking){ seeking = false; unstickLater(); } }, {passive:true});
+  }
+
+  // initial peek then hide
+  showControls(); scheduleHide(2000);
+})();
+</script>
 
 
   </body>
