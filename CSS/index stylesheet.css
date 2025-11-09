@@ -3056,6 +3056,31 @@ color: #7b7b7b;
   color: #4b2e2e;
 }
 
+/* ===== Full-viewport video that preserves aspect ratio ===== */
+.jj-video-viewport{
+  position: relative; width: 100%; background:#000; /* subtle letterboxing */
+  margin: 0; padding: 0;
+}
+.jj-video-viewport .jj-video-frame{
+  /* Use dynamic viewport height (mobile-safe), minus sticky header */
+  height: calc(100dvh - var(--nav-h, 0px));
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+/* Fallback for older browsers that lack dvh */
+@supports not (height: 100dvh){
+  .jj-video-viewport .jj-video-frame{ height: calc(100vh - var(--nav-h, 0px)); }
+}
+.jj-video-contained{
+  /* Keep the original aspect ratio and fit entirely in view */
+  max-width: 100%;
+  max-height: 100%;
+  width: auto; height: auto;
+  object-fit: contain;            /* preserves ratio, adds letterboxing if needed */
+  display: block;
+  border-radius: 12px;            /* optional: match your image rounding */
+  box-shadow: 0 10px 24px rgba(0,0,0,.08); /* optional */
+}
 
 
 /* Show only on screens <=768px */

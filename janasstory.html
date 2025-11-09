@@ -578,32 +578,27 @@
     </div>
     </div>
 
-    <section id="transformation" class="jj-video-section" aria-label="Recovery to Gym PBs video">
-  <div class="container">
-    <h2 class="visually-hidden">Recovery Journey</h2>
-    <div class="jj-video-wrap">
-      <video
-        id="transformationVideo"
-        class="jj-video"
-        playsinline
-        webkit-playsinline
-        muted
-        preload="metadata"
-        controls
-        poster="img/Femur fracture/femur fracture.jpg"  
-        aria-describedby="transformationCaption"
-      >
-        <!-- Update the path/filename here if yours differs -->
-        <source src="img/Femur fracture/transformation.mp4" type="video/mp4">
-        Your browser doesn’t support HTML5 video.
-        <a href="img/Femur fracture/transformation.mp4">Download it</a>.
-      </video>
-    </div>
-    <p id="transformationCaption" class="jj-video-caption">
-      Recovery from femur fracture → first steps back → gym PBs.
-    </p>
+<!-- Recovery → Gym PBs (full-viewport, fits without scrolling) -->
+<section id="recovery-video" class="jj-video-viewport" aria-label="Recovery to Gym PBs">
+  <div class="jj-video-frame">
+    <video
+      id="transformationVideo"
+      class="jj-video-contained"
+      playsinline
+      webkit-playsinline
+      muted
+      preload="metadata"
+      controls
+      poster="img/Femur fracture/crutches.png"
+      aria-label="Recovery from femur fracture to gym PBs"
+    >
+      <source src="img/Femur fracture/transformation.mp4" type="video/mp4">
+      Your browser doesn’t support HTML5 video.
+      <a href="img/Femur fracture/transformation.mp4">Download</a>.
+    </video>
   </div>
 </section>
+
 
     
     <div class="center-wrapper">
@@ -1409,46 +1404,37 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 <script>
-/* ===========================================================
-   Autoplay video on scroll (plays inline on mobile)
-   =========================================================== */
 (function () {
   const video = document.getElementById('transformationVideo');
   if (!video) return;
 
-  // Respect Reduced Motion
-  const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const prefersReduced = window.matchMedia &&
+                         window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Ensure muted + inline for mobile Safari
+  // Mobile autoplay requirements
   video.muted = true;
-  video.setAttribute('playsinline', '');
-  video.setAttribute('webkit-playsinline', '');
+  video.setAttribute('playsinline','');
+  video.setAttribute('webkit-playsinline','');
 
-  // Helper to safely play
-  function tryPlay() {
+  function tryPlay(){
     const p = video.play();
     if (p && typeof p.catch === 'function') {
-      p.catch(() => {
-        // If autoplay is blocked for any reason, leave controls visible so user can tap play.
-        video.setAttribute('controls', '');
-      });
+      p.catch(() => { video.setAttribute('controls',''); });
     }
   }
 
-  if (!('IntersectionObserver' in window) || prefersReduced) {
-    // Fallback: don’t auto-play for reduced motion or lack of IO
-    // (keeps controls so the user can play manually)
-    video.setAttribute('controls', '');
+  if (!('IntersectionObserver' in window) || prefersReduced){
+    video.setAttribute('controls','');
     return;
   }
 
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
+  // Start when ~60% of the video is in view, pause when out
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
       if (entry.target !== video) return;
       if (entry.isIntersecting && entry.intersectionRatio >= 0.6) {
         tryPlay();
       } else {
-        // Pause when scrolled away
         if (!video.paused) video.pause();
       }
     });
@@ -1456,14 +1442,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
   io.observe(video);
 
-  // Optional: pause when tab is hidden, resume when visible and still in view
+  // Pause when tab hidden; resume if still in view on return
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-      if (!video.paused) video.pause();
-    } else {
-      const rect = video.getBoundingClientRect();
+    if (document.hidden) { if (!video.paused) video.pause(); }
+    else {
+      const r = video.getBoundingClientRect();
       const vh = window.innerHeight || document.documentElement.clientHeight;
-      const visible = rect.top < vh * 0.4 ? (rect.bottom > vh * 0.4) : (rect.top < vh * 0.6);
+      const visible = r.top < vh*0.6 && r.bottom > vh*0.4;
       if (visible) tryPlay();
     }
   });
