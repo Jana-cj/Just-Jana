@@ -3315,6 +3315,50 @@ color: #7b7b7b;
   }
 }
 
+/* Keep the same white letterbox feel */
+#recovery-video.jj-video-viewport{
+  background:#fff;
+  padding-bottom:0;
+}
+
+/* Center the embed like your video */
+#recovery-video .jj-video-frame{
+  position:relative;
+  height:calc(100dvh - var(--nav-h, 0px));
+  display:flex; align-items:center; justify-content:center;
+  overflow:hidden; background:#fff;
+}
+
+/* Aspect-ratio wrapper (Reels are vertical 9:16) */
+#recovery-video .jj-ig-embed{
+  width:min(96vw, 540px);
+  aspect-ratio: 9 / 16;              /* fallback below if not supported */
+  display:flex; align-items:center; justify-content:center;
+}
+@supports not (aspect-ratio: 1 / 1){
+  #recovery-video .jj-ig-embed{ position:relative; padding-top:177.78%; width:min(96vw,540px); }
+  #recovery-video .jj-ig-embed > *{ position:absolute; inset:0; }
+}
+
+/* Instagram injects an iframe; make sure it fills the box */
+#recovery-video .jj-ig-embed .instagram-media,
+#recovery-video .jj-ig-embed iframe{
+  width:100% !important; height:100% !important;
+}
+
+/* Nice CTA button, floating at the bottom like your old controls */
+#recovery-video .jj-ig-btn{
+  position:absolute; left:50%; bottom:12px; transform:translateX(-50%);
+  background:linear-gradient(135deg,#f6ddbd,#f6cecc 50%,#f5bfdd);
+  color:#5e3c46; font:600 14px/1 Poppins, system-ui, sans-serif;
+  padding:.65rem .9rem; border-radius:14px; text-decoration:none;
+  box-shadow:0 8px 22px rgba(0,0,0,.10); border:1px solid rgba(0,0,0,.06);
+  backdrop-filter:saturate(1.2);
+}
+@media (max-width:560px){
+  #recovery-video .jj-ig-btn{ bottom:10px; font-size:13px; }
+}
+
 
 
 /* Show only on screens <=768px */
