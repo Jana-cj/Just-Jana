@@ -3286,6 +3286,35 @@ color: #7b7b7b;
   }
 }
 
+/* --- OVERRIDES: keep controls visible inside the frame --- */
+
+/* 1) Don’t reserve extra bottom padding on the section anymore */
+#recovery-video.jj-video-viewport{ padding-bottom: 0 !important; }
+
+/* 2) Nudge the frame height down a touch so the bar doesn’t crowd */
+#recovery-video .jj-video-frame{
+  height: calc(100dvh - var(--nav-h, 0px) - 16px) !important;
+}
+
+/* 3) Overlay the controls at the bottom of the video area */
+#recovery-video .jjv-controls{
+  top: auto !important;
+  bottom: 12px !important;
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-50%) !important;
+  max-width: min(96vw, 920px) !important; /* safety cap */
+  z-index: 3 !important;
+}
+
+/* Slightly tighter on small screens */
+@media (max-width: 560px){
+  #recovery-video .jjv-controls{ bottom: 10px !important; }
+  #recovery-video .jj-video-frame{
+    height: calc(100dvh - var(--nav-h, 0px) - 10px) !important;
+  }
+}
+
 
 
 /* Show only on screens <=768px */
