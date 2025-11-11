@@ -3058,20 +3058,41 @@ color: #7b7b7b;
 
 
 
-/* Minimal “Instagram white” look */
-.ig-card{max-width:680px;margin:24px auto;border:1px solid #e5e7eb;border-radius:12px;background:#fff;font-family:system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif;color:#111}
-.ig-head{display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid #eef0f2}
-.ig-avatar{width:36px;height:36px;border-radius:50%;object-fit:cover;background:#f2f2f2}
-.ig-meta{flex:1;min-width:0}
-.ig-name{font-size:14px}
-.ig-sub{display:block;font-size:12px;color:#6b7280}
-.ig-btn{font-size:12px;padding:6px 10px;border-radius:8px;border:1px solid #d1d5db;text-decoration:none;color:#111;background:#fff}
-.ig-media{position:relative;display:block;overflow:hidden}
-.ig-thumb{display:block;width:100%;height:auto}
-.ig-play{position:absolute;inset:auto 50% 12px 50%;transform:translateX(-50%);font-size:13px;padding:8px 10px;border-radius:999px;background:#fff;border:1px solid #e5e7eb}
-.ig-foot{padding:10px 14px 14px}
-.ig-more{display:inline-block;font-size:13px;color:#2563eb;text-decoration:none;margin-bottom:8px}
-.ig-caption{font-size:14px;line-height:1.4;color:#111}
+
+.jj-reel-intro{
+  max-width: 56ch;
+  margin: 24px auto 10px;
+  padding: .6rem .9rem;
+  text-align: center;
+  font: 500 16px/1.5 "Poppins", system-ui, sans-serif;
+  color: #5e3c46;
+  background: linear-gradient(135deg,#f6ddbd22,#f6cecc22,#f5bfdd22);
+  border: 1px solid rgba(0,0,0,.05);
+  border-radius: 14px;
+}
+@media (max-width:560px){
+  .jj-reel-intro{ font-size: 15px; margin-top: 16px; }
+}
+
+.jj-ig-embed{
+  --jj-ig-width: 640px;     /* set this to your existing component width */
+  margin: 0 auto;
+  max-width: var(--jj-ig-width);
+}
+
+/* Remove Instagram’s default outer margins so it snaps to your layout */
+.jj-ig-embed .instagram-media{
+  margin: 0 !important;
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+/* Optional fallback link styling */
+.jj-ig-fallback{
+  display:inline-block; padding:10px 14px; border:1px solid #e5e7eb; border-radius:12px;
+  text-decoration:none; color:#111827; background:#fff;
+  box-shadow:0 6px 18px rgba(0,0,0,.06);
+}
 
 
 
