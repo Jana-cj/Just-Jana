@@ -602,26 +602,34 @@
 </p>
 
 
-  <!-- Put this ONCE near the end of <body> (or in your global layout) -->
-<script async src="https://www.instagram.com/embed.js"></script>
+  <!-- Instagram-look reel card -->
+<article class="ig-card" 
+         data-url="https://www.instagram.com/reel/DQx8yzKEjHz/"
+         data-username="jana.cj" 
+         data-name="jana.cj"
+         data-avatar="/img/jana-avatar.jpg" 
+         data-caption="Thought I’d put together a lil celebratory reel 🥳✨ A couple years ago, life threw me a wild curveball and I fractured my femur…">
+  <header class="ig-head">
+    <img class="ig-avatar" src="/img/jana-avatar.jpg" alt="" loading="lazy">
+    <div class="ig-meta">
+      <strong class="ig-name">jana.cj</strong>
+      <span class="ig-sub">letterboxd · Original audio</span>
+    </div>
+    <a class="ig-btn" target="_blank" rel="noopener">View profile</a>
+  </header>
 
-<!-- Reel embed block (use your shortcode or the full URL) -->
-<section class="jj-ig-embed">
-  <blockquote
-    class="instagram-media"
-    data-instgrm-permalink="https://www.instagram.com/p/DQx8yzKEjHz/"
-    data-instgrm-version="14"
-    data-instgrm-captioned="false"
-    data-instgrm-theme="light">
-  </blockquote>
+  <a class="ig-media" target="_blank" rel="noopener">
+    <!-- Use your reel thumbnail here -->
+    <img class="ig-thumb" src="img/Femur fracture/femur fracture.jpg" alt="Instagram reel thumbnail" loading="lazy">
+    <span class="ig-play">Watch on Instagram</span>
+  </a>
 
-  <!-- Fallback if the script is blocked -->
-  <noscript>
-    <a class="jj-ig-fallback" href="https://www.instagram.com/p/DQx8yzKEjHz/" target="_blank" rel="noopener">
-      View this reel on Instagram
-    </a>
-  </noscript>
-</section>
+  <footer class="ig-foot">
+    <a class="ig-more" target="_blank" rel="noopener">View more on Instagram</a>
+    <div class="ig-caption"></div>
+  </footer>
+</article>
+
 
 
 
@@ -1438,6 +1446,26 @@ document.addEventListener('DOMContentLoaded', function () {
 })();
 </script>
 
+<script>
+  // Tiny initializer: fills links, truncates caption to N chars
+document.querySelectorAll('.ig-card').forEach(card=>{
+  const url   = card.dataset.url;
+  const name  = card.dataset.name || card.dataset.username;
+  const user  = card.dataset.username;
+  const cap   = card.dataset.caption || '';
+  const N = 140; // character limit for preview
+
+  card.querySelector('.ig-btn').href = `https://www.instagram.com/${user}/`;
+  const media = card.querySelector('.ig-media');
+  media.href = url;
+
+  card.querySelector('.ig-more').href = url;
+
+  const out = cap.length > N ? cap.slice(0, N).trim() + '…' : cap;
+  card.querySelector('.ig-caption').textContent = out;
+});
+
+</script>
 
   </body>
 </html>
