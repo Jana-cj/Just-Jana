@@ -3107,11 +3107,17 @@ color: #7b7b7b;
 #recovery-video .jj-ig-embed{
   position: absolute;
   top: 50%; left: 50%;
-  height: 100%;
-  aspect-ratio: 9 / 16;
-  width: auto;               /* derived from aspect-ratio */
-  transform: translate(-50%, -50%);
+
+  /* Fill width of the square, compute height from 9:16 ratio */
+  width: 100%;
+  height: calc(100% * 16 / 9);  /* = 177.78% of the square */
+
+  /* Center and slightly overscan to hide IG chrome */
+  transform: translate(-50%, -50%) scale(var(--ig-overscan, 1.06));
+  transform-origin: center;
+
   border: 0;
+  pointer-events: auto;
 }
 
 /* CTA button (Just-Jana gradient) */
