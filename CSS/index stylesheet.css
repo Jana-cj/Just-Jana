@@ -3142,6 +3142,21 @@ color: #7b7b7b;
   #recovery-video .jj-ig-btn{ font-size: 13px; }
 }
 
+.jj-reel-intro{
+  max-width: 56ch;
+  margin: 24px auto 10px;
+  padding: .6rem .9rem;
+  text-align: center;
+  font: 500 16px/1.5 "Poppins", system-ui, sans-serif;
+  color: #5e3c46;
+  background: linear-gradient(135deg,#f6ddbd22,#f6cecc22,#f5bfdd22);
+  border: 1px solid rgba(0,0,0,.05);
+  border-radius: 14px;
+}
+@media (max-width:560px){
+  .jj-reel-intro{ font-size: 15px; margin-top: 16px; }
+}
+
 
 
 /* Show only on screens <=768px */
