@@ -599,33 +599,36 @@
 
   <section id="recovery-video" class="jj-video-viewport" aria-label="Recovery to Gym PBs">
   <div class="jj-video-frame">
+    <!-- Square stage (keeps layout perfectly square and responsive) -->
+    <div class="jj-ig-stage jj-ig-square">
+      <!-- Your square thumbnail (1080×1080 recommended) -->
+      <img
+        class="jj-ig-thumb"
+        src="/img/reels/recovery-square-1080.jpg"
+        alt="Recovery reel thumbnail"
+        decoding="async"
+        fetchpriority="low"
+      >
 
-    <!-- Responsive wrapper keeps a 9:16 ratio (good for Reels) -->
-    <div class="jj-ig-embed">
-      <blockquote
-        class="instagram-media"
-        data-instgrm-permalink="https://www.instagram.com/reel/DQx8yzKEjHz/"
-        data-instgrm-version="14"
-        data-instgrm-captioned
-        style="background:#fff; border:0; margin:0; padding:0;">
-      </blockquote>
+      <!-- Instagram Reel embed (inline playback) -->
+      <iframe
+        class="jj-ig-embed"
+        src="https://www.instagram.com/reel/DQx8yzKEjHz/embed"
+        title="Instagram Reel"
+        allowfullscreen
+        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+        frameborder="0"
+        scrolling="no"
+      ></iframe>
     </div>
 
-    <!-- Optional: a clear “Watch on Instagram” button -->
+    <!-- Just-Jana themed CTA -->
     <a class="jj-ig-btn" href="https://www.instagram.com/reel/DQx8yzKEjHz/" target="_blank" rel="noopener">
       Watch on Instagram ↗
     </a>
   </div>
 </section>
 
-<!-- Load once per page (place near the end of <body>) -->
-<script async src="https://www.instagram.com/embed.js"></script>
-<script>
-  // If this block gets injected dynamically, call process(); for static HTML this is safe too.
-  window.addEventListener('DOMContentLoaded', () => {
-    if (window.instgrm?.Embeds?.process) instgrm.Embeds.process();
-  });
-</script>
 
   <hr class="my-4" style="opacity:0.2;">
 <h3 class="mt-4" style="font-family:'Playfair Display', serif; color:#5e3c46;">Continue the Journey</h3>
@@ -1410,259 +1413,33 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 </script>
-<script>
-(function(){
-  const video   = document.getElementById('transformationVideo');
-  const wrap    = document.querySelector('#recovery-video .jj-video-frame');
-  const bar     = document.querySelector('#recovery-video .jjv-controls');
-  if(!video || !wrap || !bar) return;
-
-  // Buttons & fields
-  const btnPlay   = bar.querySelector('.jjv-play');
-  const btnMute   = bar.querySelector('.jjv-mute');
-  const btnReplay = bar.querySelector('.jjv-replay');
-  const rng       = bar.querySelector('.jjv-range');
-  const fill      = bar.querySelector('.jjv-fill');
-  const curEl     = bar.querySelector('.jjv-current');
-  const durEl     = bar.querySelector('.jjv-duration');
-
-  // Ensure autoplay capability for IO logic used elsewhere
-  video.muted = true;
-  video.setAttribute('playsinline','');
-  video.setAttribute('webkit-playsinline','');
-
-  const fmt = s => {
-    s = Math.max(0, Math.floor(s||0));
-    const m = Math.floor(s/60), r = s%60;
-    return `${m}:${r.toString().padStart(2,'0')}`;
-  };
-
-  // Duration once known
-  function setDuration(){
-    if (Number.isFinite(video.duration)) durEl.textContent = fmt(video.duration);
-  }
-  if (video.readyState >= 1) setDuration();
-  video.addEventListener('loadedmetadata', setDuration);
-
-  // Update progress UI
-  function updateProgress(){
-    if (!Number.isFinite(video.duration)) return;
-    const ratio = video.currentTime / video.duration;
-    const val   = Math.round(ratio * 1000);
-    rng.value = String(val);
-    fill.style.width = (ratio * 100).toFixed(2) + '%';
-    curEl.textContent = fmt(video.currentTime);
-    rng.setAttribute('aria-valuenow', String(val));
-  }
-  video.addEventListener('timeupdate', updateProgress);
-  video.addEventListener('seeked', updateProgress);
-
-  // Seek interactions
-  let seeking = false;
-  rng.addEventListener('input', () => {
-    if (!Number.isFinite(video.duration)) return;
-    const ratio = rng.value / 1000;
-    video.currentTime = ratio * video.duration;
-    updateProgress();
-    showControlsSticky(); // keep visible while scrubbing
-  });
-  rng.addEventListener('pointerdown', () => { seeking = true; showControlsSticky(); });
-  window.addEventListener('pointerup', () => { seeking = false; unstickLater(); });
-
-  // Play/pause
-  function reflectPlayState(){
-    btnPlay.classList.toggle('is-playing', !video.paused && !video.ended);
-    btnPlay.classList.toggle('is-paused',  video.paused || video.ended);
-  }
-  btnPlay.addEventListener('click', () => {
-    if (video.paused) video.play().catch(()=>{});
-    else video.pause();
-  });
-  video.addEventListener('play',  reflectPlayState);
-  video.addEventListener('pause', reflectPlayState);
-  video.addEventListener('ended', reflectPlayState);
-
-  // Mute
-  function reflectMute(){ btnMute.classList.toggle('is-muted', video.muted); }
-  btnMute.addEventListener('click', () => { video.muted = !video.muted; reflectMute(); });
-  reflectMute();
-
-  // Replay
-  btnReplay.addEventListener('click', () => { video.currentTime = 0; video.play().catch(()=>{}); });
-
-  // ---------- Auto-show / auto-hide logic ----------
-  let hideTimer = null, sticky = false, pointerInside = false;
-
-  function showControls(){
-    bar.classList.remove('is-hidden');
-  }
-  function hideControls(){
-    if (sticky || seeking) return;
-    // keep visible if paused to aid discoverability
-    if (video.paused) return;
-    if (!pointerInside) bar.classList.add('is-hidden');
-  }
-  function showControlsSticky(){
-    sticky = true;
-    bar.classList.remove('is-hidden');
-    bar.classList.add('is-sticky');
-  }
-  function unstickLater(delay=1200){
-    // remove sticky after a short grace period, then schedule hide
-    clearTimeout(hideTimer);
-    setTimeout(()=>{ sticky = false; bar.classList.remove('is-sticky'); scheduleHide(); }, delay);
-  }
-  function scheduleHide(ms=2500){
-    clearTimeout(hideTimer);
-    hideTimer = setTimeout(hideControls, ms);
-  }
-
-  // Reveal on any movement/tap/keys over the video area
-  const nudge = () => { showControls(); scheduleHide(); };
-  wrap.addEventListener('mousemove', nudge, {passive:true});
-  wrap.addEventListener('pointermove', nudge, {passive:true});
-  wrap.addEventListener('touchstart', nudge, {passive:true});
-  wrap.addEventListener('click', nudge, {passive:true}); // single tap on mobile also reveals
-
-  // Track hover/pointer presence
-  wrap.addEventListener('pointerenter', ()=>{ pointerInside = true; showControls(); });
-  wrap.addEventListener('pointerleave', ()=>{ pointerInside = false; scheduleHide(400); });
-
-  // Keep controls visible when any control is focused (keyboard users)
-  bar.addEventListener('focusin', showControlsSticky);
-  bar.addEventListener('focusout', () => unstickLater());
-
-  // Hide when playing starts (after brief peek)
-  video.addEventListener('play', () => { reflectPlayState(); scheduleHide(1600); });
-  video.addEventListener('pause', () => { showControlsSticky(); });
-
-  // If video not intersecting (your IO may pause it), keep controls hidden
-  const io = ('IntersectionObserver' in window) ? new IntersectionObserver((entries)=>{
-    const e = entries[0];
-    if (!e) return;
-    if (!e.isIntersecting){ bar.classList.add('is-hidden'); }
-    else { nudge(); }
-  }, {threshold: .2}) : null;
-  io && io.observe(video);
-
-  // Initialize UI
-  reflectPlayState();
-  updateProgress();
-  showControls(); scheduleHide(1800);
-})();
-</script>
 
 <script>
+/* ----------------------------------------------------------
+   Just Jana — Instagram Reel square embed
+   - Removes the poster once the iframe loads
+   - If the embed fails to load in 6s, keeps the poster
+   ---------------------------------------------------------- */
 (function(){
-  const video   = document.getElementById('transformationVideo');
-  const section = document.getElementById('recovery-video');          // NEW
-  const wrap    = document.querySelector('#recovery-video .jj-video-frame');
-  const bar     = document.querySelector('#recovery-video .jjv-controls');
-  if(!video || !wrap || !bar || !section) return;
+  const stage  = document.querySelector('#recovery-video .jj-ig-stage');
+  const frame  = stage?.querySelector('.jj-ig-embed');
+  const thumb  = stage?.querySelector('.jj-ig-thumb');
+  if(!stage || !frame || !thumb) return;
 
-  /* ---------------- width just-over-video on desktop ---------------- */
-  function sizeControls(){
-    // current rendered video width:
-    const vw   = window.innerWidth || document.documentElement.clientWidth;
-    const rect = video.getBoundingClientRect();
-    const vidW = Math.max(0, rect.width || 0);
-
-    // Desktop: a touch wider than the video (+120px), capped by viewport
-    // Mobile/tablet: keep near-viewport but not edge-to-edge
-    const isDesktop = vw >= 1024;
-    const targetMax = isDesktop ? Math.min(vidW + 120, vw - 64) : Math.min(vw * 0.96, vidW + 40);
-
-    bar.style.maxWidth = targetMax + 'px';
-  }
-  sizeControls();
-  addEventListener('resize', sizeControls, {passive:true});
-  // Recompute after metadata/layout shifts too:
-  video.addEventListener('loadedmetadata', sizeControls);
-  video.addEventListener('loadeddata', sizeControls);
-
-  /* ---------------- auto-hide timing: 2 seconds ---------------- */
-  let hideTimer = null, sticky = false, seeking = false, pointerInside = false;
-
-  function showControls(){
-    bar.classList.remove('is-hidden');
-  }
-  function hideControls(){
-    if (sticky || seeking) return;
-    if (video.paused) return;          // keep visible when paused
-    if (!pointerInside) bar.classList.add('is-hidden');
-  }
-  function scheduleHide(ms=2000){      // CHANGED: 2000ms
-    clearTimeout(hideTimer);
-    hideTimer = setTimeout(hideControls, ms);
-  }
-  function showControlsSticky(){
-    sticky = true;
-    bar.classList.remove('is-hidden');
-    bar.classList.add('is-sticky');
-  }
-  function unstickLater(delay=900){
-    clearTimeout(hideTimer);
-    setTimeout(()=>{ sticky = false; bar.classList.remove('is-sticky'); scheduleHide(2000); }, delay);
+  let cleaned = false;
+  function removeThumb(){
+    if (cleaned) return;
+    cleaned = true;
+    // Fade the thumbnail out for a nicer swap
+    thumb.style.opacity = '0';
+    setTimeout(() => thumb.remove(), 220);
   }
 
-  // keep your existing listeners; just ensure they call scheduleHide(2000)
-  const nudge = () => { showControls(); scheduleHide(2000); };
-  wrap.addEventListener('mousemove', nudge, {passive:true});
-  wrap.addEventListener('pointermove', nudge, {passive:true});
-  wrap.addEventListener('touchstart', nudge, {passive:true});
-  wrap.addEventListener('click', nudge, {passive:true});
+  // Remove poster when the embed finishes loading
+  frame.addEventListener('load', removeThumb, { once: true });
 
-  wrap.addEventListener('pointerenter', ()=>{ pointerInside = true; showControls(); });
-  wrap.addEventListener('pointerleave', ()=>{ pointerInside = false; scheduleHide(400); });
-
-  bar.addEventListener('focusin', showControlsSticky);
-  bar.addEventListener('focusout', () => unstickLater());
-
-  // reflect play/pause with your existing code; ensure on play we hide after 2s
-  video.addEventListener('play',  () => scheduleHide(2000));
-  video.addEventListener('pause', () => showControlsSticky());
-
-  /* ---------------- autoplay/pause by section visibility ---------------- */
-  function tryPlay(){ video.play().catch(()=>{}); }
-
-  if ('IntersectionObserver' in window){
-    const io = new IntersectionObserver((entries)=>{
-      const e = entries[0];
-      if (!e) return;
-
-      // when at least half the section is on-screen, play; otherwise pause
-      if (e.isIntersecting && e.intersectionRatio >= 0.5){
-        tryPlay();                     // auto-play when arriving in area
-        scheduleHide(2000);            // let controls peek then vanish
-      } else {
-        if (!video.paused) video.pause();
-      }
-    }, { root:null, threshold:[0, .5, 1] });
-
-    io.observe(section);
-  }
-
-  // pause when tab is hidden, resume if still in view on return
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden){
-      if (!video.paused) video.pause();
-    } else {
-      const r  = section.getBoundingClientRect();
-      const vh = window.innerHeight || document.documentElement.clientHeight;
-      const inView = r.top < vh*0.5 && r.bottom > vh*0.5; // roughly half in view
-      if (inView) tryPlay();
-    }
-  });
-
-  /* ----------- seeking hooks (if not already present in your file) ----------- */
-  const rng = bar.querySelector('.jjv-range');
-  if (rng){
-    rng.addEventListener('pointerdown', () => { seeking = true; showControlsSticky(); });
-    addEventListener('pointerup', () => { if (seeking){ seeking = false; unstickLater(); } }, {passive:true});
-  }
-
-  // initial peek then hide
-  showControls(); scheduleHide(2000);
+  // Safety: ifload doesn't fire (ad-block/private-mode), fallback after 6s
+  setTimeout(removeThumb, 6000);
 })();
 </script>
 

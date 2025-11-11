@@ -3056,307 +3056,84 @@ color: #7b7b7b;
   color: #4b2e2e;
 }
 
-/* ============================
-   Just Jana – Video Section CSS
-   Markup target:
-   #recovery-video.jj-video-viewport
-     .jj-video-frame
-       video.jj-video-contained
-       .jjv-controls …
-   ============================ */
 
-/* --- Viewport wrapper (gives white letterbox and reserves room for detached bar) --- */
+/* ====== Section scaffold (matches your site’s spacing) ====== */
 #recovery-video.jj-video-viewport{
   position: relative;
   width: 100%;
-  background: #fff;                     /* white letterbox to match page */
   margin: 0;
-  padding: 0;
-  /* space below for the detached controls bar */
-  padding-bottom: clamp(64px, 7vh, 96px);
+  padding: 0 0 24px 0;    /* room for CTA button’s shadow */
+  background: #fff;
 }
-
-/* --- Frame: centers the video, creates positioning context for the bar --- */
 #recovery-video .jj-video-frame{
-  position: relative;                   /* anchor for absolute controls */
-  height: calc(100dvh - var(--nav-h, 0px));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  background: #fff;                     /* keep white behind video */
-}
-@supports not (height: 100dvh){
-  #recovery-video .jj-video-frame{ height: calc(100vh - var(--nav-h, 0px)); }
+  position: relative;
+  display: grid;
+  place-items: center;
+  background: #fff;
 }
 
-/* --- Video: keep aspect ratio, never overflow --- */
-#recovery-video .jj-video-contained{
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  display: block;
-  object-fit: contain;
+/* ====== Square stage (prevents squashing) ======
+   - The outer box is always square (1:1)
+   - Inside, the Reel keeps its native 9:16 without distortion
+   - We crop (letterbox) horizontally so the frame stays square
+*/
+#recovery-video .jj-ig-stage{
+  position: relative;
+  width: min(96vw, 540px);
+  /* choose one shape for the stage: square */
+}
+#recovery-video .jj-ig-stage.jj-ig-square{
+  aspect-ratio: 1 / 1;       /* perfect square */
+  overflow: hidden;          /* hides horizontal letterbox */
   border-radius: 12px;
-  background: #000;                     /* shows through where letterboxed */
+  background: #000;          /* shows behind the Reel */
   box-shadow: 0 6px 18px rgba(0,0,0,.08);
   border: 1px solid rgba(0,0,0,.04);
 }
 
-/* ============================
-   Detached Controls (below video)
-   ============================ */
-#recovery-video .jjv-controls{
+/* Poster thumbnail (square) — sits under the iframe until loaded */
+#recovery-video .jj-ig-thumb{
   position: absolute;
-  top: 100%;                            /* sit directly under the frame */
-  left: 50%;
-  transform: translate(-50%, 12px);
-  right: auto;                          /* explicitly unset opposite edges */
-  bottom: auto;
-
-  display: flex;
-  align-items: center;
-  gap: .75rem;
-
-  /* style */
-  background: rgba(255,255,255,.98);
-  border: 1px solid rgba(0,0,0,.06);
-  box-shadow: 0 8px 22px rgba(0,0,0,.10);
-  border-radius: 14px;
-  padding: .75rem .9rem;
-
-  /* sizing – JS will also cap with maxWidth; keep a hard cap as safety */
-  width: auto;
-  max-width: 96vw;
-
-  /* auto-hide transitions (JS toggles classes) */
-  opacity: 1;
-  transform-origin: 50% 0;
-  transition: opacity .25s ease, transform .25s ease;
-  z-index: 3;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;         /* your square art won’t stretch */
+  transition: opacity .2s ease;
 }
 
-/* auto-hide state set by JS */
-#recovery-video .jjv-controls.is-hidden{
-  opacity: 0;
-  transform: translate(-50%, 20px);
-  pointer-events: none;
-}
-/* keep visible while sticky/focused/seeking */
-#recovery-video .jjv-controls.is-sticky{
-  opacity: 1;
-  transform: translate(-50%, 12px);
-  pointer-events: auto;
-}
-
-/* --- Buttons (play, mute, replay) --- */
-#recovery-video .jjv-btn{
-  --jj-grad: linear-gradient(135deg,#f6ddbd,#f6cecc 50%,#f5bfdd);
-  --jj-ink: #5e3c46;
-
-  width: 40px; height: 40px;
+/* The Reel iframe:
+   - Keep full height of the square
+   - Use aspect-ratio to compute width (9:16)
+   - Center it; side areas will crop cleanly */
+#recovery-video .jj-ig-embed{
+  position: absolute;
+  top: 50%; left: 50%;
+  height: 100%;
+  aspect-ratio: 9 / 16;
+  width: auto;               /* derived from aspect-ratio */
+  transform: translate(-50%, -50%);
   border: 0;
-  border-radius: 999px;
-  background: var(--jj-grad);
-  box-shadow: 0 6px 18px rgba(0,0,0,.08);
-  display: inline-grid;
-  place-items: center;
-  cursor: pointer;
 }
-#recovery-video .jjv-btn:focus-visible{
+
+/* CTA button (Just-Jana gradient) */
+#recovery-video .jj-ig-btn{
+  margin-top: 12px;
+  background: linear-gradient(135deg,#f6ddbd,#f6cecc 50%,#f5bfdd);
+  color:#5e3c46; text-decoration:none;
+  font: 600 14px/1 Poppins, system-ui, sans-serif;
+  padding:.65rem .9rem;
+  border-radius:14px;
+  display:inline-block;
+  border:1px solid rgba(0,0,0,.06);
+  box-shadow:0 8px 22px rgba(0,0,0,.10);
+}
+#recovery-video .jj-ig-btn:focus-visible{
   outline: 2px solid #b38398;
   outline-offset: 2px;
 }
 
-/* Icon masks (compact, themeable) */
-#recovery-video .jjv-btn::before{
-  content:"";
-  display:block;
-  width:14px; height:14px;
-  background: var(--jj-ink);
-  -webkit-mask-size: contain; mask-size: contain;
-  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
-  -webkit-mask-position: center; mask-position: center;
-}
-/* Play/Pause */
-#recovery-video .jjv-play.is-paused::before{
-  -webkit-mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M18 12v40l34-20z"/></svg>');
-          mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M18 12v40l34-20z"/></svg>');
-}
-#recovery-video .jjv-play.is-playing::before{
-  -webkit-mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M18 12h10v40H18zM36 12h10v40H36z"/></svg>');
-          mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M18 12h10v40H18zM36 12h10v40H36z"/></svg>');
-}
-/* Mute */
-#recovery-video .jjv-mute.is-muted::before{
-  -webkit-mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M28 18L18 26H10v12h8l10 8V18zm20.2 2.2l-4.2 4.2 4.8 4.8-4.8 4.8 4.2 4.2 4.8-4.8 4.8 4.8 4.2-4.2-4.8-4.8 4.8-4.8-4.2-4.2-4.8 4.8-4.8-4.8z"/></svg>');
-          mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M28 18L18 26H10v12h8l10 8V18zm20.2 2.2l-4.2 4.2 4.8 4.8-4.8 4.8 4.2 4.2 4.8-4.8 4.8 4.8 4.2-4.2-4.8-4.8 4.8-4.8-4.2-4.2-4.8 4.8-4.8-4.8z"/></svg>');
-}
-#recovery-video .jjv-mute:not(.is-muted)::before{
-  -webkit-mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M28 18L18 26H10v12h8l10 8V18zm18 2a18 18 0 010 24l-3.5-3.5a13 13 0 000-17L46 20z"/></svg>');
-          mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M28 18L18 26H10v12h8l10 8V18zm18 2a18 18 0 010 24l-3.5-3.5a13 13 0 000-17L46 20z"/></svg>');
-}
-/* Replay */
-#recovery-video .jjv-replay::before{
-  -webkit-mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M12 18v12h12l-5-5a17 17 0 112 25l-4 4A22 22 0 1030 13l5 5H12z"/></svg>');
-          mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><path d="M12 18v12h12l-5-5a17 17 0 112 25l-4 4A22 22 0 1030 13l5 5H12z"/></svg>');
-}
-
-/* --- Time & Scrub --- */
-#recovery-video .jjv-time{
-  display: flex;
-  align-items: center;
-  gap: .6rem;
-  flex: 1;
-  min-width: 0;
-  color: #5e3c46;
-  font: 600 14px/1.2 Poppins, system-ui, sans-serif;
-}
-#recovery-video .jjv-current,
-#recovery-video .jjv-duration{
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
-
-/* Track + fill */
-#recovery-video .jjv-scrub{
-  position: relative;
-  flex: 1;
-  height: 28px;
-  display: flex;
-  align-items: center;
-}
-#recovery-video .jjv-track{
-  position: absolute;
-  left: 0; right: 0; height: 6px;
-  border-radius: 999px;
-  background: rgba(0,0,0,.06);
-  overflow: hidden;
-}
-#recovery-video .jjv-fill{
-  height: 100%; width: 0%;
-  background: linear-gradient(90deg,#f6ddbd,#f6cecc,#f5bfdd);
-  transition: width .08s linear;
-}
-
-/* Range sits on top, transparent */
-#recovery-video .jjv-range{
-  -webkit-appearance: none; appearance: none;
-  width: 100%; height: 28px; background: transparent;
-  margin: 0; padding: 0;
-}
-#recovery-video .jjv-range:focus{ outline: none; }
-#recovery-video .jjv-range::-webkit-slider-thumb{
-  -webkit-appearance: none; appearance: none;
-  width: 16px; height: 16px; border-radius: 50%;
-  background: #5e3c46; border: 2px solid #fff;
-  box-shadow: 0 2px 8px rgba(0,0,0,.15);
-  margin-top: -5px;
-}
-#recovery-video .jjv-range::-moz-range-thumb{
-  width: 16px; height: 16px; border-radius: 50%;
-  background: #5e3c46; border: 2px solid #fff;
-}
-
-/* Right cluster keeps spacing tidy */
-#recovery-video .jjv-right{
-  display: inline-flex;
-  gap: .5rem;
-}
-
-/* --- Small screens tweaks --- */
-@media (max-width: 560px){
-  #recovery-video .jjv-controls{ gap: .6rem; padding: .6rem .75rem; }
-  #recovery-video .jjv-btn{ width: 36px; height: 36px; }
-  #recovery-video .jjv-time{ font-size: .92rem; gap: .5rem; }
-}
-
-/* --- Desktop tighten a touch --- */
-@media (min-width: 1024px){
-  #recovery-video .jjv-controls{ gap: .6rem; padding: .6rem .8rem; }
-}
-
-/* --- Reduced motion: skip fades/shifts --- */
-@media (prefers-reduced-motion: reduce){
-  #recovery-video .jjv-controls,
-  #recovery-video .jjv-controls.is-hidden{
-    transition: none;
-    transform: translate(-50%, 12px);
-  }
-}
-
-/* --- OVERRIDES: keep controls visible inside the frame --- */
-
-/* 1) Don’t reserve extra bottom padding on the section anymore */
-#recovery-video.jj-video-viewport{ padding-bottom: 0 !important; }
-
-/* 2) Nudge the frame height down a touch so the bar doesn’t crowd */
-#recovery-video .jj-video-frame{
-  height: calc(100dvh - var(--nav-h, 0px) - 16px) !important;
-}
-
-/* 3) Overlay the controls at the bottom of the video area */
-#recovery-video .jjv-controls{
-  top: auto !important;
-  bottom: 12px !important;
-  left: 50% !important;
-  right: auto !important;
-  transform: translateX(-50%) !important;
-  max-width: min(96vw, 920px) !important; /* safety cap */
-  z-index: 3 !important;
-}
-
-/* Slightly tighter on small screens */
-@media (max-width: 560px){
-  #recovery-video .jjv-controls{ bottom: 10px !important; }
-  #recovery-video .jj-video-frame{
-    height: calc(100dvh - var(--nav-h, 0px) - 10px) !important;
-  }
-}
-
-/* Keep the same white letterbox feel */
-#recovery-video.jj-video-viewport{
-  background:#fff;
-  padding-bottom:0;
-}
-
-/* Center the embed like your video */
-#recovery-video .jj-video-frame{
-  position:relative;
-  height:calc(100dvh - var(--nav-h, 0px));
-  display:flex; align-items:center; justify-content:center;
-  overflow:hidden; background:#fff;
-}
-
-/* Aspect-ratio wrapper (Reels are vertical 9:16) */
-#recovery-video .jj-ig-embed{
-  width:min(96vw, 540px);
-  aspect-ratio: 9 / 16;              /* fallback below if not supported */
-  display:flex; align-items:center; justify-content:center;
-}
-@supports not (aspect-ratio: 1 / 1){
-  #recovery-video .jj-ig-embed{ position:relative; padding-top:177.78%; width:min(96vw,540px); }
-  #recovery-video .jj-ig-embed > *{ position:absolute; inset:0; }
-}
-
-/* Instagram injects an iframe; make sure it fills the box */
-#recovery-video .jj-ig-embed .instagram-media,
-#recovery-video .jj-ig-embed iframe{
-  width:100% !important; height:100% !important;
-}
-
-/* Nice CTA button, floating at the bottom like your old controls */
-#recovery-video .jj-ig-btn{
-  position:absolute; left:50%; bottom:12px; transform:translateX(-50%);
-  background:linear-gradient(135deg,#f6ddbd,#f6cecc 50%,#f5bfdd);
-  color:#5e3c46; font:600 14px/1 Poppins, system-ui, sans-serif;
-  padding:.65rem .9rem; border-radius:14px; text-decoration:none;
-  box-shadow:0 8px 22px rgba(0,0,0,.10); border:1px solid rgba(0,0,0,.06);
-  backdrop-filter:saturate(1.2);
-}
+/* Small tweaks for narrow screens */
 @media (max-width:560px){
-  #recovery-video .jj-ig-btn{ bottom:10px; font-size:13px; }
+  #recovery-video .jj-ig-btn{ font-size: 13px; }
 }
 
 
