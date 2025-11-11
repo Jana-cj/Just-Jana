@@ -3057,217 +3057,25 @@ color: #7b7b7b;
 }
 
 
-/* ====== Section scaffold (matches your site’s spacing) ====== */
-#recovery-video.jj-video-viewport{
-  position: relative;
-  width: 100%;
-  margin: 0;
-  padding: 0 0 24px 0;    /* room for CTA button’s shadow */
-  background: #fff;
-}
-#recovery-video .jj-video-frame{
-  position: relative;
-  display: grid;
-  place-items: center;
-  background: #fff;
+.jj-ig-embed{
+  --jj-ig-width: 640px;     /* set this to your existing component width */
+  margin: 0 auto;
+  max-width: var(--jj-ig-width);
 }
 
-/* ====== Square stage (prevents squashing) ======
-   - The outer box is always square (1:1)
-   - Inside, the Reel keeps its native 9:16 without distortion
-   - We crop (letterbox) horizontally so the frame stays square
-*/
-#recovery-video .jj-ig-stage{
-  position: relative;
-  width: min(96vw, 540px);
-  /* choose one shape for the stage: square */
-}
-#recovery-video .jj-ig-stage.jj-ig-square{
-  aspect-ratio: 1 / 1;       /* perfect square */
-  overflow: hidden;          /* hides horizontal letterbox */
-  border-radius: 12px;
-  background: #000;          /* shows behind the Reel */
-  box-shadow: 0 6px 18px rgba(0,0,0,.08);
-  border: 1px solid rgba(0,0,0,.04);
+/* Remove Instagram’s default outer margins so it snaps to your layout */
+.jj-ig-embed .instagram-media{
+  margin: 0 !important;
+  max-width: 100% !important;
+  width: 100% !important;
 }
 
-/* Poster thumbnail (square) — sits under the iframe until loaded */
-#recovery-video .jj-ig-thumb{
-  position: absolute;
-  inset: 0;
-  width: 100%; height: 100%;
-  object-fit: cover;         /* your square art won’t stretch */
-  transition: opacity .2s ease;
+/* Optional fallback link styling */
+.jj-ig-fallback{
+  display:inline-block; padding:10px 14px; border:1px solid #e5e7eb; border-radius:12px;
+  text-decoration:none; color:#111827; background:#fff;
+  box-shadow:0 6px 18px rgba(0,0,0,.06);
 }
-
-/* The Reel iframe:
-   - Keep full height of the square
-   - Use aspect-ratio to compute width (9:16)
-   - Center it; side areas will crop cleanly */
-#recovery-video .jj-ig-embed{
-  position: absolute;
-  top: 50%; left: 50%;
-
-  /* Fill width of the square, compute height from 9:16 ratio */
-  width: 100%;
-  height: calc(100% * 16 / 9);  /* = 177.78% of the square */
-
-  /* Center and slightly overscan to hide IG chrome */
-  transform: translate(-50%, -50%) scale(var(--ig-overscan, 1.06));
-  transform-origin: center;
-
-  border: 0;
-  pointer-events: auto;
-}
-
-/* CTA button (Just-Jana gradient) */
-#recovery-video .jj-ig-btn{
-  margin-top: 12px;
-  background: linear-gradient(135deg,#f6ddbd,#f6cecc 50%,#f5bfdd);
-  color:#5e3c46; text-decoration:none;
-  font: 600 14px/1 Poppins, system-ui, sans-serif;
-  padding:.65rem .9rem;
-  border-radius:14px;
-  display:inline-block;
-  border:1px solid rgba(0,0,0,.06);
-  box-shadow:0 8px 22px rgba(0,0,0,.10);
-}
-#recovery-video .jj-ig-btn:focus-visible{
-  outline: 2px solid #b38398;
-  outline-offset: 2px;
-}
-
-/* Small tweaks for narrow screens */
-@media (max-width:560px){
-  #recovery-video .jj-ig-btn{ font-size: 13px; }
-}
-
-.jj-reel-intro{
-  max-width: 56ch;
-  margin: 24px auto 10px;
-  padding: .6rem .9rem;
-  text-align: center;
-  font: 500 16px/1.5 "Poppins", system-ui, sans-serif;
-  color: #5e3c46;
-  background: linear-gradient(135deg,#f6ddbd22,#f6cecc22,#f5bfdd22);
-  border: 1px solid rgba(0,0,0,.05);
-  border-radius: 14px;
-}
-@media (max-width:560px){
-  .jj-reel-intro{ font-size: 15px; margin-top: 16px; }
-}
-
-/* ===== Shell layout ===== */
-#recovery-video.jj-ig-shell{
-  --panel-w: 360px;           /* right side width on desktop */
-  --gap: 18px;
-  --radius: 12px;
-  --ink: #222;
-  --muted: #6b7280;
-  --card: #fff;
-  background:#fff; padding:0; margin: 0 0 24px 0;
-}
-#recovery-video .jj-ig-wrap{
-  display:grid; align-items:start; justify-content:center;
-  grid-template-columns: auto var(--gap) var(--panel-w);
-  width: 100%;
-}
-@media (max-width: 900px){
-  #recovery-video .jj-ig-wrap{
-    grid-template-columns: 1fr;
-    grid-auto-rows: auto;
-    row-gap: 14px;
-  }
-}
-
-/* ===== Left media — same sizing as before ===== */
-#recovery-video .jj-ig-media{
-  position:relative; display:block;
-  width: min(96vw, 540px);
-  aspect-ratio: 1 / 1;        /* square stage */
-  overflow:hidden; border-radius: var(--radius);
-  border:1px solid rgba(0,0,0,.06);
-  box-shadow: 0 6px 18px rgba(0,0,0,.08);
-  background:#000;
-}
-#recovery-video .jj-ig-media .jj-ig-thumb{
-  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
-}
-/* Play icon (center) */
-#recovery-video .jj-ig-play{
-  position:absolute; inset:auto; left:50%; top:50%; transform:translate(-50%,-50%);
-  font-size: 68px; color: #ffffffdd; text-shadow: 0 6px 16px rgba(0,0,0,.35);
-  transition: transform .2s ease, opacity .2s ease;
-}
-#recovery-video .jj-ig-media:hover .jj-ig-play{ transform:translate(-50%,-50%) scale(1.05); }
-
-/* ===== Right panel ===== */
-#recovery-video .jj-ig-panel{
-  background: var(--card);
-  border:1px solid rgba(0,0,0,.06);
-  border-radius: var(--radius);
-  padding: 12px;
-  color: var(--ink);
-  max-height: min(80vh, 760px);
-  overflow:auto;
-}
-@media (max-width:900px){
-  #recovery-video .jj-ig-panel{ max-height:none; }
-}
-
-/* Header */
-#recovery-video .jj-ig-hdr{
-  display:flex; align-items:center; justify-content:space-between; gap:10px;
-  padding:6px; border-bottom:1px solid rgba(0,0,0,.06); margin-bottom:8px;
-}
-#recovery-video .jj-ig-user{ display:flex; align-items:center; gap:10px; text-decoration:none; color:inherit; }
-#recovery-video .jj-ig-avatar{
-  width:36px; height:36px; border-radius:50%; object-fit:cover;
-  box-shadow:0 0 0 2px rgba(0,0,0,.06);
-}
-#recovery-video .jj-ig-usertext{ display:flex; flex-direction:column; line-height:1.1; }
-#recovery-video .jj-ig-name{ font:600 14px/1 Poppins, system-ui, sans-serif; color:#111; margin-right:6px; }
-#recovery-video .jj-ig-sub{ font:500 11px/1 Poppins, system-ui, sans-serif; color: var(--muted); }
-#recovery-video .jj-ig-open{ font-size:20px; color:#d62976; }
-
-/* Actions */
-#recovery-video .jj-ig-actions{ display:flex; gap:14px; padding:8px 6px 4px; }
-#recovery-video .jj-ig-act{ font-size:20px; color:#111; }
-#recovery-video .jj-ig-likes{ font:600 13px/1.2 Poppins, system-ui, sans-serif; padding: 4px 6px 8px; }
-
-/* Caption + comments */
-#recovery-video .jj-ig-caption{
-  font:400 14px/1.45 Poppins, system-ui, sans-serif;
-  padding: 6px; color:#111;
-}
-#recovery-video .jj-ig-caption .jj-ig-more{
-  color:#6b7280; text-decoration:none; margin-left:6px; white-space:nowrap;
-}
-#recovery-video .jj-ig-comments{
-  list-style:none; margin: 6px 0 0; padding:0 6px 0 6px;
-  font:400 14px/1.4 Poppins, system-ui, sans-serif; color:#111;
-}
-#recovery-video .jj-ig-comments li + li{ margin-top:6px; }
-#recovery-video .jj-ig-comments .jj-ig-name{ font-weight:600; color:#111; text-decoration:none; }
-
-/* Button */
-#recovery-video .jj-ig-btn{
-  display:inline-block; margin: 12px 6px 6px;
-  background: linear-gradient(135deg,#f6ddbd,#f6cecc 50%,#f5bfdd);
-  color:#5e3c46; text-decoration:none;
-  font: 600 14px/1 Poppins, system-ui, sans-serif;
-  padding:.6rem .9rem; border-radius:12px; border:1px solid rgba(0,0,0,.06);
-  box-shadow:0 8px 22px rgba(0,0,0,.10);
-}
-#recovery-video .jj-ig-btn:focus-visible{ outline:2px solid #b38398; outline-offset:2px; }
-
-/* spacing column (only on desktop grid) */
-#recovery-video .jj-ig-wrap > :nth-child(2){ display:block; }
-@media (max-width:900px){
-  #recovery-video .jj-ig-wrap > :nth-child(2){ display:none; }
-}
-
-
 
 /* Show only on screens <=768px */
 @media (max-width: 768px) {
