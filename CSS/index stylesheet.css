@@ -3057,6 +3057,23 @@ color: #7b7b7b;
 }
 
 
+
+
+.jj-reel-intro{
+  max-width: 56ch;
+  margin: 24px auto 10px;
+  padding: .6rem .9rem;
+  text-align: center;
+  font: 500 16px/1.5 "Poppins", system-ui, sans-serif;
+  color: #5e3c46;
+  background: linear-gradient(135deg,#f6ddbd22,#f6cecc22,#f5bfdd22);
+  border: 1px solid rgba(0,0,0,.05);
+  border-radius: 14px;
+}
+@media (max-width:560px){
+  .jj-reel-intro{ font-size: 15px; margin-top: 16px; }
+}
+
 .jj-ig-embed{
   --jj-ig-width: 640px;     /* set this to your existing component width */
   margin: 0 auto;
@@ -3076,6 +3093,8 @@ color: #7b7b7b;
   text-decoration:none; color:#111827; background:#fff;
   box-shadow:0 6px 18px rgba(0,0,0,.06);
 }
+
+
 
 /* Show only on screens <=768px */
 @media (max-width: 768px) {
