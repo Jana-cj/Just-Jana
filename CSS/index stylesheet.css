@@ -4794,6 +4794,7 @@ html {
 }
 .jjmv-toc-link.active::before{opacity:1;background:linear-gradient(120deg,var(--jjmv-grad-a),var(--jjmv-grad-b),var(--jjmv-grad-c))}
 
+
 /* Progress bar */
 .jjmv-progress-bar{height:4px;background:rgba(0,0,0,.06);border-radius:999px;margin:14px 8px 4px}
 .jjmv-progress{height:100%;width:0%;border-radius:999px;background:linear-gradient(90deg,var(--jjmv-grad-a),var(--jjmv-grad-b),var(--jjmv-grad-c));transition:width .25s ease}
@@ -4814,6 +4815,50 @@ html {
   .jjmv-chip-scroll{background:transparent;border:none;font-size:20px;padding:8px;border-radius:12px;color:var(--jjmv-ink-2)}
   .jjmv-toc-list{display:none}
 }
+
+/* --- TOC hover should NOT go blue --- */
+.jjmv-toc-link,
+.jjmv-chip{
+  color: var(--jjmv-ink-2);
+  text-decoration: none;
+}
+
+.jjmv-toc-link:hover,
+.jjmv-chip:hover{
+  color: var(--jjmv-ink) !important;
+  text-decoration: none;
+}
+
+/* Make keyboard focus look like active (nice for accessibility) */
+.jjmv-toc-link:focus-visible,
+.jjmv-chip:focus-visible{
+  outline: none;
+  color: var(--jjmv-ink) !important;
+  background: linear-gradient(90deg,
+    rgba(246,221,189,.45),
+    rgba(246,206,204,.45),
+    rgba(245,191,221,.45));
+  box-shadow: 0 0 0 3px rgba(245,191,221,.28);
+}
+
+/* --- Bottom-of-screen progress bar (shows how much is LEFT) --- */
+.jjmv-bottom-progress{
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  height: 4px;
+  background: rgba(0,0,0,.10);
+  z-index: 99999;
+}
+
+.jjmv-bottom-progress__fill{
+  height: 100%;
+  width: 100%;
+  transform-origin: left center;
+  transform: scaleX(1); /* starts full (100% left) */
+  background: linear-gradient(90deg,var(--jjmv-grad-a),var(--jjmv-grad-b),var(--jjmv-grad-c));
+  transition: transform .12s ease;
+}
+
 
 /* Content scaffolding */
 .jjmv-content{display:flex;flex-direction:column;gap:64px}

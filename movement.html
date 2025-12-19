@@ -447,16 +447,16 @@
       <nav class="jjmv-chips" aria-label="Section shortcuts">
         <button class="jjmv-chip-scroll left" aria-label="Scroll left">‹</button>
         <div class="jjmv-chips-track" role="tablist">
-          <a role="tab" class="jjmv-chip" href="#why"      data-target="why">Why movement matters</a>
-          <a role="tab" class="jjmv-chip" href="#ways"     data-target="ways">Different ways to move</a>
-          <a role="tab" class="jjmv-chip" href="#pyramid"  data-target="pyramid">Functional movement pyramid</a>
-          <a role="tab" class="jjmv-chip" href="#balance"  data-target="balance">Body & Mind balance</a>
-          <a role="tab" class="jjmv-chip" href="#schedule" data-target="schedule">Build your weekly workout schedule</a>
-          <a role="tab" class="jjmv-chip" href="#culture"  data-target="culture">Cultural lens</a>
-          <a role="tab" class="jjmv-chip" href="#myths"    data-target="myths">Myths & FAQs</a>
-          <a role="tab" class="jjmv-chip" href="#safety"   data-target="safety">Safety & red flags</a>
-          <a role="tab" class="jjmv-chip" href="#before"   data-target="before">Before you go</a>
-          <a role="tab" class="jjmv-chip" href="#refs"     data-target="refs">References</a>
+          <a role="tab" class="jjmv-chip" href="#jj-why"      data-target="jj-why">Why movement matters</a>
+          <a role="tab" class="jjmv-chip" href="#jj-ways"     data-target="jj-ways">Different ways to move</a>
+          <a role="tab" class="jjmv-chip" href="#jj-pyramid"  data-target="jj-pyramid">Functional movement pyramid</a>
+          <a role="tab" class="jjmv-chip" href="#jj-balance"  data-target="jj-balance">Body & Mind balance</a>
+          <a role="tab" class="jjmv-chip" href="#jj-schedule" data-target="jj-schedule">Build your weekly workout schedule</a>
+          <a role="tab" class="jjmv-chip" href="#jj-culture"  data-target="jj-culture">Cultural lens</a>
+          <a role="tab" class="jjmv-chip" href="#jj-myths"    data-target="jj-myths">Myths & FAQs</a>
+          <a role="tab" class="jjmv-chip" href="#jj-safety"   data-target="jj-safety">Safety & red flags</a>
+          <a role="tab" class="jjmv-chip" href="#jj-before"   data-target="jj-before">Before you go</a>
+          <a role="tab" class="jjmv-chip" href="#jj-refs"     data-target="jj-refs">References</a>
         </div>
         <button class="jjmv-chip-scroll right" aria-label="Scroll right">›</button>
       </nav>
@@ -464,16 +464,16 @@
       <!-- Desktop list -->
       <nav class="jjmv-toc-list" aria-label="Section navigation">
         <ol>
-          <li><a class="jjmv-toc-link" href="#why"      data-target="why">Why movement matters</a></li>
-          <li><a class="jjmv-toc-link" href="#ways"     data-target="ways">Different ways to move</a></li>
-          <li><a class="jjmv-toc-link" href="#pyramid"  data-target="pyramid">Functional movement pyramid</a></li>
-          <li><a class="jjmv-toc-link" href="#balance"  data-target="balance">Body and Mind balance</a></li>
-          <li><a class="jjmv-toc-link" href="#schedule" data-target="schedule">Build your weekly workout schedule</a></li>
-          <li><a class="jjmv-toc-link" href="#culture"  data-target="culture">Cultural lens: Gentle reframes</a></li>
-          <li><a class="jjmv-toc-link" href="#myths"    data-target="myths">Myths and FAQs</a></li>
-          <li><a class="jjmv-toc-link" href="#safety"   data-target="safety">Safety and red flags</a></li>
-          <li><a class="jjmv-toc-link" href="#before"   data-target="before">Before you go</a></li>
-          <li><a class="jjmv-toc-link" href="#refs"     data-target="refs">References</a></li>
+          <li><a class="jjmv-toc-link" href="#jj-why"      data-target="jj-why">Why movement matters</a></li>
+          <li><a class="jjmv-toc-link" href="#jj-ways"     data-target="jj-ways">Different ways to move</a></li>
+          <li><a class="jjmv-toc-link" href="#jj-pyramid"  data-target="jj-pyramid">Functional movement pyramid</a></li>
+          <li><a class="jjmv-toc-link" href="#jj-balance"  data-target="jj-balance">Body and Mind balance</a></li>
+          <li><a class="jjmv-toc-link" href="#jj-schedule" data-target="jj-schedule">Build your weekly workout schedule</a></li>
+          <li><a class="jjmv-toc-link" href="#jj-culture"  data-target="jj-culture">Cultural lens: Gentle reframes</a></li>
+          <li><a class="jjmv-toc-link" href="#jj-myths"    data-target="jj-myths">Myths and FAQs</a></li>
+          <li><a class="jjmv-toc-link" href="#jj-safety"   data-target="jj-safety">Safety and red flags</a></li>
+          <li><a class="jjmv-toc-link" href="#jj-before"   data-target="jj-before">Before you go</a></li>
+          <li><a class="jjmv-toc-link" href="#jj-refs"     data-target="jj-refs">References</a></li>
         </ol>
         <div class="jjmv-progress-bar" aria-hidden="true">
           <div class="jjmv-progress"></div>
@@ -990,56 +990,114 @@
 
   <!-- Place the script just before your closing </body> -->
   <script>
-    /* Just Jana – Movement page TOC interactions (light mode only) */
-    (function(){
-      const links = Array.from(document.querySelectorAll('.jjmv-toc-link'));
-      const chips = Array.from(document.querySelectorAll('.jjmv-chip'));
-      const progress = document.querySelector('.jjmv-progress');
-      const sections = links.map(a => document.getElementById(a.dataset.target));
+/* Just Jana – Movement page TOC (tap highlight, scroll spy, progress left) */
+(function(){
+  const links = Array.from(document.querySelectorAll('.jjmv-toc-link'));
+  const chips = Array.from(document.querySelectorAll('.jjmv-chip'));
+  const allNav = [...links, ...chips];
 
-      function goTo(id){
-        const el = document.getElementById(id);
-        if(!el) return;
-        el.scrollIntoView({behavior:'smooth', block:'start'});
-        // focus for a11y without jump
-        setTimeout(()=>{ el.setAttribute('tabindex','-1'); el.focus({preventScroll:true}); }, 240);
-        history.replaceState(null, '', '#' + id);
-      }
-      function setActive(id){
-        links.forEach(a => a.classList.toggle('active', a.dataset.target === id));
-        chips.forEach(c => c.classList.toggle('active', c.dataset.target === id));
-      }
+  // Desktop progress (inside TOC card)
+  const progressInCard = document.querySelector('.jjmv-progress');
 
-      links.forEach(a => a.addEventListener('click', e => { e.preventDefault(); goTo(a.dataset.target); }));
-      chips.forEach(c => c.addEventListener('click', e => { e.preventDefault(); goTo(c.dataset.target); }));
+  // Create bottom progress bar (viewport bottom)
+  let bottomBar = document.querySelector('.jjmv-bottom-progress');
+  if(!bottomBar){
+    bottomBar = document.createElement('div');
+    bottomBar.className = 'jjmv-bottom-progress';
+    bottomBar.innerHTML = '<div class="jjmv-bottom-progress__fill"></div>';
+    document.body.appendChild(bottomBar);
+  }
+  const bottomFill = bottomBar.querySelector('.jjmv-bottom-progress__fill');
 
-      // Scroll spy + progress
-      const io = new IntersectionObserver((entries)=>{
-        // pick most visible currently intersecting
-        const visible = entries.filter(e => e.isIntersecting);
-        if(visible.length){
-          visible.sort((a,b)=> b.intersectionRatio - a.intersectionRatio);
-          setActive(visible[0].target.id);
-        }
-        const doc = document.documentElement;
-        const scrolled = (doc.scrollTop || document.body.scrollTop);
-        const height = (doc.scrollHeight - doc.clientHeight);
-        const pct = Math.max(0, Math.min(1, height ? (scrolled/height) : 0)) * 100;
-        if(progress) progress.style.width = pct + '%';
-      }, { rootMargin: '-42% 0px -52% 0px', threshold: [0.1,0.25,0.5,0.75,1] });
+  // Sections (from data-target)
+  const sections = allNav
+    .map(a => document.getElementById(a.dataset.target))
+    .filter(Boolean);
 
-      sections.forEach(s => s && io.observe(s));
+  function setActive(id){
+    links.forEach(a => {
+      const on = a.dataset.target === id;
+      a.classList.toggle('active', on);
+      if(on) a.setAttribute('aria-current','true');
+      else a.removeAttribute('aria-current');
+    });
 
-      // Respect hash on load
-      const initial = location.hash.replace('#','');
-      if(initial){ setActive(initial); }
+    chips.forEach(c => {
+      const on = c.dataset.target === id;
+      c.classList.toggle('active', on);
+      c.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+  }
 
-      // Mobile chip scrollers
-      const track = document.querySelector('.jjmv-chips-track');
-      document.querySelector('.jjmv-chip-scroll.left')?.addEventListener('click', ()=> track && track.scrollBy({left:-240,behavior:'smooth'}));
-      document.querySelector('.jjmv-chip-scroll.right')?.addEventListener('click', ()=> track && track.scrollBy({left: 240,behavior:'smooth'}));
-    })();
-  </script>
+  function goTo(id){
+    const el = document.getElementById(id);
+    if(!el) return;
+    setActive(id); // highlight immediately on tap/click
+    el.scrollIntoView({behavior:'smooth', block:'start'});
+    history.replaceState(null, '', '#' + id);
+  }
+
+  // Click handlers (desktop list + mobile chips)
+  allNav.forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      goTo(a.dataset.target);
+    });
+  });
+
+  // Progress: show how much is LEFT (starts full, drains to 0)
+  function updateProgress(){
+    const doc = document.documentElement;
+    const scrolled = doc.scrollTop || document.body.scrollTop || 0;
+    const height = (doc.scrollHeight - doc.clientHeight);
+    const read = height ? (scrolled / height) : 0;
+    const left = Math.max(0, Math.min(1, 1 - read)); // LEFT
+    const pctLeft = left * 100;
+
+    if(progressInCard) progressInCard.style.width = pctLeft + '%';
+    if(bottomFill) bottomFill.style.transform = `scaleX(${left})`;
+  }
+
+  // Scroll spy (highlights current section)
+  let currentId = null;
+  const io = new IntersectionObserver((entries)=>{
+    const visible = entries.filter(e => e.isIntersecting);
+    if(!visible.length) return;
+
+    visible.sort((a,b)=> b.intersectionRatio - a.intersectionRatio);
+    const id = visible[0].target.id;
+    if(id && id !== currentId){
+      currentId = id;
+      setActive(id);
+    }
+  }, {
+    root: null,
+    rootMargin: '-35% 0px -55% 0px',
+    threshold: [0.12, 0.25, 0.5, 0.75, 1]
+  });
+
+  sections.forEach(s => io.observe(s));
+
+  // Keep progress smooth
+  addEventListener('scroll', updateProgress, {passive:true});
+  addEventListener('resize', updateProgress, {passive:true});
+  updateProgress();
+
+  // Respect hash on load
+  const initial = (location.hash || '').replace('#','');
+  if(initial && document.getElementById(initial)){
+    setActive(initial);
+  } else if(sections[0]) {
+    setActive(sections[0].id);
+  }
+
+  // Mobile chip scrollers
+  const track = document.querySelector('.jjmv-chips-track');
+  document.querySelector('.jjmv-chip-scroll.left')?.addEventListener('click', ()=> track?.scrollBy({left:-240,behavior:'smooth'}));
+  document.querySelector('.jjmv-chip-scroll.right')?.addEventListener('click',()=> track?.scrollBy({left: 240,behavior:'smooth'}));
+})();
+</script>
+
 
 <script>
   /* Swipe arrows */
