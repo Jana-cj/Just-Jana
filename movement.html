@@ -1039,7 +1039,6 @@ function goTo(id){
   const y = el.getBoundingClientRect().top + window.pageYOffset - yOffset;
 
   window.scrollTo({ top: y, behavior: 'smooth' });
-  history.replaceState(null, '', '#' + id);
 }
 
 
@@ -1091,14 +1090,12 @@ function updateProgress(){
   addEventListener('resize', updateProgress, {passive:true});
   updateProgress();
 
-  // Respect hash on load
-  const initial = (location.hash || '').replace('#','');
-  if(initial && document.getElementById(initial)){
-    setActive(initial);
-  } else if(sections[0]) {
+   if (document.getElementById('why')) {
+    setActive('why');
+  } else if (sections[0]) {
     setActive(sections[0].id);
   }
-
+  
   // Mobile chip scrollers
   const track = document.querySelector('.jjmv-chips-track');
   document.querySelector('.jjmv-chip-scroll.left')?.addEventListener('click', ()=> track?.scrollBy({left:-240,behavior:'smooth'}));
