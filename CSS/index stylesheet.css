@@ -5697,7 +5697,7 @@ html{scroll-behavior:smooth}
 
 .jjmv-toc-link.active::before{
   opacity:1;
-  background:linear-gradient(120deg,#f6ddbd,#f6cecc,#f5bfdd);
+  background:linear-gradient(120deg,#ffedd4,#ffe0de,#ffdcef);
   box-shadow:0 0 0 4px rgba(245,191,221,.18);
 }
 
