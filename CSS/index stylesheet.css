@@ -5691,8 +5691,7 @@ html{scroll-behavior:smooth}
 /* Active/tapped look (like your screenshot) */
 .jjmv-toc-link.active{
   color: #000;
-  background: rgba(246,221,189,.55);
-  border: 1px solid rgba(179,131,152,.22);
+  background: linear-gradient(90deg,var(--jjmv-grad-a),var(--jjmv-grad-b),var(--jjmv-grad-c));
   box-shadow: 0 8px 20px rgba(0,0,0,.06);
 }
 
