@@ -5690,23 +5690,24 @@ html{scroll-behavior:smooth}
 
 /* Active/tapped look (like your screenshot) */
 .jjmv-toc-link.active{
-  color: #000;
-  background: linear-gradient(90deg,var(--jjmv-grad-a),var(--jjmv-grad-b),var(--jjmv-grad-c));
-  box-shadow: 0 8px 20px rgba(0,0,0,.06);
+  color:#000;
+  background:linear-gradient(90deg,#f6ddbd,#f6cecc,#f5bfdd);
+  box-shadow:0 8px 20px rgba(0,0,0,.06);
 }
 
 .jjmv-toc-link.active::before{
-  opacity: 1;
-  background: linear-gradient(120deg,var(--jjmv-grad-a),var(--jjmv-grad-b),var(--jjmv-grad-c));
-  box-shadow: 0 0 0 4px rgba(245,191,221,.18);
+  opacity:1;
+  background:linear-gradient(120deg,#f6ddbd,#f6cecc,#f5bfdd);
+  box-shadow:0 0 0 4px rgba(245,191,221,.18);
 }
 
 /* Chips: same active vibe */
 .jjmv-chip.active{
-  color: #000;
-  background: linear-gradient(90deg,var(--jjmv-grad-a),var(--jjmv-grad-b),var(--jjmv-grad-c));
-  box-shadow: 0 8px 18px rgba(0,0,0,.06);
+  color:#000;
+  background:linear-gradient(90deg,#f6ddbd,#f6cecc,#f5bfdd);
+  box-shadow:0 8px 18px rgba(0,0,0,.06);
 }
+
 
 /* Nice tactile tap feedback */
 .jjmv-toc-link:active,
