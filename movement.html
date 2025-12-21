@@ -2228,6 +2228,102 @@ document.addEventListener("DOMContentLoaded", function() {
 
 </script>
 
+<script>
+  // --- Scroll-driven topic highlight (no click-persist) ---
+document.addEventListener('DOMContentLoaded', () => {
+  // Try common selectors: adjust ONLY if your links use different classes
+  const tocLinks = Array.from(
+    document.querySelectorAll(
+      '.topic-pill[href^="#"], .on-this-page a[href^="#"], .toc a[href^="#"], nav a[href^="#"]'
+    )
+  );
+
+  if (!tocLinks.length) return;
+
+  // Map links -> sections by href="#id"
+  const items = tocLinks
+    .map(link => {
+      const id = (link.getAttribute('href') || '').slice(1);
+      const section = id ? document.getElementById(id) : null;
+      return section ? { link, section } : null;
+    })
+    .filter(Boolean);
+
+  if (!items.length) return;
+
+  const ACTIVE_CLASS = 'is-active';
+
+  const clearActive = () => {
+    items.forEach(({ link }) => link.classList.remove(ACTIVE_CLASS));
+  };
+
+  const setActive = (link) => {
+    clearActive();
+    link.classList.add(ACTIVE_CLASS);
+  };
+
+  // Header/sticky offset so the "current section" feels correct
+  const getOffset = () => {
+    const header = document.querySelector('.site-header, header, .mf-nav');
+    const h = header ? header.getBoundingClientRect().height : 0;
+    return h + 120; // tweak if needed
+  };
+
+  const updateActiveFromScroll = () => {
+    const y = window.scrollY + getOffset();
+
+    // Find the last section whose top is above the current scroll position
+    let current = items[0];
+    for (const it of items) {
+      if (it.section.offsetTop <= y) current = it;
+      else break;
+    }
+    setActive(current.link);
+  };
+
+  // Keep items sorted top-to-bottom (important for correct detection)
+  items.sort((a, b) => a.section.offsetTop - b.section.offsetTop);
+
+  // Highlight correct topic immediately on refresh/load
+  // (after layout settles)
+  requestAnimationFrame(updateActiveFromScroll);
+  window.addEventListener('load', updateActiveFromScroll);
+
+  // Update highlight as user scrolls
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      updateActiveFromScroll();
+      ticking = false;
+    });
+  }, { passive: true });
+
+  // On click, we still scroll — but highlight will ultimately reflect scroll position
+  tocLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href') || '';
+      if (!href.startsWith('#')) return;
+
+      const id = href.slice(1);
+      const target = document.getElementById(id);
+      if (!target) return;
+
+      e.preventDefault();
+
+      const top = target.getBoundingClientRect().top + window.scrollY - getOffset() + 10;
+      window.scrollTo({ top, behavior: 'smooth' });
+
+      // Ensure highlight syncs even during/after smooth scroll
+      setTimeout(updateActiveFromScroll, 0);
+      setTimeout(updateActiveFromScroll, 250);
+      setTimeout(updateActiveFromScroll, 600);
+    });
+  });
+});
+
+</script>  
 
   </body>
 </html>
