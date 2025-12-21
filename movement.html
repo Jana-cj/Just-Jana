@@ -447,16 +447,16 @@
       <nav class="jjmv-chips" aria-label="Section shortcuts">
         <button class="jjmv-chip-scroll left" aria-label="Scroll left">‹</button>
         <div class="jjmv-chips-track" role="tablist">
-          <a role="tab" class="jjmv-chip" href="#jj-why"      data-target="jj-why">Why movement matters</a>
-          <a role="tab" class="jjmv-chip" href="#jj-ways"     data-target="jj-ways">Different ways to move</a>
-          <a role="tab" class="jjmv-chip" href="#jj-pyramid"  data-target="jj-pyramid">Functional movement pyramid</a>
+          <a role="tab" class="jjmv-chip" href="#why"      data-target="why">Why movement matters</a>
+          <a role="tab" class="jjmv-chip" href="#ways"     data-target="ways">Different ways to move</a>
+          <a role="tab" class="jjmv-chip" href="#pyramid"  data-target="pyramid">Functional movement pyramid</a>
           <a role="tab" class="jjmv-chip" href="#jj-balance"  data-target="jj-balance">Body & Mind balance</a>
-          <a role="tab" class="jjmv-chip" href="#jj-schedule" data-target="jj-schedule">Build your weekly workout schedule</a>
-          <a role="tab" class="jjmv-chip" href="#jj-culture"  data-target="jj-culture">Cultural lens</a>
-          <a role="tab" class="jjmv-chip" href="#jj-myths"    data-target="jj-myths">Myths & FAQs</a>
-          <a role="tab" class="jjmv-chip" href="#jj-safety"   data-target="jj-safety">Safety & red flags</a>
-          <a role="tab" class="jjmv-chip" href="#jj-before"   data-target="jj-before">Before you go</a>
-          <a role="tab" class="jjmv-chip" href="#jj-refs"     data-target="jj-refs">References</a>
+          <a role="tab" class="jjmv-chip" href="#schedule" data-target="schedule">Build your weekly workout schedule</a>
+          <a role="tab" class="jjmv-chip" href="#culture"  data-target="culture">Cultural lens</a>
+          <a role="tab" class="jjmv-chip" href="#myths"    data-target="myths">Myths & FAQs</a>
+          <a role="tab" class="jjmv-chip" href="#safety"   data-target="safety">Safety & red flags</a>
+          <a role="tab" class="jjmv-chip" href="#before"   data-target="before">Before you go</a>
+          <a role="tab" class="jjmv-chip" href="#refs"     data-target="refs">References</a>
         </div>
         <button class="jjmv-chip-scroll right" aria-label="Scroll right">›</button>
       </nav>
@@ -464,16 +464,16 @@
       <!-- Desktop list -->
       <nav class="jjmv-toc-list" aria-label="Section navigation">
         <ol>
-          <li><a class="jjmv-toc-link" href="#jj-why"      data-target="jj-why">Why movement matters</a></li>
-          <li><a class="jjmv-toc-link" href="#jj-ways"     data-target="jj-ways">Different ways to move</a></li>
-          <li><a class="jjmv-toc-link" href="#jj-pyramid"  data-target="jj-pyramid">Functional movement pyramid</a></li>
+          <li><a class="jjmv-toc-link" href="#why"      data-target="why">Why movement matters</a></li>
+          <li><a class="jjmv-toc-link" href="#ways"     data-target="ways">Different ways to move</a></li>
+          <li><a class="jjmv-toc-link" href="#pyramid"  data-target="pyramid">Functional movement pyramid</a></li>
           <li><a class="jjmv-toc-link" href="#jj-balance"  data-target="jj-balance">Body and Mind balance</a></li>
-          <li><a class="jjmv-toc-link" href="#jj-schedule" data-target="jj-schedule">Build your weekly workout schedule</a></li>
-          <li><a class="jjmv-toc-link" href="#jj-culture"  data-target="jj-culture">Cultural lens: Gentle reframes</a></li>
-          <li><a class="jjmv-toc-link" href="#jj-myths"    data-target="jj-myths">Myths and FAQs</a></li>
-          <li><a class="jjmv-toc-link" href="#jj-safety"   data-target="jj-safety">Safety and red flags</a></li>
-          <li><a class="jjmv-toc-link" href="#jj-before"   data-target="jj-before">Before you go</a></li>
-          <li><a class="jjmv-toc-link" href="#jj-refs"     data-target="jj-refs">References</a></li>
+          <li><a class="jjmv-toc-link" href="#schedule" data-target="schedule">Build your weekly workout schedule</a></li>
+          <li><a class="jjmv-toc-link" href="#culture"  data-target="culture">Cultural lens: Gentle reframes</a></li>
+          <li><a class="jjmv-toc-link" href="#myths"    data-target="myths">Myths and FAQs</a></li>
+          <li><a class="jjmv-toc-link" href="#safety"   data-target="safety">Safety and red flags</a></li>
+          <li><a class="jjmv-toc-link" href="#before"   data-target="before">Before you go</a></li>
+          <li><a class="jjmv-toc-link" href="#refs"     data-target="refs">References</a></li>
         </ol>
         <div class="jjmv-progress-bar" aria-hidden="true">
           <div class="jjmv-progress"></div>
@@ -1029,13 +1029,19 @@
     });
   }
 
-  function goTo(id){
-    const el = document.getElementById(id);
-    if(!el) return;
-    setActive(id); // highlight immediately on tap/click
-    el.scrollIntoView({behavior:'smooth', block:'start'});
-    history.replaceState(null, '', '#' + id);
-  }
+function goTo(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+
+  setActive(id);
+
+  const yOffset = 90; // adjust to your header height
+  const y = el.getBoundingClientRect().top + window.pageYOffset - yOffset;
+
+  window.scrollTo({ top: y, behavior: 'smooth' });
+  history.replaceState(null, '', '#' + id);
+}
+
 
   // Click handlers (desktop list + mobile chips)
   allNav.forEach(a => {
@@ -1046,17 +1052,19 @@
   });
 
   // Progress: show how much is LEFT (starts full, drains to 0)
-  function updateProgress(){
-    const doc = document.documentElement;
-    const scrolled = doc.scrollTop || document.body.scrollTop || 0;
-    const height = (doc.scrollHeight - doc.clientHeight);
-    const read = height ? (scrolled / height) : 0;
-    const left = Math.max(0, Math.min(1, 1 - read)); // LEFT
-    const pctLeft = left * 100;
+function updateProgress(){
+  const doc = document.documentElement;
+  const scrolled = doc.scrollTop || document.body.scrollTop || 0;
+  const height = (doc.scrollHeight - doc.clientHeight);
+  const read = height ? (scrolled / height) : 0;
+  const pctRead = Math.max(0, Math.min(100, read * 100));
 
-    if(progressInCard) progressInCard.style.width = pctLeft + '%';
-    if(bottomFill) bottomFill.style.transform = `scaleX(${left})`;
-  }
+  // desktop mini bar
+  if (progressInCard) progressInCard.style.width = pctRead + '%';
+
+  // bottom bar fill
+  if (bottomFill) bottomFill.style.transform = `scaleX(${Math.max(0, Math.min(1, read))})`;
+}
 
   // Scroll spy (highlights current section)
   let currentId = null;

@@ -5662,3 +5662,61 @@ html{scroll-behavior:smooth}
 }
 
 /* Desktop stays untouched: your existing desktop grid, nav, spacing, etc. remain in effect */
+
+/* Use the same font as your headings (Playfair is already loaded) */
+.jjmv-toc-title{
+  font-family: "Playfair Display", serif;
+  font-weight: 600;
+}
+
+/* Ensure TOC links never turn bootstrap-blue (hover/visited) */
+.jjmv-toc-link,
+.jjmv-chip{
+  color: var(--jjmv-ink-2);
+  text-decoration: none !important;
+}
+
+.jjmv-toc-link:visited,
+.jjmv-chip:visited{
+  color: var(--jjmv-ink-2);
+}
+
+/* Hover = BLACK text */
+.jjmv-toc-link:hover,
+.jjmv-chip:hover{
+  color: #000 !important;
+  text-decoration: none !important;
+}
+
+/* Active/tapped look (like your screenshot) */
+.jjmv-toc-link.active{
+  color: #000;
+  background: rgba(246,221,189,.55);
+  border: 1px solid rgba(179,131,152,.22);
+  box-shadow: 0 8px 20px rgba(0,0,0,.06);
+}
+
+.jjmv-toc-link.active::before{
+  opacity: 1;
+  background: linear-gradient(120deg,var(--jjmv-grad-a),var(--jjmv-grad-b),var(--jjmv-grad-c));
+  box-shadow: 0 0 0 4px rgba(245,191,221,.18);
+}
+
+/* Chips: same active vibe */
+.jjmv-chip.active{
+  color: #000;
+  background: rgba(246,221,189,.55);
+  border-color: rgba(179,131,152,.22);
+  box-shadow: 0 8px 18px rgba(0,0,0,.06);
+}
+
+/* Nice tactile tap feedback */
+.jjmv-toc-link:active,
+.jjmv-chip:active{
+  transform: translateY(1px);
+}
+
+/* Bottom progress uses JJ gradient already — keep it */
+.jjmv-bottom-progress__fill{
+  background: linear-gradient(90deg,var(--jjmv-grad-a),var(--jjmv-grad-b),var(--jjmv-grad-c));
+}
