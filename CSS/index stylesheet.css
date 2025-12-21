@@ -5697,14 +5697,14 @@ html{scroll-behavior:smooth}
 
 .jjmv-toc-link.active::before{
   opacity:1;
-  background:linear-gradient(120deg,#ffedd4,#ffe0de,#ffdcef);
+  background:linear-gradient(120deg,#fff3e1,#ffe7e6,#ffe5f3);
   box-shadow:0 0 0 4px rgba(245,191,221,.18);
 }
 
 /* Chips: same active vibe */
 .jjmv-chip.active{
   color:#000;
-  background:linear-gradient(90deg,#f6ddbd,#f6cecc,#f5bfdd);
+  background:linear-gradient(90deg,#ffedd4,#ffe0de,#ffdcef);
   box-shadow:0 8px 18px rgba(0,0,0,.06);
 }
 
